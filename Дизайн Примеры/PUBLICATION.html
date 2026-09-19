@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Publication</title>
+    <meta name="description" content="Publication — главный источник о технологиях и культуре">
+    <style>
+@font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/8a480f0b521d4e75-s.8e0177b5.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}@font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/7178b3e590c64307-s.b97b3418.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Geist Fallback;src:local(Arial);ascent-override:95.94%;descent-override:28.16%;line-gap-override:0.0%;size-adjust:104.76%}
+@font-face{font-family:Geist Mono;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/4fa387ec64143e14-s.c1fdd6c2.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}@font-face{font-family:Geist Mono;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/bbc41e54d2fcbd21-s.799d8ef8.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}@font-face{font-family:Geist Mono;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://publication-nu.vercel.app/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:Geist Mono Fallback;src:local(Arial);ascent-override:74.67%;descent-override:21.92%;line-gap-override:0.0%;size-adjust:134.59%}
+@layer properties{@supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))){*,:before,:after,::backdrop{--tw-translate-x:0;--tw-translate-y:0;--tw-translate-z:0;--tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-tracking:initial;--tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;--tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;--tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;--tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000}}}@layer theme{:root,:host{--color-purple-400:#c07eff;--color-purple-600:#9810fa;--color-purple-800:#6e11b0;--color-purple-900:#59168b;--color-gray-100:#f3f4f6;--color-gray-200:#e5e7eb;--color-gray-400:#99a1af;--color-gray-500:#6a7282;--color-gray-800:#1e2939;--color-black:#000;--color-white:#fff;--spacing:.25rem;--container-md:28rem;--text-xs:.75rem;--text-xs--line-height:calc(1/.75);--text-sm:.875rem;--text-sm--line-height:calc(1.25/.875);--text-lg:1.125rem;--text-lg--line-height:calc(1.75/1.125);--text-xl:1.25rem;--text-xl--line-height:calc(1.75/1.25);--text-2xl:1.5rem;--text-2xl--line-height:calc(2/1.5);--text-3xl:1.875rem;--text-3xl--line-height:calc(2.25/1.875);--text-4xl:2.25rem;--text-4xl--line-height:calc(2.5/2.25);--font-weight-medium:500;--font-weight-bold:700;--font-weight-black:900;--tracking-tighter:-.05em;--tracking-wider:.05em;--tracking-widest:.1em;--leading-snug:1.375;--leading-relaxed:1.625;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4,0,.2,1);--default-font-family:var(--font-geist-sans);--default-mono-font-family:var(--font-geist-mono)}@supports (color:lab(0% 0 0)){:root,:host{--color-purple-400:lab(63.6946% 47.6127 -59.2066);--color-purple-600:lab(43.0295% 75.21 -86.5669);--color-purple-800:lab(30.6017% 56.7637 -64.4751);--color-purple-900:lab(24.9401% 45.2703 -51.2728);--color-gray-100:lab(96.1596% -.0823438 -1.13575);--color-gray-200:lab(91.6229% -.159115 -2.26791);--color-gray-400:lab(65.9269% -.832707 -8.17473);--color-gray-500:lab(47.7841% -.393182 -10.0268);--color-gray-800:lab(16.1051% -1.18239 -11.7533)}}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab, red, red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.visible{visibility:visible}.sr-only{clip-path:inset(50%);white-space:nowrap;border-width:0;width:1px;height:1px;margin:-1px;padding:0;position:absolute;overflow:hidden}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.start{inset-inline-start:var(--spacing)}.top-0{top:calc(var(--spacing)*0)}.top-\[350px\]{top:350px}.top-\[400px\]{top:400px}.top-full{top:100%}.right-4{right:calc(var(--spacing)*4)}.bottom-0{bottom:calc(var(--spacing)*0)}.left-0{left:calc(var(--spacing)*0)}.left-4{left:calc(var(--spacing)*4)}.z-20{z-index:20}.z-50{z-index:50}.container{width:100%}@media (min-width:40rem){.container{max-width:40rem}}@media (min-width:48rem){.container{max-width:48rem}}@media (min-width:64rem){.container{max-width:64rem}}@media (min-width:80rem){.container{max-width:80rem}}@media (min-width:96rem){.container{max-width:96rem}}.mx-auto{margin-inline:auto}.mt-1{margin-top:calc(var(--spacing)*1)}.mt-32{margin-top:calc(var(--spacing)*32)}.mb-3{margin-bottom:calc(var(--spacing)*3)}.mb-6{margin-bottom:calc(var(--spacing)*6)}.mb-12{margin-bottom:calc(var(--spacing)*12)}.mb-24{margin-bottom:calc(var(--spacing)*24)}.ml-0\.5{margin-left:calc(var(--spacing)*.5)}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-3{height:calc(var(--spacing)*3)}.h-10{height:calc(var(--spacing)*10)}.h-16{height:calc(var(--spacing)*16)}.h-\[350px\]{height:350px}.h-\[400px\]{height:400px}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-3{width:calc(var(--spacing)*3)}.w-10{width:calc(var(--spacing)*10)}.w-full{width:100%}.max-w-\[1400px\]{max-width:1400px}.max-w-md{max-width:var(--container-md)}.-translate-y-1\/2{--tw-translate-y:calc(calc(1/2*100%)*-1);translate:var(--tw-translate-x)var(--tw-translate-y)}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.items-start{align-items:flex-start}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.gap-0\.5{gap:calc(var(--spacing)*.5)}.gap-2{gap:calc(var(--spacing)*2)}.gap-4{gap:calc(var(--spacing)*4)}.gap-6{gap:calc(var(--spacing)*6)}.gap-10{gap:calc(var(--spacing)*10)}.gap-12{gap:calc(var(--spacing)*12)}.gap-x-16{column-gap:calc(var(--spacing)*16)}.gap-y-4{row-gap:calc(var(--spacing)*4)}.overflow-hidden{overflow:hidden}.rounded-full{border-radius:3.40282e38px}.border-b{border-bottom-style:var(--tw-border-style);border-bottom-width:1px}.border-gray-200{border-color:var(--color-gray-200)}.border-purple-900\/50{border-color:#59168b80}@supports (color:color-mix(in lab, red, red)){.border-purple-900\/50{border-color:color-mix(in oklab,var(--color-purple-900)50%,transparent)}}.bg-\[\#0A1829\]{background-color:#0a1829}.bg-\[\#4C2889\]{background-color:#4c2889}.bg-\[\#6B46C1\]{background-color:#6b46c1}.bg-gray-100{background-color:var(--color-gray-100)}.bg-gray-800{background-color:var(--color-gray-800)}.bg-white{background-color:var(--color-white)}.object-cover{object-fit:cover}.p-6{padding:calc(var(--spacing)*6)}.p-12{padding:calc(var(--spacing)*12)}.px-4{padding-inline:calc(var(--spacing)*4)}.px-8{padding-inline:calc(var(--spacing)*8)}.pt-6{padding-top:calc(var(--spacing)*6)}.pt-32{padding-top:calc(var(--spacing)*32)}.pb-12{padding-bottom:calc(var(--spacing)*12)}.pb-16{padding-bottom:calc(var(--spacing)*16)}.pb-20{padding-bottom:calc(var(--spacing)*20)}.pl-4{padding-left:calc(var(--spacing)*4)}.font-sans{font-family:var(--font-geist-sans)}.text-2xl{font-size:var(--text-2xl);line-height:var(--tw-leading,var(--text-2xl--line-height))}.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}.text-4xl{font-size:var(--text-4xl);line-height:var(--tw-leading,var(--text-4xl--line-height))}.text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.text-sm{font-size:var(--text-sm);line-height:var(--tw-leading,var(--text-sm--line-height))}.text-xs{font-size:var(--text-xs);line-height:var(--tw-leading,var(--text-xs--line-height))}.text-\[11px\]{font-size:11px}.text-\[13px\]{font-size:13px}.leading-\[1\.1\]{--tw-leading:1.1;line-height:1.1}.leading-relaxed{--tw-leading:var(--leading-relaxed);line-height:var(--leading-relaxed)}.leading-snug{--tw-leading:var(--leading-snug);line-height:var(--leading-snug)}.font-black{--tw-font-weight:var(--font-weight-black);font-weight:var(--font-weight-black)}.font-bold{--tw-font-weight:var(--font-weight-bold);font-weight:var(--font-weight-bold)}.font-medium{--tw-font-weight:var(--font-weight-medium);font-weight:var(--font-weight-medium)}.tracking-tighter{--tw-tracking:var(--tracking-tighter);letter-spacing:var(--tracking-tighter)}.tracking-wider{--tw-tracking:var(--tracking-wider);letter-spacing:var(--tracking-wider)}.tracking-widest{--tw-tracking:var(--tracking-widest);letter-spacing:var(--tracking-widest)}.whitespace-nowrap{white-space:nowrap}.text-\[\#0A1829\]{color:#0a1829}.text-black{color:var(--color-black)}.text-gray-400{color:var(--color-gray-400)}.text-gray-500{color:var(--color-gray-500)}.text-purple-600{color:var(--color-purple-600)}.text-white{color:var(--color-white)}.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-xl{--tw-shadow:0 20px 25px -5px var(--tw-shadow-color,#0000001a),0 8px 10px -6px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.transition-colors{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}@media (hover:hover){.group-hover\:text-\[\#6B46C1\]:is(:where(.group):hover *){color:#6b46c1}.hover\:bg-\[\#6B46C1\]:hover{background-color:#6b46c1}.hover\:text-\[\#6B46C1\]:hover{color:#6b46c1}.hover\:text-purple-400:hover{color:var(--color-purple-400)}.hover\:text-purple-600:hover{color:var(--color-purple-600)}.hover\:text-purple-800:hover{color:var(--color-purple-800)}}@media (min-width:40rem){.sm\:px-6{padding-inline:calc(var(--spacing)*6)}}@media (min-width:48rem){.md\:top-\[450px\]{top:450px}.md\:top-\[550px\]{top:550px}.md\:right-24{right:calc(var(--spacing)*24)}.md\:left-12{left:calc(var(--spacing)*12)}.md\:mb-4{margin-bottom:calc(var(--spacing)*4)}.md\:h-4{height:calc(var(--spacing)*4)}.md\:h-\[450px\]{height:450px}.md\:h-\[550px\]{height:550px}.md\:w-4{width:calc(var(--spacing)*4)}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:flex-row{flex-direction:row}.md\:items-center{align-items:center}.md\:border-l{border-left-style:var(--tw-border-style);border-left-width:1px}.md\:p-10{padding:calc(var(--spacing)*10)}.md\:p-16{padding:calc(var(--spacing)*16)}.md\:px-12{padding-inline:calc(var(--spacing)*12)}.md\:pt-40{padding-top:calc(var(--spacing)*40)}.md\:pt-48{padding-top:calc(var(--spacing)*48)}.md\:pl-6{padding-left:calc(var(--spacing)*6)}.md\:pl-8{padding-left:calc(var(--spacing)*8)}.md\:pl-10{padding-left:calc(var(--spacing)*10)}.md\:text-4xl{font-size:var(--text-4xl);line-height:var(--tw-leading,var(--text-4xl--line-height))}.md\:text-xl{font-size:var(--text-xl);line-height:var(--tw-leading,var(--text-xl--line-height))}.md\:text-xs{font-size:var(--text-xs);line-height:var(--tw-leading,var(--text-xs--line-height))}}@media (min-width:64rem){.lg\:flex{display:flex}.lg\:px-8{padding-inline:calc(var(--spacing)*8)}.lg\:text-\[42px\]{font-size:42px}}}
+:root{--background:#fff;--foreground:#171717}body{background:var(--background);color:var(--foreground);font-family:Arial,Helvetica,sans-serif}
+@property --tw-translate-x{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-y{syntax:"*";inherits:false;initial-value:0}@property --tw-translate-z{syntax:"*";inherits:false;initial-value:0}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-leading{syntax:"*";inherits:false}@property --tw-font-weight{syntax:"*";inherits:false}@property --tw-tracking{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}
+    </style>
+</head>
+<body class="antialiased" style="--font-geist-sans:'Geist','Geist Fallback'; --font-geist-mono:'Geist Mono','Geist Mono Fallback'; font-family:'Geist','Geist Fallback',Arial,Helvetica,sans-serif;">
+    <header class="sticky top-0 z-50 bg-white text-[#0A1829] border-b border-gray-200">
+        <div class="container mx-auto px-4 max-w-[1400px]">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="text-3xl font-black tracking-tighter">Publication</a>
+                <nav class="hidden lg:flex items-center gap-6 font-bold text-[13px]">
+                    <a href="#" class="text-purple-600 hover:text-purple-800 transition-colors">Тип 101</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Хаб Авторов</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Технологии</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Наука</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Жизнь</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Польза</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Развлечения</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Акции</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Покупки</a>
+                    <a href="#" class="hover:text-purple-600 transition-colors">Игры</a>
+                </nav>
+                <button class="flex items-center gap-2 text-sm font-bold hover:text-purple-600 transition-colors">Поиск</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="pb-20">
+        <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+            <!-- Hero Section 1 -->
+            <div class="relative mb-24">
+                <div class="w-full h-[400px] md:h-[550px] bg-gray-100">
+                    <img src="https://publication-nu.vercel.app/hero.png" alt="Абстрактные фиолетовые геометрические фигуры" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-[#0A1829] text-white px-8 md:px-12 pt-32 md:pt-48 pb-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div>
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">Учебная цель</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">NASA доказало: человечество способно остановить астероид, летящий к Земле</h3>
+                        </div>
+                        <div class="md:border-l border-purple-900/50 md:pl-10">
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">От полуночных до инди-жемчужин</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">17 фильмов SXSW, которые нужно знать прямо сейчас</h3>
+                        </div>
+                        <div class="md:border-l border-purple-900/50 md:pl-10">
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">Интерактивный тест</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">Ваши желания «нормальны»? Новый тест Feeld поможет разобраться.</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-[400px] md:top-[550px] -translate-y-1/2 left-4 md:left-12 right-4 md:right-24 z-20">
+                    <div class="relative group cursor-pointer bg-white p-6 md:p-10 shadow-xl" style="clip-path:polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%)">
+                        <div class="absolute left-0 top-0 bottom-0 w-3 md:w-4 bg-[#6B46C1]"></div>
+                        <div class="pl-4 md:pl-6">
+                            <div class="text-gray-500 text-xs font-bold uppercase mb-3">Выбор Редакции</div>
+                            <h2 class="text-2xl md:text-4xl font-black leading-[1.1] group-hover:text-[#6B46C1] transition-colors">Новая ИИ-модель обещает более быстрый код и меньше ошибок для разработчиков</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Section 2 -->
+            <div class="relative mb-24 mt-32">
+                <div class="w-full h-[350px] md:h-[450px] bg-gray-100">
+                    <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=2000&auto=format&fit=crop" alt="Технические устройства" class="w-full h-full object-cover">
+                </div>
+                <div class="bg-[#0A1829] text-white px-8 md:px-12 pt-32 md:pt-40 pb-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                        <div>
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">Соц. Польза</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">Почему не стоит поручать налоги ChatGPT в этом году</h3>
+                        </div>
+                        <div class="md:border-l border-purple-900/50 md:pl-10">
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">Хаб Авторов</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">Тип 101: авторы, формирующие интернет в 2026 году</h3>
+                        </div>
+                        <div class="md:border-l border-purple-900/50 md:pl-10">
+                            <div class="text-gray-400 text-xs font-bold uppercase mb-3">Цифровая культура</div>
+                            <h3 class="text-lg md:text-xl font-bold hover:text-purple-400 cursor-pointer transition-colors">163 новых эмодзи в iOS 26.4 beta 4</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute top-[350px] md:top-[450px] -translate-y-1/2 left-4 md:left-12 right-4 md:right-24 z-20">
+                    <div class="relative group cursor-pointer bg-white p-6 md:p-10 shadow-xl" style="clip-path:polygon(0 0, 100% 0, 100% calc(100% - 40px), calc(100% - 40px) 100%, 0 100%)">
+                        <div class="absolute left-0 top-0 bottom-0 w-3 md:w-4 bg-[#6B46C1]"></div>
+                        <div class="pl-4 md:pl-6">
+                            <div class="text-gray-500 text-xs font-bold uppercase mb-3">Технологии: Глубокий разбор</div>
+                            <h2 class="text-2xl md:text-4xl font-black leading-[1.1] group-hover:text-[#6B46C1] transition-colors">iPhone Fold позволит запускать приложения рядом — утверждает источник</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-32">
+        <div class="bg-[#0A1829] text-white p-12 md:p-16">
+            <div class="absolute left-0 top-0 bottom-0 w-3 md:w-4 bg-[#6B46C1]"></div>
+            <div class="pl-4 md:pl-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-12 border-b border-purple-900/50 pb-12 mb-12">
+                    <div class="max-w-md">
+                        <a href="#" class="text-4xl font-black mb-6">Publication</a>
+                        <p class="text-gray-400 font-medium">Главный источник о технологиях, цифровой культуре и развлечениях для глобальной преданной аудитории.</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-x-16 gap-y-4 text-[13px] font-bold uppercase tracking-wider">
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">О нас</a>
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">Рассылки</a>
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">Контакты</a>
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">Карта сайта</a>
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">Конфиденциальность</a>
+                        <a href="#" class="hover:text-[#6B46C1] transition-colors">Условия</a>
+                    </div>
+                </div>
+                <div class="flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-gray-500">
+                    <div>© 2026 Type, Inc. Все права защищены.</div>
+                    <div class="flex gap-4">
+                        <div class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#6B46C1] transition-colors cursor-pointer flex items-center justify-center"><span class="sr-only">Facebook</span></div>
+                        <div class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#6B46C1] transition-colors cursor-pointer flex items-center justify-center"><span class="sr-only">Twitter</span></div>
+                        <div class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#6B46C1] transition-colors cursor-pointer flex items-center justify-center"><span class="sr-only">Instagram</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

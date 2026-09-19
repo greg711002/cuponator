@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aethera® — За пределами тишины мы создаём вечное</title>
+
+<!-- Шрифты: Instrument Serif (заголовки) + Inter (текст) -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<style>
+  /* ============ БАЗА ============ */
+  :root {
+    --ink: #000000;
+    --gray: #6F6F6F;
+    --paper: #FFFFFF;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Inter', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  /* ============ АНИМАЦИИ ============ */
+  @keyframes fadeRise {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-rise        { animation: fadeRise 0.8s ease-out both; }
+  .animate-fade-rise-delay  { animation: fadeRise 0.8s ease-out 0.2s both; }
+  .animate-fade-rise-delay-2{ animation: fadeRise 0.8s ease-out 0.4s both; }
+
+  /* Появление при скролле */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.15s; }
+  .reveal-delay-2 { transition-delay: 0.3s; }
+  .reveal-delay-3 { transition-delay: 0.45s; }
+
+  /* ============ НАВИГАЦИЯ ============ */
+  nav {
+    position: relative;
+    z-index: 10;
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: var(--serif);
+    font-size: 1.875rem;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .logo sup { font-size: 0.5em; }
+
+  .nav-menu {
+    display: flex;
+    gap: 2.25rem;
+    list-style: none;
+  }
+  .nav-menu a {
+    font-size: 0.875rem;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  .nav-menu a:hover, .nav-menu a.active { color: var(--ink); }
+
+  .btn {
+    display: inline-block;
+    border-radius: 9999px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--sans);
+    transition: transform 0.3s ease;
+  }
+  .btn:hover { transform: scale(1.03); }
+
+  .btn-nav  { padding: 0.625rem 1.5rem; font-size: 0.875rem; }
+  .btn-hero { padding: 1.25rem 3.5rem; font-size: 1rem; margin-top: 3rem; }
+
+  /* ============ ГЕРОЙ ============ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .hero-video {
+    position: absolute;
+    top: 300px;
+    left: 0; right: 0; bottom: 0;
+    width: 100%;
+    height: calc(100% - 300px);
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .hero-gradient {
+    position: absolute;
+    top: 300px; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    background: linear-gradient(to bottom, var(--paper), transparent 40%, transparent 60%, var(--paper));
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: calc(8rem - 75px) 1.5rem 10rem;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -2.46px;
+    max-width: 80rem;
+    color: var(--ink);
+  }
+  .hero h1 em { color: var(--gray); }
+
+  .hero p {
+    font-size: 1.125rem;
+    max-width: 42rem;
+    margin-top: 2rem;
+    line-height: 1.75;
+    color: var(--gray);
+  }
+
+  /* ============ ОБЩИЕ СЕКЦИИ ============ */
+  section { position: relative; }
+
+  .section-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 9rem 2rem;
+  }
+
+  .section-tag {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .section-title em { color: var(--gray); }
+
+  .section-desc {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--gray);
+    max-width: 38rem;
+    margin-top: 2rem;
+  }
+
+  /* ============ СТУДИЯ ============ */
+  .studio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: #EBEBEB;
+    border: 1px solid #EBEBEB;
+    margin-top: 5rem;
+  }
+  .studio-card {
+    background: var(--paper);
+    padding: 3rem 2.5rem;
+    transition: background 0.4s ease;
+  }
+  .studio-card:hover { background: #FAFAFA; }
+  .studio-card .num {
+    font-family: var(--serif);
+    font-size: 1rem;
+    color: var(--gray);
+    display: block;
+    margin-bottom: 3.5rem;
+  }
+  .studio-card h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 1.75rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+  .studio-card p { font-size: 0.9375rem; line-height: 1.7; color: var(--gray); }
+
+  /* ============ О НАС / МАНИФЕСТ ============ */
+  .about { background: var(--ink); color: var(--paper); }
+  .about .section-tag { color: #8A8A8A; }
+  .about .section-title { color: var(--paper); }
+  .about .section-title em { color: #8A8A8A; }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 4rem 2rem;
+    margin-top: 6rem;
+    border-top: 1px solid #2A2A2A;
+    padding-top: 4rem;
+  }
+  .stat .value {
+    font-family: var(--serif);
+    font-size: clamp(3rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .stat .label {
+    font-size: 0.875rem;
+    color: #8A8A8A;
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+
+  /* ============ ЖУРНАЛ ============ */
+  .journal-list { margin-top: 5rem; border-top: 1px solid #EBEBEB; }
+
+  .journal-item {
+    display: grid;
+    grid-template-columns: 6rem 1fr auto;
+    align-items: baseline;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid #EBEBEB;
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.4s ease;
+  }
+  .journal-item:hover { padding-left: 1.5rem; }
+  .journal-item .date { font-size: 0.8125rem; color: var(--gray); }
+  .journal-item h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    letter-spacing: -0.02em;
+    transition: color 0.3s ease;
+  }
+  .journal-item:hover h3 { color: var(--gray); }
+  .journal-item .arrow {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    transition: transform 0.4s ease;
+  }
+  .journal-item:hover .arrow { transform: translateX(8px); }
+
+  /* ============ КОНТАКТ ============ */
+  .contact { text-align: center; }
+  .contact .section-title { max-width: 60rem; margin: 0 auto; }
+  .contact .section-desc { margin-left: auto; margin-right: auto; }
+
+  .contact-mail {
+    display: inline-block;
+    margin-top: 4rem;
+    font-family: var(--serif);
+    font-size: clamp(1.5rem, 3.5vw, 2.5rem);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 0.35rem;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .contact-mail:hover { color: var(--gray); border-color: var(--gray); }
+
+  /* ============ ФУТЕР ============ */
+  footer {
+    border-top: 1px solid #EBEBEB;
+  }
+  .footer-inner {
+    max-width: 80rem;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  .footer-inner .logo { font-size: 1.5rem; }
+  .footer-links { display: flex; gap: 2rem; list-style: none; }
+  .footer-links a { font-size: 0.8125rem; color: var(--gray); text-decoration: none; transition: color 0.3s ease; }
+  .footer-links a:hover { color: var(--ink); }
+  .footer-copy { font-size: 0.8125rem; color: var(--gray); }
+
+  /* ============ АДАПТИВ ============ */
+  @media (max-width: 768px) {
+    .nav-menu { display: none; }
+    .hero h1 { letter-spacing: -1.2px; }
+    .section-inner { padding: 6rem 1.5rem; }
+    .journal-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .journal-item .arrow { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== ЭКРАН 1 · ГЕРОЙ ==================== -->
+<header class="hero" id="home">
+  <video
+    id="bgVideo"
+    class="hero-video"
+    src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260328_083109_283f3553-e28f-428b-a723-d639c617eb2b.mp4"
+    muted
+    playsinline
+    preload="auto"
+  ></video>
+  <div class="hero-gradient"></div>
+
+  <nav>
+    <a href="#home" class="logo">Aethera<sup>®</sup></a>
+    <ul class="nav-menu">
+      <li><a href="#home" class="active">Главная</a></li>
+      <li><a href="#studio">Студия</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#journal">Журнал</a></li>
+      <li><a href="#contact">Связаться</a></li>
+    </ul>
+    <a href="#contact" class="btn btn-nav">Начать путь</a>
+  </nav>
+
+  <div class="hero-content">
+    <h1 class="animate-fade-rise">За пределами <em>тишины</em><br />мы создаём <em>вечное.</em></h1>
+    <p class="animate-fade-rise-delay">
+      Мы строим платформы для блестящих умов, бесстрашных создателей и вдумчивых
+      натур. Сквозь шум мы создаём цифровые пространства для глубокой работы и чистого потока.
+    </p>
+    <a href="#studio" class="btn btn-hero animate-fade-rise-delay-2">Начать путь</a>
+  </div>
+</header>
+
+<!-- ==================== ЭКРАН 2 · СТУДИЯ ==================== -->
+<section id="studio">
+  <div class="section-inner">
+    <p class="section-tag reveal">Студия</p>
+    <h2 class="section-title reveal reveal-delay-1">Дисциплины, которые<br />мы довели до <em>совершенства.</em></h2>
+    <p class="section-desc reveal reveal-delay-2">
+      Четыре направления, один принцип: ничего лишнего. Каждый проект — это
+      точная работа на стыке смысла, формы и технологии.
+    </p>
+
+    <div class="studio-grid">
+      <div class="studio-card reveal">
+        <span class="num">01</span>
+        <h3>Стратегия</h3>
+        <p>Исследуем аудиторию, рынок и смыслы. Формулируем позиционирование, которое выдерживает время и конкуренцию.</p>
+      </div>
+      <div class="studio-card reveal reveal-delay-1">
+        <span class="num">02</span>
+        <h3>Дизайн</h3>
+        <p>Создаём визуальные системы и интерфейсы, в которых эстетика служит ясности, а каждая деталь работает на результат.</p>
+      </div>
+      <div class="studio-card reveal reveal-delay-2">
+        <span class="num">03</span>
+        <h3>Разработка</h3>
+        <p>Превращаем дизайн в быстрые и надёжные продукты: от лендингов до сложных платформ и цифровых экосистем.</p>
+      </div>
+      <div class="studio-card reveal reveal-delay-3">
+        <span class="num">04</span>
+        <h3>Сопровождение</h3>
+        <p>Остаёмся рядом после запуска: аналитика, итерации и развитие продукта вместе с вашей командой.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЭКРАН 3 · О НАС ==================== -->
+<section id="about" class="about">
+  <div class="section-inner">
+    <p class="section-tag reveal">О нас</p>
+    <h2 class="section-title reveal reveal-delay-1">Мы верим, что тишина —<br />это тоже <em>формулировка.</em></h2>
+    <p class="section-desc reveal reveal-delay-2" style="color:#8A8A8A;">
+      Aethera — независимая студия, основанная в 2019 году. Мы работаем с теми,
+      кто строит надолго: с основателями, исследователями и мастерами своего дела.
+      Наши проекты не кричат — они звучат точно.
+    </p>
+
+    <div class="about-stats">
+      <div class="stat reveal">
+        <div class="value">6</div>
+        <div class="label">лет практики<br />без компромиссов</div>
+      </div>
+      <div class="stat reveal reveal-delay-1">
+        <div class="value">48</div>
+        <div class="label">запущенных продуктов<br />и платформ</div>
+      </div>
+      <div class="stat reveal reveal-delay-2">
+        <div class="value">14</div>
+        <div class="label">международных<br />наград за дизайн</div>
+      </div>
+      <div class="stat reveal reveal-delay-3">
+        <div class="value">97%</div>
+        <div class="label">клиентов возвращаются<br />с новыми задачами</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЭКРАН 4 · ЖУРНАЛ ==================== -->
+<section id="journal">
+  <div class="section-inner">
+    <p class="section-tag reveal">Журнал</p>
+    <h2 class="section-title reveal reveal-delay-1">Мысли, записанные<br /><em>не спеша.</em></h2>
+
+    <div class="journal-list">
+      <a href="#journal" class="journal-item reveal">
+        <span class="date">12.03.2026</span>
+        <h3>Почему лучшие интерфейсы почти невидимы</h3>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#journal" class="journal-item reveal reveal-delay-1">
+        <span class="date">28.02.2026</span>
+        <h3>Тишина как метод: заметки о глубокой работе</h3>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#journal" class="journal-item reveal reveal-delay-2">
+        <span class="date">09.02.2026</span>
+        <h3>Типографика, которая дышит: уроки Instrument Serif</h3>
+        <span class="arrow">→</span>
+      </a>
+      <a href="#journal" class="journal-item reveal reveal-delay-3">
+        <span class="date">21.01.2026</span>
+        <h3>Мы переписали свой процесс. Вот что получилось</h3>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЭКРАН 5 · КОНТАКТ ==================== -->
+<section id="contact" class="contact">
+  <div class="section-inner">
+    <p class="section-tag reveal">Связаться</p>
+    <h2 class="section-title reveal reveal-delay-1">Расскажите нам о том,<br />что хотите <em>создать.</em></h2>
+    <p class="section-desc reveal reveal-delay-2">
+      Мы отвечаем в течение одного рабочего дня. Без презентаций на сто слайдов —
+      просто честный разговор о вашей задаче.
+    </p>
+    <a href="mailto:hello@aethera.studio" class="contact-mail reveal reveal-delay-3">hello@aethera.studio</a>
+  </div>
+</section>
+
+<!-- ==================== ФУТЕР ==================== -->
+<footer>
+  <div class="footer-inner">
+    <a href="#home" class="logo">Aethera<sup>®</sup></a>
+    <ul class="footer-links">
+      <li><a href="#studio">Студия</a></li>
+      <li><a href="#about">О нас</a></li>
+      <li><a href="#journal">Журнал</a></li>
+      <li><a href="#contact">Связаться</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Aethera. Все права защищены.</span>
+  </div>
+</footer>
+
+<script>
+  /* ============ БЕСШОВНЫЙ ЦИКЛ ВИДЕО ============
+     Fade-in 0.5s в начале, fade-out 0.5s в конце,
+     по ended — сброс в 0 и повтор. */
+  (function () {
+    const video = document.getElementById('bgVideo');
+    const FADE = 0.5;
+
+    video.addEventListener('canplay', () => {
+      video.play().catch(() => {});
+    }, { once: true });
+
+    function tick() {
+      const t = video.currentTime;
+      const d = video.duration;
+      if (d && !isNaN(d)) {
+        if (t < FADE) {
+          video.style.opacity = String(t / FADE);
+        } else if (t > d - FADE) {
+          video.style.opacity = String(Math.max(0, (d - t) / FADE));
+        } else {
+          video.style.opacity = '1';
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    video.addEventListener('ended', () => {
+      video.style.opacity = '0';
+      setTimeout(() => {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }, 100);
+    });
+  })();
+
+  /* ============ ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ ============ */
+  (function () {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  })();
+
+  /* ============ АКТИВНЫЙ ПУНКТ МЕНЮ ============ */
+  (function () {
+    const links = document.querySelectorAll('.nav-menu a');
+    const sections = ['home', 'studio', 'about', 'journal', 'contact']
+      .map((id) => document.getElementById(id));
+
+    window.addEventListener('scroll', () => {
+      let current = 0;
+      sections.forEach((sec, i) => {
+        if (sec && sec.getBoundingClientRect().top <= window.innerHeight * 0.4) current = i;
+      });
+      links.forEach((link, i) => link.classList.toggle('active', i === current));
+    }, { passive: true });
+  })();
+</script>
+</body>
+</html>

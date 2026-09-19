@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Apple - Modern Landing Page</title>
+<meta name="description" content="Современная лендинг-страница, вдохновлённая дизайн-системой Apple."/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sf-pro-display {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.sf-pro-text {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+/* Slider scrollbar */
+.slider-track {
+  width: 100%;
+  max-width: 260px;
+  height: 4px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 999px;
+  position: relative;
+  cursor: pointer;
+  transition: height 0.2s ease;
+}
+.slider-track:hover {
+  height: 6px;
+}
+.slider-thumb {
+  height: 100%;
+  border-radius: 999px;
+  background: #1d1d1f;
+  transition: background 0.2s ease;
+  min-width: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.slider-track:hover .slider-thumb {
+  background: #0071e3;
+}
+
+/* Slider nav buttons */
+.slider-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.06);
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #1d1d1f;
+  flex-shrink: 0;
+}
+.slider-btn:hover {
+  background: #1d1d1f;
+  color: white;
+  transform: scale(1.08);
+}
+.slider-btn:active {
+  transform: scale(0.95);
+}
+.slider-btn:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+</style>
+</head>
+<body class="antialiased bg-[#f5f5f7] text-[#1d1d1f]">
+<div class="flex min-h-screen flex-col bg-[#f5f5f7] dark:bg-[#000000] font-sans text-[#1d1d1f] dark:text-[#f5f5f7] selection:bg-[#0071e3] selection:text-white">
+<nav class="h-12 w-full bg-white/70 dark:bg-black/70 backdrop-blur-xl saturate-150 sticky top-0 z-50 border-b border-black/5 dark:border-white/[0.08] flex items-center justify-center text-xs font-normal tracking-wide">
+<ul class="flex space-x-10 opacity-80">
+<li class="cursor-pointer hover:opacity-100 transition-opacity duration-300">Flow</li>
+<li class="cursor-pointer hover:opacity-100 transition-opacity duration-300">iPad</li>
+<li class="cursor-pointer hover:opacity-100 transition-opacity duration-300">iPhone</li>
+<li class="cursor-pointer hover:opacity-100 transition-opacity duration-300">Watch</li>
+<li class="cursor-pointer hover:opacity-100 transition-opacity duration-300">Vision</li>
+</ul>
+</nav>
+<main class="flex-1 flex flex-col w-full items-center">
+<section class="w-full flex flex-col items-center justify-center pt-32 pb-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto overflow-hidden">
+<div class="text-center max-w-4xl mx-auto z-10 relative mt-8">
+<h1 class="text-6xl md:text-[5.5rem] font-bold tracking-[-0.04em] sf-pro-display text-[#1d1d1f] dark:text-[#f5f5f7] mb-6 leading-tight">Любовь с первого взгляда.</h1>
+<p class="text-[1.35rem] font-medium tracking-[-0.015em] text-[#1d1d1f] dark:text-[#a1a1a6] mb-10 max-w-[42rem] mx-auto leading-[1.4] sf-pro-text">Встречайте FlowBook Neo — потрясающий Flow по удивительной цене. Прочный корпус, красивые цвета и мощные функции — это волшебный способ влюбляться в Flow каждый день.<br/>Добро пожаловать в семью.</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+<button class="group flex items-center gap-2 rounded-full border border-[#1d1d1f] dark:border-[#f5f5f7] px-6 py-3.5 text-[#1d1d1f] dark:text-[#f5f5f7] hover:bg-[#1d1d1f] hover:text-white dark:hover:bg-[#f5f5f7] dark:hover:text-[#1d1d1f] transition-all duration-500 ease-out font-medium text-[17px] sf-pro-text hover:scale-105 active:scale-95">Купить за $499<svg class="w-4 h-4 fill-current transition-transform duration-300 group-hover:translate-x-0.5" viewBox="0 0 24 24">
+<path d="M8 5v14l11-7z"></path>
+</svg>
+</button>
+</div>
+</div>
+<div class="-mt-20 relative w-full h-[450px] md:h-[600px] flex justify-between items-end max-w-6xl mx-auto perspective-1000">
+<div class="absolute left-[-2%] md:left-[2%] bottom-0 w-[48%] md:w-[42%] transform -rotate-6 transition-transform hover:-translate-y-2 hover:-rotate-3 hover:scale-105 duration-700 ease-out z-20">
+<div class="aspect-[4/3] bg-gradient-to-br from-[#2c3545] to-[#1a202c] rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.3)] dark:shadow-[0_30px_60px_rgba(0,0,0,0.6)] relative border-[3px] border-[#3a4556] flex items-center justify-center overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-tr before:from-transparent before:via-white/5 before:to-white/10 before:rounded-xl">
+<div class="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/10 to-transparent transform -skew-y-6 origin-top-left opacity-30"></div>
+<div class="w-14 h-14 text-[#111827] drop-shadow-sm opacity-60 mix-blend-multiply">
+<svg viewBox="0 0 384 512" fill="currentColor">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 90.1-85.7 103.5-121.3-43.1-18.2-62.6-58.4-62.6-89.3zM218.6 84.6c15.2-18.5 28.5-42.3 25.6-66.6-23.2 1-49.7 13.9-65.4 32.5-13.9 16.4-28.5 40.8-24.9 64.9 25.6 2 49.4-12.3 64.7-30.8z"></path>
+</svg>
+</div>
+</div>
+</div>
+<div class="absolute right-[-2%] md:right-[2%] bottom-0 w-[48%] md:w-[42%] transform rotate-6 transition-transform hover:-translate-y-2 hover:rotate-3 hover:scale-105 duration-700 ease-out z-10">
+<div class="aspect-[4/3] bg-gradient-to-br from-[#f8fafc] to-[#cbd5e1] rounded-2xl shadow-[0_30px_60px_rgba(0,0,0,0.15)] dark:shadow-[0_30px_60px_rgba(255,255,255,0.05)] relative border-[3px] border-[#e2e8f0] flex items-center justify-center overflow-hidden before:absolute before:inset-0 before:bg-gradient-to-tl before:from-transparent before:via-white/40 before:to-white/60 before:rounded-xl">
+<div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-transparent transform rotate-45 translate-x-[-50%] transition-transform duration-1000 hover:translate-x-[150%]"></div>
+<div class="w-14 h-14 text-[#94a3b8] drop-shadow-md opacity-70">
+<svg viewBox="0 0 384 512" fill="currentColor">
+<path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.3 48.6-.6 90.1-85.7 103.5-121.3-43.1-18.2-62.6-58.4-62.6-89.3zM218.6 84.6c15.2-18.5 28.5-42.3 25.6-66.6-23.2 1-49.7 13.9-65.4 32.5-13.9 16.4-28.5 40.8-24.9 64.9 25.6 2 49.4-12.3 64.7-30.8z"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="w-full py-32 px-4 md:px-8 max-w-[1400px] mx-auto bg-[#ffffff] dark:bg-[#111111] mt-16 rounded-[48px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] border border-black/[0.02] dark:border-white/[0.02]">
+<div class="mb-16">
+<h2 class="text-[3rem] md:text-[4.5rem] font-bold tracking-[-0.04em] sf-pro-display text-[#1d1d1f] dark:text-[#f5f5f7] mb-8 ml-4 md:ml-12">Основные моменты.</h2>
+</div>
+<div id="slider" class="flex overflow-x-auto gap-8 pb-8 pt-4 snap-x snap-mandatory hide-scrollbar px-4 md:px-12 scroll-smooth">
+<!-- Card 1: Display -->
+<div class="snap-center shrink-0 w-[85vw] md:w-[760px] h-[640px] bg-[#f5f5f7] dark:bg-[#1d1d1f] rounded-[40px] flex flex-col relative overflow-hidden group shadow-[inset_0_0_0_1px_rgba(0,0,0,0.03)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)] transition-transform duration-500 hover:scale-[1.01]">
+<div class="shrink-0 p-10 md:p-14 pb-4">
+<p class="text-[1.75rem] md:text-[2rem] font-semibold sf-pro-display text-[#1d1d1f] dark:text-[#f5f5f7] max-w-[32rem] leading-[1.2] tracking-[-0.02em]">13-дюймовый дисплей Liquid Retina.<sup class="text-sm align-super text-[#86868b]">2</sup> Невероятно яркий и насыщенный. Миллиард цветов. Откройте и скажите «вау».</p>
+</div>
+<div class="flex-1 mx-10 mb-0 rounded-t-[32px] overflow-hidden bg-black flex items-center justify-center shadow-2xl transition-transform duration-700 group-hover:-translate-y-2">
+<div class="w-full h-full bg-gradient-to-br from-[#ffb347] via-[#ff7b00] to-[#e63946] relative overflow-hidden">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="text-white/90 font-medium text-2xl tracking-tight drop-shadow-lg sf-pro-display">Яркое воспроизведение</span>
+</div>
+<div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-5 bg-white/10 dark:bg-black/20 backdrop-blur-xl saturate-150 px-6 py-3.5 rounded-full border border-white/20 shadow-[0_8px_32px_rgba(0,0,0,0.12)]">
+<div class="flex gap-2.5 items-center">
+<div class="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+<div class="w-10 h-1.5 rounded-full bg-white/40 overflow-hidden">
+<div class="w-1/2 h-full bg-white rounded-full"></div>
+</div>
+<div class="w-2 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-colors cursor-pointer"></div>
+<div class="w-2 h-2 rounded-full bg-white/40 hover:bg-white/70 transition-colors cursor-pointer"></div>
+</div>
+<div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center cursor-pointer hover:bg-white/40 hover:scale-110 transition-all duration-300">
+<svg class="w-3.5 h-3.5 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+<path d="M6 4l15 8-15 8z"></path>
+</svg>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card 2: M3 Chip -->
+<div class="snap-center shrink-0 w-[85vw] md:w-[760px] h-[640px] bg-black rounded-[40px] flex flex-col relative overflow-hidden group shadow-[inset_0_0_0_1px_rgba(255,255,255,0.1)] transition-transform duration-500 hover:scale-[1.01]">
+<div class="shrink-0 p-10 md:p-14 pb-4">
+<p class="text-[1.75rem] md:text-[2rem] font-semibold sf-pro-display text-white max-w-[32rem] leading-[1.2] tracking-[-0.02em]">Чип M3. До 18 часов работы без подзарядки. На суперсиле Apple silicon.</p>
+</div>
+<div class="flex-1 flex items-center justify-center bg-gradient-to-b from-transparent via-black/40 to-black/90">
+<div class="w-56 h-56 bg-gradient-to-br from-[#3f3f46] via-[#1e293b] to-[#0f172a] rounded-[2.5rem] border border-white/10 shadow-[0_0_80px_rgba(255,255,255,0.07)] flex items-center justify-center relative overflow-hidden group-hover:shadow-[0_0_100px_rgba(255,255,255,0.12)] transition-shadow duration-700">
+<div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20"></div>
+<div class="absolute top-0 left-0 w-full h-full bg-gradient-to-tr from-transparent via-white/5 to-transparent transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+<span class="text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-white via-gray-300 to-gray-500 tracking-tighter sf-pro-display">M3</span>
+</div>
+</div>
+</div>
+<!-- Card 3: Camera -->
+<div class="snap-center shrink-0 w-[85vw] md:w-[760px] h-[640px] bg-gradient-to-br from-[#e8e8ed] to-[#d1d1d6] dark:from-[#2d2d30] dark:to-[#1a1a1c] rounded-[40px] flex flex-col relative overflow-hidden group shadow-[inset_0_0_0_1px_rgba(0,0,0,0.05)] dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)] transition-transform duration-500 hover:scale-[1.01]">
+<div class="shrink-0 p-10 md:p-14 pb-4">
+<p class="text-[1.75rem] md:text-[2rem] font-semibold sf-pro-display text-[#1d1d1f] dark:text-white max-w-[32rem] leading-[1.2] tracking-[-0.02em]">Камера и звук нового уровня. Выглядите чётко. Звучите великолепно.</p>
+</div>
+<div class="flex-1 flex items-end justify-center pb-16">
+<div class="w-[300px] h-40 bg-black/95 dark:bg-black rounded-full border border-gray-600/50 flex flex-col items-center justify-center gap-3 shadow-2xl backdrop-blur-xl group-hover:-translate-y-2 transition-transform duration-700">
+<div class="w-16 h-16 rounded-full border-[5px] border-[#0ea5e9] bg-black relative shadow-[0_0_30px_rgba(14,165,233,0.4)] flex items-center justify-center">
+<div class="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-black border border-gray-600/50 flex items-center justify-center">
+<div class="w-3 h-3 rounded-full bg-blue-400/20 blur-[2px]"></div>
+</div>
+<div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-white/80 blur-[0.5px]"></div>
+</div>
+<span class="text-white/80 text-[11px] font-medium uppercase tracking-[0.2em] sf-pro-text">1080p FaceTime HD</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Slider controls -->
+<div class="flex items-center justify-end px-4 md:px-12 pt-4 pb-8 gap-4">
+<div class="slider-track" id="slider-track">
+<div class="slider-thumb" id="slider-thumb"></div>
+</div>
+<button class="slider-btn" id="slider-prev" disabled>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+</button>
+<button class="slider-btn" id="slider-next">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 6 15 12 9 18"></polyline></svg>
+</button>
+</div>
+</section>
+</main>
+<footer class="w-full bg-[#f5f5f7] dark:bg-[#000000] py-12 text-[12px] text-[#86868b] border-t border-black/[0.05] dark:border-white/[0.05] mt-24 sf-pro-text">
+<div class="max-w-7xl mx-auto px-4 md:px-8">
+<p class="mb-4 leading-relaxed">2. Тестирование проводилось Apple в сентябре 2024 года на предсерийных 13-дюймовых системах FlowBook Neo с чипом Apple M3, 8-ядерным CPU и 8-ядерным GPU, 8 ГБ ОЗУ и SSD 256 ГБ. Время работы зависит от использования и конфигурации; подробнее на apple.com/batteries.</p>
+<div class="border-t border-[#d2d2d7] dark:border-[#424245] my-6"></div>
+<div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 lg:gap-0">
+<p>Copyright &copy; 2026 Apple Inc. Все права защищены.</p>
+<ul class="flex flex-wrap gap-y-2">
+<li class="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Конфиденциальность</li>
+<li class="border-l border-[#d2d2d7] dark:border-[#424245] ml-3 pl-3 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Условия использования</li>
+<li class="border-l border-[#d2d2d7] dark:border-[#424245] ml-3 pl-3 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Продажи и возвраты</li>
+<li class="border-l border-[#d2d2d7] dark:border-[#424245] ml-3 pl-3 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Правовая информация</li>
+<li class="border-l border-[#d2d2d7] dark:border-[#424245] ml-3 pl-3 hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Карта сайта</li>
+</ul>
+<div class="lg:ml-auto">
+<span class="hover:text-[#1d1d1f] dark:hover:text-[#f5f5f7] cursor-pointer transition-colors duration-300">Россия</span>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<script>
+(function() {
+  const slider = document.getElementById('slider');
+  const prevBtn = document.getElementById('slider-prev');
+  const nextBtn = document.getElementById('slider-next');
+  const thumb = document.getElementById('slider-thumb');
+  const track = document.getElementById('slider-track');
+
+  // --- Scrollbar sync ---
+  function updateScrollbar() {
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    if (maxScroll <= 0) return;
+
+    const trackW = track.offsetWidth;
+    const thumbW = Math.max(30, (slider.clientWidth / slider.scrollWidth) * trackW);
+    const progress = slider.scrollLeft / maxScroll;
+    const maxOffset = trackW - thumbW;
+
+    thumb.style.width = thumbW + 'px';
+    thumb.style.left = (progress * maxOffset) + 'px';
+
+    prevBtn.disabled = slider.scrollLeft <= 0;
+    nextBtn.disabled = slider.scrollLeft >= maxScroll - 1;
+  }
+
+  // --- Buttons: scrollBy ±300 ---
+  prevBtn.addEventListener('click', () => {
+    slider.scrollBy({ left: -300, behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', () => {
+    slider.scrollBy({ left: 300, behavior: 'smooth' });
+  });
+
+  // --- Click on track to jump ---
+  track.addEventListener('click', (e) => {
+    const rect = track.getBoundingClientRect();
+    const ratio = (e.clientX - rect.left) / rect.width;
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    slider.scrollTo({ left: ratio * maxScroll, behavior: 'smooth' });
+  });
+
+  // --- Drag thumb on scrollbar ---
+  let thumbDragging = false;
+  let thumbStartX = 0;
+  let thumbStartScroll = 0;
+
+  thumb.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    thumbDragging = true;
+    thumbStartX = e.clientX;
+    thumbStartScroll = slider.scrollLeft;
+    document.body.style.userSelect = 'none';
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!thumbDragging) return;
+    const dx = e.clientX - thumbStartX;
+    const maxScroll = slider.scrollWidth - slider.clientWidth;
+    const trackW = track.offsetWidth;
+    const thumbW = Math.max(30, (slider.clientWidth / slider.scrollWidth) * trackW);
+    const maxOffset = trackW - thumbW;
+    slider.scrollLeft = thumbStartScroll + (dx / maxOffset) * maxScroll;
+  });
+
+  document.addEventListener('mouseup', () => {
+    thumbDragging = false;
+    document.body.style.userSelect = '';
+  });
+
+  // --- Drag on slider container ---
+  let sliderDragging = false;
+  let sliderStartX = 0;
+
+  slider.addEventListener('mousedown', (e) => {
+    sliderDragging = true;
+    sliderStartX = e.pageX;
+    slider.style.cursor = 'grabbing';
+    slider.style.scrollBehavior = 'auto';
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!sliderDragging) return;
+    e.preventDefault();
+    const dx = e.pageX - sliderStartX;
+    sliderStartX = e.pageX;
+    slider.scrollLeft -= dx;
+  });
+
+  slider.addEventListener('mouseup', () => {
+    sliderDragging = false;
+    slider.style.cursor = '';
+    slider.style.scrollBehavior = 'smooth';
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    sliderDragging = false;
+    slider.style.cursor = '';
+    slider.style.scrollBehavior = 'smooth';
+  });
+
+  // --- Sync ---
+  slider.addEventListener('scroll', updateScrollbar, { passive: true });
+  window.addEventListener('resize', updateScrollbar);
+  updateScrollbar();
+})();
+</script>
+</body>
+</html>

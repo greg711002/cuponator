@@ -1,0 +1,866 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Asme — пространство идей, открытий и вдохновения для любознательных." />
+  <title>Asme — для любознательных</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Prata&display=swap');
+
+    :root {
+      --white: #ffffff;
+      --muted: rgba(255, 255, 255, 0.72);
+      --quiet: rgba(255, 255, 255, 0.42);
+      --glass: rgba(255, 255, 255, 0.01);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { min-height: 100%; background: #000; }
+    html { color-scheme: dark; }
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      color: var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, input, a { color: inherit; font: inherit; }
+    button { border: 0; }
+    a { text-decoration: none; }
+    ::selection { background: rgba(255,255,255,.92); color: #000; }
+
+    .page {
+      position: relative;
+      min-height: 100svh;
+      overflow-x: clip;
+      background: #000;
+    }
+    .hero-screen {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      overflow: hidden;
+      flex-direction: column;
+      isolation: isolate;
+      background: #000;
+    }
+
+    .video-stage {
+      position: absolute;
+      inset: 0;
+      z-index: -4;
+      overflow: hidden;
+      background: #000;
+    }
+    .background-video {
+      position: absolute;
+      top: -18%;
+      left: -8%;
+      width: 116%;
+      height: 118%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0;
+      transform: translateY(17%);
+      will-change: opacity;
+    }
+    .cinematic-shade {
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.12) 27%, rgba(0,0,0,.08) 55%, rgba(0,0,0,.54) 100%),
+        radial-gradient(ellipse at center, transparent 34%, rgba(0,0,0,.35) 100%);
+    }
+    .cinematic-grain {
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      pointer-events: none;
+      opacity: .045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
+      mix-blend-mode: soft-light;
+    }
+
+    .liquid-glass {
+      position: relative;
+      overflow: hidden;
+      border: none;
+      background: rgba(255, 255, 255, 0.01);
+      background-blend-mode: luminosity;
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1), 0 12px 38px rgba(0,0,0,.12);
+    }
+    .liquid-glass::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.4px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .nav-wrap {
+      position: relative;
+      z-index: 20;
+      padding: 24px clamp(18px, 3vw, 28px);
+      animation: reveal-down 800ms cubic-bezier(.2,.75,.22,1) both;
+    }
+    .nav {
+      display: flex;
+      width: min(100%, 1024px);
+      min-height: 58px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+      border-radius: 999px;
+      padding: 10px 14px 10px 24px;
+    }
+    .nav-left { display: flex; min-width: 0; align-items: center; gap: clamp(24px, 4vw, 48px); }
+    .brand { display: inline-flex; align-items: center; gap: 9px; font-size: 1.12rem; font-weight: 650; letter-spacing: -.02em; }
+    .brand svg { width: 24px; height: 24px; }
+    .nav-links { display: flex; align-items: center; gap: clamp(22px, 3vw, 38px); }
+    .nav-links a {
+      color: rgba(255,255,255,.78);
+      font-size: .86rem;
+      font-weight: 550;
+      transition: color 200ms ease, transform 200ms ease;
+    }
+    .nav-links a:hover { color: #fff; transform: translateY(-1px); }
+    .nav-actions { display: flex; flex: none; align-items: center; gap: 14px; }
+    .plain-action {
+      padding: 10px 6px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .glass-action {
+      min-width: 94px;
+      border-radius: 999px;
+      padding: 10px 23px;
+      color: #fff;
+      cursor: pointer;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: background 200ms ease, transform 200ms ease;
+    }
+    .glass-action:hover { background: rgba(255,255,255,.06); transform: translateY(-1px); }
+
+    .hero {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 50px 24px;
+      text-align: center;
+      transform: translateY(-20%);
+    }
+    .heading {
+      margin: 0 0 clamp(28px, 4vw, 40px);
+      color: #fff;
+      font-family: "Prata", "Instrument Serif", Georgia, serif;
+      font-size: clamp(2.05rem, 5.5vw, 4.65rem);
+      font-weight: 400;
+      letter-spacing: -.045em;
+      line-height: 1.04;
+      white-space: nowrap;
+      text-wrap: balance;
+      text-shadow: 0 4px 36px rgba(0,0,0,.32);
+      animation: reveal-up 900ms 120ms cubic-bezier(.2,.75,.22,1) both;
+    }
+    .subscribe-block {
+      width: min(100%, 576px);
+      animation: reveal-up 900ms 230ms cubic-bezier(.2,.75,.22,1) both;
+    }
+    .email-form {
+      display: flex;
+      width: 100%;
+      align-items: center;
+      gap: 12px;
+      border-radius: 999px;
+      padding: 8px 8px 8px 24px;
+    }
+    .email-input {
+      min-width: 0;
+      flex: 1;
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 1rem;
+    }
+    .email-input::placeholder { color: rgba(255,255,255,.42); }
+    .email-submit {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      flex: none;
+      place-items: center;
+      border-radius: 50%;
+      background: #fff;
+      color: #000;
+      cursor: pointer;
+      transition: transform 220ms ease, background 220ms ease;
+    }
+    .email-submit:hover { transform: rotate(-12deg) scale(1.04); background: #f1f1f1; }
+    .email-submit svg { width: 20px; height: 20px; }
+    .subtitle {
+      margin: 17px auto 0;
+      padding: 0 16px;
+      color: rgba(255,255,255,.92);
+      font-size: .87rem;
+      line-height: 1.65;
+      text-shadow: 0 2px 18px rgba(0,0,0,.45);
+    }
+    .manifesto {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 18px;
+      border-radius: 999px;
+      padding: 13px 32px;
+      color: #fff;
+      cursor: pointer;
+      font-size: .86rem;
+      font-weight: 600;
+      transition: background 200ms ease, transform 200ms ease;
+    }
+    .manifesto:hover { background: rgba(255,255,255,.055); transform: translateY(-2px); }
+    .form-status { min-height: 18px; margin-top: 8px; color: rgba(255,255,255,.78); font-size: .75rem; }
+
+    .social-footer {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      padding: 0 20px clamp(24px, 5vh, 48px);
+      animation: reveal-up 900ms 360ms cubic-bezier(.2,.75,.22,1) both;
+    }
+    .social-button {
+      display: grid;
+      width: 52px;
+      height: 52px;
+      place-items: center;
+      border-radius: 50%;
+      color: rgba(255,255,255,.8);
+      transition: color 200ms ease, background 200ms ease, transform 200ms ease;
+    }
+    .social-button:hover { color: #fff; background: rgba(255,255,255,.055); transform: translateY(-3px); }
+    .social-button svg { width: 20px; height: 20px; }
+
+    .content-screen {
+      position: relative;
+      min-height: 100svh;
+      overflow: hidden;
+      padding: clamp(88px, 10vw, 150px) clamp(20px, 5vw, 78px);
+      isolation: isolate;
+    }
+    .screen-inner { position: relative; z-index: 3; width: min(100%, 1280px); margin: 0 auto; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 26px;
+      color: rgba(255,255,255,.52);
+      font-size: .72rem;
+      font-weight: 650;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 28px; height: 1px; background: currentColor; }
+    .serif-title {
+      margin: 0;
+      font-family: "Prata", "Instrument Serif", Georgia, serif;
+      font-size: clamp(3rem, 7.5vw, 7.8rem);
+      font-weight: 400;
+      letter-spacing: -.065em;
+      line-height: .98;
+      text-wrap: balance;
+    }
+    .scroll-reveal {
+      opacity: 0;
+      transform: translate3d(0, 42px, 0);
+      transition: opacity 900ms cubic-bezier(.2,.75,.22,1), transform 900ms cubic-bezier(.2,.75,.22,1);
+      transition-delay: var(--delay, 0ms);
+    }
+    .scroll-reveal.is-visible { opacity: 1; transform: translate3d(0,0,0); }
+    .hover-glow::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.13), transparent 62%);
+      transition: opacity 260ms ease;
+    }
+    .hover-glow:hover::after { opacity: 1; }
+
+    .discovery-screen {
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(circle at 73% 48%, rgba(64, 91, 123, .24), transparent 29%),
+        radial-gradient(circle at 23% 86%, rgba(93, 40, 86, .16), transparent 31%),
+        #050607;
+    }
+    .discovery-screen::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      opacity: .25;
+      background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at 70% 45%, #000, transparent 70%);
+    }
+    .discovery-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(420px, 1.1fr); gap: clamp(50px, 8vw, 130px); align-items: center; }
+    .discovery-copy { position: relative; z-index: 5; }
+    .discovery-copy p:not(.eyebrow) { max-width: 520px; margin: 34px 0 0; color: rgba(255,255,255,.62); font-size: clamp(.95rem, 1.4vw, 1.15rem); line-height: 1.75; }
+    .orbit-scene { position: relative; display: grid; width: min(48vw, 590px); aspect-ratio: 1; place-items: center; margin-left: auto; }
+    .orbit-aura { position: absolute; inset: 19%; border-radius: 50%; background: radial-gradient(circle, rgba(213,229,244,.18), rgba(114,142,166,.07) 43%, transparent 72%); filter: blur(18px); }
+    .orbit-ring { position: absolute; border: 1px solid rgba(221,238,249,.26); border-radius: 50%; transform: rotateX(66deg) rotateZ(var(--tilt)); animation: orbit-spin var(--speed) linear infinite; }
+    .orbit-ring::after { content: ""; position: absolute; top: 50%; left: -5px; width: 9px; height: 9px; border-radius: 50%; background: #eaf7ff; box-shadow: 0 0 20px #b9ddf5; }
+    .orbit-ring-one { inset: 9%; --tilt: 11deg; --speed: 19s; }
+    .orbit-ring-two { inset: 19%; --tilt: -38deg; --speed: 13s; animation-direction: reverse; }
+    .orbit-ring-three { inset: 30%; --tilt: 66deg; --speed: 9s; }
+    .orbit-core {
+      position: relative;
+      display: grid;
+      width: 34%;
+      aspect-ratio: 1;
+      place-items: center;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), rgba(110,145,169,.13) 42%, rgba(3,7,10,.72) 73%);
+      box-shadow: inset 0 0 28px rgba(255,255,255,.1), 0 0 80px rgba(126,176,210,.24);
+      text-align: center;
+    }
+    .orbit-core strong { display: block; font-family: "Prata", serif; font-size: clamp(2.2rem, 4vw, 4rem); font-weight: 400; line-height: .9; }
+    .orbit-core span { display: block; margin-top: 7px; color: rgba(255,255,255,.5); font-size: .62rem; letter-spacing: .17em; text-transform: uppercase; }
+    .signal {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-radius: 999px;
+      padding: 10px 15px;
+      color: rgba(255,255,255,.82);
+      font-size: .72rem;
+      letter-spacing: .06em;
+      white-space: nowrap;
+      animation: signal-float 4.6s ease-in-out infinite;
+    }
+    .signal::after { content: ""; width: 5px; height: 5px; order: -1; border-radius: 50%; background: #d9f1ff; box-shadow: 0 0 10px #d9f1ff; }
+    .signal-one { top: 14%; left: 5%; }
+    .signal-two { top: 43%; right: -2%; animation-delay: -1.4s; }
+    .signal-three { right: 13%; bottom: 10%; animation-delay: -2.8s; }
+    .feature-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(58px, 7vw, 92px); }
+    .feature-card { min-height: 178px; border-radius: 27px; padding: 24px; }
+    .feature-index { color: rgba(255,255,255,.35); font-family: "Prata", serif; font-size: 1.15rem; }
+    .feature-card h3 { margin: 45px 0 8px; font-size: 1rem; font-weight: 650; }
+    .feature-card p { margin: 0; color: rgba(255,255,255,.5); font-size: .8rem; line-height: 1.55; }
+
+    .manifesto-screen {
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(142,82,128,.18), transparent 26%),
+        radial-gradient(circle at 88% 76%, rgba(160,118,77,.14), transparent 28%),
+        #080707;
+    }
+    .manifesto-screen::before {
+      content: "МЫСЛИТЬ";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: -1;
+      color: transparent;
+      font-size: clamp(6rem, 18vw, 19rem);
+      font-weight: 800;
+      letter-spacing: -.08em;
+      -webkit-text-stroke: 1px rgba(255,255,255,.05);
+      transform: translate(-50%,-50%);
+      white-space: nowrap;
+    }
+    .manifesto-layout { display: grid; grid-template-columns: 1fr minmax(280px, .48fr); gap: clamp(50px, 9vw, 150px); align-items: end; }
+    .manifesto-quote { max-width: 920px; }
+    .manifesto-quote .serif-title { font-size: clamp(3.2rem, 7vw, 7.4rem); }
+    .manifesto-quote em { color: rgba(255,255,255,.42); font-weight: 400; }
+    .manifesto-side { padding-bottom: 8px; }
+    .manifesto-side p { margin: 0 0 26px; color: rgba(255,255,255,.58); font-size: .96rem; line-height: 1.75; }
+    .mini-orb {
+      display: grid;
+      width: 92px;
+      aspect-ratio: 1;
+      place-items: center;
+      margin-bottom: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 28%, #efe9e4, #6f6172 45%, #141116 73%);
+      box-shadow: 0 0 54px rgba(183,142,175,.24);
+    }
+    .mini-orb svg { width: 30px; height: 30px; color: rgba(255,255,255,.88); }
+    .manifesto-line { display: flex; align-items: center; gap: 14px; color: rgba(255,255,255,.38); font-size: .68rem; letter-spacing: .15em; text-transform: uppercase; }
+    .manifesto-line::before { content: ""; width: 52px; height: 1px; background: currentColor; }
+
+    .pricing-screen {
+      display: flex;
+      align-items: center;
+      background:
+        radial-gradient(circle at 50% 105%, rgba(106,139,159,.25), transparent 38%),
+        #030404;
+    }
+    .pricing-head { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: clamp(52px, 7vw, 88px); }
+    .pricing-intro { max-width: 380px; margin: 0 0 8px; color: rgba(255,255,255,.5); font-size: .92rem; line-height: 1.65; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .price-card {
+      display: flex;
+      min-height: 430px;
+      flex-direction: column;
+      border-radius: 34px;
+      padding: clamp(25px, 3vw, 36px);
+      transition: transform 300ms cubic-bezier(.2,.75,.22,1), background 300ms ease;
+    }
+    .price-card:hover { transform: translateY(-10px); background: rgba(255,255,255,.035); }
+    .price-card-featured {
+      background:
+        radial-gradient(circle at 78% 5%, rgba(207,226,238,.2), transparent 31%),
+        linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.01));
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.16), 0 24px 70px rgba(67,95,111,.16);
+    }
+    .plan-label { color: rgba(255,255,255,.58); font-size: .72rem; font-weight: 650; letter-spacing: .16em; text-transform: uppercase; }
+    .plan-price { margin: 30px 0 4px; font-family: "Prata", serif; font-size: clamp(2.8rem, 4.5vw, 4.9rem); letter-spacing: -.06em; line-height: 1; }
+    .plan-period { color: rgba(255,255,255,.38); font-size: .78rem; }
+    .plan-list { display: grid; gap: 14px; margin: 42px 0 36px; padding: 0; list-style: none; color: rgba(255,255,255,.68); font-size: .84rem; }
+    .plan-list li { display: flex; align-items: center; gap: 10px; }
+    .plan-list li::before { content: ""; width: 6px; height: 6px; border: 1px solid rgba(255,255,255,.6); border-radius: 50%; }
+    .plan-button { margin-top: auto; border-radius: 999px; padding: 14px 22px; background: rgba(255,255,255,.94); color: #090909; cursor: pointer; font-size: .82rem; font-weight: 700; transition: transform 200ms ease, background 200ms ease; }
+    .plan-button:hover { transform: scale(1.02); background: #fff; }
+
+    .final-screen {
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      background:
+        radial-gradient(circle at center, rgba(90,117,134,.19), transparent 34%),
+        #020303;
+      text-align: center;
+    }
+    .final-screen::before, .final-screen::after { content: ""; position: absolute; top: 50%; left: 50%; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; transform: translate(-50%,-50%); }
+    .final-screen::before { width: min(82vw, 860px); aspect-ratio: 1; }
+    .final-screen::after { width: min(58vw, 600px); aspect-ratio: 1; border-color: rgba(255,255,255,.055); }
+    .final-content { position: relative; z-index: 3; width: min(100%, 920px); }
+    .final-content .serif-title { font-size: clamp(3.3rem, 8vw, 8.5rem); }
+    .final-content > p { max-width: 510px; margin: 34px auto 42px; color: rgba(255,255,255,.55); font-size: clamp(.9rem, 1.4vw, 1.08rem); line-height: 1.7; }
+    .final-cta { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; padding: 10px 10px 10px 28px; color: #fff; font-size: .86rem; font-weight: 650; }
+    .final-cta span:last-child { display: grid; width: 46px; height: 46px; place-items: center; border-radius: 50%; background: #fff; color: #000; transition: transform 220ms ease; }
+    .final-cta:hover span:last-child { transform: rotate(-18deg); }
+    .final-cta svg { width: 19px; height: 19px; }
+    .final-meta { position: absolute; right: clamp(20px,4vw,56px); bottom: 28px; left: clamp(20px,4vw,56px); z-index: 4; display: flex; justify-content: space-between; color: rgba(255,255,255,.28); font-size: .63rem; letter-spacing: .13em; text-transform: uppercase; }
+
+    @keyframes orbit-spin { to { transform: rotateX(66deg) rotateZ(calc(var(--tilt) + 360deg)); } }
+    @keyframes signal-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-11px); } }
+
+    @keyframes reveal-down {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes reveal-up {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 1050px) {
+      .discovery-grid { grid-template-columns: minmax(0, .9fr) minmax(350px, 1fr); gap: 52px; }
+      .orbit-scene { width: min(46vw, 520px); }
+      .manifesto-layout { grid-template-columns: 1fr minmax(240px, .42fr); gap: 56px; }
+      .pricing-grid { gap: 12px; }
+      .price-card { min-height: 410px; padding: 26px; }
+    }
+
+    @media (max-width: 720px) {
+      .nav-wrap { padding: 18px 14px; }
+      .nav { min-height: 54px; padding: 8px 9px 8px 17px; }
+      .nav-links { display: none; }
+      .nav-actions { gap: 7px; }
+      .plain-action { font-size: .73rem; }
+      .glass-action { min-width: 72px; padding: 9px 15px; font-size: .73rem; }
+      .hero { padding: 40px 20px; transform: translateY(-13%); }
+      .heading { font-size: clamp(1.85rem, 8.8vw, 3rem); white-space: normal; }
+      .subtitle { padding: 0 6px; font-size: .78rem; }
+      .email-form { padding-left: 18px; }
+      .email-input { font-size: .9rem; }
+      .email-submit { width: 44px; height: 44px; }
+      .social-footer { padding-bottom: 22px; }
+      .social-button { width: 48px; height: 48px; }
+      .content-screen { min-height: auto; padding: 96px 20px; }
+      .serif-title { font-size: clamp(2.7rem, 13vw, 4.5rem); }
+      .discovery-grid { grid-template-columns: 1fr; gap: 42px; }
+      .discovery-copy p:not(.eyebrow) { margin-top: 25px; }
+      .orbit-scene { width: min(92vw, 440px); margin: 0 auto; }
+      .signal { padding: 8px 11px; font-size: .6rem; }
+      .signal-one { left: 0; }
+      .signal-two { right: 0; }
+      .feature-strip { grid-template-columns: 1fr; margin-top: 44px; }
+      .feature-card { min-height: 150px; }
+      .feature-card h3 { margin-top: 30px; }
+      .manifesto-screen { min-height: 100svh; }
+      .manifesto-layout { grid-template-columns: 1fr; gap: 48px; }
+      .manifesto-quote .serif-title { font-size: clamp(2.8rem, 12vw, 4.2rem); }
+      .manifesto-side { max-width: 460px; }
+      .pricing-head { align-items: start; flex-direction: column; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card { min-height: 390px; }
+      .final-screen { min-height: 100svh; padding: 110px 20px; }
+      .final-screen::before { width: 120vw; }
+      .final-screen::after { width: 86vw; }
+      .final-meta { align-items: center; flex-direction: column; gap: 8px; }
+    }
+
+    @media (max-height: 680px) {
+      .nav-wrap { padding-top: 14px; padding-bottom: 14px; }
+      .hero { padding-top: 24px; padding-bottom: 24px; transform: translateY(-8%); }
+      .heading { margin-bottom: 24px; }
+      .subtitle { margin-top: 12px; }
+      .manifesto { margin-top: 12px; }
+      .social-footer { padding-bottom: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; animation-delay: 0ms !important; transition-duration: .01ms !important; }
+      .scroll-reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero-screen" id="home">
+    <div class="video-stage" aria-hidden="true">
+      <video
+        class="background-video"
+        id="cinematicVideo"
+        src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260328_115001_bcdaa3b4-03de-47e7-ad63-ae3e392c32d4.mp4"
+        muted
+        autoplay
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
+    <div class="cinematic-shade" aria-hidden="true"></div>
+    <div class="cinematic-grain" aria-hidden="true"></div>
+
+    <header class="nav-wrap">
+      <nav class="nav liquid-glass" aria-label="Основная навигация">
+        <div class="nav-left">
+          <a class="brand" href="#home" aria-label="Asme — главная">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"></path>
+            </svg>
+            <span>Asme</span>
+          </a>
+          <div class="nav-links">
+            <a href="#features">Возможности</a>
+            <a href="#pricing">Тарифы</a>
+            <a href="#about">О нас</a>
+          </div>
+        </div>
+        <div class="nav-actions">
+          <button class="plain-action" type="button">Регистрация</button>
+          <button class="glass-action liquid-glass" type="button">Войти</button>
+        </div>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1 class="heading">Для любознательных</h1>
+      <div class="subscribe-block">
+        <form class="email-form liquid-glass" id="subscribeForm">
+          <label for="email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Электронная почта</label>
+          <input class="email-input" id="email" name="email" type="email" autocomplete="email" placeholder="Введите электронную почту" required />
+          <button class="email-submit" type="submit" aria-label="Подписаться">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"></path>
+            </svg>
+          </button>
+        </form>
+        <p class="subtitle">Получайте свежие новости, идеи и наблюдения. Подпишитесь сегодня, чтобы не пропустить самое интересное.</p>
+        <a class="manifesto liquid-glass" href="#about">Наш манифест</a>
+        <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <footer class="social-footer" aria-label="Социальные сети">
+      <a class="social-button liquid-glass" href="#contact" aria-label="Инстаграм">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect width="18" height="18" x="3" y="3" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </a>
+      <a class="social-button liquid-glass" href="#contact" aria-label="Твиттер">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 4.01c-.96.68-2.02 1.2-3.15 1.52A4.48 4.48 0 0 0 11 8.55v1A10.66 10.66 0 0 1 3 5s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5 0-.28-.03-.55-.08-.82A7.72 7.72 0 0 0 22 4.01Z"></path>
+        </svg>
+      </a>
+      <a class="social-button liquid-glass" href="#contact" aria-label="Сайт">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"></path>
+        </svg>
+      </a>
+    </footer>
+    </section>
+
+    <section class="content-screen discovery-screen" id="features">
+      <div class="screen-inner">
+        <div class="discovery-grid">
+          <div class="discovery-copy">
+            <p class="eyebrow scroll-reveal">01 · Возможности</p>
+            <h2 class="serif-title scroll-reveal" style="--delay:90ms">Весь мир —<br />в одном вопросе.</h2>
+            <p class="scroll-reveal" style="--delay:180ms">Asme соединяет идеи из науки, культуры и технологий, чтобы любопытство не заканчивалось быстрым ответом, а становилось началом нового маршрута.</p>
+          </div>
+
+          <div class="orbit-scene scroll-reveal" style="--delay:150ms" aria-label="Орбита знаний">
+            <div class="orbit-aura" aria-hidden="true"></div>
+            <div class="orbit-ring orbit-ring-one" aria-hidden="true"></div>
+            <div class="orbit-ring orbit-ring-two" aria-hidden="true"></div>
+            <div class="orbit-ring orbit-ring-three" aria-hidden="true"></div>
+            <div class="orbit-core">
+              <div><strong>∞</strong><span>связей</span></div>
+            </div>
+            <span class="signal signal-one liquid-glass">Наука</span>
+            <span class="signal signal-two liquid-glass">Культура</span>
+            <span class="signal signal-three liquid-glass">Будущее</span>
+          </div>
+        </div>
+
+        <div class="feature-strip">
+          <article class="feature-card liquid-glass hover-glow scroll-reveal">
+            <span class="feature-index">01</span>
+            <h3>Личные маршруты</h3>
+            <p>Темы и открытия подстраиваются под то, что действительно вас увлекает.</p>
+          </article>
+          <article class="feature-card liquid-glass hover-glow scroll-reveal" style="--delay:100ms">
+            <span class="feature-index">02</span>
+            <h3>Живые связи</h3>
+            <p>Одна идея открывает другую — без бесконечного поиска и информационного шума.</p>
+          </article>
+          <article class="feature-card liquid-glass hover-glow scroll-reveal" style="--delay:200ms">
+            <span class="feature-index">03</span>
+            <h3>Новый взгляд</h3>
+            <p>Сложные вещи становятся понятными, но никогда не становятся скучными.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-screen manifesto-screen" id="about">
+      <div class="screen-inner manifesto-layout">
+        <div class="manifesto-quote">
+          <p class="eyebrow scroll-reveal">02 · Наш манифест</p>
+          <h2 class="serif-title scroll-reveal" style="--delay:90ms">Мы не даём<br />готовых ответов.<br /><em>Мы помогаем</em><br />задавать сильные<br />вопросы.</h2>
+        </div>
+        <aside class="manifesto-side scroll-reveal" style="--delay:220ms">
+          <div class="mini-orb" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9.5 2h5M10 2v6.5l-5.8 9.2A2.8 2.8 0 0 0 6.6 22h10.8a2.8 2.8 0 0 0 2.4-4.3L14 8.5V2"></path><path d="M7.5 16h9"></path>
+            </svg>
+          </div>
+          <p>Любознательность — не черта характера. Это способ смотреть на мир внимательнее, замечать невидимые связи и находить возможности там, где другие видят привычное.</p>
+          <span class="manifesto-line">Продолжайте спрашивать</span>
+        </aside>
+      </div>
+    </section>
+
+    <section class="content-screen pricing-screen" id="pricing">
+      <div class="screen-inner">
+        <div class="pricing-head">
+          <div>
+            <p class="eyebrow scroll-reveal">03 · Тарифы</p>
+            <h2 class="serif-title scroll-reveal" style="--delay:90ms">Выберите<br />свою глубину.</h2>
+          </div>
+          <p class="pricing-intro scroll-reveal" style="--delay:170ms">Начните свободно и углубляйтесь тогда, когда захотите больше связей, контекста и неожиданных открытий.</p>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="price-card liquid-glass hover-glow scroll-reveal">
+            <span class="plan-label">Начало</span>
+            <strong class="plan-price">0 ₽</strong>
+            <span class="plan-period">навсегда</span>
+            <ul class="plan-list">
+              <li>Ежедневная подборка идей</li>
+              <li>Три личных маршрута</li>
+              <li>Сохранение открытий</li>
+            </ul>
+            <button class="plan-button" type="button">Попробовать</button>
+          </article>
+
+          <article class="price-card price-card-featured liquid-glass hover-glow scroll-reveal" style="--delay:110ms">
+            <span class="plan-label">Искатель · выбор Asme</span>
+            <strong class="plan-price">490 ₽</strong>
+            <span class="plan-period">в месяц</span>
+            <ul class="plan-list">
+              <li>Безлимитные маршруты</li>
+              <li>Глубокие тематические связи</li>
+              <li>Личная карта интересов</li>
+            </ul>
+            <button class="plan-button" type="button">Начать исследование</button>
+          </article>
+
+          <article class="price-card liquid-glass hover-glow scroll-reveal" style="--delay:220ms">
+            <span class="plan-label">Без границ</span>
+            <strong class="plan-price">990 ₽</strong>
+            <span class="plan-period">в месяц</span>
+            <ul class="plan-list">
+              <li>Всё из тарифа «Искатель»</li>
+              <li>Закрытые лекции и встречи</li>
+              <li>Ранний доступ к новому</li>
+            </ul>
+            <button class="plan-button" type="button">Открыть всё</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="content-screen final-screen" id="contact">
+      <div class="final-content">
+        <p class="eyebrow scroll-reveal">04 · Следующий вопрос</p>
+        <h2 class="serif-title scroll-reveal" style="--delay:90ms">Что вам<br />интересно сейчас?</h2>
+        <p class="scroll-reveal" style="--delay:170ms">Начните с одного вопроса. Возможно, именно он изменит то, как вы видите всё остальное.</p>
+        <a class="final-cta liquid-glass hover-glow scroll-reveal" href="#home" style="--delay:250ms">
+          <span>Начать исследование</span>
+          <span aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+          </span>
+        </a>
+      </div>
+      <div class="final-meta"><span>Asme · пространство любопытства</span><span>Сделано для тех, кто спрашивает</span><span>© 2026</span></div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const video = document.getElementById('cinematicVideo');
+      const form = document.getElementById('subscribeForm');
+      const formStatus = document.getElementById('formStatus');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      let fadeFrame = null;
+      let fadingOut = false;
+      let restartTimer = null;
+
+      const cancelFade = () => {
+        if (fadeFrame !== null) {
+          cancelAnimationFrame(fadeFrame);
+          fadeFrame = null;
+        }
+      };
+
+      const fadeTo = (targetOpacity, duration = 500) => {
+        cancelFade();
+        const currentOpacity = Number.parseFloat(video.style.opacity || getComputedStyle(video).opacity || '0');
+        const startOpacity = Number.isFinite(currentOpacity) ? currentOpacity : 0;
+        const startedAt = performance.now();
+
+        const animate = (now) => {
+          const progress = Math.min(1, (now - startedAt) / duration);
+          const eased = progress < 0.5
+            ? 2 * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+          video.style.opacity = String(startOpacity + (targetOpacity - startOpacity) * eased);
+          if (progress < 1) {
+            fadeFrame = requestAnimationFrame(animate);
+          } else {
+            video.style.opacity = String(targetOpacity);
+            fadeFrame = null;
+          }
+        };
+
+        fadeFrame = requestAnimationFrame(animate);
+      };
+
+      const beginPlayback = () => {
+        fadingOut = false;
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => undefined);
+        fadeTo(1, 500);
+      };
+
+      const handleVideoReady = () => {
+        video.style.opacity = '0';
+        beginPlayback();
+      };
+      if (video.readyState >= 2) handleVideoReady();
+      else video.addEventListener('loadeddata', handleVideoReady, { once: true });
+
+      video.addEventListener('timeupdate', () => {
+        if (!Number.isFinite(video.duration)) return;
+        if (video.duration - video.currentTime <= 0.55 && !fadingOut) {
+          fadingOut = true;
+          fadeTo(0, 500);
+        }
+      });
+
+      video.addEventListener('ended', () => {
+        cancelFade();
+        video.style.opacity = '0';
+        if (restartTimer !== null) window.clearTimeout(restartTimer);
+        restartTimer = window.setTimeout(() => {
+          video.currentTime = 0;
+          beginPlayback();
+        }, 100);
+      });
+
+      if (!reduceMotion) {
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.14, rootMargin: '0px 0px -6% 0px' });
+        document.querySelectorAll('.scroll-reveal').forEach((element) => revealObserver.observe(element));
+      } else {
+        document.querySelectorAll('.scroll-reveal').forEach((element) => element.classList.add('is-visible'));
+      }
+
+      document.querySelectorAll('.hover-glow').forEach((element) => {
+        element.addEventListener('pointermove', (event) => {
+          const rect = element.getBoundingClientRect();
+          element.style.setProperty('--mx', `${event.clientX - rect.left}px`);
+          element.style.setProperty('--my', `${event.clientY - rect.top}px`);
+        }, { passive: true });
+      });
+
+      document.querySelectorAll('.plan-button, .plain-action, .glass-action').forEach((button) => {
+        button.addEventListener('click', () => {
+          document.getElementById('home').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+          window.setTimeout(() => document.getElementById('email').focus(), reduceMotion ? 0 : 650);
+        });
+      });
+
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const email = new FormData(form).get('email');
+        if (!email) return;
+        formStatus.textContent = 'Готово — вы в списке любознательных.';
+        form.reset();
+      });
+    })();
+  </script>
+</body>
+</html>

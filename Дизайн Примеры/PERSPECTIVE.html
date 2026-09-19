@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ART VR</title>
+  <meta name="description" content="Виртуальная галерея современного искусства"/>
+  <link rel="preload" href="https://perspective-gray.vercel.app/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2" as="font" crossorigin="" type="font/woff2"/>
+  <link rel="preload" href="https://perspective-gray.vercel.app/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2" as="font" crossorigin="" type="font/woff2"/>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?w=150&h=150&fit=crop"/>
+  <link rel="preload" as="image" href="https://perspective-gray.vercel.app/starry-night.png"/>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=300&h=200&fit=crop"/>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=300&h=200&fit=crop"/>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=200&fit=crop"/>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?w=300&h=200&fit=crop"/>
+  <style>
+    @font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://perspective-gray.vercel.app/_next/static/media/8a480f0b521d4e75-s.8e0177b5.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}
+    @font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://perspective-gray.vercel.app/_next/static/media/7178b3e590c64307-s.b97b3418.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+    @font-face{font-family:Geist;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://perspective-gray.vercel.app/_next/static/media/caa3a2e1cccd8315-s.p.853070df.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+    @font-face{font-family:"Geist Fallback";src:local(Arial);ascent-override:95.94%;descent-override:28.16%;line-gap-override:0.0%;size-adjust:104.76%}
+    @font-face{font-family:"Geist Mono";font-style:normal;font-weight:100 900;font-display:swap;src:url(https://perspective-gray.vercel.app/_next/static/media/797e433ab948586e-s.p.dbea232f.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+    :root {
+      --font-geist-sans: "Geist", "Geist Fallback";
+      --font-geist-mono: "Geist Mono", "Geist Mono Fallback";
+      --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --color-neutral-900: #171717;
+      --color-black: #000;
+      --color-white: #fff;
+      --spacing: .25rem;
+      --container-2xl: 42rem;
+      --container-6xl: 72rem;
+      --text-sm: .875rem;
+      --text-sm--line-height: calc(1.25/.875);
+      --text-4xl: 2.25rem;
+      --text-4xl--line-height: calc(2.5/2.25);
+      --font-weight-medium: 500;
+      --font-weight-black: 900;
+      --tracking-wider: .05em;
+      --tracking-widest: .1em;
+      --leading-tight: 1.25;
+      --radius-lg: .5rem;
+      --radius-xl: .75rem;
+      --radius-2xl: 1rem;
+      --drop-shadow-md: 0 3px 3px #0000001f;
+      --drop-shadow-lg: 0 4px 4px #00000026;
+      --ease-out: cubic-bezier(0,0,.2,1);
+      --blur-md: 12px;
+      --blur-xl: 24px;
+      --blur-2xl: 40px;
+      --default-transition-duration: .15s;
+      --default-transition-timing-function: cubic-bezier(.4,0,.2,1);
+      --default-font-family: var(--font-geist-sans);
+      --default-mono-font-family: var(--font-geist-mono);
+      --background: #fff;
+      --foreground: #171717;
+    }
+
+    *, :after, :before, ::backdrop {
+      box-sizing: border-box;
+      border: 0 solid;
+      margin: 0;
+      padding: 0;
+      --tw-translate-x: 0;
+      --tw-translate-y: 0;
+      --tw-translate-z: 0;
+      --tw-scale-x: 1;
+      --tw-scale-y: 1;
+      --tw-scale-z: 1;
+      --tw-shadow: 0 0 #0000;
+      --tw-inset-shadow: 0 0 #0000;
+      --tw-ring-shadow: 0 0 #0000;
+      --tw-inset-ring-shadow: 0 0 #0000;
+      --tw-ring-offset-shadow: 0 0 #0000;
+      --tw-border-style: solid;
+    }
+
+    html, :host {
+      -webkit-text-size-adjust: 100%;
+      tab-size: 4;
+      line-height: 1.5;
+      font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+    img, svg, video, canvas, audio, iframe, embed, object { vertical-align: middle; display: block; }
+    img, video { max-width: 100%; height: auto; }
+    button, input, select, optgroup, textarea {
+      font: inherit;
+      letter-spacing: inherit;
+      color: inherit;
+      opacity: 1;
+      background-color: transparent;
+      border-radius: 0;
+    }
+    button { cursor: pointer; }
+
+    /* Tailwind utilities */
+    .antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .min-h-screen { min-height: 100vh; }
+    .w-full { width: 100%; }
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .overflow-hidden { overflow: hidden; }
+    .bg-neutral-900 { background-color: var(--color-neutral-900); }
+    .text-white { color: var(--color-white); }
+    .font-sans { font-family: var(--font-geist-sans); }
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-center { justify-content: center; }
+    .inset-0 { inset: 0; }
+    .z-0 { z-index: 0; }
+    .z-10 { z-index: 10; }
+    .z-20 { z-index: 20; }
+    .z-30 { z-index: 30; }
+    .scale-110 { --tw-scale-x: 110%; --tw-scale-y: 110%; scale: var(--tw-scale-x) var(--tw-scale-y); }
+    .transition-transform { transition-property: transform, translate, scale, rotate; transition-timing-function: var(--ease-out); transition-duration: var(--default-transition-duration); }
+    .duration-1000 { transition-duration: 1s; }
+    .duration-200 { transition-duration: .2s; }
+    .duration-300 { transition-duration: .3s; }
+    .duration-500 { transition-duration: .5s; }
+    .duration-700 { transition-duration: .7s; }
+    .ease-out { transition-timing-function: var(--ease-out); }
+    .h-full { height: 100%; }
+    .left-\[2\%\] { left: 2%; }
+    .top-1\/2 { top: 50%; }
+    .-translate-y-1\/2 { --tw-translate-y: calc(calc(1/2*100%)*-1); translate: var(--tw-translate-x) var(--tw-translate-y); }
+    .bg-white\/10 { background-color: #ffffff1a; }
+    .backdrop-blur-xl { --tw-backdrop-blur: blur(var(--blur-xl)); -webkit-backdrop-filter: var(--tw-backdrop-blur); backdrop-filter: var(--tw-backdrop-blur); }
+    .backdrop-blur-2xl { --tw-backdrop-blur: blur(var(--blur-2xl)); -webkit-backdrop-filter: var(--tw-backdrop-blur); backdrop-filter: var(--tw-backdrop-blur); }
+    .backdrop-blur-md { --tw-backdrop-blur: blur(var(--blur-md)); -webkit-backdrop-filter: var(--tw-backdrop-blur); backdrop-filter: var(--tw-backdrop-blur); }
+    .border { border-style: solid; border-width: 1px; }
+    .border-r { border-right-style: solid; border-right-width: 1px; }
+    .border-white\/20 { border-color: #fff3; }
+    .border-white\/10 { border-color: #ffffff1a; }
+    .border-white\/30 { border-color: #ffffff4d; }
+    .rounded-full { border-radius: 9999px; }
+    .rounded-\[2rem\] { border-radius: 2rem; }
+    .rounded-2xl { border-radius: var(--radius-2xl); }
+    .rounded-xl { border-radius: var(--radius-xl); }
+    .rounded-lg { border-radius: var(--radius-lg); }
+    .py-6 { padding-block: calc(var(--spacing)*6); }
+    .px-3 { padding-inline: calc(var(--spacing)*3); }
+    .flex-col { flex-direction: column; }
+    .gap-6 { gap: calc(var(--spacing)*6); }
+    .gap-4 { gap: calc(var(--spacing)*4); }
+    .gap-2 { gap: calc(var(--spacing)*2); }
+    .shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.5\)\] { box-shadow: 0 30px 60px rgba(0,0,0,.5); }
+    .shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.6\)\] { box-shadow: 0 30px 60px rgba(0,0,0,.6); }
+    .shadow-\[0_50px_100px_rgba\(0\,0\,0\,0\.5\)\] { box-shadow: 0 50px 100px rgba(0,0,0,.5); }
+    .shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.4\)\] { box-shadow: 0 30px 60px rgba(0,0,0,.4); }
+    .shadow-\[0_8px_32px_0_rgba\(255\,255\,255\,0\.1\)\] { box-shadow: 0 8px 32px 0 rgba(255,255,255,.1); }
+    .shadow-lg { box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a; }
+    .shadow-md { box-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a; }
+    .w-\[85vw\] { width: 85vw; }
+    .max-w-6xl { max-width: var(--container-6xl); }
+    .h-\[80vh\] { height: 80vh; }
+    .w-80 { width: calc(var(--spacing)*80); }
+    .bg-black\/20 { background-color: #0003; }
+    .p-8 { padding: calc(var(--spacing)*8); }
+    .mb-12 { margin-bottom: calc(var(--spacing)*12); }
+    .text-4xl { font-size: var(--text-4xl); line-height: var(--text-4xl--line-height); }
+    .font-serif { font-family: var(--font-serif); }
+    .tracking-widest { letter-spacing: var(--tracking-widest); }
+    .leading-none { line-height: 1; }
+    .font-black { font-weight: var(--font-weight-black); }
+    .drop-shadow-lg { filter: drop-shadow(var(--drop-shadow-lg)); }
+    .drop-shadow-md { filter: drop-shadow(var(--drop-shadow-md)); }
+    .text-\[10px\] { font-size: 10px; }
+    .text-white\/60 { color: #fff9; }
+    .mt-3 { margin-top: calc(var(--spacing)*3); }
+    .uppercase { text-transform: uppercase; }
+    .tracking-wider { letter-spacing: var(--tracking-wider); }
+    .space-y-3 > :not(:last-child) { margin-block-end: calc(var(--spacing)*3); }
+    .flex-1 { flex: 1; }
+    .overflow-y-auto { overflow-y: auto; }
+    .pr-2 { padding-right: calc(var(--spacing)*2); }
+    .w-full { width: 100%; }
+    .text-left { text-align: left; }
+    .p-4 { padding: calc(var(--spacing)*4); }
+    .transition-all { transition-property: all; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+    .bg-white\/20 { background-color: #fff3; }
+    .translate-x-2 { --tw-translate-x: calc(var(--spacing)*2); translate: var(--tw-translate-x) var(--tw-translate-y); }
+    .items-center { align-items: center; }
+    .w-12 { width: calc(var(--spacing)*12); }
+    .h-12 { height: calc(var(--spacing)*12); }
+    .object-cover { object-fit: cover; }
+    .font-medium { font-weight: var(--font-weight-medium); }
+    .text-white\/70 { color: #ffffffb3; }
+    .mt-1 { margin-top: calc(var(--spacing)*1); }
+    .px-2 { padding-inline: calc(var(--spacing)*2); }
+    .py-1 { padding-block: calc(var(--spacing)*1); }
+    .p-12 { padding: calc(var(--spacing)*12); }
+    .pt-4 { padding-top: calc(var(--spacing)*4); }
+    .pb-32 { padding-bottom: calc(var(--spacing)*32); }
+    .justify-start { justify-content: flex-start; }
+    .max-w-2xl { max-width: var(--container-2xl); }
+    .h-\[45vh\] { height: 45vh; }
+    .group { }
+    .p-2\.5 { padding: calc(var(--spacing)*2.5); }
+    .bg-black\/40 { background-color: #0006; }
+    .top-4 { top: calc(var(--spacing)*4); }
+    .right-4 { right: calc(var(--spacing)*4); }
+    .opacity-0 { opacity: 0; }
+    .transition-opacity { transition-property: opacity; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+    .justify-between { justify-content: space-between; }
+    .items-end { align-items: flex-end; }
+    .text-sm { font-size: var(--text-sm); line-height: var(--text-sm--line-height); }
+    .mt-8 { margin-top: calc(var(--spacing)*8); }
+    .bottom-8 { bottom: calc(var(--spacing)*8); }
+    .left-1\/2 { left: 50%; }
+    .-translate-x-1\/2 { --tw-translate-x: calc(calc(1/2*100%)*-1); translate: var(--tw-translate-x) var(--tw-translate-y); }
+    .w-max { width: max-content; }
+    .p-3 { padding: calc(var(--spacing)*3); }
+    .p-2 { padding: calc(var(--spacing)*2); }
+    .ml-1 { margin-left: calc(var(--spacing)*1); }
+    .mr-1 { margin-right: calc(var(--spacing)*1); }
+    .transition-colors { transition-property: color, background-color, border-color; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+    .overflow-x-auto { overflow-x: auto; }
+    .w-24 { width: calc(var(--spacing)*24); }
+    .h-24 { height: calc(var(--spacing)*24); }
+    .flex-shrink-0 { flex-shrink: 0; }
+    .bg-gradient-to-t { background-image: linear-gradient(to top, var(--tw-gradient-stops)); }
+    .from-black\/90 { --tw-gradient-from: #000000e6; --tw-gradient-stops: var(--tw-gradient-from), transparent; }
+    .via-black\/20 { --tw-gradient-stops: var(--tw-gradient-from), #0003, transparent; }
+    .to-transparent { --tw-gradient-to: transparent; }
+    .leading-tight { line-height: var(--leading-tight); }
+    .text-white\/90 { color: #ffffffe6; }
+    .mt-6 { margin-top: calc(var(--spacing)*6); }
+    .w-2 { width: calc(var(--spacing)*2); }
+    .h-2 { height: calc(var(--spacing)*2); }
+    .w-8 { width: calc(var(--spacing)*8); }
+    .bg-white\/40 { background-color: #fff6; }
+    .bg-white { background-color: var(--color-white); }
+    .visible { visibility: visible; }
+    .filter { filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-contrast,) var(--tw-grayscale,) var(--tw-hue-rotate,) var(--tw-invert,) var(--tw-saturate,) var(--tw-sepia,) var(--tw-drop-shadow,); }
+
+    /* Hover states */
+    @media (hover: hover) {
+      .hover\:text-white:hover { color: var(--color-white); }
+      .hover\:bg-white\/20:hover { background-color: #fff3; }
+      .hover\:bg-white\/10:hover { background-color: #ffffff1a; }
+      .hover\:bg-black\/60:hover { background-color: #0009; }
+      .hover\:scale-\[1\.02\]:hover { scale: 1.02; }
+      .hover\:translate-x-1:hover { --tw-translate-x: calc(var(--spacing)*1); translate: var(--tw-translate-x) var(--tw-translate-y); }
+      .group:hover .group-hover\:opacity-100 { opacity: 1; }
+      .group:hover .group-hover\:scale-110 { --tw-scale-x: 110%; --tw-scale-y: 110%; scale: var(--tw-scale-x) var(--tw-scale-y); }
+    }
+
+    /* Scrollbar styles */
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #ffffff0d; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #fff3; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #ffffff4d; }
+  </style>
+</head>
+<body class="antialiased">
+<main class="min-h-screen w-full relative overflow-hidden bg-neutral-900 text-white font-sans flex items-center justify-center" style="perspective:2000px">
+  <div id="parallax-bg" class="absolute inset-0 z-0 scale-110 transition-transform duration-1000" style="background-image:url('https://perspective-gray.vercel.app/museum-bg.png');background-size:cover;background-position:center;filter:blur(3px) brightness(0.8);transform:translate(0px, 0px) scale(1.05)"></div>
+  <div id="parallax-panel" class="relative z-10 w-full h-full flex items-center justify-center transition-transform duration-200 ease-out" style="transform-style:preserve-3d;transform:rotateY(-12deg) rotateX(4deg) scale(0.95)">
+
+    <!-- Боковая панель с иконками -->
+    <div class="absolute left-[2%] top-1/2 -translate-y-1/2 bg-white/10 backdrop-blur-xl border border-white/20 rounded-full py-6 px-3 flex flex-col gap-6 shadow-[0_30px_60px_rgba(0,0,0,0.5)] z-30" style="transform:translateZ(120px)">
+      <button class="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-palette" aria-hidden="true"><path d="M12 22a1 1 0 0 1 0-20 10 9 0 0 1 10 9 5 5 0 0 1-5 5h-2.25a1.75 1.75 0 0 0-1.4 2.8l.3.4a1.75 1.75 0 0 1-1.4 2.8z"></path><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle></svg>
+      </button>
+      <button class="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coffee" aria-hidden="true"><path d="M10 2v2"></path><path d="M14 2v2"></path><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"></path><path d="M6 2v2"></path></svg>
+      </button>
+      <button class="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-all">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-camera" aria-hidden="true"><path d="M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z"></path><circle cx="12" cy="13" r="3"></circle></svg>
+      </button>
+    </div>
+
+    <!-- Основная карточка -->
+    <div class="relative w-[85vw] max-w-6xl h-[80vh] overflow-hidden rounded-[2rem] shadow-[0_50px_100px_rgba(0,0,0,0.5)] flex border border-white/20" style="background:linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.02) 100%);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);transform-style:preserve-3d;transform:translateZ(0px)">
+
+      <!-- Левая панель — список художников -->
+      <div class="w-80 bg-black/20 border-r border-white/10 p-8 flex flex-col" style="transform:translateZ(20px)">
+        <div class="mb-12">
+          <h1 class="text-4xl font-serif tracking-widest leading-none font-black drop-shadow-lg">ART VR</h1>
+          <p class="text-[10px] text-white/60 mt-3 uppercase tracking-wider">Виртуальная галерея современного искусства</p>
+        </div>
+        <div class="space-y-3 flex-1 overflow-y-auto pr-2 custom-scrollbar">
+          <button class="w-full text-left p-4 rounded-2xl transition-all duration-300 bg-white/20 shadow-[0_8px_32px_0_rgba(255,255,255,0.1)] border border-white/20 translate-x-2">
+            <div class="flex items-center gap-4">
+              <img src="https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?w=150&h=150&fit=crop" alt="Елена Ростова" class="w-12 h-12 rounded-lg object-cover shadow-md"/>
+              <div>
+                <div class="font-medium text-white">Елена Ростова</div>
+                <div class="text-[10px] text-white/70 mt-1">Современное</div>
+                <div class="text-[10px] text-white/70">Цифровое пространство</div>
+              </div>
+            </div>
+          </button>
+          <button class="w-full text-left p-4 rounded-2xl transition-all duration-300 hover:bg-white/10 text-white/60 hover:translate-x-1">
+            <div class="font-medium px-2 py-1">Маркус Вэнс</div>
+          </button>
+          <button class="w-full text-left p-4 rounded-2xl transition-all duration-300 hover:bg-white/10 text-white/60 hover:translate-x-1">
+            <div class="font-medium px-2 py-1">София Лин</div>
+          </button>
+          <button class="w-full text-left p-4 rounded-2xl transition-all duration-300 hover:bg-white/10 text-white/60 hover:translate-x-1">
+            <div class="font-medium px-2 py-1">Джулиан Кросс</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Правая панель — экспозиция -->
+      <div class="flex-1 p-12 flex flex-col relative overflow-hidden" style="transform-style:preserve-3d">
+        <div class="flex-1 flex flex-col items-center justify-start pt-4 pb-32" style="transform:translateZ(60px);transform-style:preserve-3d">
+
+          <!-- Основное произведение -->
+          <div class="relative group rounded-xl overflow-hidden shadow-[0_30px_60px_rgba(0,0,0,0.6)] w-full max-w-2xl h-[45vh] border border-white/10 transition-transform duration-500 hover:scale-[1.02]">
+            <img src="https://perspective-gray.vercel.app/starry-night.png" alt="Геометрическая гармония" class="w-full h-full object-cover rounded-xl"/>
+            <button class="absolute top-4 right-4 p-2.5 bg-black/40 hover:bg-black/60 backdrop-blur-md rounded-full text-white opacity-0 group-hover:opacity-100 transition-opacity">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-maximize2 lucide-maximize-2" aria-hidden="true"><path d="M15 3h6v6"></path><path d="m21 3-7 7"></path><path d="m3 21 7-7"></path><path d="M9 21H3v-6"></path></svg>
+            </button>
+          </div>
+
+          <div class="w-full max-w-2xl mt-8 flex justify-between items-end" style="transform:translateZ(30px)">
+            <div class="text-sm text-white font-medium drop-shadow-md">2024</div>
+          </div>
+        </div>
+
+        <!-- Нижняя лента миниатюр -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 w-max z-20" style="transform:translateZ(90px) translateX(-50%);left:50%">
+          <div class="bg-white/10 backdrop-blur-2xl border border-white/30 rounded-[2rem] p-3 flex items-center gap-4 shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
+            <button class="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors ml-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-left" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+            </button>
+            <div class="flex gap-4 overflow-x-auto hide-scrollbar">
+              <button class="relative group rounded-xl overflow-hidden w-24 h-24 flex-shrink-0 border border-white/20 shadow-lg">
+                <img src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=300&h=200&fit=crop" alt="Эфирный пейзаж" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+                  <span class="text-[10px] leading-tight font-medium text-left text-white/90">Эфирный пейзаж</span>
+                </div>
+              </button>
+              <button class="relative group rounded-xl overflow-hidden w-24 h-24 flex-shrink-0 border border-white/20 shadow-lg">
+                <img src="https://images.unsplash.com/photo-1578301978018-3005759f48f7?w=300&h=200&fit=crop" alt="Абстрактная природа" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+                  <span class="text-[10px] leading-tight font-medium text-left text-white/90">Абстрактная природа</span>
+                </div>
+              </button>
+              <button class="relative group rounded-xl overflow-hidden w-24 h-24 flex-shrink-0 border border-white/20 shadow-lg">
+                <img src="https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=300&h=200&fit=crop" alt="Внутренние видения" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+                  <span class="text-[10px] leading-tight font-medium text-left text-white/90">Внутренние видения</span>
+                </div>
+              </button>
+              <button class="relative group rounded-xl overflow-hidden w-24 h-24 flex-shrink-0 border border-white/20 shadow-lg">
+                <img src="https://images.unsplash.com/photo-1579783901586-d88db74b4fe4?w=300&h=200&fit=crop" alt="Яркая роща" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"/>
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-2.5">
+                  <span class="text-[10px] leading-tight font-medium text-left text-white/90">Яркая роща</span>
+                </div>
+              </button>
+            </div>
+            <button class="p-2 text-white/70 hover:text-white hover:bg-white/20 rounded-full transition-colors mr-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+            </button>
+          </div>
+          <div class="flex justify-center gap-2 mt-6" style="transform:translateZ(20px)">
+            <div class="w-2 h-2 rounded-full bg-white/40 transition-all shadow-lg"></div>
+            <div class="w-8 h-2 rounded-full bg-white shadow-lg"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+<script>
+  (function() {
+    var mouse = { x: 0, y: 0 };
+    var panel = document.getElementById('parallax-panel');
+    var bg = document.getElementById('parallax-bg');
+
+    window.addEventListener('mousemove', function(e) {
+      mouse.x = (e.clientX / window.innerWidth - 0.5) * 20;
+      mouse.y = -((e.clientY / window.innerHeight - 0.5) * 20);
+
+      panel.style.transform =
+        'rotateY(' + (-12 + 0.5 * mouse.x) + 'deg) ' +
+        'rotateX(' + (4 + 0.5 * mouse.y) + 'deg) ' +
+        'scale(0.95)';
+
+      bg.style.transform =
+        'translate(' + (-1 * mouse.x) + 'px, ' + mouse.y + 'px) scale(1.05)';
+    });
+  })();
+</script>
+</body>
+</html>

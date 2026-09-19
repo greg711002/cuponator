@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VEX — Формируем завтра</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] }
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+  ::selection { background: #fff; color: #000; }
+
+  /* ---------- Liquid Glass ---------- */
+  .liquid-glass {
+    background: rgba(0, 0, 0, 0.4);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ---------- Character entrance ---------- */
+  .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-18px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+  .char.on { opacity: 1; transform: translateX(0); }
+
+  /* ---------- Fade in ---------- */
+  .fade-in { opacity: 0; transition: opacity 1000ms ease; }
+  .fade-in.on { opacity: 1; }
+
+  /* ---------- Scroll reveal ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(48px);
+    transition: opacity 900ms cubic-bezier(.22,.61,.36,1), transform 900ms cubic-bezier(.22,.61,.36,1);
+  }
+  .reveal.shown { opacity: 1; transform: translateY(0); }
+  .reveal-d1 { transition-delay: 120ms; }
+  .reveal-d2 { transition-delay: 240ms; }
+  .reveal-d3 { transition-delay: 360ms; }
+
+  /* ---------- Hover lift on cards ---------- */
+  .glass-card {
+    transition: transform 500ms cubic-bezier(.22,.61,.36,1), background 500ms ease;
+  }
+  .glass-card:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* ---------- Big outlined section numbers ---------- */
+  .sec-num {
+    -webkit-text-stroke: 1px rgba(255,255,255,0.18);
+    color: transparent;
+    line-height: 0.85;
+    user-select: none;
+  }
+
+  /* ---------- Marquee ---------- */
+  @keyframes marquee {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 32s linear infinite;
+  }
+
+  /* ---------- Subtle grain ---------- */
+  .grain::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Glow orb ---------- */
+  @keyframes floaty {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50%      { transform: translate(40px, -30px) scale(1.08); }
+  }
+  .orb { animation: floaty 14s ease-in-out infinite; }
+
+  /* ---------- Progress hairline ---------- */
+  #scrollbar-progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(90deg, rgba(255,255,255,.2), #fff);
+    z-index: 70; width: 0%;
+    transition: width 80ms linear;
+  }
+</style>
+</head>
+
+<body class="grain font-sans">
+<div id="scrollbar-progress"></div>
+
+<!-- ================= NAVBAR ================= -->
+<header class="fixed top-0 left-0 right-0 z-50 px-6 md:px-12 lg:px-16 pt-6">
+  <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+    <a href="#hero" class="text-2xl font-semibold tracking-tight">VEX</a>
+    <div class="hidden md:flex items-center gap-8 text-sm">
+      <a href="#story" class="transition-colors duration-300 hover:text-gray-300">История</a>
+      <a href="#investing" class="transition-colors duration-300 hover:text-gray-300">Инвестиции</a>
+      <a href="#building" class="transition-colors duration-300 hover:text-gray-300">Создание</a>
+      <a href="#advisory" class="transition-colors duration-300 hover:text-gray-300">Консалтинг</a>
+    </div>
+    <a href="#contact" class="bg-white text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-300 hover:bg-gray-100">Начать диалог</a>
+  </nav>
+</header>
+
+<!-- ================= ЭКРАН 1 · HERO ================= -->
+<section id="hero" class="relative h-screen overflow-hidden">
+  <video
+    class="absolute inset-0 w-full h-full object-cover"
+    src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4"
+    autoplay loop muted playsinline></video>
+
+  <div class="relative z-10 h-full px-6 md:px-12 lg:px-16 flex flex-col justify-end pb-12 lg:pb-16">
+    <div class="lg:grid lg:grid-cols-2 lg:items-end">
+      <!-- Левая колонка -->
+      <div>
+        <h1 id="hero-heading"
+            class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-4"
+            style="letter-spacing: -0.04em;"></h1>
+
+        <p class="fade-in text-base md:text-lg text-gray-300 mb-5" data-delay="800">
+          Мы поддерживаем визионеров и создаём венчуры, которые определяют будущее.
+        </p>
+
+        <div class="fade-in flex flex-wrap gap-4" data-delay="1200">
+          <a href="#contact" class="bg-white text-black px-8 py-3 rounded-lg font-medium transition-colors duration-300 hover:bg-gray-100">Начать диалог</a>
+          <a href="#story" class="liquid-glass border border-white/20 text-white px-8 py-3 rounded-lg font-medium transition-colors duration-300 hover:bg-white hover:text-black">Узнать больше</a>
+        </div>
+      </div>
+
+      <!-- Правая колонка -->
+      <div class="fade-in flex items-end justify-start lg:justify-end mt-10 lg:mt-0" data-delay="1400">
+        <div class="liquid-glass border border-white/20 px-6 py-3 rounded-xl">
+          <span class="text-lg md:text-xl lg:text-2xl font-light">Инвестиции. Создание. Консалтинг.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<div class="border-y border-white/10 py-5 overflow-hidden bg-black">
+  <div class="marquee-track text-sm md:text-base font-light tracking-[0.35em] uppercase text-gray-400">
+    <div class="flex gap-16 pr-16 whitespace-nowrap">
+      <span>Венчурный капитал</span><span>·</span><span>Венчурная студия</span><span>·</span><span>Стратегический консалтинг</span><span>·</span><span>Глубокие технологии</span><span>·</span><span>Искусственный интеллект</span><span>·</span>
+    </div>
+    <div class="flex gap-16 pr-16 whitespace-nowrap" aria-hidden="true">
+      <span>Венчурный капитал</span><span>·</span><span>Венчурная студия</span><span>·</span><span>Стратегический консалтинг</span><span>·</span><span>Глубокие технологии</span><span>·</span><span>Искусственный интеллект</span><span>·</span>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ЭКРАН 2 · ИСТОРИЯ ================= -->
+<section id="story" class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-16 py-28 overflow-hidden">
+  <div class="orb absolute -top-32 -right-32 w-[480px] h-[480px] rounded-full bg-white/[0.04] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="flex items-baseline gap-6 mb-14 reveal">
+      <span class="sec-num text-7xl md:text-8xl lg:text-9xl font-semibold">01</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal" style="letter-spacing:-0.04em;">История</h2>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-2 lg:gap-20">
+      <div class="reveal reveal-d1">
+        <p class="text-xl md:text-2xl lg:text-3xl font-light leading-snug text-gray-200" style="letter-spacing:-0.02em;">
+          Мы начали с простого убеждения: великие компании рождаются там, где встречаются
+          <span class="text-white font-normal">смелое видение</span> и
+          <span class="text-white font-normal">безупречное исполнение</span>.
+        </p>
+        <p class="mt-8 text-base md:text-lg text-gray-400 leading-relaxed">
+          За десять лет мы прошли путь от первых ангельских чеков до полноценной платформы,
+          объединяющей капитал, венчурную студию и консалтинг. Мы не просто финансируем идеи —
+          мы стоим рядом с основателями от первой строки кода до выхода на глобальные рынки.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4 mt-12 lg:mt-0">
+        <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-6 md:p-8 reveal reveal-d1">
+          <div class="text-4xl md:text-5xl font-light mb-2">10<span class="text-gray-400">+</span></div>
+          <div class="text-sm text-gray-400">лет на рынке венчурных инвестиций</div>
+        </div>
+        <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-6 md:p-8 reveal reveal-d2">
+          <div class="text-4xl md:text-5xl font-light mb-2">48</div>
+          <div class="text-sm text-gray-400">компаний в портфеле по всему миру</div>
+        </div>
+        <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-6 md:p-8 reveal reveal-d2">
+          <div class="text-4xl md:text-5xl font-light mb-2">$120<span class="text-gray-400">M</span></div>
+          <div class="text-sm text-gray-400">капитала под управлением</div>
+        </div>
+        <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-6 md:p-8 reveal reveal-d3">
+          <div class="text-4xl md:text-5xl font-light mb-2">9</div>
+          <div class="text-sm text-gray-400">успешных выходов и поглощений</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЭКРАН 3 · ИНВЕСТИЦИИ ================= -->
+<section id="investing" class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-16 py-28 overflow-hidden border-t border-white/10">
+  <div class="orb absolute -bottom-40 -left-40 w-[520px] h-[520px] rounded-full bg-white/[0.035] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="flex items-baseline gap-6 mb-6 reveal">
+      <span class="sec-num text-7xl md:text-8xl lg:text-9xl font-semibold">02</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal" style="letter-spacing:-0.04em;">Инвестиции</h2>
+    </div>
+    <p class="reveal reveal-d1 max-w-2xl text-base md:text-lg text-gray-400 mb-14">
+      Мы инвестируем на ранних стадиях в команды, которые переосмысливают целые отрасли.
+      Первый чек — от $250 тысяч до $2 миллионов.
+    </p>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d1">
+        <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">01 / Направление</div>
+        <h3 class="text-2xl font-normal mb-3">Искусственный интеллект</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Фундаментальные модели, агентные системы и инфраструктура, на которой будет работать следующее десятилетие.</p>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d2">
+        <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">02 / Направление</div>
+        <h3 class="text-2xl font-normal mb-3">Глубокие технологии</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Робототехника, новые материалы, вычислительные платформы — наука, превращённая в продукт.</p>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d3">
+        <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">03 / Направление</div>
+        <h3 class="text-2xl font-normal mb-3">Финансовые системы</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Платёжная инфраструктура, инструменты казначейства и новые рынки капитала.</p>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d1">
+        <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">04 / Направление</div>
+        <h3 class="text-2xl font-normal mb-3">Здоровье и долголетие</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Диагностика, персонализированная медицина и технологии качества жизни.</p>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d2">
+        <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">05 / Направление</div>
+        <h3 class="text-2xl font-normal mb-3">Климат и энергия</h3>
+        <p class="text-gray-400 text-sm leading-relaxed">Хранение энергии, умные сети и декарбонизация промышленности.</p>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 reveal reveal-d3 flex flex-col justify-between">
+        <div>
+          <div class="text-sm uppercase tracking-[0.3em] text-gray-500 mb-6">Ваше направление</div>
+          <h3 class="text-2xl font-normal mb-3">Не нашли себя в списке?</h3>
+          <p class="text-gray-400 text-sm leading-relaxed mb-8">Мы открыты к амбициозным идеям за пределами наших тезисов.</p>
+        </div>
+        <a href="#contact" class="inline-block bg-white text-black px-6 py-2.5 rounded-lg text-sm font-medium transition-colors duration-300 hover:bg-gray-100 w-max">Рассказать о проекте</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЭКРАН 4 · СОЗДАНИЕ ================= -->
+<section id="building" class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-16 py-28 overflow-hidden border-t border-white/10">
+  <div class="orb absolute top-20 right-0 w-[420px] h-[420px] rounded-full bg-white/[0.04] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="flex items-baseline gap-6 mb-6 reveal">
+      <span class="sec-num text-7xl md:text-8xl lg:text-9xl font-semibold">03</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal" style="letter-spacing:-0.04em;">Создание</h2>
+    </div>
+    <p class="reveal reveal-d1 max-w-2xl text-base md:text-lg text-gray-400 mb-16">
+      Наша венчурная студия превращает гипотезы в компании. От идеи до первого раунда — за шесть месяцев.
+    </p>
+
+    <div class="space-y-0">
+      <div class="reveal reveal-d1 group border-t border-white/10 py-10 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-baseline transition-colors duration-500 hover:bg-white/[0.02]">
+        <div class="lg:col-span-2 text-gray-500 font-light text-lg mb-2 lg:mb-0">Этап 01</div>
+        <h3 class="lg:col-span-4 text-2xl md:text-3xl font-normal mb-3 lg:mb-0 group-hover:translate-x-2 transition-transform duration-500">Исследование</h3>
+        <p class="lg:col-span-6 text-gray-400 leading-relaxed">Глубокий анализ рынка, интервью с клиентами, проверка спроса. Отсеиваем 9 из 10 идей до того, как написана первая строка кода.</p>
+      </div>
+      <div class="reveal reveal-d2 group border-t border-white/10 py-10 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-baseline transition-colors duration-500 hover:bg-white/[0.02]">
+        <div class="lg:col-span-2 text-gray-500 font-light text-lg mb-2 lg:mb-0">Этап 02</div>
+        <h3 class="lg:col-span-4 text-2xl md:text-3xl font-normal mb-3 lg:mb-0 group-hover:translate-x-2 transition-transform duration-500">Прототип</h3>
+        <p class="lg:col-span-6 text-gray-400 leading-relaxed">Рабочий продукт за шесть недель. Команда студии — дизайнеры, инженеры, аналитики — работает как единый механизм.</p>
+      </div>
+      <div class="reveal reveal-d3 group border-t border-white/10 py-10 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-baseline transition-colors duration-500 hover:bg-white/[0.02]">
+        <div class="lg:col-span-2 text-gray-500 font-light text-lg mb-2 lg:mb-0">Этап 03</div>
+        <h3 class="lg:col-span-4 text-2xl md:text-3xl font-normal mb-3 lg:mb-0 group-hover:translate-x-2 transition-transform duration-500">Запуск</h3>
+        <p class="lg:col-span-6 text-gray-400 leading-relaxed">Первые клиенты, первые метрики, первая выручка. Подбираем сооснователей и передаём им штурвал.</p>
+      </div>
+      <div class="reveal reveal-d3 group border-y border-white/10 py-10 lg:grid lg:grid-cols-12 lg:gap-8 lg:items-baseline transition-colors duration-500 hover:bg-white/[0.02]">
+        <div class="lg:col-span-2 text-gray-500 font-light text-lg mb-2 lg:mb-0">Этап 04</div>
+        <h3 class="lg:col-span-4 text-2xl md:text-3xl font-normal mb-3 lg:mb-0 group-hover:translate-x-2 transition-transform duration-500">Масштабирование</h3>
+        <p class="lg:col-span-6 text-gray-400 leading-relaxed">Посевной раунд, найм команды, выход на новые рынки. Компания покидает студию самостоятельной и сильной.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЭКРАН 5 · КОНСАЛТИНГ ================= -->
+<section id="advisory" class="relative min-h-screen flex flex-col justify-center px-6 md:px-12 lg:px-16 py-28 overflow-hidden border-t border-white/10">
+  <div class="orb absolute -top-24 left-1/3 w-[460px] h-[460px] rounded-full bg-white/[0.035] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto w-full">
+    <div class="flex items-baseline gap-6 mb-6 reveal">
+      <span class="sec-num text-7xl md:text-8xl lg:text-9xl font-semibold">04</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal" style="letter-spacing:-0.04em;">Консалтинг</h2>
+    </div>
+    <p class="reveal reveal-d1 max-w-2xl text-base md:text-lg text-gray-400 mb-14">
+      Стратегическая экспертиза для основателей и корпораций, которые строят будущее уже сегодня.
+    </p>
+
+    <div class="lg:grid lg:grid-cols-3 gap-4">
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 md:p-10 reveal reveal-d1">
+        <h3 class="text-2xl font-normal mb-4">Стратегия роста</h3>
+        <ul class="space-y-3 text-gray-400 text-sm leading-relaxed">
+          <li class="flex gap-3"><span class="text-white">—</span>Позиционирование и выход на рынок</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Юнит-экономика и модели монетизации</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Международная экспансия</li>
+        </ul>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 md:p-10 reveal reveal-d2">
+        <h3 class="text-2xl font-normal mb-4">Привлечение капитала</h3>
+        <ul class="space-y-3 text-gray-400 text-sm leading-relaxed">
+          <li class="flex gap-3"><span class="text-white">—</span>Подготовка к раундам любой стадии</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Питч-деки и финансовые модели</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Переговоры с инвесторами</li>
+        </ul>
+      </div>
+      <div class="liquid-glass glass-card border border-white/20 rounded-2xl p-8 md:p-10 reveal reveal-d3">
+        <h3 class="text-2xl font-normal mb-4">Трансформация</h3>
+        <ul class="space-y-3 text-gray-400 text-sm leading-relaxed">
+          <li class="flex gap-3"><span class="text-white">—</span>Внедрение ИИ в бизнес-процессы</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Корпоративные венчурные программы</li>
+          <li class="flex gap-3"><span class="text-white">—</span>Слияния и поглощения</li>
+        </ul>
+      </div>
+    </div>
+
+    <blockquote class="reveal reveal-d2 mt-16 border-l border-white/20 pl-8 max-w-3xl">
+      <p class="text-xl md:text-2xl font-light text-gray-200 leading-snug" style="letter-spacing:-0.02em;">
+        «VEX увидел в нашей идее компанию раньше, чем мы сами. Их команда — это не советники, это сооснователи на дистанции».
+      </p>
+      <footer class="mt-4 text-sm text-gray-500">— Основатель портфельной компании, серия A</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- ================= ЭКРАН 6 · КОНТАКТ / ФУТЕР ================= -->
+<section id="contact" class="relative min-h-screen flex flex-col px-6 md:px-12 lg:px-16 pt-28 overflow-hidden border-t border-white/10">
+  <div class="orb absolute bottom-0 right-1/4 w-[560px] h-[560px] rounded-full bg-white/[0.045] blur-3xl pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col justify-center">
+    <div class="flex items-baseline gap-6 mb-14 reveal">
+      <span class="sec-num text-7xl md:text-8xl lg:text-9xl font-semibold">05</span>
+      <h2 class="text-3xl md:text-5xl lg:text-6xl font-normal" style="letter-spacing:-0.04em;">Начать диалог</h2>
+    </div>
+
+    <div class="lg:grid lg:grid-cols-2 lg:gap-20">
+      <div class="reveal reveal-d1">
+        <p class="text-2xl md:text-3xl lg:text-4xl font-light leading-snug text-gray-200 mb-10" style="letter-spacing:-0.02em;">
+          Есть идея, которая не даёт спать?<br>Расскажите нам.
+        </p>
+        <div class="space-y-4 text-gray-400">
+          <a href="mailto:hello@vex.vc" class="block text-lg md:text-xl text-white hover:text-gray-300 transition-colors duration-300">hello@vex.vc</a>
+          <p class="text-sm">Москва · Дубай · Лондон</p>
+        </div>
+      </div>
+
+      <form class="reveal reveal-d2 mt-12 lg:mt-0 space-y-4" onsubmit="event.preventDefault(); this.querySelector('button').textContent='Отправлено ✓';">
+        <input type="text" required placeholder="Ваше имя"
+               class="w-full liquid-glass border border-white/20 rounded-xl px-6 py-4 bg-transparent text-white placeholder-gray-500 text-sm outline-none focus:border-white/40 transition-colors duration-300">
+        <input type="email" required placeholder="Электронная почта"
+               class="w-full liquid-glass border border-white/20 rounded-xl px-6 py-4 bg-transparent text-white placeholder-gray-500 text-sm outline-none focus:border-white/40 transition-colors duration-300">
+        <textarea required placeholder="Расскажите о проекте в двух словах" rows="4"
+               class="w-full liquid-glass border border-white/20 rounded-xl px-6 py-4 bg-transparent text-white placeholder-gray-500 text-sm outline-none focus:border-white/40 transition-colors duration-300 resize-none"></textarea>
+        <button type="submit" class="bg-white text-black px-8 py-3 rounded-lg font-medium transition-colors duration-300 hover:bg-gray-100 w-full md:w-auto">Отправить</button>
+      </form>
+    </div>
+  </div>
+
+  <footer class="max-w-7xl mx-auto w-full border-t border-white/10 mt-20 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-500">
+    <span class="text-xl font-semibold tracking-tight text-white">VEX</span>
+    <div class="flex gap-8">
+      <a href="#story" class="hover:text-gray-300 transition-colors duration-300">История</a>
+      <a href="#investing" class="hover:text-gray-300 transition-colors duration-300">Инвестиции</a>
+      <a href="#building" class="hover:text-gray-300 transition-colors duration-300">Создание</a>
+      <a href="#advisory" class="hover:text-gray-300 transition-colors duration-300">Консалтинг</a>
+    </div>
+    <span>© 2026 VEX. Формируем завтра.</span>
+  </footer>
+</section>
+
+<script>
+  /* ---------- Посимвольная анимация заголовка ---------- */
+  (function () {
+    const CHAR_DELAY = 30;   // мс на символ
+    const START_DELAY = 200; // мс до начала
+    const el = document.getElementById('hero-heading');
+    const text = 'Формируем завтра\nвидением и действием.';
+    const lines = text.split('\n');
+
+    lines.forEach((line, lineIndex) => {
+      const lineEl = document.createElement('div');
+      line.split('').forEach((ch, charIndex) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = ch === ' ' ? ' ' : ch;
+        const delay = START_DELAY + (lineIndex * line.length * CHAR_DELAY) + (charIndex * CHAR_DELAY);
+        span.style.transitionDelay = delay + 'ms';
+        lineEl.appendChild(span);
+      });
+      el.appendChild(lineEl);
+    });
+
+    setTimeout(() => {
+      el.querySelectorAll('.char').forEach(s => s.classList.add('on'));
+    }, 50);
+  })();
+
+  /* ---------- Fade-in элементы с задержкой ---------- */
+  document.querySelectorAll('.fade-in').forEach(el => {
+    const delay = parseInt(el.dataset.delay || '0', 10);
+    setTimeout(() => el.classList.add('on'), delay);
+  });
+
+  /* ---------- Появление при скролле ---------- */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('shown');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- Полоса прогресса скролла ---------- */
+  const bar = document.getElementById('scrollbar-progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = h.scrollTop / (h.scrollHeight - h.clientHeight) * 100;
+    bar.style.width = pct + '%';
+  }, { passive: true });
+</script>
+</body>
+</html>

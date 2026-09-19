@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Корпоративная платформа | Профессиональная инфраструктура</title>
+<meta name="description" content="Пересобираем сетевой стек. Одно устройство за раз."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Open Sans', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
+      },
+      colors: {
+        surface: '#ffffff',
+        text: '#0a0a0a',
+      }
+    }
+  }
+}
+</script>
+<style>
+body { font-family: 'Open Sans', sans-serif; }
+.font-display { font-family: 'Poppins', sans-serif; }
+details summary::-webkit-details-marker { display: none; }
+details summary::marker { display: none; content: ''; }
+</style>
+</head>
+<body class="font-sans antialiased bg-surface text-text">
+<div hidden=""></div>
+<div class="min-h-screen bg-white text-[#0a0a0a] font-sans selection:bg-gray-200">
+
+<!-- NAV -->
+<nav class="absolute top-0 w-full z-50 border-b border-gray-200/60">
+<div class="max-w-[1400px] mx-auto px-6 lg:px-12">
+<div class="flex justify-between items-center h-24">
+<div class="flex items-center gap-4">
+<div class="w-8 h-8 flex items-center justify-center">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-[#0a0a0a]"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+</div>
+<span class="font-display font-medium text-sm tracking-[0.25em] text-[#0a0a0a] uppercase">Difuse</span>
+</div>
+<button class="p-3 hover:bg-gray-50 rounded-[2px] transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu w-5 h-5 text-[#0a0a0a]" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+</button>
+</div>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="relative pt-40 pb-24 lg:pt-56 lg:pb-40 px-6 lg:px-12 bg-[#f8f8f8] overflow-hidden">
+<div class="max-w-[1400px] mx-auto">
+<div class="grid lg:grid-cols-2 gap-12 items-center">
+<div class="flex gap-8 z-10">
+<div class="hidden md:flex flex-col text-[0.65rem] font-medium text-gray-500 uppercase tracking-widest leading-loose pt-4">
+<span>Компактно</span>
+<span>Мощно</span>
+<span>Бесшовно</span>
+</div>
+<div class="max-w-xl">
+<h1 class="text-5xl lg:text-[5rem] font-display font-medium leading-[1.02] tracking-[-0.02em] text-[#0a0a0a] mb-10">Пересобираем<br/>сетевой стек.</h1>
+<p class="text-gray-500 text-lg mb-12 leading-relaxed max-w-md font-light">Мы создаём интеллектуальные маршрутизаторы, объединяющие сети и коммуникации — модульные, автономные и рассчитанные на десятилетие цифровой независимости.</p>
+<div class="flex items-center gap-8">
+<button class="flex items-center gap-3 bg-white border border-gray-200 px-8 py-4 rounded-[2px] text-sm font-medium hover:bg-gray-50 transition-colors text-[#0a0a0a]">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag w-4 h-4" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg> Онлайн-магазин</button>
+<button class="flex items-center gap-2 text-sm font-medium hover:text-gray-500 transition-colors text-[#0a0a0a] group">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Стать партнёром</button>
+</div>
+</div>
+</div>
+
+<!-- Hero right side -->
+<div class="relative h-[500px] hidden lg:block">
+<div class="absolute top-0 right-12 w-48 space-y-4 z-20">
+<div class="bg-[#0a0a0a]/95 backdrop-blur-sm border border-white/10 rounded-[2px] p-6 text-white">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-bell w-4 h-4 mb-4 text-gray-400" aria-hidden="true"><path d="M10.268 21a2 2 0 0 0 3.464 0"></path><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"></path></svg>
+<div class="text-sm font-light leading-relaxed text-gray-200">v2.7.0<br/>доступна для<br/><span class="font-medium text-white">DMSBG-100</span></div>
+</div>
+<div class="bg-[#0a0a0a]/95 backdrop-blur-sm border border-white/10 rounded-[2px] p-6 text-white">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-headphones w-4 h-4 mb-4 text-gray-400" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
+<div class="text-xs font-medium text-gray-400 uppercase tracking-wider mb-2">Поддержка</div>
+<div class="text-sm font-medium">1800-599-TECH</div>
+</div>
+</div>
+
+<div class="absolute bottom-8 right-0 w-[550px] h-[120px] pointer-events-none">
+<div class="absolute bottom-full left-16 w-2.5 h-32 bg-gradient-to-t from-[#111] to-[#222] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full left-32 w-2.5 h-48 bg-gradient-to-t from-[#111] to-[#222] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full left-48 w-2.5 h-64 bg-gradient-to-t from-[#111] to-[#222] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full left-64 w-2.5 h-48 bg-gradient-to-t from-[#111] to-[#222] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full left-80 w-2.5 h-32 bg-gradient-to-t from-[#111] to-[#222] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute inset-0 bg-gradient-to-tr from-[#0a0a0a] to-[#1a1a1a] rounded-[2px] border border-gray-800 shadow-2xl flex items-center justify-between px-12 z-10">
+<div class="flex items-center gap-6">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="w-10 h-10 text-white opacity-90"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+<span class="font-display font-medium text-2xl tracking-[0.3em] text-white opacity-90 uppercase">Difuse</span>
+</div>
+<div class="flex gap-4">
+<div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-gray-600"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"></div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ABOUT -->
+<section class="py-32 lg:py-40 px-6 lg:px-12 max-w-[1400px] mx-auto bg-white">
+<div class="text-sm font-medium text-gray-500 mb-16 tracking-wide">Более 1 500 команд управляют сетями, звонками и облаком с Difuse</div>
+<div class="grid lg:grid-cols-12 gap-16 items-start">
+<div class="lg:col-span-7">
+<h2 class="text-4xl lg:text-[4rem] font-display font-medium leading-[1.05] tracking-[-0.02em] text-[#0a0a0a]">Единая платформа<br/>для умной бизнес-<br/>инфраструктуры</h2>
+</div>
+<div class="lg:col-span-5 lg:pt-6">
+<p class="text-gray-500 text-lg font-light leading-relaxed mb-12">Мы уверены: бизнес-сети не должны зависеть от устаревшего оборудования и сторонних облаков. Наша платформа объединяет шлюзы, VoIP-системы и средства связи — всё ради производительности, простоты и контроля.</p>
+<button class="flex items-center gap-3 bg-[#0a0a0a] text-white px-8 py-4 rounded-[2px] text-sm font-medium hover:bg-[#1a1a1a] transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg> Узнать о компании</button>
+</div>
+</div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="bg-[#0a0a0a] text-white py-32 lg:py-40 px-6 lg:px-12">
+<div class="max-w-[1400px] mx-auto">
+<div class="text-center mb-24">
+<div class="text-xs font-medium text-gray-500 uppercase tracking-widest mb-8">Почему Difuse?</div>
+<h2 class="text-4xl lg:text-[4rem] font-display font-medium leading-[1.05] tracking-[-0.02em]">Всё, что вам нужно.<br/>Создано для профессионалов.</h2>
+</div>
+<div class="grid md:grid-cols-3 gap-6">
+
+<div class="bg-white text-[#0a0a0a] rounded-[2px] p-12 flex flex-col min-h-[360px] border border-transparent hover:border-gray-300 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield w-8 h-8 mb-8 text-[#0a0a0a]" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path></svg>
+<p class="text-sm text-gray-500 leading-relaxed mb-12 max-w-xs font-light">Расширьте возможности сети с помощью интуитивных шлюзов для плавного подключения и эффективной работы.</p>
+<h3 class="text-4xl font-display font-medium mt-auto leading-tight">Надёжная<br/>безопасность</h3>
+</div>
+
+<div class="bg-white text-[#0a0a0a] rounded-[2px] p-12 flex flex-col min-h-[360px] border border-transparent hover:border-gray-300 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-activity w-8 h-8 mb-8 text-[#0a0a0a]" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg>
+<p class="text-sm text-gray-500 leading-relaxed mb-12 max-w-xs font-light">Субмиллисекундная задержка благодаря оптимизированным алгоритмам маршрутизации и выделенному пограничному кэшированию.</p>
+<h3 class="text-4xl font-display font-medium mt-auto leading-tight">Высокая<br/>производительность</h3>
+</div>
+
+<div class="bg-white text-[#0a0a0a] rounded-[2px] p-12 flex flex-col min-h-[360px] border border-transparent hover:border-gray-300 transition-colors">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw w-8 h-8 mb-8 text-[#0a0a0a]" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg>
+<p class="text-sm text-gray-500 leading-relaxed mb-12 max-w-xs font-light">Обновления по воздуху гарантируют, что ваша инфраструктура всегда работает на новейшей и безопасной прошивке.</p>
+<h3 class="text-4xl font-display font-medium mt-auto leading-tight">Постоянное<br/>развитие</h3>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="py-32 lg:py-40 px-6 lg:px-12 max-w-[1400px] mx-auto">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+<div>
+<h2 class="text-4xl lg:text-[4rem] font-display font-medium leading-[1.05] tracking-[-0.02em] mb-8">Одна платформа.<br/>Множество продуктов.</h2>
+<p class="text-gray-500 text-lg font-light max-w-xl leading-relaxed">Наша экосистема масштабируется вместе с вашим бизнесом. От пограничных маршрутизаторов до коммутаторов — всё управляется из единой панели.</p>
+</div>
+<button class="flex items-center gap-2 text-[#0a0a0a] font-medium hover:text-gray-500 transition-colors group text-sm uppercase tracking-wider">Перейти в магазин <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-right w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true"><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path></svg></button>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+
+<!-- Product 1 -->
+<div class="group border border-gray-200 rounded-[2px] overflow-hidden hover:border-[#0a0a0a] transition-colors">
+<div class="aspect-[4/3] bg-[#f8f8f8] p-8 flex flex-col items-center justify-center relative border-b border-gray-200 overflow-hidden">
+<div class="absolute top-6 left-6">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hard-drive w-5 h-5 text-gray-400 group-hover:text-[#0a0a0a] transition-colors" aria-hidden="true"><path d="M10 16h.01"></path><path d="M2.212 11.577a2 2 0 0 0-.212.896V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.527a2 2 0 0 0-.212-.896L18.55 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"></path><path d="M21.946 12.013H2.054"></path><path d="M6 16h.01"></path></svg>
+</div>
+<div class="transform group-hover:scale-105 transition-transform duration-500">
+<div class="w-40 h-12 bg-[#0a0a0a] rounded-[2px] relative flex flex-col justify-center px-4 gap-2 shadow-2xl border border-gray-800">
+<div class="flex gap-2"><div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div><div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div></div>
+<div class="w-16 h-0.5 bg-gray-700"></div>
+</div>
+</div>
+</div>
+<div class="p-10">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-display font-medium">DMSBG 300</h3>
+<span class="text-sm font-medium text-gray-500">$2 199,00</span>
+</div>
+<p class="text-gray-500 text-sm mb-10 leading-relaxed font-light">Корпоративный маршрутизатор с пропускной способностью 100 Гбит/с.</p>
+<button class="w-full border border-gray-200 text-[#0a0a0a] py-4 rounded-[2px] text-sm font-medium hover:bg-[#0a0a0a] hover:text-white transition-colors flex items-center justify-center gap-2">Подробнее <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right w-4 h-4" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+</div>
+</div>
+
+<!-- Product 2 -->
+<div class="group border border-gray-200 rounded-[2px] overflow-hidden hover:border-[#0a0a0a] transition-colors">
+<div class="aspect-[4/3] bg-[#f8f8f8] p-8 flex flex-col items-center justify-center relative border-b border-gray-200 overflow-hidden">
+<div class="absolute top-6 left-6">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wifi w-5 h-5 text-gray-400 group-hover:text-[#0a0a0a] transition-colors" aria-hidden="true"><path d="M12 20h.01"></path><path d="M2 8.82a15 15 0 0 1 20 0"></path><path d="M5 12.859a10 10 0 0 1 14 0"></path><path d="M8.5 16.429a5 5 0 0 1 7 0"></path></svg>
+</div>
+<div class="transform group-hover:scale-105 transition-transform duration-500">
+<div class="relative mt-8">
+<div class="w-28 h-8 bg-[#0a0a0a] rounded-[2px] relative z-10 shadow-2xl flex items-center px-3 border border-gray-800"><div class="w-1.5 h-1.5 rounded-full bg-gray-500"></div></div>
+<div class="absolute bottom-full left-3 w-1.5 h-14 bg-[#0a0a0a] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full left-13 w-1.5 h-14 bg-[#0a0a0a] rounded-t-[2px] border-x border-t border-gray-800"></div>
+<div class="absolute bottom-full right-3 w-1.5 h-14 bg-[#0a0a0a] rounded-t-[2px] border-x border-t border-gray-800"></div>
+</div>
+</div>
+</div>
+<div class="p-10">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-display font-medium">DMSBG 100</h3>
+<span class="text-sm font-medium text-gray-500">$999,00</span>
+</div>
+<p class="text-gray-500 text-sm mb-10 leading-relaxed font-light">Устройство для филиалов и розничных точек.</p>
+<button class="w-full border border-gray-200 text-[#0a0a0a] py-4 rounded-[2px] text-sm font-medium hover:bg-[#0a0a0a] hover:text-white transition-colors flex items-center justify-center gap-2">Подробнее <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right w-4 h-4" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+</div>
+</div>
+
+<!-- Product 3 -->
+<div class="group border border-gray-200 rounded-[2px] overflow-hidden hover:border-[#0a0a0a] transition-colors">
+<div class="aspect-[4/3] bg-[#f8f8f8] p-8 flex flex-col items-center justify-center relative border-b border-gray-200 overflow-hidden">
+<div class="absolute top-6 left-6">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-cpu w-5 h-5 text-gray-400 group-hover:text-[#0a0a0a] transition-colors" aria-hidden="true"><path d="M12 20v2"></path><path d="M12 2v2"></path><path d="M17 20v2"></path><path d="M17 2v2"></path><path d="M2 12h2"></path><path d="M2 17h2"></path><path d="M2 7h2"></path><path d="M20 12h2"></path><path d="M20 17h2"></path><path d="M20 7h2"></path><path d="M7 20v2"></path><path d="M7 2v2"></path><rect x="4" y="4" width="16" height="16" rx="2"></rect><rect x="8" y="8" width="8" height="8" rx="1"></rect></svg>
+</div>
+<div class="transform group-hover:scale-105 transition-transform duration-500">
+<div class="w-20 h-20 bg-[#0a0a0a] rounded-[2px] transform rotate-12 relative shadow-2xl border border-gray-800">
+<div class="absolute inset-2 border border-gray-700 rounded-[2px]"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-gray-500 rounded-full"></div>
+</div>
+</div>
+</div>
+<div class="p-10">
+<div class="flex justify-between items-start mb-6">
+<h3 class="text-2xl font-display font-medium">DMSBG 50</h3>
+<span class="text-sm font-medium text-gray-500">$399,00</span>
+</div>
+<p class="text-gray-500 text-sm mb-10 leading-relaxed font-light">Компактный шлюз для удалённых сотрудников.</p>
+<button class="w-full border border-gray-200 text-[#0a0a0a] py-4 rounded-[2px] text-sm font-medium hover:bg-[#0a0a0a] hover:text-white transition-colors flex items-center justify-center gap-2">Подробнее <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up-right w-4 h-4" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="py-32 lg:py-40 bg-[#f8f8f8] px-6 lg:px-12">
+<div class="max-w-4xl mx-auto">
+<div class="text-center mb-24">
+<h2 class="text-4xl lg:text-[4rem] font-display font-medium leading-[1.05] tracking-[-0.02em] mb-8">Часто задаваемые вопросы</h2>
+<p class="text-gray-500 text-lg font-light">Всё, что нужно знать о продукте и оплате.</p>
+</div>
+<div class="space-y-4">
+
+<details class="group bg-white border border-gray-200 rounded-[2px]">
+<summary class="flex cursor-pointer items-center justify-between gap-1.5 p-8 text-[#0a0a0a] font-medium">
+<h3 class="font-display text-xl">Как работает самовосстановление сети?</h3>
+<span class="relative size-5 shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</span>
+</summary>
+<div class="px-8 pb-8 text-gray-500 leading-relaxed font-light">Наш маршрутизатор на основе ИИ постоянно отслеживает потери пакетов и задержки по всем доступным WAN-каналам. При обнаружении деградации трафик автоматически перенаправляется за миллисекунды без разрыва активных сессий.</div>
+</details>
+
+<details class="group bg-white border border-gray-200 rounded-[2px]">
+<summary class="flex cursor-pointer items-center justify-between gap-1.5 p-8 text-[#0a0a0a] font-medium">
+<h3 class="font-display text-xl">Можно ли управлять несколькими офисами из одной панели?</h3>
+<span class="relative size-5 shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</span>
+</summary>
+<div class="px-8 pb-8 text-gray-500 leading-relaxed font-light">Да, облачный контроллер Difuse обеспечивает единую панель управления для всех ваших развёртываний по всему миру. Вы можете отправлять шаблоны конфигурации на сотни устройств одновременно.</div>
+</details>
+
+<details class="group bg-white border border-gray-200 rounded-[2px]">
+<summary class="flex cursor-pointer items-center justify-between gap-1.5 p-8 text-[#0a0a0a] font-medium">
+<h3 class="font-display text-xl">Какая поддержка включена?</h3>
+<span class="relative size-5 shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</span>
+</summary>
+<div class="px-8 pb-8 text-gray-500 leading-relaxed font-light">Все корпоративные устройства включают приоритетную поддержку 24/7 с заменой оборудования за 4 часа в поддерживаемых регионах. Обновления ПО включены на весь срок службы устройства.</div>
+</details>
+
+<details class="group bg-white border border-gray-200 rounded-[2px]">
+<summary class="flex cursor-pointer items-center justify-between gap-1.5 p-8 text-[#0a0a0a] font-medium">
+<h3 class="font-display text-xl">Доступен ли API?</h3>
+<span class="relative size-5 shrink-0">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-100 group-open:opacity-0 transition-opacity" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute inset-0 size-5 opacity-0 group-open:opacity-100 transition-opacity rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+</span>
+</summary>
+<div class="px-8 pb-8 text-gray-500 leading-relaxed font-light">Безусловно. Наша платформа построена по принципу API-first. Всё, что доступно в панели управления, можно автоматизировать через RESTful API и провайдер Terraform.</div>
+</details>
+
+</div>
+</div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-[#0a0a0a] text-gray-400 py-24 px-6 lg:px-12">
+<div class="max-w-[1400px] mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-16 mb-24">
+<div class="col-span-2 lg:col-span-2">
+<div class="flex items-center gap-4 mb-10">
+<div class="w-8 h-8 flex items-center justify-center">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="w-6 h-6 text-white"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+</div>
+<span class="font-display font-medium text-sm tracking-[0.25em] text-white uppercase">Difuse</span>
+</div>
+<p class="mb-10 max-w-sm leading-relaxed text-sm font-light">Пересобираем сетевой стек. Одно устройство за раз. Умная бизнес-инфраструктура для современных компаний.</p>
+<div class="flex gap-6">
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail w-5 h-5 hover:text-white cursor-pointer transition-colors" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe w-5 h-5 hover:text-white cursor-pointer transition-colors" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+</div>
+</div>
+<div>
+<h4 class="text-white font-medium mb-8 font-display tracking-wide text-sm uppercase">Продукт</h4>
+<ul class="space-y-5 text-sm font-light">
+<li><a href="#" class="hover:text-white transition-colors">Оборудование</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Программы</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Цены</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Обновления</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-medium mb-8 font-display tracking-wide text-sm uppercase">Компания</h4>
+<ul class="space-y-5 text-sm font-light">
+<li><a href="#" class="hover:text-white transition-colors">О нас</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Карьера</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Новости</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Контакты</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-white font-medium mb-8 font-display tracking-wide text-sm uppercase">Правовая информация</h4>
+<ul class="space-y-5 text-sm font-light">
+<li><a href="#" class="hover:text-white transition-colors">Политика конфиденциальности</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Условия использования</a></li>
+<li><a href="#" class="hover:text-white transition-colors">Политика cookie</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6 text-sm font-light">
+<p>&copy; 2026 Difuse Networks Inc. Все права защищены.</p>
+<div class="flex gap-8">
+<a href="#" class="hover:text-white transition-colors">Статус системы</a>
+<a href="#" class="hover:text-white transition-colors">Безопасность</a>
+</div>
+</div>
+</div>
+</footer>
+
+</div>
+</body>
+</html>

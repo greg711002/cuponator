@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Fitness Landing Bold</title>
+<meta name="description" content="Брутальный фитнес-лендинг"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ['Roboto', 'sans-serif'],
+        display: ['"Archivo Black"', 'sans-serif'],
+      },
+    },
+  },
+}
+</script>
+<style>
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection {
+    background: #ff4500;
+    color: white;
+  }
+</style>
+</head>
+<body class="font-sans antialiased">
+<div class="min-h-screen bg-[#111111] text-[#f4f4f4] font-sans relative overflow-hidden">
+  <!-- Noise overlay -->
+  <div class="pointer-events-none fixed inset-0 z-50 opacity-[0.03] mix-blend-overlay" style="background-image:url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E&quot;)"></div>
+  <!-- Grid background -->
+  <div class="fixed inset-0 pointer-events-none z-0">
+    <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:64px_64px]"></div>
+  </div>
+
+  <div class="relative z-10 flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="grid grid-cols-3 md:grid-cols-4 border-b border-[#ffffff15] uppercase tracking-widest text-[10px] sm:text-xs font-bold font-sans">
+      <div class="p-4 sm:p-6 border-r border-[#ffffff15] flex items-center gap-2">
+        <span class="text-[#ff4500]">Nº</span> 001
+      </div>
+      <div class="p-4 sm:p-6 border-r border-[#ffffff15] col-span-2 flex items-center justify-center md:justify-start">
+        <span class="truncate">Создаём абсолютную силу и выносливость</span>
+      </div>
+      <div class="p-4 sm:p-6 hidden md:flex items-center justify-end gap-6 text-[#ff4500]">
+        <a class="hover:text-white transition-colors flex items-center gap-1" href="#join">Вступить <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></a>
+      </div>
+    </header>
+
+    <main class="flex-1 flex flex-col">
+      <!-- Hero -->
+      <section class="px-4 py-12 sm:px-8 sm:py-20 flex flex-col justify-center border-b border-[#ffffff15] relative">
+        <div class="absolute top-8 right-8 text-[#ff4500] font-display text-2xl tracking-wider hidden md:block">限界を超える</div>
+        <div class="flex flex-col font-display text-[13vw] leading-[0.8] uppercase tracking-tight font-black">
+          <div class="text-transparent" style="-webkit-text-stroke:2px #f4f4f4">НЕТ</div>
+          <div class="flex items-center gap-4 sm:gap-8">
+            <span class="text-[#f4f4f4]">ОТГОВОРОК</span>
+          </div>
+          <div class="flex items-center gap-4 sm:gap-8 text-[#ff4500]">
+            <span>—</span><span>ТОЛЬКО</span>
+          </div>
+          <div class="text-[#ff4500]">РЕЗУЛЬТАТ</div>
+        </div>
+        <div class="mt-12 sm:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-[#ffffff15] pt-8">
+          <div class="font-sans text-xs uppercase tracking-widest text-zinc-400 max-w-xs leading-relaxed">Мы создаём тренировочные методики, которые раскрывают грубую силу и неудержимую выносливость.</div>
+          <div class="font-sans text-xs uppercase tracking-widest text-zinc-400 max-w-xs leading-relaxed">
+            <span class="text-[#ff4500] mb-1 block">2026—НАСТОЯЩЕЕ</span>Железо и пот. Добро пожаловать на полигон.
+          </div>
+          <div class="flex items-end md:justify-end">
+            <span class="font-display text-4xl text-[#f4f4f4]">©2026</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Marquee -->
+      <div class="border-b border-[#ffffff15] bg-[#ff4500] text-black overflow-hidden flex whitespace-nowrap py-3 font-display uppercase text-2xl tracking-widest">
+        <div class="animate-marquee inline-block">
+          <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> /<span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> / <span class="mx-4">ТРЕНИРУЙСЯ ЖЁСТКО</span> / <span class="mx-4">БУДЬ СТОЙКИМ</span> /
+        </div>
+      </div>
+
+      <!-- Cards -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-b border-[#ffffff15]">
+        <!-- Conditioning -->
+        <div class="p-8 md:p-12 border-b md:border-b-0 md:border-r border-[#ffffff15] flex flex-col justify-between group hover:bg-[#1a1a1a] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-[#ff4500] mb-12" aria-hidden="true"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"></path></svg>
+          <div>
+            <h3 class="font-display text-4xl mb-4 uppercase">Кондиция</h3>
+            <p class="font-sans text-sm text-zinc-400 uppercase tracking-wider leading-relaxed">Высокоинтенсивные интервалы для развития сердечно-сосудистой выносливости.</p>
+          </div>
+        </div>
+        <!-- Strength -->
+        <div class="p-8 md:p-12 border-b md:border-b-0 lg:border-r border-[#ffffff15] flex flex-col justify-between group hover:bg-[#1a1a1a] transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-[#ff4500] mb-12" aria-hidden="true"><path d="M17.596 12.768a2 2 0 1 0 2.829-2.829l-1.768-1.767a2 2 0 0 0 2.828-2.829l-2.828-2.828a2 2 0 0 0-2.829 2.828l-1.767-1.768a2 2 0 1 0-2.829 2.829z"></path><path d="m2.5 21.5 1.4-1.4"></path><path d="m20.1 3.9 1.4-1.4"></path><path d="M5.343 21.485a2 2 0 1 0 2.829-2.828l1.767 1.768a2 2 0 1 0 2.829-2.829l-6.364-6.364a2 2 0 1 0-2.829 2.829l1.768 1.767a2 2 0 0 0-2.828 2.829z"></path><path d="m9.6 14.4 4.8-4.8"></path></svg>
+          <div>
+            <h3 class="font-display text-4xl mb-4 uppercase">Сила</h3>
+            <p class="font-sans text-sm text-zinc-400 uppercase tracking-wider leading-relaxed">Тяжёлые протоколы для наращивания мощной мышечной массы.</p>
+          </div>
+        </div>
+        <!-- Discipline -->
+        <div class="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-[#ffffff15] flex flex-col justify-between group hover:bg-[#1a1a1a] transition-colors bg-[#ff4500] text-black">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-10 h-10 text-black mb-12" aria-hidden="true"><line x1="10" x2="14" y1="2" y2="2"></line><line x1="12" x2="15" y1="14" y2="11"></line><circle cx="12" cy="14" r="8"></circle></svg>
+          <div>
+            <h3 class="font-display text-4xl mb-4 uppercase">Дисциплина</h3>
+            <p class="font-sans text-sm text-black/80 uppercase tracking-wider leading-relaxed">Ежедневная стабильность важнее редкой интенсивности. Приходи.</p>
+          </div>
+        </div>
+        <!-- Start Now -->
+        <div class="p-8 md:p-12 flex flex-col justify-center group relative overflow-hidden bg-white text-black">
+          <div class="absolute inset-0 bg-cover bg-center grayscale mix-blend-multiply opacity-50 group-hover:scale-105 transition-transform duration-700" style="background-image:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop')"></div>
+          <div class="relative z-10">
+            <h3 class="font-display text-5xl mb-4 uppercase">Начни<br/>Сейчас</h3>
+            <button class="flex items-center gap-2 mt-8 font-bold uppercase tracking-widest text-xs border-b-2 border-black pb-1 hover:text-[#ff4500] hover:border-[#ff4500] transition-colors">Вступить в клуб <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4" aria-hidden="true"><path d="M7 7h10v10"></path><path d="M7 17 17 7"></path></svg></button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="grid grid-cols-2 md:grid-cols-4 uppercase text-[10px] tracking-widest font-bold text-zinc-500">
+        <div class="p-4 border-r border-[#ffffff15] border-b md:border-b-0 hover:bg-[#1a1a1a] transition-colors cursor-pointer text-center">Instagram</div>
+        <div class="p-4 border-r border-[#ffffff15] border-b md:border-b-0 hover:bg-[#1a1a1a] transition-colors cursor-pointer text-center">Twitter // X</div>
+        <div class="p-4 border-r border-[#ffffff15] hover:bg-[#1a1a1a] transition-colors cursor-pointer text-center">YouTube</div>
+        <div class="p-4 hover:bg-[#1a1a1a] transition-colors cursor-pointer text-center text-[#ff4500]">Связаться</div>
+      </footer>
+    </main>
+  </div>
+</div>
+</body>
+</html>

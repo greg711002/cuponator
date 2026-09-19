@@ -1,0 +1,1160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://db.onlinewebfonts.com/c/6e47ef470dd19698c911332a9b4d1cf4?family=Neue+Haas+Grotesk+Text+Pro" rel="stylesheet" />
+  <link href="https://db.onlinewebfonts.com/c/dec0d9b4e22ca588dc20e1e2e09a59b5?family=Neue+Haas+Grotesk+Display+Pro+55+Roman" rel="stylesheet" />
+  <title>LinkFlow — Соединяем сигналы и действия</title>
+  <style>
+    :root {
+      --green-dark: #1f2a1d;      /* текст, кнопки */
+      --green-mid: #2d3a2a;
+      --green-hover: #2a3827;
+      --green-body: #4b5b47;      /* основной текст */
+      --green-heading: #336443;   /* заголовки */
+      --green-accent: #85AB8B;    /* акцент */
+      --green-cta: #3d5638;       /* нижний блок */
+      --green-cta-hover: #2d4228;
+      --cream: #f2f5ef;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Neue Haas Grotesk Display Pro 55 Roman', 'Neue Haas Grotesk Text Pro', 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    * { box-sizing: border-box; }
+    button, a { font-family: inherit; }
+
+    /* ============================= ЭКРАН 1: HERO ============================= */
+
+    .hero {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    .hero__bg, .hero__bg video, .hero__bg canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* --- Навигация --- */
+
+    .nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 40px;
+    }
+
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green-mid);
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav__logo sup { font-size: 12px; font-weight: 500; }
+
+    .nav__pill {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px;
+      padding: 4px 4px 4px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .nav__link {
+      font-size: 14px;
+      padding: 8px 12px;
+      transition: color .15s;
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--green-body);
+    }
+    .nav__link:hover { color: var(--green-dark); }
+    .nav__link--active { font-weight: 600; color: var(--green-dark); }
+
+    .btn-dark {
+      margin-left: 8px;
+      background: var(--green-dark);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 999px;
+      transition: background .15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-dark:hover { background: var(--green-hover); }
+
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--green-mid);
+    }
+
+    .nav__auth {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--green-mid);
+      text-decoration: none;
+      transition: opacity .15s;
+    }
+    .nav__auth:hover { opacity: .8; }
+    .nav__auth svg { width: 16px; height: 16px; }
+
+    /* --- Кнопка-гамбургер --- */
+
+    .nav__burger {
+      display: none;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.6);
+      color: var(--green-dark);
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .nav__burger:hover { background: rgba(255,255,255,0.9); }
+    .nav__burger svg {
+      position: absolute;
+      width: 20px; height: 20px;
+      transition: all .3s;
+    }
+    .nav__burger .icon-menu { opacity: 1; transform: rotate(0) scale(1); }
+    .nav__burger .icon-x    { opacity: 0; transform: rotate(-90deg) scale(.5); }
+    .nav__burger--open .icon-menu { opacity: 0; transform: rotate(90deg) scale(.5); }
+    .nav__burger--open .icon-x    { opacity: 1; transform: rotate(0) scale(1); }
+
+    /* --- Мобильное меню --- */
+
+    .menu-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      background: rgba(31,42,29,0.4);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .3s;
+    }
+    .menu-overlay--open { opacity: 1; pointer-events: auto; }
+
+    .menu-drawer {
+      display: none;
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      z-index: 21;
+      width: 85%;
+      max-width: 24rem;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: -20px 0 60px rgba(0,0,0,0.15);
+      transform: translateX(100%);
+      transition: transform .5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .menu-drawer--open { transform: translateX(0); }
+
+    .menu-drawer__inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 96px 32px 32px;
+    }
+
+    .menu-drawer__link {
+      display: block;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--green-dark);
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(31,42,29,0.1);
+      opacity: 0;
+      transform: translateX(32px);
+      transition: all .5s;
+    }
+    .menu-drawer--open .menu-drawer__link { opacity: 1; transform: translateX(0); }
+    .menu-drawer--open .menu-drawer__link:nth-child(1) { transition-delay: 150ms; }
+    .menu-drawer--open .menu-drawer__link:nth-child(2) { transition-delay: 220ms; }
+    .menu-drawer--open .menu-drawer__link:nth-child(3) { transition-delay: 290ms; }
+
+    .menu-drawer__cta {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      opacity: 0;
+      transform: translateX(32px);
+      transition: all .5s;
+    }
+    .menu-drawer--open .menu-drawer__cta { opacity: 1; transform: translateX(0); transition-delay: 400ms; }
+    .menu-drawer__cta .btn-dark { margin-left: 0; text-align: center; font-weight: 600; padding: 12px 20px; }
+
+    .menu-drawer__auth {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--green-mid);
+      text-decoration: none;
+    }
+    .menu-drawer__auth svg { width: 16px; height: 16px; }
+
+    /* --- Текст hero --- */
+
+    .hero__copy {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 128px 24px 0;
+    }
+
+    .hero__title {
+      font-weight: 400;
+      line-height: 0.95;
+      color: var(--green-heading);
+      font-size: clamp(2rem, 7vw, 5.25rem);
+      letter-spacing: -0.035em;
+      max-width: 64rem;
+      margin: 0;
+    }
+    .hero__title span { color: var(--green-accent); }
+
+    .hero__subtitle {
+      margin-top: 32px;
+      color: var(--green-body);
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 28rem;
+    }
+
+    /* --- Нижний левый блок --- */
+
+    .hero__cta {
+      position: absolute;
+      left: 40px;
+      bottom: 40px;
+      z-index: 10;
+      max-width: 24rem;
+    }
+
+    .hero__cta-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 12px;
+    }
+    .hero__cta-brand svg { width: 16px; height: 16px; }
+    .hero__cta-brand span { font-size: 14px; font-weight: 500; }
+    .hero__cta-brand sup { font-size: 10px; }
+
+    .hero__cta-text {
+      color: rgba(255,255,255,0.85);
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 0 0 24px;
+      max-width: 20rem;
+    }
+
+    .hero__cta-buttons { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+    .btn-white {
+      background: #fff;
+      color: var(--green-dark);
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 999px;
+      transition: background .15s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-white:hover { background: rgba(255,255,255,0.9); }
+
+    .btn-ghost-light {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 500;
+      transition: opacity .15s;
+      text-decoration: none;
+    }
+    .btn-ghost-light:hover { opacity: .8; }
+
+    /* --- Нижний правый блок: видео-ссылка --- */
+
+    .hero__video-link {
+      position: absolute;
+      right: 40px;
+      bottom: 40px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.9);
+      font-size: 14px;
+    }
+    .hero__video-link button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      backdrop-filter: blur(4px);
+      border: none;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .hero__video-link button:hover { background: rgba(255,255,255,0.3); }
+    .hero__video-link svg { width: 12px; height: 12px; fill: #fff; color: #fff; margin-left: 2px; }
+    .hero__video-link .dur { color: rgba(255,255,255,0.6); }
+
+    /* ============================= ОБЩИЕ СЕКЦИИ ============================= */
+
+    .screen {
+      min-height: 100vh;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 40px;
+      background: var(--cream);
+    }
+
+    .screen__inner { max-width: 1200px; margin: 0 auto; width: 100%; }
+
+    .screen__label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--green-heading);
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 999px;
+      padding: 8px 16px;
+      margin-bottom: 32px;
+    }
+    .screen__label::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green-accent);
+    }
+
+    .screen__title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--green-heading);
+      margin: 0 0 24px;
+      max-width: 56rem;
+    }
+    .screen__title span { color: var(--green-accent); }
+
+    .screen__subtitle {
+      font-size: 18px;
+      color: var(--green-body);
+      line-height: 1.65;
+      max-width: 34rem;
+      margin: 0 0 64px;
+    }
+
+    /* Появление при скролле */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity .7s ease, transform .7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal--in { opacity: 1; transform: translateY(0); }
+
+    /* ============================= ЭКРАН 2: ЦЕЛЬ ============================= */
+
+    .mission__grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 64px;
+      align-items: end;
+    }
+
+    .mission__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 24px;
+      padding: 28px 24px;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .stat:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(31,42,29,0.08); }
+
+    .stat__value {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      color: var(--green-heading);
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+    .stat__label { font-size: 13px; color: var(--green-body); line-height: 1.5; }
+
+    /* ============================= ЭКРАН 3: ПРОЦЕСС ============================= */
+
+    .process__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .pstep {
+      position: relative;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 28px;
+      padding: 32px 28px;
+      overflow: hidden;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .pstep:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(31,42,29,0.1); }
+
+    .pstep__num {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--green-accent);
+      margin-bottom: 48px;
+    }
+
+    .pstep__title {
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--green-dark);
+      margin: 0 0 12px;
+    }
+
+    .pstep__text { font-size: 14px; color: var(--green-body); line-height: 1.6; margin: 0; }
+
+    .pstep::after {
+      content: '';
+      position: absolute;
+      top: 32px; right: 28px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--green-accent);
+      opacity: .5;
+      transition: transform .3s, opacity .3s;
+    }
+    .pstep:hover::after { transform: scale(1.6); opacity: 1; }
+
+    /* ============================= ЭКРАН 4: FLUXENGINE ============================= */
+
+    .screen--dark { background: var(--green-dark); }
+    .screen--dark .screen__label {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.12);
+      color: var(--green-accent);
+    }
+    .screen--dark .screen__title { color: #eef3ea; }
+    .screen--dark .screen__title span { color: var(--green-accent); }
+    .screen--dark .screen__subtitle { color: rgba(238,243,234,0.65); }
+
+    .flux__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .flux__card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 36px 32px;
+      transition: background .3s, transform .3s;
+    }
+    .flux__card:hover { background: rgba(255,255,255,0.08); transform: translateY(-4px); }
+
+    .flux__icon {
+      width: 44px; height: 44px;
+      border-radius: 14px;
+      background: rgba(133,171,139,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .flux__icon svg { width: 20px; height: 20px; color: var(--green-accent); }
+
+    .flux__title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: #eef3ea; margin: 0 0 10px; }
+    .flux__text { font-size: 14px; color: rgba(238,243,234,0.6); line-height: 1.6; margin: 0; }
+
+    /* ============================= ЭКРАН 5: ТАРИФЫ ============================= */
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .plan {
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 32px;
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: transform .3s, box-shadow .3s;
+    }
+    .plan:hover { transform: translateY(-6px); box-shadow: 0 24px 48px rgba(31,42,29,0.1); }
+
+    .plan--featured {
+      background: var(--green-dark);
+      border-color: var(--green-dark);
+      color: #eef3ea;
+    }
+
+    .plan__name {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--green-heading);
+      margin-bottom: 20px;
+    }
+    .plan--featured .plan__name { color: var(--green-accent); }
+
+    .plan__price {
+      font-size: 44px;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--green-dark);
+      margin-bottom: 8px;
+    }
+    .plan--featured .plan__price { color: #eef3ea; }
+    .plan__price span { font-size: 15px; font-weight: 500; color: var(--green-body); }
+    .plan--featured .plan__price span { color: rgba(238,243,234,0.6); }
+
+    .plan__desc { font-size: 14px; color: var(--green-body); line-height: 1.6; margin: 0 0 28px; }
+    .plan--featured .plan__desc { color: rgba(238,243,234,0.6); }
+
+    .plan__features { list-style: none; margin: 0 0 32px; padding: 0; flex: 1; }
+    .plan__features li {
+      font-size: 14px;
+      padding: 10px 0 10px 26px;
+      position: relative;
+      color: var(--green-dark);
+      border-bottom: 1px solid rgba(31,42,29,0.07);
+    }
+    .plan--featured .plan__features li { color: rgba(238,243,234,0.85); border-bottom-color: rgba(255,255,255,0.08); }
+    .plan__features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--green-heading);
+      font-weight: 700;
+    }
+    .plan--featured .plan__features li::before { color: var(--green-accent); }
+
+    .plan__btn { width: 100%; text-align: center; margin-left: 0; padding: 14px 20px; font-weight: 600; }
+    .plan__btn--light {
+      background: transparent;
+      color: var(--green-dark);
+      border: 1.5px solid var(--green-dark);
+    }
+    .plan__btn--light:hover { background: var(--green-dark); color: #fff; }
+    .plan__btn--featured { background: #fff; color: var(--green-dark); }
+    .plan__btn--featured:hover { background: rgba(255,255,255,0.85); }
+
+    /* ============================= ЭКРАН 6: CTA + ФУТЕР ============================= */
+
+    .cta {
+      background: var(--cream);
+      text-align: center;
+      align-items: center;
+    }
+    .cta .screen__inner { display: flex; flex-direction: column; align-items: center; }
+    .cta .screen__title { max-width: 48rem; }
+    .cta .screen__subtitle { margin-bottom: 48px; }
+
+    .cta__buttons { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+    .cta__buttons .btn-dark { margin-left: 0; padding: 16px 32px; font-size: 15px; }
+
+    .footer {
+      background: var(--green-dark);
+      color: rgba(238,243,234,0.55);
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      font-size: 14px;
+    }
+    .footer__logo { color: #eef3ea; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; text-decoration: none; }
+    .footer__logo sup { font-size: 10px; font-weight: 500; }
+    .footer__links { display: flex; gap: 24px; }
+    .footer__links a { color: rgba(238,243,234,0.55); text-decoration: none; transition: color .15s; }
+    .footer__links a:hover { color: #eef3ea; }
+
+    /* ============================= АДАПТИВ ============================= */
+
+    @media (max-width: 1023px) {
+      .nav__pill { display: none; }
+      .nav__burger { display: flex; }
+      .menu-overlay, .menu-drawer { display: block; }
+      .process__steps { grid-template-columns: repeat(2, 1fr); }
+      .mission__grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    @media (max-width: 639px) {
+      .nav { padding: 16px; }
+      .nav__logo { font-size: 20px; }
+      .nav__auth { display: none; }
+      .hero__copy { padding-top: 96px; }
+      .hero__cta { left: 16px; right: 16px; bottom: 24px; max-width: none; }
+      .hero__cta-brand { color: var(--green-cta); }
+      .hero__cta-brand span { font-weight: 600; }
+      .hero__cta-text { color: rgba(61,86,56,0.9); font-weight: 500; }
+      .btn-white { background: var(--green-cta); color: #fff; }
+      .btn-white:hover { background: var(--green-cta-hover); }
+      .btn-ghost-light { color: var(--green-cta); font-weight: 600; }
+      .hero__video-link { display: none; }
+      .hero { padding-bottom: 220px; }
+      .screen { padding: 80px 24px; }
+      .mission__stats { grid-template-columns: 1fr; }
+      .process__steps { grid-template-columns: 1fr; }
+      .flux__grid { grid-template-columns: 1fr; }
+      .plans { grid-template-columns: 1fr; }
+      .footer { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================= ЭКРАН 1: HERO ============================= -->
+  <section class="hero" id="top">
+    <div class="hero__bg">
+      <video id="bg-video" muted playsinline preload="auto" crossorigin="anonymous"
+        src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260511_131941_d136af49-e243-493a-be14-6ff3f24e09e6.mp4"></video>
+      <canvas id="bg-canvas" style="display:none"></canvas>
+    </div>
+
+    <nav class="nav">
+      <a class="nav__logo" href="#top">LinkFlow<sup>TM</sup></a>
+
+      <div class="nav__pill">
+        <a class="nav__link nav__link--active" href="#mission">Цель</a>
+        <a class="nav__link" href="#how">Процесс</a>
+        <a class="nav__link" href="#pricing">Тарифы</a>
+        <a class="btn-dark" href="#cta">Попробовать вживую</a>
+      </div>
+
+      <div class="nav__right">
+        <a class="nav__auth" href="#cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+          Регистрация
+        </a>
+        <a class="nav__auth" href="#cta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+          Войти
+        </a>
+        <button class="nav__burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+          <svg class="icon-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Мобильное меню -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="menu-drawer" id="menuDrawer">
+      <div class="menu-drawer__inner">
+        <div>
+          <a class="menu-drawer__link" href="#mission">Цель</a>
+          <a class="menu-drawer__link" href="#how">Процесс</a>
+          <a class="menu-drawer__link" href="#pricing">Тарифы</a>
+        </div>
+        <div class="menu-drawer__cta">
+          <a class="menu-drawer__auth" href="#cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+            Регистрация
+          </a>
+          <a class="menu-drawer__auth" href="#cta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" x2="3" y1="12" y2="12"/></svg>
+            Войти
+          </a>
+          <a class="btn-dark" href="#cta">Попробовать вживую</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Текст hero -->
+    <div class="hero__copy">
+      <h1 class="hero__title">
+        Устраните разрыв<br />
+        <span>между сигналами<br class="hidden-break" /> и действиями</span>
+      </h1>
+      <p class="hero__subtitle">
+        Превращайте разрозненные сигналы в значимые результаты
+        с помощью рабочих процессов на базе ИИ.
+      </p>
+    </div>
+
+    <!-- Нижний левый блок -->
+    <div class="hero__cta">
+      <div class="hero__cta-brand">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+        <span>FluxEngine<sup>TM</sup></span>
+      </div>
+      <p class="hero__cta-text">
+        LinkFlow плавно объединяет системы вашей компании, выстраивая потоки
+        данных между сервисами — без единой строчки кода.
+      </p>
+      <div class="hero__cta-buttons">
+        <a class="btn-white" href="#cta">Попробовать вживую</a>
+        <a class="btn-ghost-light" href="#how">Узнать больше.</a>
+      </div>
+    </div>
+
+    <!-- Нижний правый блок -->
+    <div class="hero__video-link">
+      <button aria-label="Смотреть видео">
+        <svg viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></svg>
+      </button>
+      <span style="font-weight:500">Как мы работаем?</span>
+      <span class="dur">1:35</span>
+    </div>
+  </section>
+
+  <!-- ============================= ЭКРАН 2: ЦЕЛЬ ============================= -->
+  <section class="screen" id="mission">
+    <div class="screen__inner">
+      <div class="mission__grid">
+        <div class="reveal">
+          <p class="screen__label">Наша цель</p>
+          <h2 class="screen__title">
+            Данные не должны застревать <span>между системами</span>
+          </h2>
+          <p class="screen__subtitle">
+            Каждый день компании теряют часы на ручной перенос данных между
+            CRM, таблицами и чатами. LinkFlow устраняет этот разрыв: сигналы
+            из любых источников мгновенно превращаются в действия — там,
+            где они нужны.
+          </p>
+        </div>
+        <div class="mission__stats reveal">
+          <div class="stat">
+            <div class="stat__value">40+</div>
+            <div class="stat__label">готовых интеграций с популярными сервисами</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">12 млн</div>
+            <div class="stat__label">событий обрабатывается каждый день</div>
+          </div>
+          <div class="stat">
+            <div class="stat__value">99,98%</div>
+            <div class="stat__label">аптайм платформы за последний год</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ЭКРАН 3: ПРОЦЕСС ============================= -->
+  <section class="screen" id="how">
+    <div class="screen__inner">
+      <div class="reveal">
+        <p class="screen__label">Процесс</p>
+        <h2 class="screen__title">
+          От хаоса сигналов — <span>к единому потоку</span>
+        </h2>
+        <p class="screen__subtitle">
+          Четыре шага отделяют вас от автоматизации, которая работает
+          без сценариев и кода.
+        </p>
+      </div>
+
+      <div class="process__steps reveal">
+        <div class="pstep">
+          <div class="pstep__num">ШАГ 01</div>
+          <h3 class="pstep__title">Подключите источники</h3>
+          <p class="pstep__text">
+            CRM, почта, таблицы, вебхуки — подключение занимает пару кликов,
+            без настройки серверов.
+          </p>
+        </div>
+        <div class="pstep">
+          <div class="pstep__num">ШАГ 02</div>
+          <h3 class="pstep__title">Опишите логику словами</h3>
+          <p class="pstep__text">
+            Просто напишите, что должно происходить: «новую заявку — в CRM
+            и уведомление команде».
+          </p>
+        </div>
+        <div class="pstep">
+          <div class="pstep__num">ШАГ 03</div>
+          <h3 class="pstep__title">FluxEngine собирает поток</h3>
+          <p class="pstep__text">
+            ИИ сам выстраивает маршруты данных, проверяет их на тестовых
+            событиях и показывает результат.
+          </p>
+        </div>
+        <div class="pstep">
+          <div class="pstep__num">ШАГ 04</div>
+          <h3 class="pstep__title">Получайте результат</h3>
+          <p class="pstep__text">
+            Поток работает в реальном времени, а вы следите за метриками
+            в живом дашборде.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ЭКРАН 4: FLUXENGINE ============================= -->
+  <section class="screen screen--dark" id="flux">
+    <div class="screen__inner">
+      <div class="reveal">
+        <p class="screen__label">FluxEngine™</p>
+        <h2 class="screen__title">
+          Движок, который понимает <span>ваши данные</span>
+        </h2>
+        <p class="screen__subtitle">
+          Под капотом LinkFlow — FluxEngine: ИИ-ядро, которое само строит,
+          тестирует и масштабирует потоки данных.
+        </p>
+      </div>
+
+      <div class="flux__grid reveal">
+        <div class="flux__card">
+          <div class="flux__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+          </div>
+          <h3 class="flux__title">Без кода</h3>
+          <p class="flux__text">
+            Логика описывается обычным языком. FluxEngine переводит её
+            в рабочие потоки и объясняет каждый шаг.
+          </p>
+        </div>
+        <div class="flux__card">
+          <div class="flux__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3 class="flux__title">Реальное время</h3>
+          <p class="flux__text">
+            События доставляются за миллисекунды: от сигнала до действия
+            проходит меньше времени, чем длится моргание.
+          </p>
+        </div>
+        <div class="flux__card">
+          <div class="flux__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3 class="flux__title">Автомасштабирование</h3>
+          <p class="flux__text">
+            Десять событий в день или десять миллионов — движок сам
+            подстраивает мощность под нагрузку.
+          </p>
+        </div>
+        <div class="flux__card">
+          <div class="flux__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg>
+          </div>
+          <h3 class="flux__title">Прозрачность</h3>
+          <p class="flux__text">
+            Каждое событие записывается в журнал: вы всегда видите, что,
+            когда и почему произошло в потоке.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ЭКРАН 5: ТАРИФЫ ============================= -->
+  <section class="screen" id="pricing">
+    <div class="screen__inner">
+      <div class="reveal">
+        <p class="screen__label">Тарифы</p>
+        <h2 class="screen__title">
+          План под <span>любой масштаб</span>
+        </h2>
+        <p class="screen__subtitle">
+          Начните бесплатно и растите вместе с потоками ваших данных.
+        </p>
+      </div>
+
+      <div class="plans reveal">
+        <div class="plan">
+          <p class="plan__name">Старт</p>
+          <p class="plan__price">0 ₽ <span>/ навсегда</span></p>
+          <p class="plan__desc">Чтобы попробовать и автоматизировать первый процесс.</p>
+          <ul class="plan__features">
+            <li>3 активных потока</li>
+            <li>1 000 событий в месяц</li>
+            <li>5 базовых интеграций</li>
+          </ul>
+          <a href="#cta" class="btn-dark plan__btn plan__btn--light">Начать бесплатно</a>
+        </div>
+
+        <div class="plan plan--featured">
+          <p class="plan__name">Поток</p>
+          <p class="plan__price">990 ₽ <span>/ месяц</span></p>
+          <p class="plan__desc">Для команд, которые строят процессы каждый день.</p>
+          <ul class="plan__features">
+            <li>Безлимитные потоки</li>
+            <li>100 000 событий в месяц</li>
+            <li>Все 40+ интеграций</li>
+            <li>FluxEngine с ИИ-логикой</li>
+          </ul>
+          <a href="#cta" class="btn-dark plan__btn plan__btn--featured">Выбрать Поток</a>
+        </div>
+
+        <div class="plan">
+          <p class="plan__name">Корпорация</p>
+          <p class="plan__price">2 900 ₽ <span>/ месяц</span></p>
+          <p class="plan__desc">Для компаний с высокими нагрузками и требованиями.</p>
+          <ul class="plan__features">
+            <li>Всё из тарифа Поток</li>
+            <li>Безлимит событий</li>
+            <li>Выделенная инфраструктура</li>
+            <li>Поддержка 24/7 и SLA</li>
+          </ul>
+          <a href="#cta" class="btn-dark plan__btn plan__btn--light">Связаться с нами</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ЭКРАН 6: CTA ============================= -->
+  <section class="screen cta" id="cta">
+    <div class="screen__inner">
+      <div class="reveal" style="display:flex;flex-direction:column;align-items:center">
+        <p class="screen__label">Начать</p>
+        <h2 class="screen__title">
+          Соедините свои системы <span>уже сегодня</span>
+        </h2>
+        <p class="screen__subtitle" style="text-align:center">
+          Первый поток запускается за пять минут. Без карты,
+          без кода, без боли.
+        </p>
+        <div class="cta__buttons">
+          <a class="btn-dark" href="#top">Попробовать вживую</a>
+          <a class="btn-dark plan__btn--light" href="#pricing" style="margin-left:0;padding:16px 32px;font-size:15px">Смотреть тарифы</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================= ФУТЕР ============================= -->
+  <footer class="footer">
+    <a class="footer__logo" href="#top">LinkFlow<sup>TM</sup></a>
+    <div class="footer__links">
+      <a href="#mission">Цель</a>
+      <a href="#how">Процесс</a>
+      <a href="#pricing">Тарифы</a>
+    </div>
+    <span>© 2026 LinkFlow. Сигналы становятся действиями.</span>
+  </footer>
+
+  <script>
+    /* ============================= Бумеранг-видеофон =============================
+       Захватывает кадры видео в canvas, затем проигрывает их вперёд/назад
+       в бесшовном цикле со скоростью 30 fps (ширина захвата до 960px). */
+    (function () {
+      var video = document.getElementById('bg-video');
+      var canvas = document.getElementById('bg-canvas');
+      var frames = [];
+      var capturing = true;
+      var lastTime = -1;
+      var MAX_WIDTH = 960;
+      var MAX_FRAMES = 240; // до ~8 сек при 30 fps — защита от переполнения памяти
+      var corsRetryDone = false;
+
+      function captureFrame() {
+        if (!capturing || video.readyState < 2) return;
+        if (video.currentTime === lastTime) return;
+        lastTime = video.currentTime;
+
+        var vw = video.videoWidth, vh = video.videoHeight;
+        if (!vw || !vh) return;
+
+        var scale = Math.min(1, MAX_WIDTH / vw);
+        var w = Math.round(vw * scale), h = Math.round(vh * scale);
+
+        var c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        var ctx = c.getContext('2d');
+        if (!ctx) return;
+        ctx.drawImage(video, 0, 0, w, h);
+        frames.push(c);
+
+        if (frames.length >= MAX_FRAMES) finishCapture();
+      }
+
+      function startBoomerang() {
+        if (!frames.length) return;
+        video.style.display = 'none';
+        canvas.style.display = 'block';
+
+        var ctx = canvas.getContext('2d');
+        canvas.width = frames[0].width;
+        canvas.height = frames[0].height;
+
+        var index = 0, direction = 1;
+        var last = performance.now();
+        var interval = 1000 / 30;
+
+        function render(now) {
+          if (now - last >= interval) {
+            last = now;
+            ctx.drawImage(frames[index], 0, 0);
+            index += direction;
+            if (index >= frames.length - 1) { index = frames.length - 1; direction = -1; }
+            else if (index <= 0) { index = 0; direction = 1; }
+          }
+          requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+      }
+
+      function finishCapture() {
+        if (!capturing) return;
+        capturing = false;
+        startBoomerang();
+      }
+
+      function loop() {
+        captureFrame();
+        if (capturing) requestAnimationFrame(loop);
+      }
+
+      function onLoaded() {
+        video.play().catch(function () {});
+        requestAnimationFrame(loop);
+      }
+
+      video.addEventListener('loadedmetadata', onLoaded);
+      video.addEventListener('ended', finishCapture);
+      if (video.readyState >= 1) onLoaded();
+
+      // Если видео не грузится из-за CORS — повторяем без crossorigin и просто зацикливаем
+      video.addEventListener('error', function () {
+        if (corsRetryDone) { video.loop = true; return; }
+        corsRetryDone = true;
+        capturing = false;
+        video.removeAttribute('crossorigin');
+        video.loop = true;
+        video.load();
+        video.play().catch(function () {});
+      });
+    })();
+
+    /* ============================= Мобильное меню ============================= */
+    (function () {
+      var burger = document.getElementById('burger');
+      var overlay = document.getElementById('menuOverlay');
+      var drawer = document.getElementById('menuDrawer');
+      var open = false;
+
+      function setMenu(v) {
+        open = v;
+        burger.classList.toggle('nav__burger--open', v);
+        overlay.classList.toggle('menu-overlay--open', v);
+        drawer.classList.toggle('menu-drawer--open', v);
+        burger.setAttribute('aria-expanded', v);
+        burger.setAttribute('aria-label', v ? 'Закрыть меню' : 'Открыть меню');
+        document.body.style.overflow = v ? 'hidden' : '';
+      }
+
+      burger.addEventListener('click', function () { setMenu(!open); });
+      overlay.addEventListener('click', function () { setMenu(false); });
+      drawer.querySelectorAll('a').forEach(function (a) {
+        a.addEventListener('click', function () { setMenu(false); });
+      });
+    })();
+
+    /* ============================= Появление при скролле ============================= */
+    (function () {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('reveal--in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      document.querySelectorAll('.reveal').forEach(function (el) {
+        observer.observe(el);
+      });
+    })();
+  </script>
+</body>
+</html>

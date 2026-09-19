@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Windows 95 Ретро UI</title>
+<meta name="description" content="Лендинг в стиле ретро Windows 95"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+@font-face{font-family:"Silkscreen Fallback";src:local(Arial);ascent-override:68.84%;descent-override:16.71%;line-gap-override:0.0%;size-adjust:149.62%}
+:root{--font-sans:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";--font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;--spacing:.25rem;--container-2xl:42rem;--container-4xl:56rem;--container-5xl:64rem;--text-xs:.75rem;--text-xs--line-height:calc(1/.75);--text-sm:.875rem;--text-sm--line-height:calc(1.25/.875);--text-lg:1.125rem;--text-lg--line-height:calc(1.75/1.125);--text-2xl:1.5rem;--text-2xl--line-height:calc(2/1.5);--text-4xl:2.25rem;--text-4xl--line-height:calc(2.5/2.25);--text-6xl:3.75rem;--text-6xl--line-height:1;--font-weight-bold:700;--tracking-wide:.025em;--leading-tight:1.25;--leading-relaxed:1.625;--default-font-family:var(--font-sans);--default-mono-font-family:var(--font-mono);--font-silkscreen:"Silkscreen","Silkscreen Fallback",Arial}
+:root{--background:teal;--foreground:#000;--win-silver:silver;--win-dark-gray:gray;--win-white:#fff;--win-black:#000;--win-navy:navy}
+*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family);-webkit-tap-highlight-color:transparent}
+a{color:inherit;text-decoration:inherit}
+b,strong{font-weight:bolder}
+code,kbd,samp,pre{font-family:var(--default-mono-font-family);font-size:1em}
+button,input,select,optgroup,textarea{font:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}
+[hidden]{display:none!important}
+body{background:var(--background);color:var(--foreground);font-family:var(--font-silkscreen),Arial,monospace}
+/* Tailwind utilities */
+.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.top-1\/2{top:50%}.right-0{right:0}.bottom-0{bottom:0}.left-0{left:0}.left-1\/2{left:50%}.z-10{z-index:10}.z-20{z-index:20}.z-50{z-index:50}.mx-1{margin-inline:calc(var(--spacing)*1)}.mx-auto{margin-inline:auto}.mt-2{margin-top:calc(var(--spacing)*2)}.mb-1{margin-bottom:calc(var(--spacing)*1)}.mb-12{margin-bottom:calc(var(--spacing)*12)}.mb-20{margin-bottom:calc(var(--spacing)*20)}.line-clamp-2{-webkit-line-clamp:2;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-4{height:calc(var(--spacing)*4)}.h-10{height:calc(var(--spacing)*10)}.h-full{height:100%}.min-h-\[90vh\]{min-height:90vh}.min-h-\[200px\]{min-height:200px}.min-h-screen{min-height:100vh}.w-4{width:calc(var(--spacing)*4)}.w-20{width:calc(var(--spacing)*20)}.w-\[2px\]{width:2px}.w-full{width:100%}.max-w-2xl{max-width:var(--container-2xl)}.max-w-4xl{max-width:var(--container-4xl)}.max-w-5xl{max-width:var(--container-5xl)}.-translate-x-1\/2{translate:calc(50% * -1) var(--tw-translate-y,0)}.-translate-y-1\/2{translate:var(--tw-translate-x,0) calc(50% * -1)}.transform{transform:translateX(var(--tw-translate-x,0)) translateY(var(--tw-translate-y,0))}.cursor-pointer{cursor:pointer}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.flex-col{flex-direction:column}.flex-row{flex-direction:row}.flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.gap-1{gap:calc(var(--spacing)*1)}.gap-2{gap:calc(var(--spacing)*2)}.gap-4{gap:calc(var(--spacing)*4)}.gap-6{gap:calc(var(--spacing)*6)}.gap-8{gap:calc(var(--spacing)*8)}.truncate{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.overflow-x-hidden{overflow-x:hidden}.border-r{border-right-style:solid;border-right-width:1px}.border-win-white{border-color:var(--win-white)}.bg-transparent{background-color:#0000}.bg-win-dark-gray{background-color:var(--win-dark-gray)}.bg-win-navy{background-color:var(--win-navy)}.bg-win-silver{background-color:var(--win-silver)}.bg-win-white{background-color:var(--win-white)}.p-2{padding:calc(var(--spacing)*2)}.p-4{padding:calc(var(--spacing)*4)}.p-\[2px\]{padding:2px}.px-1{padding-inline:calc(var(--spacing)*1)}.px-2{padding-inline:calc(var(--spacing)*2)}.px-3{padding-inline:calc(var(--spacing)*3)}.px-4{padding-inline:calc(var(--spacing)*4)}.px-6{padding-inline:calc(var(--spacing)*6)}.py-1{padding-block:calc(var(--spacing)*1)}.py-2{padding-block:calc(var(--spacing)*2)}.pr-1{padding-right:calc(var(--spacing)*1)}.pr-2{padding-right:calc(var(--spacing)*2)}.pb-12{padding-bottom:calc(var(--spacing)*12)}.text-center{text-align:center}.font-mono{font-family:var(--font-mono)}.font-silkscreen{font-family:var(--font-silkscreen)}.text-2xl{font-size:var(--text-2xl);line-height:var(--text-2xl--line-height)}.text-4xl{font-size:var(--text-4xl);line-height:var(--text-4xl--line-height)}.text-6xl{font-size:var(--text-6xl);line-height:var(--text-6xl--line-height)}.text-lg{font-size:var(--text-lg);line-height:var(--text-lg--line-height)}.text-sm{font-size:var(--text-sm);line-height:var(--text-sm--line-height)}.text-xs{font-size:var(--text-xs);line-height:var(--text-xs--line-height)}.text-\[10px\]{font-size:10px}.leading-none{line-height:1}.leading-relaxed{line-height:var(--leading-relaxed)}.leading-tight{line-height:var(--leading-tight)}.font-bold{font-weight:700}.tracking-wide{letter-spacing:var(--tracking-wide)}.break-words{overflow-wrap:break-word}.whitespace-pre-wrap{white-space:pre-wrap}.text-win-black{color:var(--win-black)}.text-win-dark-gray{color:var(--win-dark-gray)}.text-win-navy{color:var(--win-navy)}.text-win-white{color:var(--win-white)}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-\[4px_4px_0_0_rgba\(0\,0\,0\,0\.5\)\]{box-shadow:4px 4px 0 0 rgba(0,0,0,0.5)}
+.group:active .group-active\:bg-win-navy{background-color:var(--win-navy)}.group:active .group-active\:text-win-white{color:var(--win-white)}.group:active .group-active\:brightness-75{filter:brightness(75%)}
+@media(hover:hover){.hover\:bg-win-white:hover{background-color:var(--win-white)}.hover\:underline:hover{text-decoration-line:underline}}
+.focus\:ring-1:focus{box-shadow:0 0 0 1px var(--win-black)}.focus\:outline-none:focus{outline:none}.active\:bg-win-silver:active{background-color:var(--win-silver)}
+@media(min-width:48rem){.md\:mt-24{margin-top:calc(var(--spacing)*24)}.md\:block{display:block}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:flex-col{flex-direction:column}.md\:flex-row{flex-direction:row}.md\:flex-nowrap{flex-wrap:nowrap}.md\:p-12{padding:calc(var(--spacing)*12)}}
+.win-border{border-top:2px solid var(--win-white);border-left:2px solid var(--win-white);border-right:2px solid var(--win-black);border-bottom:2px solid var(--win-black)}.win-border-inset{border-top:2px solid var(--win-dark-gray);border-left:2px solid var(--win-dark-gray);border-right:2px solid var(--win-white);border-bottom:2px solid var(--win-white)}.win-border-button{border-top:2px solid var(--win-white);border-left:2px solid var(--win-white);border-right:2px solid var(--win-black);border-bottom:2px solid var(--win-black);box-shadow:inset -1px -1px 0 0 var(--win-dark-gray),inset 1px 1px 0 0 var(--win-white)}.win-border-button:active{border-top:2px solid var(--win-black);border-left:2px solid var(--win-black);border-right:2px solid var(--win-white);border-bottom:2px solid var(--win-white);box-shadow:inset 1px 1px 0 0 var(--win-dark-gray)}
+</style>
+</head>
+<body class="font-silkscreen antialiased">
+<main class="min-h-screen font-silkscreen text-sm pb-12 overflow-x-hidden">
+
+  <!-- Hero Section -->
+  <section class="relative min-h-[90vh] p-4 flex flex-col md:flex-row gap-8">
+    <!-- Desktop Icons -->
+    <div class="flex flex-row md:flex-col gap-6 flex-wrap md:flex-nowrap z-10">
+      <div class="flex flex-col items-center gap-1 w-20 cursor-pointer group">
+        <div class="text-4xl group-active:brightness-75">💻</div>
+        <div class="text-win-white bg-transparent group-active:bg-win-navy group-active:text-win-white px-1 text-center text-xs leading-tight line-clamp-2 break-words">Мой Компьютер</div>
+      </div>
+      <div class="flex flex-col items-center gap-1 w-20 cursor-pointer group">
+        <div class="text-4xl group-active:brightness-75">📁</div>
+        <div class="text-win-white bg-transparent group-active:bg-win-navy group-active:text-win-white px-1 text-center text-xs leading-tight line-clamp-2 break-words">Проекты</div>
+      </div>
+      <div class="flex flex-col items-center gap-1 w-20 cursor-pointer group">
+        <div class="text-4xl group-active:brightness-75">📁</div>
+        <div class="text-win-white bg-transparent group-active:bg-win-navy group-active:text-win-white px-1 text-center text-xs leading-tight line-clamp-2 break-words">Документы</div>
+      </div>
+      <div class="flex flex-col items-center gap-1 w-20 cursor-pointer group">
+        <div class="text-4xl group-active:brightness-75">🌐</div>
+        <div class="text-win-white bg-transparent group-active:bg-win-navy group-active:text-win-white px-1 text-center text-xs leading-tight line-clamp-2 break-words">Интернет</div>
+      </div>
+      <div class="flex flex-col items-center gap-1 w-20 cursor-pointer group">
+        <div class="text-4xl group-active:brightness-75">🗑️</div>
+        <div class="text-win-white bg-transparent group-active:bg-win-navy group-active:text-win-white px-1 text-center text-xs leading-tight line-clamp-2 break-words">Корзина</div>
+      </div>
+    </div>
+
+    <!-- Hero Window -->
+    <div class="absolute top-1/2 left-1/2 w-full max-w-2xl z-20 px-4" style="transform: translate(-50%, -50%)">
+      <div class="bg-win-silver win-border p-[2px] shadow-[4px_4px_0_0_rgba(0,0,0,0.5)]">
+        <div class="bg-win-navy text-win-white px-2 py-1 flex justify-between items-center font-bold tracking-wide mb-1">
+          <span class="truncate pr-2">Welcome_to_1995.exe</span>
+          <div class="flex gap-1">
+            <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">_</button>
+            <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">□</button>
+            <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">x</button>
+          </div>
+        </div>
+        <div class="bg-win-silver p-2">
+          <div class="flex flex-col md:flex-row gap-6 p-4 bg-win-white win-border-inset">
+            <div class="text-6xl hidden md:block">🚀</div>
+            <div class="flex flex-col gap-4">
+              <h1 class="text-2xl font-bold text-win-black">Ретро-интерфейс</h1>
+              <p class="text-win-dark-gray leading-relaxed">Устал от современных скучных дизайнов? Вернись в прошлое с UI-китом в стиле Windows 95. Серый, угловатый и абсолютно прекрасный.</p>
+              <div class="flex gap-4 mt-2">
+                <button class="bg-win-silver win-border-button px-6 py-2 active:bg-win-silver focus:outline-none font-bold">Начать</button>
+                <button class="bg-win-silver win-border-button px-6 py-2 active:bg-win-silver focus:outline-none">Отмена</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="p-4 md:p-12 md:mt-24 max-w-5xl mx-auto z-10 relative">
+    <div class="bg-win-silver win-border p-[2px] shadow-[4px_4px_0_0_rgba(0,0,0,0.5)]">
+      <div class="bg-win-navy text-win-white px-2 py-1 flex justify-between items-center font-bold tracking-wide mb-1">
+        <span class="truncate pr-2">Панель управления - Функции</span>
+        <div class="flex gap-1">
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">_</button>
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">□</button>
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">x</button>
+        </div>
+      </div>
+      <div class="bg-win-silver p-2">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
+          <div class="flex flex-col items-center text-center gap-2 p-4 hover:bg-win-white win-border-inset cursor-pointer">
+            <div class="text-4xl">🎨</div>
+            <h3 class="font-bold">Родные цвета</h3>
+            <p class="text-xs text-win-dark-gray">16-битная палитра с классическим бирюзовым и серебристым.</p>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2 p-4 hover:bg-win-white win-border-inset cursor-pointer">
+            <div class="text-4xl">🔲</div>
+            <h3 class="font-bold">3D-рамки</h3>
+            <p class="text-xs text-win-dark-gray">Точные рамки с тактильным эффектом нажатия.</p>
+          </div>
+          <div class="flex flex-col items-center text-center gap-2 p-4 hover:bg-win-white win-border-inset cursor-pointer">
+            <div class="text-4xl">⚡</div>
+            <h3 class="font-bold">Молниеносно</h3>
+            <p class="text-xs text-win-dark-gray">Никаких анимаций. Чистый HTML и CSS.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- README Section -->
+  <section class="p-4 md:p-12 md:mt-24 max-w-4xl mx-auto z-10 relative mb-12">
+    <div class="bg-win-silver win-border p-[2px] shadow-[4px_4px_0_0_rgba(0,0,0,0.5)]">
+      <div class="bg-win-navy text-win-white px-2 py-1 flex justify-between items-center font-bold tracking-wide mb-1">
+        <span class="truncate pr-2">README.TXT - Блокнот</span>
+        <div class="flex gap-1">
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">_</button>
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">□</button>
+          <button class="bg-win-silver text-win-black win-border-button w-4 h-4 flex items-center justify-center font-bold text-[10px] leading-none">x</button>
+        </div>
+      </div>
+      <div class="bg-win-silver p-2">
+        <div class="bg-win-white win-border-inset p-4 min-h-[200px] font-mono text-sm whitespace-pre-wrap">=========================================
+  VINTAGE UI KIT - ПРИМЕЧАНИЯ v1.0
+=========================================
+
+Спасибо за установку Vintage UI.
+
+Системные требования:
+- Современный браузер
+- Ностальгия по 90-м
+- Разрешение 640x480 (шутка)
+
+Всё для создания интерфейсов в стиле CRT-монитора. Кнопки, окна, панели задач и многое другое.
+
+Просто скопируй компоненты и вставь в проект. Мастер установки не нужен!
+
+(c) 1995-2026 Retro Corp.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="p-4 md:p-12 md:mt-24 max-w-5xl mx-auto z-10 relative mb-20">
+    <div class="bg-win-silver win-border p-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-4">
+        <div class="text-4xl">💾</div>
+        <div>
+          <p class="font-bold text-win-black">Vintage UI Kit</p>
+          <p class="text-xs text-win-dark-gray">На основе Next.js и Tailwind CSS</p>
+        </div>
+      </div>
+      <div class="flex gap-4">
+        <a href="#" class="text-win-navy hover:underline focus:outline-none focus:ring-1">Github</a>
+        <a href="#" class="text-win-navy hover:underline focus:outline-none focus:ring-1">Twitter</a>
+        <a href="#" class="text-win-navy hover:underline focus:outline-none focus:ring-1">Документы</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Taskbar -->
+  <div class="fixed bottom-0 left-0 right-0 h-10 bg-win-silver win-border flex items-center justify-between px-1 z-50">
+    <div class="flex gap-1 h-full py-1">
+      <button class="bg-win-silver win-border-button px-2 h-full flex items-center gap-2 font-bold active:bg-win-silver">
+        <span class="text-lg leading-none">🪟</span> Пуск
+      </button>
+      <div class="w-[2px] h-full bg-win-dark-gray mx-1 border-r border-win-white"></div>
+      <button class="bg-win-silver win-border-button px-4 h-full flex items-center gap-2 active:bg-win-silver bg-win-white win-border-inset">Welcome_to_1995.exe</button>
+    </div>
+    <div class="h-full py-1 pr-1">
+      <div class="h-full win-border-inset px-3 flex items-center text-xs bg-win-silver">06:34 PM</div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>

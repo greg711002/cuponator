@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oneapp — Ваши встречи работают на вас</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            background-color: #f8fafc;
+            color: #0f172b;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ===== GRADIENT BLOBS ===== */
+        .bg-blobs {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            mix-blend-mode: multiply;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50%;
+            height: 50%;
+            background: rgba(191, 219, 254, 0.4);
+            filter: blur(120px);
+        }
+
+        .blob-2 {
+            top: 20%;
+            right: -10%;
+            width: 60%;
+            height: 60%;
+            background: rgba(252, 206, 232, 0.4);
+            filter: blur(120px);
+        }
+
+        .blob-3 {
+            bottom: -20%;
+            left: 20%;
+            width: 50%;
+            height: 50%;
+            background: rgba(164, 244, 207, 0.4);
+            filter: blur(120px);
+        }
+
+        .blob-4 {
+            top: 40%;
+            left: 40%;
+            width: 40%;
+            height: 40%;
+            background: rgba(233, 213, 255, 0.3);
+            filter: blur(100px);
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-logo-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: #004e3b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .nav-logo-text {
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: -0.025em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #45556c;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover {
+            color: #0f172b;
+        }
+
+        .nav-btn {
+            padding: 8px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fff;
+            background: linear-gradient(to right, #007956, #004e3b);
+            border: none;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.15s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(to right, #009767, #005f46);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 96px 24px 128px;
+            max-width: 1024px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 12px;
+            margin-bottom: 32px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.025em;
+            text-transform: uppercase;
+            border-radius: 9999px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.6);
+            color: #62748e;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: #0f172b;
+            margin-bottom: 24px;
+            max-width: 896px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #62748e;
+            margin-bottom: 64px;
+            max-width: 672px;
+            line-height: 1.6;
+        }
+
+        /* ===== CARDS GRID ===== */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            width: 100%;
+        }
+
+        /* ===== CARD (flex-column, no absolute, no overflow hacks) ===== */
+        .card {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+            transition: box-shadow 0.15s;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Card illustration area */
+        .card-illustration {
+            width: 100%;
+            height: 192px;
+            background: rgba(248, 250, 252, 0.5);
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(241, 245, 249, 0.5);
+            position: relative;
+        }
+
+        .card-illustration-gradient {
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+        }
+
+        .card-illustration-gradient.emerald {
+            background: linear-gradient(to bottom right, rgba(208, 250, 229, 0.4), transparent);
+        }
+
+        .card-illustration-gradient.pink {
+            background: linear-gradient(to bottom right, rgba(252, 231, 243, 0.4), transparent);
+        }
+
+        .card-illustration-gradient.blue {
+            background: linear-gradient(to bottom right, rgba(219, 234, 254, 0.4), transparent);
+        }
+
+        /* Card 1 illustration: rotated square */
+        .illust-square {
+            width: 80px;
+            height: 80px;
+            background: #a4f4cf;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: rotate(12deg);
+            position: relative;
+            z-index: 1;
+        }
+
+        .illust-square-inner {
+            width: 40px;
+            height: 40px;
+            background: #004e3b;
+            border-radius: 8px;
+        }
+
+        /* Card 2 illustration: chat bubbles */
+        .illust-chat {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .illust-chat-bubble {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #f1f5f9;
+        }
+
+        .illust-chat-bubble-1 {
+            width: 75%;
+            height: 48px;
+        }
+
+        .illust-chat-bubble-2 {
+            width: 100%;
+            height: 64px;
+            align-self: flex-end;
+        }
+
+        .chat-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #fccee8;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-line {
+            height: 8px;
+            border-radius: 9999px;
+            background: #f1f5f9;
+        }
+
+        .chat-line-sm {
+            width: 96px;
+        }
+
+        .chat-line-md {
+            width: 128px;
+        }
+
+        .chat-sparkle {
+            width: 16px;
+            height: 16px;
+            color: #00bb7f;
+            margin-right: 8px;
+            flex-shrink: 0;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        /* Card 3 illustration: action blocks */
+        .illust-action {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .illust-action-card {
+            width: 64px;
+            height: 48px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .illust-action-line {
+            width: 24px;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 9999px;
+        }
+
+        .illust-action-blocks {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .illust-action-block {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+        }
+
+        .illust-action-block.blue {
+            background: #dbeafe;
+        }
+
+        .illust-action-block.purple {
+            background: #f3e8ff;
+        }
+
+        /* Card text */
+        .card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #0f172b;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #62748e;
+            line-height: 1.625;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (min-width: 768px) {
+            .hero h1 {
+                font-size: 72px;
+            }
+
+            .hero p {
+                font-size: 20px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .nav-links {
+                display: flex;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 64px 16px 80px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background gradient blobs -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        <div class="blob blob-4"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-logo">
+            <div class="nav-logo-icon">O</div>
+            <span class="nav-logo-text">Oneapp</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Возможности</a>
+            <a href="#">Цены</a>
+            <a href="#">FAQ</a>
+        </div>
+        <button class="nav-btn">Скачать</button>
+    </nav>
+
+    <!-- Hero -->
+    <main class="hero">
+        <div class="hero-badge">Как это работает</div>
+        <h1>Пусть ваши встречи работают на вас</h1>
+        <p>Oneapp тихо работает в фоне и записывает ваши разговоры в Zoom, Meet, Teams и других сервисах, создавая точные транскрипции.</p>
+
+        <!-- Cards Grid -->
+        <div class="cards-grid">
+
+            <!-- Card 1: Start your meeting -->
+            <div class="card">
+                <div class="card-illustration">
+                    <div class="card-illustration-gradient emerald"></div>
+                    <div class="illust-square">
+                        <div class="illust-square-inner"></div>
+                    </div>
+                </div>
+                <h3>Начните встречу</h3>
+                <p>Oneapp тихо работает в фоне и записывает ваши разговоры в Zoom, Meet, Teams и других сервисах.</p>
+            </div>
+
+            <!-- Card 2: AI Copilot -->
+            <div class="card">
+                <div class="card-illustration">
+                    <div class="card-illustration-gradient pink"></div>
+                    <div class="illust-chat">
+                        <div class="illust-chat-bubble illust-chat-bubble-1">
+                            <div class="chat-avatar"></div>
+                            <div class="chat-line chat-line-sm"></div>
+                        </div>
+                        <div class="illust-chat-bubble illust-chat-bubble-2">
+                            <span class="chat-sparkle">&#10039;</span>
+                            <div class="chat-line chat-line-md"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>ИИ-помощник</h3>
+                <p>Во время разговора Oneapp создаёт точные транскрипции, понятные резюме, ключевые решения и задачи автоматически.</p>
+            </div>
+
+            <!-- Card 3: Turn meetings into action -->
+            <div class="card">
+                <div class="card-illustration">
+                    <div class="card-illustration-gradient blue"></div>
+                    <div class="illust-action">
+                        <div class="illust-action-card">
+                            <div class="illust-action-line"></div>
+                        </div>
+                        <div class="illust-action-blocks">
+                            <div class="illust-action-block blue"></div>
+                            <div class="illust-action-block purple"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Превращайте встречи в действия</h3>
+                <p>Просматривайте заметки с поиском, делитесь ключевыми моментами с командой и отправляйте follow-up мгновенно.</p>
+            </div>
+
+        </div>
+    </main>
+
+</body>
+</html>

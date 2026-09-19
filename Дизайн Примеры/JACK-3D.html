@@ -1,0 +1,734 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0c0c0c" />
+  <meta name="description" content="Портфолио Джека — 3D-креатора, моушн-дизайнера и автора визуальных миров." />
+  <title>Джек — 3D-креатор</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;family=Unbounded:wght@500;600;700;800;900&amp;display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0c0c0c;
+      --paper: #ffffff;
+      --silver: #d7e2ea;
+      --muted: rgba(215, 226, 234, 0.62);
+      --line: rgba(215, 226, 234, 0.18);
+      --radius: clamp(30px, 4vw, 64px);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--ink); }
+    body {
+      margin: 0;
+      overflow-x: clip;
+      background: var(--ink);
+      color: var(--silver);
+      font-family: "Manrope", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+    button, a { color: inherit; font: inherit; }
+    a { text-decoration: none; }
+    figure { margin: 0; }
+    img { display: block; max-width: 100%; }
+    ::selection { background: #b600a8; color: #fff; }
+
+    .page { min-height: 100vh; overflow-x: clip; background: var(--ink); }
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.88' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .display {
+      margin: 0;
+      font-family: "Unbounded", sans-serif;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.075em;
+      line-height: 0.86;
+    }
+    .metal-text {
+      color: #aebcc7;
+      background: linear-gradient(180deg, #646973 0%, #eef8ff 46%, #899aa7 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .section-title { font-size: clamp(3.2rem, 11vw, 10rem); text-align: center; }
+
+    .reveal {
+      opacity: 0;
+      transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 34px), 0);
+      transition: opacity 800ms cubic-bezier(.2,.72,.25,1), transform 800ms cubic-bezier(.2,.72,.25,1);
+      transition-delay: var(--delay, 0ms);
+    }
+    .reveal.is-visible { opacity: 1; transform: translate3d(0, 0, 0); }
+
+    .hero {
+      position: relative;
+      display: flex;
+      min-height: 100svh;
+      flex-direction: column;
+      isolation: isolate;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 68%, rgba(115, 33, 176, 0.13), transparent 28%),
+        var(--ink);
+    }
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: linear-gradient(to bottom, transparent, black 28%, black 78%, transparent);
+    }
+    .nav {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px clamp(20px, 3vw, 48px) 0;
+      color: var(--silver);
+      font-size: clamp(.68rem, 1.15vw, 1.35rem);
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .nav a { position: relative; opacity: .92; transition: opacity 200ms ease; }
+    .nav a::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      bottom: -7px;
+      left: 0;
+      height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 260ms ease;
+    }
+    .nav a:hover { opacity: .66; }
+    .nav a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+    .hero-heading-wrap {
+      position: relative;
+      z-index: 5;
+      margin-top: clamp(44px, 6vh, 88px);
+      overflow: hidden;
+      padding: 0 clamp(12px, 1.7vw, 28px);
+    }
+    .hero-heading {
+      width: 100%;
+      white-space: nowrap;
+      font-size: clamp(3.25rem, 10.95vw, 13.5rem);
+      text-align: center;
+    }
+    .portrait-wrap {
+      position: absolute;
+      z-index: 12;
+      bottom: 0;
+      left: 50%;
+      width: clamp(292px, 38vw, 560px);
+      transform: translateX(-50%);
+      will-change: transform;
+    }
+    .portrait-wrap.reveal {
+      opacity: 0;
+      transform: translateX(-50%) translate3d(var(--reveal-x, 0), var(--reveal-y, 34px), 0);
+    }
+    .portrait-wrap.reveal.is-visible { opacity: 1; transform: translateX(-50%) translate3d(0, 0, 0); }
+    .portrait-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 25% 5% 0;
+      z-index: -1;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(182,0,168,.23), rgba(118,33,176,.09) 42%, transparent 70%);
+      filter: blur(20px);
+    }
+    .portrait { width: 100%; filter: saturate(.86) contrast(1.04); user-select: none; }
+    .hero-bottom {
+      position: relative;
+      z-index: 20;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-top: auto;
+      padding: 0 clamp(20px, 3vw, 48px) clamp(24px, 4vh, 44px);
+    }
+    .hero-note {
+      max-width: 290px;
+      margin: 0;
+      color: var(--silver);
+      font-size: clamp(.72rem, 1.25vw, 1.28rem);
+      font-weight: 400;
+      line-height: 1.42;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .contact-button {
+      position: relative;
+      display: inline-flex;
+      min-height: 50px;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border: 0;
+      border-radius: 999px;
+      padding: 15px clamp(30px, 4vw, 52px);
+      outline: 2px solid #fff;
+      outline-offset: -3px;
+      background: linear-gradient(123deg, #18011f 7%, #b600a8 37%, #7621b0 72%, #be4c00 100%);
+      box-shadow: 0 4px 18px rgba(181,1,167,.32), inset 4px 4px 12px #7721b1;
+      color: #fff;
+      cursor: pointer;
+      font-size: clamp(.72rem, 1vw, .98rem);
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: transform 220ms ease, box-shadow 220ms ease;
+    }
+    .contact-button::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      background: linear-gradient(100deg, transparent 22%, rgba(255,255,255,.35) 48%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform 650ms ease;
+    }
+    .contact-button span { position: relative; z-index: 1; }
+    .contact-button:hover { transform: translateY(-3px); box-shadow: 0 12px 34px rgba(181,1,167,.4), inset 4px 4px 12px #7721b1; }
+    .contact-button:hover::before { transform: translateX(120%); }
+
+    .marquee-section { position: relative; overflow: hidden; padding: clamp(86px, 12vw, 168px) 0 54px; background: var(--ink); }
+    .marquee-section::before, .marquee-section::after {
+      content: "";
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      bottom: 0;
+      width: min(10vw, 150px);
+      pointer-events: none;
+    }
+    .marquee-section::before { left: 0; background: linear-gradient(90deg, var(--ink), transparent); }
+    .marquee-section::after { right: 0; background: linear-gradient(-90deg, var(--ink), transparent); }
+    .marquee-row { width: max-content; will-change: transform; }
+    .marquee-row + .marquee-row { margin-top: 12px; }
+    .marquee-track { display: flex; width: max-content; gap: 12px; }
+    .marquee-tile {
+      position: relative;
+      width: clamp(260px, 29vw, 420px);
+      height: clamp(168px, 18.65vw, 270px);
+      flex: none;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 22px;
+      background: #161616;
+    }
+    .marquee-tile img { width: 100%; height: 100%; object-fit: cover; }
+
+    .about {
+      position: relative;
+      display: grid;
+      min-height: 100svh;
+      place-items: center;
+      overflow: hidden;
+      padding: 110px clamp(20px, 4vw, 64px);
+      background: var(--ink);
+    }
+    .about::before {
+      content: "";
+      position: absolute;
+      width: 50vw;
+      height: 50vw;
+      max-width: 760px;
+      max-height: 760px;
+      border: 1px solid rgba(215,226,234,.1);
+      border-radius: 50%;
+      box-shadow: 0 0 0 10vw rgba(255,255,255,.012), 0 0 0 20vw rgba(255,255,255,.008);
+    }
+    .about-content { position: relative; z-index: 8; display: flex; width: min(100%, 980px); flex-direction: column; align-items: center; text-align: center; }
+    .about-copy {
+      max-width: 680px;
+      margin: clamp(44px, 6vw, 80px) auto 0;
+      color: var(--silver);
+      font-size: clamp(1rem, 1.7vw, 1.35rem);
+      font-weight: 500;
+      line-height: 1.75;
+    }
+    .about-copy .char { opacity: .16; transition: opacity 130ms linear; }
+    .about .contact-button { margin-top: clamp(54px, 7vw, 96px); }
+    .decor {
+      position: absolute;
+      z-index: 5;
+      width: clamp(92px, 14vw, 220px);
+      pointer-events: none;
+      filter: drop-shadow(0 22px 34px rgba(0,0,0,.38));
+      will-change: transform;
+    }
+    .decor-moon { top: 4%; left: 3%; }
+    .decor-lego { top: 4%; right: 3%; }
+    .decor-object { bottom: 8%; left: 7%; width: clamp(78px, 12vw, 180px); }
+    .decor-group { right: 7%; bottom: 8%; width: clamp(100px, 15vw, 230px); }
+
+    .services {
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: clamp(84px, 10vw, 148px) clamp(20px, 4vw, 64px) 120px;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    .services .section-title { margin-bottom: clamp(60px, 9vw, 124px); }
+    .service-list { width: min(100%, 1180px); margin: 0 auto; border-top: 1px solid rgba(12,12,12,.16); }
+    .service-item {
+      display: grid;
+      grid-template-columns: minmax(110px, .72fr) 1.6fr;
+      gap: clamp(24px, 6vw, 96px);
+      align-items: center;
+      border-bottom: 1px solid rgba(12,12,12,.16);
+      padding: clamp(30px, 4vw, 54px) 0;
+    }
+    .service-number {
+      font-family: "Unbounded", sans-serif;
+      font-size: clamp(3.1rem, 8vw, 8.7rem);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      line-height: .8;
+    }
+    .service-name {
+      margin: 0;
+      font-family: "Unbounded", sans-serif;
+      font-size: clamp(1rem, 2vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -.035em;
+      line-height: 1.15;
+      text-transform: uppercase;
+    }
+    .service-description {
+      max-width: 760px;
+      margin: 14px 0 0;
+      color: rgba(12,12,12,.62);
+      font-size: clamp(.9rem, 1.3vw, 1.14rem);
+      font-weight: 400;
+      line-height: 1.65;
+    }
+
+    .projects {
+      position: relative;
+      z-index: 20;
+      margin-top: calc(var(--radius) * -0.75);
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: clamp(94px, 11vw, 160px) clamp(14px, 3vw, 46px) 0;
+      background: var(--ink);
+    }
+    .projects .section-title { margin-bottom: clamp(70px, 9vw, 130px); }
+    .project-stack { width: min(100%, 1380px); margin: 0 auto; }
+    .project-stage { position: relative; height: min(94vh, 940px); }
+    .project-card {
+      position: sticky;
+      top: calc(72px + var(--card-top, 0px));
+      overflow: hidden;
+      border: 2px solid var(--silver);
+      border-radius: var(--radius);
+      padding: clamp(18px, 2.4vw, 34px);
+      background: var(--ink);
+      box-shadow: 0 -10px 40px rgba(0,0,0,.42);
+      transform-origin: top center;
+      will-change: transform;
+    }
+    .project-head {
+      display: grid;
+      grid-template-columns: auto minmax(130px, .7fr) minmax(220px, 1.2fr) auto;
+      gap: clamp(16px, 3vw, 46px);
+      align-items: center;
+      padding: 2px 4px clamp(20px, 3vw, 42px);
+    }
+    .project-number {
+      font-family: "Unbounded", sans-serif;
+      font-size: clamp(3.1rem, 7vw, 8rem);
+      font-weight: 900;
+      letter-spacing: -.08em;
+      line-height: .8;
+    }
+    .project-category { color: var(--muted); font-size: clamp(.68rem, .9vw, .9rem); font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+    .project-name { margin: 0; font-family: "Unbounded", sans-serif; font-size: clamp(1rem, 2vw, 2rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.1; text-transform: uppercase; }
+    .live-button {
+      display: inline-flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--silver);
+      border-radius: 999px;
+      padding: 12px clamp(20px, 3vw, 38px);
+      background: transparent;
+      color: var(--silver);
+      cursor: pointer;
+      font-size: clamp(.68rem, .9vw, .9rem);
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background 220ms ease, color 220ms ease;
+    }
+    .live-button:hover { background: var(--silver); color: var(--ink); }
+    .project-gallery { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: clamp(10px, 1.2vw, 18px); height: min(64vh, 620px); }
+    .project-gallery-left { display: grid; grid-template-rows: .82fr 1.18fr; gap: clamp(10px, 1.2vw, 18px); min-height: 0; }
+    .project-image { width: 100%; height: 100%; min-height: 0; overflow: hidden; border-radius: clamp(22px, 3vw, 52px); background: #191919; }
+    .project-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 900ms cubic-bezier(.2,.72,.25,1); }
+    .project-card:hover .project-image img { transform: scale(1.025); }
+
+    .contact-footer {
+      display: grid;
+      min-height: 78vh;
+      place-items: center;
+      padding: 100px 20px 44px;
+      text-align: center;
+    }
+    .footer-inner { width: min(100%, 1100px); }
+    .footer-kicker { margin: 0 0 26px; color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+    .footer-title { font-size: clamp(2.55rem, 8vw, 8rem); }
+    .contact-footer .contact-button { margin-top: 48px; }
+    .footer-meta { display: flex; justify-content: space-between; gap: 20px; margin-top: clamp(90px, 14vw, 170px); color: rgba(215,226,234,.42); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; }
+
+    @media (max-width: 900px) {
+      .project-head { grid-template-columns: auto 1fr auto; }
+      .project-category { grid-column: 2; grid-row: 1; }
+      .project-name { grid-column: 2; grid-row: 2; }
+      .project-number { grid-row: 1 / span 2; }
+      .live-button { grid-column: 3; grid-row: 1 / span 2; }
+      .project-gallery { height: min(59vh, 560px); }
+    }
+
+    @media (max-width: 700px) {
+      .nav { gap: 10px; padding-top: 20px; letter-spacing: .08em; }
+      .nav a:nth-child(2) { display: none; }
+      .hero-heading-wrap { margin-top: 62px; }
+      .hero-heading { white-space: normal; font-size: clamp(3.5rem, 18vw, 6.4rem); line-height: .88; }
+      .portrait-wrap { bottom: 0; width: min(79vw, 390px); }
+      .hero-bottom { align-items: center; padding-bottom: 22px; }
+      .hero-note { max-width: 142px; font-size: .64rem; }
+      .contact-button { min-height: 44px; padding: 12px 24px; font-size: .66rem; }
+      .about { min-height: 880px; padding-top: 140px; padding-bottom: 140px; }
+      .about-copy { max-width: 86%; line-height: 1.62; }
+      .decor { width: 104px; }
+      .decor-object { left: 4%; width: 82px; }
+      .decor-group { right: 4%; width: 108px; }
+      .service-item { grid-template-columns: 92px 1fr; gap: 22px; }
+      .service-number { font-size: 3rem; }
+      .projects { padding-right: 12px; padding-left: 12px; }
+      .project-stage { height: auto; margin-bottom: 18px; }
+      .project-card { position: relative; top: auto; border-width: 1px; padding: 14px; transform: none !important; }
+      .project-head { grid-template-columns: auto 1fr; gap: 10px 18px; padding-bottom: 20px; }
+      .project-number { grid-row: 1 / span 2; font-size: 3rem; }
+      .project-category { grid-column: 2; grid-row: 1; font-size: .58rem; }
+      .project-name { grid-column: 2; grid-row: 2; font-size: .92rem; }
+      .live-button { grid-column: 1 / -1; grid-row: 3; min-height: 40px; margin-top: 8px; padding: 9px 18px; }
+      .project-gallery { grid-template-columns: 1fr; height: auto; }
+      .project-gallery-left { grid-template-columns: 1fr 1fr; grid-template-rows: 150px; }
+      .project-gallery > .project-image { height: 320px; }
+      .footer-meta { flex-direction: column; align-items: center; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <main class="page">
+    <section class="hero" id="home">
+      <nav class="nav reveal" style="--reveal-y:-20px" aria-label="Основная навигация">
+        <a href="#about">Обо мне</a>
+        <a href="#services">Услуги</a>
+        <a href="#projects">Проекты</a>
+        <a href="#contact">Связаться</a>
+      </nav>
+
+      <div class="hero-heading-wrap reveal" style="--delay:150ms;--reveal-y:42px">
+        <h1 class="display metal-text hero-heading">Привет!</h1>
+      </div>
+
+      <div class="portrait-wrap reveal" id="portraitMagnet" style="--delay:600ms;--reveal-y:34px">
+        <img
+          class="portrait"
+          src="https://shrug-person-78902957.figma.site/_components/v2/d24c01ad3a56fc65e942a1f501eb73db42d7cf9a/Rectangle_40443.81459862.png"
+          alt="Джек — 3D-креатор"
+        />
+      </div>
+
+      <div class="hero-bottom">
+        <p class="hero-note reveal" style="--delay:350ms;--reveal-y:22px">3D-креатор. Создаю яркие проекты, которые остаются в памяти.</p>
+        <a class="contact-button reveal" href="#contact" style="--delay:500ms;--reveal-y:22px"><span>Связаться</span></a>
+      </div>
+    </section>
+
+    <section class="marquee-section" id="marquee" aria-label="Подборка визуальных работ">
+      <div class="marquee-row" data-direction="right"><div class="marquee-track" id="marqueeOne"></div></div>
+      <div class="marquee-row" data-direction="left"><div class="marquee-track" id="marqueeTwo"></div></div>
+    </section>
+
+    <section class="about" id="about">
+      <img class="decor decor-moon reveal" style="--reveal-x:-80px;--reveal-y:0;--delay:100ms" src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/moon_icon.11395d36.png" alt="" loading="lazy" />
+      <img class="decor decor-object reveal" style="--reveal-x:-80px;--reveal-y:0;--delay:250ms" src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/p59_1.4659672e.png" alt="" loading="lazy" />
+      <img class="decor decor-lego reveal" style="--reveal-x:80px;--reveal-y:0;--delay:150ms" src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/lego_icon-1.703bb594.png" alt="" loading="lazy" />
+      <img class="decor decor-group reveal" style="--reveal-x:80px;--reveal-y:0;--delay:300ms" src="https://shrug-person-78902957.figma.site/_components/v2/ebb2b8f25d8e24d5f0a5ca8af4c950de81aa2fd7/Group_134-1.2e04f3ce.png" alt="" loading="lazy" />
+
+      <div class="about-content">
+        <h2 class="display metal-text section-title reveal">Обо мне</h2>
+        <p class="about-copy" id="animatedCopy">Более пяти лет я создаю визуальные решения на стыке 3D, айдентики и веб-дизайна. Особенно люблю работать с брендами, которые не боятся выделяться и хотят выглядеть на максимум. Давайте вместе сделаем что-то по-настоящему впечатляющее.</p>
+        <a class="contact-button reveal" href="#contact"><span>Связаться</span></a>
+      </div>
+    </section>
+
+    <section class="services" id="services">
+      <h2 class="display section-title reveal">Услуги</h2>
+      <div class="service-list">
+        <article class="service-item reveal" style="--delay:0ms">
+          <div class="service-number">01</div>
+          <div><h3 class="service-name">3D-моделирование</h3><p class="service-description">Создаю детализированные объекты, персонажей и окружение под конкретную задачу — для игр, продуктов и визуализаций.</p></div>
+        </article>
+        <article class="service-item reveal" style="--delay:100ms">
+          <div class="service-number">02</div>
+          <div><h3 class="service-name">Рендеринг</h3><p class="service-description">Создаю фотореалистичные изображения с продуманным светом, текстурами и материалами, превращая идеи в убедительные образы.</p></div>
+        </article>
+        <article class="service-item reveal" style="--delay:200ms">
+          <div class="service-number">03</div>
+          <div><h3 class="service-name">Моушн-дизайн</h3><p class="service-description">Создаю динамичную анимацию и графику, которые добавляют брендам и цифровым продуктам энергию, характер и историю.</p></div>
+        </article>
+        <article class="service-item reveal" style="--delay:300ms">
+          <div class="service-number">04</div>
+          <div><h3 class="service-name">Брендинг</h3><p class="service-description">Разрабатываю цельный визуальный образ — от логотипа до системы айдентики, — чтобы бренд говорил ясно и запоминался.</p></div>
+        </article>
+        <article class="service-item reveal" style="--delay:400ms">
+          <div class="service-number">05</div>
+          <div><h3 class="service-name">Веб-дизайн</h3><p class="service-description">Проектирую современные сайты, ориентированные на результат, с вниманием к композиции, типографике и удобству.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="projects" id="projects">
+      <h2 class="display metal-text section-title reveal">Проекты</h2>
+      <div class="project-stack">
+        <div class="project-stage">
+          <article class="project-card" style="--card-top:0px" data-card-index="0">
+            <header class="project-head">
+              <div class="project-number">01</div>
+              <div class="project-category">Клиентский проект</div>
+              <h3 class="project-name">Студия нового уровня</h3>
+              <a class="live-button" href="#contact">Смотреть проект</a>
+            </header>
+            <div class="project-gallery">
+              <div class="project-gallery-left">
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055344_5eff02e0-87a5-41ce-b64f-eb08da8f33db.png&amp;w=1280&amp;q=85" alt="Проект студии нового уровня — деталь 1" loading="lazy" /></figure>
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055431_11d841fd-8b41-46a5-82e4-b04f2407a7d8.png&amp;w=1280&amp;q=85" alt="Проект студии нового уровня — деталь 2" loading="lazy" /></figure>
+              </div>
+              <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055451_e317bf2d-28d4-48cc-86b0-6f72f25b6327.png&amp;w=1280&amp;q=85" alt="Проект студии нового уровня — главный кадр" loading="lazy" /></figure>
+            </div>
+          </article>
+        </div>
+
+        <div class="project-stage">
+          <article class="project-card" style="--card-top:26px" data-card-index="1">
+            <header class="project-head">
+              <div class="project-number">02</div>
+              <div class="project-category">Личный проект</div>
+              <h3 class="project-name">Айдентика «Аура»</h3>
+              <a class="live-button" href="#contact">Смотреть проект</a>
+            </header>
+            <div class="project-gallery">
+              <div class="project-gallery-left">
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055654_911201c5-36d9-4bc6-bac7-331adfce159f.png&amp;w=1280&amp;q=85" alt="Айдентика «Аура» — деталь 1" loading="lazy" /></figure>
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055723_5ceda0b8-d9c2-4665-b2e3-83ba19ba76d1.png&amp;w=1280&amp;q=85" alt="Айдентика «Аура» — деталь 2" loading="lazy" /></figure>
+              </div>
+              <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055753_adc5dcbd-a8e6-49c0-b43a-9b030d835cea.png&amp;w=1280&amp;q=85" alt="Айдентика «Аура» — главный кадр" loading="lazy" /></figure>
+            </div>
+          </article>
+        </div>
+
+        <div class="project-stage">
+          <article class="project-card" style="--card-top:52px" data-card-index="2">
+            <header class="project-head">
+              <div class="project-number">03</div>
+              <div class="project-category">Клиентский проект</div>
+              <h3 class="project-name">Диджитал «Солярис»</h3>
+              <a class="live-button" href="#contact">Смотреть проект</a>
+            </header>
+            <div class="project-gallery">
+              <div class="project-gallery-left">
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055759_963cfb0b-4bd1-4b0f-9d0a-09bd6cf95b2f.png&amp;w=1280&amp;q=85" alt="Проект «Солярис» — деталь 1" loading="lazy" /></figure>
+                <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_060108_438f781a-9846-4dcc-89ab-c4e6cb830f5b.png&amp;w=1280&amp;q=85" alt="Проект «Солярис» — деталь 2" loading="lazy" /></figure>
+              </div>
+              <figure class="project-image"><img src="https://images.higgs.ai/?default=1&amp;output=webp&amp;url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260412_055818_9d062121-ad7e-46b9-999a-1a6a692ef1ee.png&amp;w=1280&amp;q=85" alt="Проект «Солярис» — главный кадр" loading="lazy" /></figure>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <footer class="contact-footer" id="contact">
+        <div class="footer-inner">
+          <p class="footer-kicker reveal">Есть идея для проекта?</p>
+          <h2 class="display metal-text footer-title reveal">Создадим что-то невероятное</h2>
+          <a class="contact-button reveal" href="mailto:hello@jack.design"><span>Написать Джеку</span></a>
+          <div class="footer-meta"><span>3D · Моушн · Айдентика</span><span>Доступен для проектов</span><span>© 2026 Джек</span></div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '50px 0px', threshold: 0.01 });
+      document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+
+      const imageRows = [
+        [
+          'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
+          'https://motionsites.ai/assets/hero-codenest-preview-Cgppc2qV.gif',
+          'https://motionsites.ai/assets/hero-vex-ventures-preview-BczMFIiw.gif',
+          'https://motionsites.ai/assets/hero-stellar-ai-v2-preview-DjvxjG3C.gif',
+          'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
+          'https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif',
+          'https://motionsites.ai/assets/hero-vitara-preview-Cjz2QYyU.gif',
+          'https://motionsites.ai/assets/hero-terra-preview-BFjrCr7T.gif',
+          'https://motionsites.ai/assets/hero-skyelite-preview-DHaZIgUv.gif',
+          'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
+          'https://motionsites.ai/assets/hero-designpro-preview-D8c5_een.gif'
+        ],
+        [
+          'https://motionsites.ai/assets/hero-stellar-ai-preview-D3HL6bw1.gif',
+          'https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif',
+          'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
+          'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
+          'https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif',
+          'https://motionsites.ai/assets/hero-planet-orbit-preview-DWAP8Z1P.gif',
+          'https://motionsites.ai/assets/hero-new-era-preview-CocuDUm9.gif',
+          'https://motionsites.ai/assets/hero-wealth-preview-B70idl_u.gif',
+          'https://motionsites.ai/assets/hero-luminex-preview-CxOP7ce6.gif',
+          'https://motionsites.ai/assets/hero-celestia-preview-0yO3jXO8.gif'
+        ]
+      ];
+
+      const buildTrack = (target, urls) => {
+        const fragment = document.createDocumentFragment();
+        for (let repeat = 0; repeat < 3; repeat += 1) {
+          urls.forEach((url, index) => {
+            const tile = document.createElement('div');
+            tile.className = 'marquee-tile';
+            const image = document.createElement('img');
+            image.src = url;
+            image.alt = repeat === 0 ? `Фрагмент 3D-работы ${index + 1}` : '';
+            image.loading = 'lazy';
+            image.decoding = 'async';
+            tile.appendChild(image);
+            fragment.appendChild(tile);
+          });
+        }
+        target.appendChild(fragment);
+      };
+      buildTrack(document.getElementById('marqueeOne'), imageRows[0]);
+      buildTrack(document.getElementById('marqueeTwo'), imageRows[1]);
+
+      const animatedCopy = document.getElementById('animatedCopy');
+      const copyText = animatedCopy.textContent.trim();
+      animatedCopy.textContent = '';
+      [...copyText].forEach((character) => {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = character;
+        animatedCopy.appendChild(span);
+      });
+      const copyChars = [...animatedCopy.querySelectorAll('.char')];
+
+      const portrait = document.getElementById('portraitMagnet');
+      if (!reduceMotion && window.matchMedia('(pointer:fine)').matches) {
+        const updateMagnet = (event) => {
+          const rect = portrait.getBoundingClientRect();
+          const padding = 150;
+          const within = event.clientX >= rect.left - padding && event.clientX <= rect.right + padding && event.clientY >= rect.top - padding && event.clientY <= rect.bottom + padding;
+          if (!within) {
+            portrait.style.transition = 'transform .6s ease-in-out';
+            portrait.style.transform = 'translateX(-50%) translate3d(0,0,0)';
+            return;
+          }
+          const x = (event.clientX - (rect.left + rect.width / 2)) / 3;
+          const y = (event.clientY - (rect.top + rect.height / 2)) / 3;
+          portrait.style.transition = 'transform .3s ease-out';
+          portrait.style.transform = `translateX(-50%) translate3d(${x}px,${y}px,0)`;
+        };
+        window.addEventListener('pointermove', updateMagnet, { passive: true });
+      }
+
+      const marquee = document.getElementById('marquee');
+      const rows = [...marquee.querySelectorAll('.marquee-row')];
+      const cards = [...document.querySelectorAll('.project-card')];
+      let ticking = false;
+
+      const updateScrollEffects = () => {
+        ticking = false;
+        const viewportHeight = window.innerHeight;
+        const marqueeOffset = (window.scrollY - marquee.offsetTop + viewportHeight) * 0.3;
+        rows.forEach((row, index) => {
+          const track = row.firstElementChild;
+          const setWidth = track.scrollWidth / 3;
+          if (!setWidth) return;
+          const travel = ((marqueeOffset % setWidth) + setWidth) % setWidth;
+          const x = index === 0 ? -setWidth + travel : -setWidth - travel;
+          row.style.transform = `translate3d(${x}px,0,0)`;
+        });
+
+        const copyRect = animatedCopy.getBoundingClientRect();
+        const copyProgress = Math.max(0, Math.min(1, (viewportHeight * 0.8 - copyRect.top) / (viewportHeight * 0.6 + copyRect.height)));
+        const visibleCount = Math.floor(copyProgress * (copyChars.length + 14));
+        copyChars.forEach((char, index) => { char.style.opacity = index < visibleCount ? '1' : '.16'; });
+
+        if (window.innerWidth > 700 && !reduceMotion) {
+          cards.forEach((card, index) => {
+            const stage = card.parentElement;
+            const rect = stage.getBoundingClientRect();
+            const progress = Math.max(0, Math.min(1, -rect.top / Math.max(1, rect.height * 0.72)));
+            const targetScale = 1 - (cards.length - 1 - index) * 0.03;
+            const scale = 1 - (1 - targetScale) * progress;
+            card.style.transform = `scale(${scale})`;
+          });
+        }
+      };
+
+      const requestEffects = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateScrollEffects);
+      };
+      window.addEventListener('scroll', requestEffects, { passive: true });
+      window.addEventListener('resize', requestEffects, { passive: true });
+      window.addEventListener('load', requestEffects, { once: true });
+      requestEffects();
+    })();
+  </script>
+</body>
+</html>

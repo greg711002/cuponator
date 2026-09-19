@@ -1,0 +1,2192 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lithos — слои хранят летопись времён</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,500;1,600&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+.font-playfair { font-family: 'Playfair Display', serif; }
+button { border: none; background: none; cursor: pointer; font: inherit; color: inherit; }
+
+/* ---------- Design tokens (site shell) ---------- */
+:root {
+  --bg: #0b0a08;
+  --panel: rgba(255, 255, 255, 0.05);
+  --panel-2: rgba(255, 255, 255, 0.08);
+  --line: rgba(255, 255, 255, 0.10);
+  --line-strong: rgba(255, 255, 255, 0.24);
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.72);
+  --text-3: rgba(255, 255, 255, 0.45);
+  --accent: #e8702a;
+  --accent-2: #d2611f;
+  --accent-soft: rgba(232, 112, 42, 0.15);
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { background: var(--bg); }
+
+/* ---------- Root wrapper: min-h-screen tracking-[-0.02em] (bg continues dark below the hero) ---------- */
+.page { min-height: 100vh; background: var(--bg); letter-spacing: -0.02em; font-family: 'Inter', sans-serif; }
+
+/* ---------- Shared section shell ---------- */
+.section { position: relative; padding: 120px 0; }
+@media (max-width: 767px) { .section { padding: 72px 0; } }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 12px;
+  font-size: 12px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--accent);
+}
+.eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
+.h2 { margin-top: 18px; color: var(--text); font-weight: 400; font-size: clamp(34px, 5vw, 60px); line-height: 1.02; letter-spacing: -0.04em; }
+.accent-serif { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; }
+.lead { margin-top: 18px; max-width: 560px; color: var(--text-2); font-size: 16px; line-height: 1.65; }
+
+.btn-primary {
+  display: inline-block; background: var(--accent); color: #fff; font-size: 14px; font-weight: 500;
+  padding: 12px 28px; border-radius: 9999px; text-decoration: none; text-align: center;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover { background: var(--accent-2); transform: scale(1.03); box-shadow: 0 10px 15px -3px rgba(232, 112, 42, 0.3), 0 4px 6px -4px rgba(232, 112, 42, 0.3); }
+.btn-primary:active { transform: scale(0.95); }
+.btn-ghost {
+  display: inline-block; background: transparent; color: var(--text); font-size: 14px; font-weight: 500;
+  padding: 11px 27px; border-radius: 9999px; border: 1px solid var(--line-strong); text-decoration: none; text-align: center;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-ghost:hover { border-color: rgba(255, 255, 255, 0.5); background: rgba(255, 255, 255, 0.06); }
+.btn-ghost:active { transform: scale(0.95); }
+
+/* Scroll-reveal */
+.io { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: var(--io-delay, 0s); }
+.io.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .io { opacity: 1; transform: none; transition: none; } }
+
+/* Nav glass state after scrolling past the hero top */
+.nav::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0;
+  background: linear-gradient(rgba(9, 8, 6, 0.88), rgba(9, 8, 6, 0.55));
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  transition: opacity 0.4s var(--ease);
+}
+.nav.scrolled::before { opacity: 1; }
+.nav-brand-link { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+
+/* Mobile overlay menu */
+.nav-menu {
+  position: fixed; inset: 0; z-index: 99;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+  padding: 96px 24px 48px;
+  background: rgba(8, 7, 5, 0.92);
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease);
+}
+.nav-menu.open { opacity: 1; pointer-events: auto; }
+.nav-menu > * { opacity: 0; transform: translateY(12px); }
+.nav-menu.open > * {
+  opacity: 1; transform: none;
+  transition: opacity 0.35s var(--ease), transform 0.35s var(--ease);
+  transition-delay: calc(var(--i) * 45ms);
+}
+.nav-menu-link {
+  color: rgba(255, 255, 255, 0.85); text-decoration: none; font-size: 26px;
+  padding: 10px 18px; border-radius: 9999px; letter-spacing: -0.02em;
+}
+.nav-menu-link:hover { color: #ffffff; }
+.nav-menu-cta { margin-top: 20px; font-size: 15px; padding: 13px 32px; }
+@media (min-width: 768px) { .nav-menu { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .nav-menu, .nav-menu.open > * { transition: none; }
+  .nav-menu > * { opacity: 1; transform: none; }
+}
+.nav-burger .nav-burger-close { display: none; }
+.nav-burger[aria-expanded="true"] .nav-burger-open { display: none; }
+.nav-burger[aria-expanded="true"] .nav-burger-close { display: block; }
+
+/* Shared focus ring for shell controls (sections define their own, same style) */
+.btn-primary:focus-visible, .btn-ghost:focus-visible, .btn-dig:focus-visible,
+.nav-link:focus-visible, .nav-signup:focus-visible, .nav-burger:focus-visible,
+.nav-brand-link:focus-visible, .nav-menu-link:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+}
+
+/* ---------- Nav: fixed top-0 left-0 right-0 z-[100] flex items-center justify-between p-4 sm:p-5 ---------- */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 16px; }
+@media (min-width: 640px) { .nav { padding: 20px; } }
+
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-wordmark { color: #ffffff; font-size: 24px; line-height: 32px; font-family: 'Playfair Display', serif; font-style: italic; }
+
+/* hidden md:flex absolute left-1/2 -translate-x-1/2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-2 py-2 items-center gap-1 */
+.nav-pill { display: none; }
+@media (min-width: 768px) {
+  .nav-pill {
+    display: flex; position: absolute; left: 50%; transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 9999px; padding: 8px; align-items: center; gap: 4px;
+  }
+}
+/* px-4 py-1.5 rounded-full text-sm font-medium */
+.nav-link {
+  padding: 6px 16px; border-radius: 9999px; font-size: 14px; line-height: 20px; font-weight: 500;
+  color: rgba(255, 255, 255, 0.8); white-space: nowrap; text-decoration: none; display: inline-block;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:not(.active):hover { background: rgba(255, 255, 255, 0.2); color: #ffffff; }
+.nav-link.active { color: #ffffff; }
+
+/* hidden md:block bg-white text-gray-900 text-sm font-semibold px-6 py-2.5 rounded-full hover:bg-gray-100 */
+.nav-signup { display: none; text-decoration: none; white-space: nowrap; }
+@media (min-width: 768px) {
+  .nav-signup { display: block; background: #ffffff; color: #111827; font-size: 14px; font-weight: 600; padding: 10px 24px; border-radius: 9999px; }
+  .nav-signup:hover { background: #f3f4f6; }
+}
+
+/* mobile hamburger: md:hidden */
+.nav-burger { display: flex; align-items: center; justify-content: center; color: #ffffff; padding: 6px; }
+@media (min-width: 768px) { .nav-burger { display: none; } }
+
+/* ---------- Section: relative w-full overflow-hidden h-screen bg-black ---------- */
+.hero { position: relative; width: 100%; overflow: hidden; height: 100vh; background: #000000; }
+
+/* Base image: absolute inset-0 bg-center bg-cover bg-no-repeat, z-10 */
+.hero-bg {
+  position: absolute; inset: 0; z-index: 10;
+  background-position: center; background-size: cover; background-repeat: no-repeat;
+  background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_195923_b0ba8ace-1d1d-4f2c-9a28-1ab84b330680.png&w=1280&q=85');
+}
+
+/* RevealLayer: hidden canvas + masked reveal div */
+.reveal-canvas { position: absolute; inset: 0; pointer-events: none; }
+.reveal-layer {
+  position: absolute; inset: 0; z-index: 30; pointer-events: none;
+  background-position: center; background-size: cover; background-repeat: no-repeat;
+  background-image: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85');
+}
+
+/* ---------- Heading: absolute top-[14%] left-0 right-0 flex flex-col items-center text-center px-5 pointer-events-none, z-50 ---------- */
+.hero-heading {
+  position: absolute; top: 14%; left: 0; right: 0; z-index: 50;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding-left: 20px; padding-right: 20px; pointer-events: none;
+}
+.hero-heading h1 { color: #ffffff; line-height: 0.95; font-weight: 400; }
+/* text-5xl sm:text-7xl md:text-8xl (48 / 72 / 96 px, line-height 1) */
+.hero-line { display: block; font-size: 48px; line-height: 1; }
+@media (max-width: 639px) { .hero-line { font-size: clamp(30px, 11.6vw, 48px); white-space: nowrap; } }
+@media (min-width: 640px) { .hero-line { font-size: 72px; } }
+@media (min-width: 768px) { .hero-line { font-size: 96px; } }
+.hero-line-1 { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; letter-spacing: -0.05em; }
+.hero-line-2 { font-weight: 400; letter-spacing: -0.08em; margin-top: -4px; }
+
+/* ---------- Bottom-left: hidden sm:block absolute bottom-14 left-10 md:left-14 max-w-[260px], z-50 ---------- */
+.hero-note-left { display: none; }
+@media (min-width: 640px) { .hero-note-left { display: block; position: absolute; bottom: 56px; left: 40px; max-width: 260px; z-index: 50; } }
+@media (min-width: 768px) { .hero-note-left { left: 56px; } }
+.hero-note-left p { font-size: 14px; line-height: 1.625; color: rgba(255, 255, 255, 0.8); }
+
+/* ---------- Bottom-right: absolute bottom-10 sm:bottom-24 left-5 right-5 sm:left-auto sm:right-10 md:right-14
+   max-w-full sm:max-w-[260px] flex flex-col items-start gap-4 sm:gap-5, z-50 ---------- */
+.hero-note-right {
+  position: absolute; bottom: 40px; left: 20px; right: 20px; max-width: 100%; z-index: 50;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 16px;
+}
+@media (min-width: 640px) { .hero-note-right { bottom: 96px; left: auto; right: 40px; max-width: 260px; gap: 20px; } }
+@media (min-width: 768px) { .hero-note-right { right: 56px; } }
+/* text-xs sm:text-sm text-white/80 leading-relaxed */
+.hero-note-right p { font-size: 12px; line-height: 1.625; color: rgba(255, 255, 255, 0.8); }
+@media (min-width: 640px) { .hero-note-right p { font-size: 14px; } }
+
+/* bg-[#e8702a] hover:bg-[#d2611f] text-white text-sm font-medium px-7 py-3 rounded-full
+   transition-all hover:scale-[1.03] active:scale-95 hover:shadow-lg hover:shadow-[#e8702a]/30 */
+.btn-dig {
+  display: inline-block; text-decoration: none;
+  background: #e8702a; color: #ffffff; font-size: 14px; font-weight: 500;
+  padding: 12px 28px; border-radius: 9999px;
+  transition: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-dig:hover {
+  background: #d2611f; transform: scale(1.03);
+  box-shadow: 0 10px 15px -3px rgba(232, 112, 42, 0.3), 0 4px 6px -4px rgba(232, 112, 42, 0.3);
+}
+.btn-dig:active { transform: scale(0.95); }
+
+/* ---------- Animations ---------- */
+@keyframes heroReveal { 0% { opacity: 0; transform: translateY(28px); filter: blur(12px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes heroFadeUp { 0% { opacity: 0; transform: translateY(20px); } 100% { opacity: 1; transform: translateY(0); } }
+@keyframes heroZoom { 0% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.hero-anim { opacity: 0; animation-fill-mode: forwards; animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1); }
+.hero-reveal { animation-name: heroReveal; animation-duration: 1.1s; }
+.hero-fade { animation-name: heroFadeUp; animation-duration: 1s; }
+.hero-zoom { animation: heroZoom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+@media (prefers-reduced-motion: reduce) { .hero-anim, .hero-zoom { animation: none; opacity: 1; } }
+</style>
+</head>
+<body id="top">
+<div class="page">
+
+  <nav class="nav">
+    <a class="nav-brand nav-brand-link" href="#top" aria-label="Lithos — на главную">
+      <svg width="26" height="26" viewBox="0 0 256 256" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" />
+      </svg>
+      <span class="nav-wordmark">Lithos</span>
+    </a>
+
+    <div class="nav-pill">
+      <a class="nav-link" href="#strata">Геология</a>
+      <a class="nav-link" href="#course">Курс</a>
+      <a class="nav-link" href="#guides">Гиды</a>
+      <a class="nav-link" href="#plans">Тарифы</a>
+      <a class="nav-link" href="#tour">Живой тур</a>
+    </div>
+
+    <a class="nav-signup" href="#plans">Регистрация</a>
+
+    <button class="nav-burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="navMenu">
+      <!-- lucide "menu" / "x" icons -->
+      <svg class="nav-burger-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="4" x2="20" y1="6" y2="6" /><line x1="4" x2="20" y1="12" y2="12" /><line x1="4" x2="20" y1="18" y2="18" />
+      </svg>
+      <svg class="nav-burger-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M18 6 6 18" /><path d="m6 6 12 12" />
+      </svg>
+    </button>
+  </nav>
+
+  <div class="nav-menu" id="navMenu">
+    <a class="nav-menu-link" style="--i: 0" href="#strata">Геология</a>
+    <a class="nav-menu-link" style="--i: 1" href="#course">Курс</a>
+    <a class="nav-menu-link" style="--i: 2" href="#guides">Гиды</a>
+    <a class="nav-menu-link" style="--i: 3" href="#plans">Тарифы</a>
+    <a class="nav-menu-link" style="--i: 4" href="#tour">Живой тур</a>
+    <a class="btn-primary nav-menu-cta" style="--i: 5" href="#plans">Регистрация</a>
+  </div>
+
+  <section class="hero" style="height: 100dvh">
+    <div class="hero-bg hero-zoom"></div>
+
+    <canvas class="reveal-canvas" id="revealCanvas" style="display: none"></canvas>
+    <div class="reveal-layer" id="revealLayer"></div>
+
+    <div class="hero-heading">
+      <h1>
+        <span class="hero-line hero-line-1 hero-anim hero-reveal" style="animation-delay: 0.25s; letter-spacing: -0.05em">Слои хранят</span>
+        <span class="hero-line hero-line-2 hero-anim hero-reveal" style="animation-delay: 0.42s; letter-spacing: -0.08em">летопись времён</span>
+      </h1>
+    </div>
+
+    <div class="hero-note-left hero-anim hero-fade" style="animation-delay: 0.7s">
+      <p>Каждый слой осадочных пород — глава истории планеты: дно древних морей и вулканический пепел, спрессованные под нами за миллионы лет.</p>
+    </div>
+
+    <div class="hero-note-right hero-anim hero-fade" style="animation-delay: 0.85s">
+      <p>Наши интерактивные карты позволяют заглянуть под земную кору и проследить, как камни, окаменелости и глубокое время формируют землю у вас под ногами.</p>
+      <a class="btn-dig" href="#dig">Начать раскопки</a>
+    </div>
+  </section>
+
+  <!-- SECTIONS:BEGIN -->
+
+  <!-- ===== dig.html ===== -->
+<style>
+/* ================= #dig — Раскопки ================= */
+.dig-head { max-width: 640px; }
+.dig-hint { margin-top: 16px; display: inline-flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-3); }
+.dig-hint::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+
+.dig-stage-wrap { margin-top: 48px; }
+.dig-stage { position: relative; aspect-ratio: 16 / 9; border-radius: 28px; border: 1px solid var(--line); overflow: hidden; background: #131009; }
+@media (max-width: 639px) { .dig-stage { aspect-ratio: 4 / 5; border-radius: 24px; } }
+
+.dig-scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; }
+.dig-chip {
+  position: absolute; left: 18px; bottom: 18px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px;
+  background: rgba(10, 8, 6, 0.55); border: 1px solid var(--line); color: var(--text-2);
+  font-size: 12px; letter-spacing: 0.02em;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.dig-chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+.dig-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; cursor: crosshair; touch-action: none; transition: opacity 0.8s var(--ease); }
+.dig-canvas.dig-canvas--done { opacity: 0; pointer-events: none; }
+
+.dig-done {
+  position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.5s var(--ease);
+  background: radial-gradient(ellipse at center, rgba(11, 10, 8, 0.1), rgba(11, 10, 8, 0.55));
+}
+.dig-done.dig-done--show { opacity: 1; pointer-events: auto; }
+.dig-done-card {
+  max-width: 420px; margin: 0 24px; padding: 36px 40px; text-align: center;
+  background: rgba(17, 14, 10, 0.85); border: 1px solid var(--line-strong); border-radius: 24px;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6);
+  transform: translateY(12px); transition: transform 0.5s var(--ease);
+}
+.dig-done--show .dig-done-card { transform: none; }
+@media (max-width: 639px) { .dig-done-card { padding: 28px 22px; } }
+.dig-done-title { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; font-size: 34px; color: var(--text); }
+.dig-done-text { margin-top: 12px; font-size: 14px; line-height: 1.65; color: var(--text-2); }
+.dig-done-card .dig-btn { margin-top: 22px; }
+
+.dig-toolbar { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 20px; }
+.dig-progress-label { font-size: 13px; color: var(--text-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dig-progress { flex: 1 1 220px; height: 4px; border-radius: 999px; background: var(--panel-2); overflow: hidden; }
+.dig-progress-fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--accent-2), var(--accent)); transition: width 0.25s var(--ease); }
+
+.dig-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .dig-canvas, .dig-done, .dig-done-card, .dig-progress-fill { transition: none; }
+}
+</style>
+
+<section class="section" id="dig">
+  <div class="container">
+    <div class="dig-head">
+      <span class="eyebrow io">Интерактив</span>
+      <h2 class="h2 io" style="--io-delay: 0.08s">Снимите <em class="accent-serif">слой за слоем</em></h2>
+      <p class="lead io" style="--io-delay: 0.16s">Каждая находка начинается с терпения. Сотрите породу — под ней уже больше ста миллионов лет своего часа ждёт древний обитатель мелового моря.</p>
+      <p class="dig-hint io" style="--io-delay: 0.24s">Зажмите и водите пальцем или курсором — стирайте породу.</p>
+    </div>
+
+    <div class="dig-stage-wrap io" style="--io-delay: 0.2s">
+      <div class="dig-stage">
+        <svg class="dig-scene" viewBox="0 0 1200 675" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <linearGradient id="digSlabG" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#181310" />
+              <stop offset="1" stop-color="#0e0b08" />
+            </linearGradient>
+            <radialGradient id="digShellG" cx="0.42" cy="0.4" r="0.78">
+              <stop offset="0" stop-color="#d8ad7d" />
+              <stop offset="0.45" stop-color="#b0855b" />
+              <stop offset="0.8" stop-color="#7c5a3a" />
+              <stop offset="1" stop-color="#5a412b" />
+            </radialGradient>
+            <filter id="digBlur" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="16" /></filter>
+            <filter id="digNoise" x="0" y="0" width="100%" height="100%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+              <feColorMatrix type="matrix" values="0 0 0 0 0.82  0 0 0 0 0.68  0 0 0 0 0.52  0 0 0 0.05 0" />
+            </filter>
+          </defs>
+          <rect width="1200" height="675" fill="url(#digSlabG)" />
+          <rect width="1200" height="675" filter="url(#digNoise)" />
+          <ellipse cx="600" cy="568" rx="280" ry="44" fill="#000000" opacity="0.42" filter="url(#digBlur)" />
+          <ellipse cx="252" cy="562" rx="42" ry="22" fill="#241c14" />
+          <ellipse cx="291" cy="576" rx="22" ry="11" fill="#1c1510" />
+          <ellipse cx="946" cy="570" rx="54" ry="26" fill="#221a12" />
+          <ellipse cx="898" cy="584" rx="24" ry="12" fill="#191310" />
+          <g transform="translate(610 348) rotate(-14)">
+            <path id="digShellPath" fill="url(#digShellG)" stroke="#33261a" stroke-width="3.5" stroke-linejoin="round" d="" />
+            <path id="digSepta" fill="none" stroke="#33261a" stroke-width="1.6" stroke-opacity="0.55" d="" />
+            <circle r="22" fill="#4a3624" />
+            <ellipse cx="-64" cy="-92" rx="118" ry="56" fill="#ffffff" opacity="0.07" transform="rotate(-16)" />
+          </g>
+        </svg>
+
+        <span class="dig-chip">Аммонит · ≈ 110 млн лет</span>
+
+        <canvas class="dig-canvas" id="digCanvas" aria-hidden="true"></canvas>
+
+        <div class="dig-done" id="digDone" role="status">
+          <div class="dig-done-card">
+            <div class="dig-done-title">Находка!</div>
+            <p class="dig-done-text">Аммонит — головоногий моллюск мелового моря. Он ждал этой встречи около 110 миллионов лет.</p>
+            <button class="btn-primary dig-btn" id="digResetBtn" type="button">Копать снова</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dig-toolbar">
+        <span class="dig-progress-label" aria-live="polite">Раскопано <span id="digPct">0</span>%</span>
+        <div class="dig-progress" aria-hidden="true"><div class="dig-progress-fill" id="digFill"></div></div>
+        <button class="btn-ghost dig-btn" id="digRevealBtn" type="button">Раскрыть сразу</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var stage = document.querySelector('#dig .dig-stage');
+  var canvas = document.getElementById('digCanvas');
+  var done = document.getElementById('digDone');
+  var pctEl = document.getElementById('digPct');
+  var fillEl = document.getElementById('digFill');
+  var resetBtn = document.getElementById('digResetBtn');
+  var revealBtn = document.getElementById('digRevealBtn');
+  var shell = document.getElementById('digShellPath');
+  var septa = document.getElementById('digSepta');
+  if (!stage || !canvas || !done || !pctEl || !fillEl) return;
+
+  /* --- Ammonite: logarithmic spiral + septa, generated once --- */
+  if (shell && septa) {
+    var TWO_PI = Math.PI * 2;
+    var B = 0.1021;
+    var thMax = 3.15 * TWO_PI;
+    var A = 205 / Math.exp(B * thMax);
+    var pt = function (th) {
+      var r = A * Math.exp(B * th);
+      return [r * Math.cos(th), r * Math.sin(th)];
+    };
+    var d = '', th, p;
+    for (th = 0; th <= thMax + 1e-6; th += 0.08) {
+      p = pt(th);
+      d += (d ? ' L ' : 'M ') + p[0].toFixed(1) + ' ' + p[1].toFixed(1);
+    }
+    d += ' L 0 0 Z';
+    shell.setAttribute('d', d);
+
+    var sd = '';
+    for (th = thMax - 0.25; th - TWO_PI > 0.2; th -= 0.34) {
+      if (th < thMax - TWO_PI * 2.1) break;
+      var p1 = pt(th), p2 = pt(th - TWO_PI);
+      var m1 = pt(th - 0.18), m2 = pt(th - TWO_PI - 0.18);
+      var cx = (m1[0] + m2[0]) / 2, cy = (m1[1] + m2[1]) / 2;
+      sd += 'M ' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1) +
+            ' Q ' + cx.toFixed(1) + ' ' + cy.toFixed(1) +
+            ' ' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1) + ' ';
+    }
+    septa.setAttribute('d', sd);
+  }
+
+  /* --- Soil canvas --- */
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  var W = 0, H = 0, lastDpr = 0, finished = false, painting = false, activeId = null;
+
+  var BANDS = [
+    ['#2b221a', '#332818'],
+    ['#3d2f20', '#46351f'],
+    ['#584429', '#4e3a22'],
+    ['#6b5232', '#5c452a'],
+    ['#4a381f', '#3f2f1c'],
+    ['#33271a', '#2a2016']
+  ];
+
+  function sizeCanvas() {
+    var r = stage.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width));
+    H = Math.max(1, Math.round(r.height));
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    lastDpr = dpr;
+    canvas.width = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  function paintSoil() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, W, H);
+    var n = BANDS.length, bandH = H / n, i, x;
+    for (i = 0; i < n; i++) {
+      var y0 = i * bandH;
+      var g = ctx.createLinearGradient(0, y0, 0, y0 + bandH);
+      g.addColorStop(0, BANDS[i][0]);
+      g.addColorStop(1, BANDS[i][1]);
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.moveTo(0, y0 - 8);
+      for (x = 0; x <= W + 24; x += 24) {
+        ctx.lineTo(x, y0 + Math.sin(x * 0.02 + i * 2.1) * 5);
+      }
+      ctx.lineTo(W, y0 + bandH + 10);
+      ctx.lineTo(0, y0 + bandH + 10);
+      ctx.closePath();
+      ctx.fill();
+    }
+    var count = Math.round(W * H / 900);
+    for (i = 0; i < count; i++) {
+      var sx = Math.random() * W, sy = Math.random() * H, sr = Math.random() * 1.6 + 0.4;
+      ctx.fillStyle = Math.random() < 0.5
+        ? 'rgba(0,0,0,' + (Math.random() * 0.35 + 0.05).toFixed(2) + ')'
+        : 'rgba(214,178,128,' + (Math.random() * 0.18 + 0.04).toFixed(2) + ')';
+      ctx.beginPath();
+      ctx.arc(sx, sy, sr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    var v = ctx.createRadialGradient(W / 2, H / 2, Math.min(W, H) * 0.35, W / 2, H / 2, Math.max(W, H) * 0.75);
+    v.addColorStop(0, 'rgba(0,0,0,0)');
+    v.addColorStop(1, 'rgba(0,0,0,0.35)');
+    ctx.fillStyle = v;
+    ctx.fillRect(0, 0, W, H);
+  }
+
+  /* --- Erasing brush --- */
+  var BRUSH = 44;
+  function stamp(x, y) {
+    ctx.globalCompositeOperation = 'destination-out';
+    var g = ctx.createRadialGradient(x, y, 0, x, y, BRUSH);
+    g.addColorStop(0, 'rgba(0,0,0,1)');
+    g.addColorStop(0.65, 'rgba(0,0,0,0.85)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(x, y, BRUSH, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  var queue = [], rafId = 0, last = null, stampsSince = 0;
+  function flush() {
+    rafId = 0;
+    for (var i = 0; i < queue.length; i++) stamp(queue[i][0], queue[i][1]);
+    stampsSince += queue.length;
+    queue.length = 0;
+    if (stampsSince > 14) { stampsSince = 0; measure(); }
+  }
+  function queuePoint(x, y) {
+    if (last) {
+      var dx = x - last[0], dy = y - last[1];
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var steps = Math.min(24, Math.floor(dist / 10));
+      for (var s = 1; s <= steps; s++) queue.push([last[0] + dx * s / (steps + 1), last[1] + dy * s / (steps + 1)]);
+    }
+    queue.push([x, y]);
+    last = [x, y];
+    if (!rafId) rafId = requestAnimationFrame(flush);
+  }
+  function localXY(e) {
+    var r = canvas.getBoundingClientRect();
+    return [e.clientX - r.left, e.clientY - r.top];
+  }
+  canvas.addEventListener('pointerdown', function (e) {
+    if (finished || activeId !== null) return;
+    activeId = e.pointerId;
+    painting = true;
+    last = null;
+    try { canvas.setPointerCapture(e.pointerId); } catch (err) {}
+    var p = localXY(e);
+    queuePoint(p[0], p[1]);
+    e.preventDefault();
+  });
+  canvas.addEventListener('pointermove', function (e) {
+    if (!painting || finished || e.pointerId !== activeId) return;
+    var p = localXY(e);
+    queuePoint(p[0], p[1]);
+  });
+  function stopPaint(e) {
+    if (e && activeId !== null && e.pointerId !== activeId) return;
+    activeId = null;
+    painting = false;
+    last = null;
+    if (!finished) measure();
+  }
+  canvas.addEventListener('pointerup', stopPaint);
+  canvas.addEventListener('pointercancel', stopPaint);
+
+  /* --- Progress (coarse probe, throttled) --- */
+  var probe = document.createElement('canvas');
+  probe.width = 64;
+  probe.height = 36;
+  var pctx = probe.getContext('2d', { willReadFrequently: true });
+
+  function measure() {
+    if (!pctx) return;
+    pctx.clearRect(0, 0, 64, 36);
+    pctx.drawImage(canvas, 0, 0, 64, 36);
+    var data = pctx.getImageData(0, 0, 64, 36).data;
+    var clear = 0, total = 64 * 36;
+    for (var i = 3; i < data.length; i += 4) { if (data[i] < 120) clear++; }
+    var f = clear / total;
+    setPct(Math.min(100, Math.round(f * 100)));
+    if (f >= 0.6) finish();
+  }
+  function setPct(p) {
+    pctEl.textContent = p;
+    fillEl.style.width = p + '%';
+  }
+
+  function finish() {
+    if (finished) return;
+    finished = true;
+    setPct(100);
+    canvas.classList.add('dig-canvas--done');
+    done.classList.add('dig-done--show');
+  }
+  function reset() {
+    finished = false;
+    done.classList.remove('dig-done--show');
+    canvas.classList.remove('dig-canvas--done');
+    sizeCanvas();
+    paintSoil();
+    setPct(0);
+  }
+  if (resetBtn) resetBtn.addEventListener('click', reset);
+  if (revealBtn) revealBtn.addEventListener('click', function () { if (!finished) finish(); });
+
+  /* --- Keep the soil sized to the stage (ignore no-op resizes: mobile URL bar, etc.) --- */
+  var rt = 0;
+  function refresh() {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      var r = stage.getBoundingClientRect();
+      var w = Math.max(1, Math.round(r.width)), h = Math.max(1, Math.round(r.height));
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      if (w === W && h === H && dpr === lastDpr) return;
+      sizeCanvas();
+      if (!finished) { paintSoil(); setPct(0); }
+    }, 200);
+  }
+  window.addEventListener('resize', refresh);
+  if ('ResizeObserver' in window) {
+    var ro = new ResizeObserver(refresh);
+    ro.observe(stage);
+  }
+
+  sizeCanvas();
+  paintSoil();
+})();
+</script>
+
+  <!-- ===== strata-timeline.html ===== -->
+<style>
+/* ================= СЕКЦИЯ «ГЕОЛОГИЯ» (#strata) ================= */
+.strata-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+  grid-template-areas: 'head col' 'panel col';
+  column-gap: 56px; row-gap: 32px;
+  align-items: start;
+}
+.strata-head { grid-area: head; }
+.strata-col { grid-area: col; }
+.strata-panel { grid-area: panel; }
+@media (max-width: 1023px) {
+  .strata-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'head' 'col' 'panel'; row-gap: 28px; }
+}
+
+.strata-col {
+  display: flex; flex-direction: column;
+  height: clamp(420px, 58vh, 580px);
+  border-radius: 24px; overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.85);
+}
+.strata-layer {
+  position: relative;
+  flex: 1 1 0; min-height: 0;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 14px 22px;
+  border: none; border-top: 1px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer; text-align: left;
+  transition: flex-grow 0.55s var(--ease), filter 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.strata-layer:first-child { border-top: none; }
+.strata-layer:hover, .strata-layer:focus-visible { flex-grow: 1.55; filter: brightness(1.14); }
+.strata-layer:focus-visible { outline: 2px solid var(--accent); outline-offset: -3px; z-index: 1; }
+.strata-layer--active {
+  flex-grow: 1.35;
+  box-shadow: inset 0 0 0 1.5px var(--accent), inset 0 0 32px rgba(232, 112, 42, 0.20);
+}
+.strata-layer-name {
+  color: var(--text); font-size: 15px; font-weight: 500; letter-spacing: -0.01em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.strata-layer-age {
+  flex: 0 0 auto; color: rgba(255, 255, 255, 0.85); font-size: 12px;
+  padding: 3px 9px; border-radius: 9999px; background: rgba(0, 0, 0, 0.45);
+  white-space: nowrap;
+}
+
+/* Текстуры слоёв: сверху — живая земля, вниз — к базальту */
+.strata-l1 {
+  background-color: #2c2917;
+  background-image:
+    radial-gradient(rgba(150, 140, 90, 0.30) 1px, transparent 1.6px),
+    radial-gradient(rgba(0, 0, 0, 0.40) 1px, transparent 1.6px),
+    linear-gradient(180deg, #35311e, #262213);
+  background-size: 16px 12px, 23px 17px, 100% 100%;
+}
+.strata-l2 {
+  background-color: #3e3122;
+  background-image:
+    radial-gradient(circle, rgba(125, 103, 76, 0.45) 2px, transparent 3.2px),
+    radial-gradient(rgba(0, 0, 0, 0.35) 1px, transparent 1.5px),
+    linear-gradient(180deg, #463726, #35291b);
+  background-size: 36px 27px, 15px 12px, 100% 100%;
+}
+.strata-l3 {
+  background-color: #5d4729;
+  background-image:
+    radial-gradient(rgba(255, 219, 160, 0.20) 1px, transparent 1.4px),
+    repeating-linear-gradient(180deg, transparent 0 15px, rgba(0, 0, 0, 0.16) 15px 16px),
+    linear-gradient(180deg, #6b5230, #533f26);
+  background-size: 12px 9px, 100% 100%, 100% 100%;
+}
+.strata-l4 {
+  background-color: #6f6a58;
+  background-image:
+    radial-gradient(rgba(240, 235, 214, 0.22) 1.2px, transparent 1.8px),
+    repeating-linear-gradient(180deg, transparent 0 18px, rgba(28, 26, 18, 0.22) 18px 20px),
+    linear-gradient(180deg, #78725e, #615c4c);
+  background-size: 27px 21px, 100% 100%, 100% 100%;
+}
+.strata-l5 {
+  background-color: #2e343d;
+  background-image:
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.055) 0 1px, transparent 1px 5px),
+    linear-gradient(180deg, #333a44, #252b34);
+  background-size: 100% 100%, 100% 100%;
+}
+.strata-l6 {
+  background-color: #141417;
+  background-image:
+    radial-gradient(rgba(180, 190, 210, 0.10) 1px, transparent 1.4px),
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(255, 255, 255, 0.055) 34px 35px),
+    linear-gradient(180deg, #1a1a1e, #0e0e11);
+  background-size: 19px 15px, 100% 100%, 100% 100%;
+}
+
+.strata-panel {
+  border: 1px solid var(--line); border-radius: 24px;
+  background: var(--panel);
+  padding: 28px;
+}
+.strata-panel-body { transition: opacity 0.28s var(--ease), transform 0.28s var(--ease); }
+.strata-swap { opacity: 0; transform: translateY(8px); }
+.strata-panel-top { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+.strata-panel-name { color: var(--text); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; }
+.strata-panel-age {
+  flex: 0 0 auto; padding: 5px 12px; border-radius: 9999px;
+  background: var(--accent-soft); color: var(--accent);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.strata-panel-text { margin-top: 14px; color: var(--text-2); font-size: 14.5px; line-height: 1.7; }
+.strata-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.strata-chips-label { width: 100%; color: var(--text-3); font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 2px; }
+.strata-chip {
+  padding: 6px 13px; border-radius: 9999px;
+  border: 1px solid var(--line); background: rgba(255, 255, 255, 0.04);
+  color: var(--text-2); font-size: 12.5px; white-space: nowrap;
+}
+
+/* ================= СЕКЦИЯ «ЛЕТОПИСЬ ВРЕМЁН» (#timeline) ================= */
+.tl-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 44px; }
+.tl-head-text { min-width: 0; }
+.tl-controls { display: flex; gap: 10px; flex: 0 0 auto; padding-bottom: 6px; }
+@media (max-width: 639px) {
+  .tl-head { flex-direction: column; align-items: flex-start; }
+  .tl-controls { padding-bottom: 0; }
+}
+.tl-arrow {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--line-strong); background: transparent; color: var(--text);
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background 0.25s var(--ease), border-color 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.tl-arrow:hover { background: rgba(255, 255, 255, 0.07); border-color: rgba(255, 255, 255, 0.45); }
+.tl-arrow:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tl-arrow:disabled { opacity: 0.3; cursor: default; background: transparent; border-color: var(--line-strong); }
+
+.tl-rail { position: relative; }
+.tl-rail::before, .tl-rail::after {
+  content: ''; position: absolute; top: 0; bottom: 0; width: 52px; z-index: 2; pointer-events: none;
+}
+.tl-rail::before { left: -1px; background: linear-gradient(90deg, var(--bg), transparent); }
+.tl-rail::after { right: -1px; background: linear-gradient(270deg, var(--bg), transparent); }
+@media (max-width: 639px) { .tl-rail::before, .tl-rail::after { width: 24px; } }
+
+.tl-track {
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  cursor: grab;
+  padding: 4px 2px 14px;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.tl-track::-webkit-scrollbar { display: none; }
+.tl-track:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 12px; }
+.tl-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; -webkit-user-select: none; }
+
+.tl-belt { position: relative; display: flex; gap: 20px; width: max-content; padding: 0 6px; }
+.tl-belt::before {
+  content: ''; position: absolute; left: 0; right: 0; top: 5px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #ff8a3d, #e8702a, #c96a38, #9a6a4e, #6a6a62, #4e6a86, #365a90);
+  opacity: 0.75;
+}
+.tl-item { flex: 0 0 252px; scroll-snap-align: start; }
+@media (max-width: 639px) { .tl-item { flex-basis: 224px; } }
+.tl-dot {
+  position: relative; z-index: 1;
+  display: block; width: 12px; height: 12px; border-radius: 50%;
+  margin: 0 0 16px 22px;
+  background: var(--tl-c, var(--accent));
+  box-shadow: 0 0 14px var(--tl-c, var(--accent)), 0 0 0 3px rgba(11, 10, 8, 0.9);
+}
+.tl-card {
+  border: 1px solid var(--line); border-radius: 24px; background: var(--panel);
+  padding: 22px; min-height: 168px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), background 0.4s var(--ease);
+}
+.tl-item:hover .tl-card { transform: translateY(-4px); border-color: var(--line-strong); background: var(--panel-2); }
+.tl-years { color: var(--text-3); font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.tl-name { font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400; color: var(--text); font-size: 27px; line-height: 1.05; }
+.tl-desc { color: var(--text-2); font-size: 13.5px; line-height: 1.6; margin-top: 2px; }
+
+.tl-progress { height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.08); margin-top: 18px; overflow: hidden; }
+.tl-progress-fill {
+  height: 100%; width: 100%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), #ff9a52);
+  transform: scaleX(0); transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .strata-layer, .strata-panel-body, .tl-card, .tl-arrow { transition: none; }
+  .strata-layer:hover, .strata-layer:focus-visible { flex-grow: 1.2; }
+  .tl-item:hover .tl-card { transform: none; }
+}
+</style>
+
+<!-- ================= ГЕОЛОГИЯ ================= -->
+<section class="section" id="strata">
+  <div class="container">
+    <div class="strata-grid">
+      <div class="strata-head io">
+        <span class="eyebrow">Геология</span>
+        <h2 class="h2">Прочитайте <em class="accent-serif">разрез</em> как книгу</h2>
+        <p class="lead">Каждая полоса в обрыве — закрытая глава. Выберите любой слой — колонка расскажет, из чего он сложен, сколько ему лет и что в нём можно найти.</p>
+      </div>
+
+      <div class="strata-col io" style="--io-delay: 0.12s" role="group" aria-label="Интерактивная стратиграфическая колонка">
+        <button class="strata-layer strata-l1 strata-layer--active" type="button" data-strata="0" aria-pressed="true">
+          <span class="strata-layer-name">Почва и дёрн</span><span class="strata-layer-age">0–10 тыс. лет</span>
+        </button>
+        <button class="strata-layer strata-l2" type="button" data-strata="1" aria-pressed="false">
+          <span class="strata-layer-name">Суглинок</span><span class="strata-layer-age">10–120 тыс. лет</span>
+        </button>
+        <button class="strata-layer strata-l3" type="button" data-strata="2" aria-pressed="false">
+          <span class="strata-layer-name">Песчаник</span><span class="strata-layer-age">≈ 30 млн лет</span>
+        </button>
+        <button class="strata-layer strata-l4" type="button" data-strata="3" aria-pressed="false">
+          <span class="strata-layer-name">Известняк</span><span class="strata-layer-age">≈ 90 млн лет</span>
+        </button>
+        <button class="strata-layer strata-l5" type="button" data-strata="4" aria-pressed="false">
+          <span class="strata-layer-name">Глинистый сланец</span><span class="strata-layer-age">≈ 210 млн лет</span>
+        </button>
+        <button class="strata-layer strata-l6" type="button" data-strata="5" aria-pressed="false">
+          <span class="strata-layer-name">Базальт</span><span class="strata-layer-age">≈ 350 млн лет</span>
+        </button>
+      </div>
+
+      <div class="strata-panel io" style="--io-delay: 0.2s" aria-live="polite">
+        <div class="strata-panel-body" id="strataPanelBody">
+          <div class="strata-panel-top">
+            <span class="strata-panel-name">Почва и дёрн</span>
+            <span class="strata-panel-age">0–10 тыс. лет</span>
+          </div>
+          <p class="strata-panel-text">Самый молодой слой — живая кожа планеты. Здесь перегной, корни и всё, что оставили последние десять тысяч лет: от пыльцы ледниковых трав до черепков у старой дороги.</p>
+          <div class="strata-chips">
+            <span class="strata-chips-label">Что можно найти</span>
+            <span class="strata-chip">гумус</span><span class="strata-chip">корни трав</span><span class="strata-chip">черепки керамики</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ЛЕТОПИСЬ ВРЕМЁН ================= -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="tl-head io">
+      <div class="tl-head-text">
+        <span class="eyebrow">Хронология</span>
+        <h2 class="h2">4,6 миллиарда лет <em class="accent-serif">в одной ленте</em></h2>
+        <p class="lead">Потяните ленту — от первых океанов магмы до эпохи, в которую вы читаете эту строку.</p>
+      </div>
+      <div class="tl-controls">
+        <button class="tl-arrow" type="button" id="tlPrev" aria-label="Назад по ленте">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5" /><path d="m12 19-7-7 7-7" /></svg>
+        </button>
+        <button class="tl-arrow" type="button" id="tlNext" aria-label="Вперёд по ленте">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="tl-rail io" style="--io-delay: 0.15s">
+      <div class="tl-track" id="tlTrack" tabindex="0" role="region" aria-label="Лента геологических периодов">
+        <div class="tl-belt">
+          <article class="tl-item" style="--tl-c: #ff7a2f">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">4,6 млрд лет</span><span class="tl-name">Хадей</span><p class="tl-desc">Океаны магмы: Земля ещё остывает после собственного рождения.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #f0702c">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">4,0 млрд лет</span><span class="tl-name">Архей</span><p class="tl-desc">Первые континенты — и первые следы жизни, впечатанные в породу.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #d96a33">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">2,5 млрд лет</span><span class="tl-name">Протерозой</span><p class="tl-desc">Кислород медленно перекрашивает океаны и небо планеты.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #c06a40">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">541 млн лет</span><span class="tl-name">Кембрий</span><p class="tl-desc">Взрыв форм: у жизни появляются глаза, панцири и аппетит.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #a06a4e">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">419 млн лет</span><span class="tl-name">Девон</span><p class="tl-desc">Рыбы пробуют сушу на прочность — плавники становятся лапами.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #7f6a58">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">359 млн лет</span><span class="tl-name">Карбон</span><p class="tl-desc">Гигантские леса затапливают сушу и медленно становятся углём.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #6a6a62">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">299 млн лет</span><span class="tl-name">Пермь</span><p class="tl-desc">Пангея собрана воедино; величайшее вымирание уже на пороге.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #5c6a74">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">252 млн лет</span><span class="tl-name">Триас</span><p class="tl-desc">Жизнь начинает с чистого листа — и изобретает динозавров.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #4e6a86">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">201 млн лет</span><span class="tl-name">Юра</span><p class="tl-desc">Гиганты меряют шагами влажные папоротниковые равнины.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #40628e">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">145 млн лет</span><span class="tl-name">Мел</span><p class="tl-desc">Цветы впервые раскрашивают ландшафт; море пишет мелом.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #365a90">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">66 млн лет</span><span class="tl-name">Палеоген</span><p class="tl-desc">После удара астероида сцену тихо занимают млекопитающие.</p></div>
+          </article>
+          <article class="tl-item" style="--tl-c: #2f5296">
+            <span class="tl-dot"></span>
+            <div class="tl-card"><span class="tl-years">2,6 млн лет</span><span class="tl-name">Четвертичный</span><p class="tl-desc">Ледники приходят и уходят — появляется тот, кто читает эту строку.</p></div>
+          </article>
+        </div>
+      </div>
+      <div class="tl-progress" aria-hidden="true"><div class="tl-progress-fill" id="tlFill"></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var PRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- Геология: выбор слоя ---------- */
+  var STRATA = [
+    {
+      name: 'Почва и дёрн', age: '0–10 тыс. лет',
+      text: 'Самый молодой слой — живая кожа планеты. Здесь перегной, корни и всё, что оставили последние десять тысяч лет: от пыльцы ледниковых трав до черепков у старой дороги.',
+      chips: ['гумус', 'корни трав', 'черепки керамики']
+    },
+    {
+      name: 'Суглинок', age: '10–120 тыс. лет',
+      text: 'Принесён ледниками и талыми водами последних оледенений. В вязкой толще — валуны, притащенные за сотни километров, и кости мамонтовой фауны.',
+      chips: ['валуны-эрратики', 'бивни мамонта', 'ледниковая галька']
+    },
+    {
+      name: 'Песчаник', age: '≈ 30 млн лет',
+      text: 'Спрессованные дюны и речные отмели палеогена. Зёрна кварца, сцементированные кремнезёмом, до сих пор хранят рябь древних течений.',
+      chips: ['кварц', 'рябь течений', 'зубы акул']
+    },
+    {
+      name: 'Известняк', age: '≈ 90 млн лет',
+      text: 'Дно тёплого мелового моря: раковины и кораллы, слежавшиеся в светлый камень. Каждый сантиметр — тысячелетия тихого снегопада из раковин.',
+      chips: ['аммониты', 'белемниты', 'морские ежи']
+    },
+    {
+      name: 'Глинистый сланец', age: '≈ 210 млн лет',
+      text: 'Ил триасовых лагун, расслоившийся на тонкие пластины под весом эпох. Раскалывается по слоям, как книга — с отпечатками на каждом развороте.',
+      chips: ['отпечатки папоротников', 'пирит', 'следы рыб']
+    },
+    {
+      name: 'Базальт', age: '≈ 350 млн лет',
+      text: 'Застывший поток древней лавы — фундамент всего разреза. Столбчатая отдельность и вкрапления оливина до сих пор помнят жар карбонового вулканизма.',
+      chips: ['оливин', 'столбчатые призмы', 'цеолиты']
+    }
+  ];
+
+  var layers = Array.prototype.slice.call(document.querySelectorAll('.strata-layer'));
+  var panelBody = document.getElementById('strataPanelBody');
+  var strataCurrent = 0;
+
+  function renderStrata(i) {
+    var d = STRATA[i];
+    if (!d || !panelBody) return;
+    var chips = d.chips.map(function (c) { return '<span class="strata-chip">' + c + '</span>'; }).join('');
+    panelBody.innerHTML =
+      '<div class="strata-panel-top"><span class="strata-panel-name">' + d.name + '</span>' +
+      '<span class="strata-panel-age">' + d.age + '</span></div>' +
+      '<p class="strata-panel-text">' + d.text + '</p>' +
+      '<div class="strata-chips"><span class="strata-chips-label">Что можно найти</span>' + chips + '</div>';
+  }
+
+  if (layers.length && panelBody) {
+    var strataSwapT = 0;
+    layers.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var i = parseInt(btn.getAttribute('data-strata'), 10);
+        if (isNaN(i) || i === strataCurrent) return;
+        strataCurrent = i;
+        layers.forEach(function (b, j) {
+          b.classList.toggle('strata-layer--active', j === i);
+          b.setAttribute('aria-pressed', j === i ? 'true' : 'false');
+        });
+        if (PRM) { renderStrata(i); return; }
+        clearTimeout(strataSwapT);
+        panelBody.classList.add('strata-swap');
+        strataSwapT = setTimeout(function () {
+          renderStrata(i);
+          panelBody.classList.remove('strata-swap');
+        }, 170);
+      });
+    });
+  }
+
+  /* ---------- Летопись времён: драг, стрелки, прогресс ---------- */
+  var track = document.getElementById('tlTrack');
+  var fill = document.getElementById('tlFill');
+  var prev = document.getElementById('tlPrev');
+  var next = document.getElementById('tlNext');
+
+  if (track) {
+    var scrollBehavior = PRM ? 'auto' : 'smooth';
+
+    function stepWidth() {
+      var item = track.querySelector('.tl-item');
+      return item ? item.getBoundingClientRect().width + 20 : 272;
+    }
+
+    var ticking = false;
+    function updateUi() {
+      ticking = false;
+      var max = track.scrollWidth - track.clientWidth;
+      var p = max > 0 ? track.scrollLeft / max : 0;
+      if (fill) fill.style.transform = 'scaleX(' + Math.min(1, Math.max(0, p)) + ')';
+      if (prev) prev.disabled = track.scrollLeft <= 2;
+      if (next) next.disabled = track.scrollLeft >= max - 2;
+    }
+    function requestUi() {
+      if (!ticking) { ticking = true; requestAnimationFrame(updateUi); }
+    }
+    track.addEventListener('scroll', requestUi, { passive: true });
+    window.addEventListener('resize', requestUi, { passive: true });
+    updateUi();
+
+    if (prev) prev.addEventListener('click', function () { track.scrollBy({ left: -stepWidth(), behavior: scrollBehavior }); });
+    if (next) next.addEventListener('click', function () { track.scrollBy({ left: stepWidth(), behavior: scrollBehavior }); });
+
+    track.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { e.preventDefault(); track.scrollBy({ left: stepWidth(), behavior: scrollBehavior }); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); track.scrollBy({ left: -stepWidth(), behavior: scrollBehavior }); }
+    });
+
+    /* Драг мышью; тач использует нативный скролл */
+    var down = false, moved = false, startX = 0, startSL = 0;
+    track.addEventListener('pointerdown', function (e) {
+      if (e.pointerType !== 'mouse' || e.button !== 0) return;
+      down = true; moved = false;
+      startX = e.clientX; startSL = track.scrollLeft;
+      track.classList.add('tl-dragging');
+      if (track.setPointerCapture) { try { track.setPointerCapture(e.pointerId); } catch (err) {} }
+    });
+    track.addEventListener('pointermove', function (e) {
+      if (!down) return;
+      var dx = e.clientX - startX;
+      if (Math.abs(dx) > 6) moved = true;
+      track.scrollLeft = startSL - dx;
+    });
+    function endDrag() {
+      if (!down) return;
+      down = false;
+      track.classList.remove('tl-dragging');
+    }
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('click', function (e) {
+      if (moved) { e.stopPropagation(); e.preventDefault(); moved = false; }
+    }, true);
+  }
+})();
+</script>
+
+  <!-- ===== course-guides.html ===== -->
+<style>
+/* ============ COURSE ============ */
+.course-grid { margin-top: 56px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 640px) { .course-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .course-grid { grid-template-columns: repeat(3, 1fr); } }
+.course-item { min-width: 0; }
+.course-card {
+  position: relative; overflow: hidden; height: 100%;
+  display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 24px;
+  padding: 28px;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.course-card::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 70%);
+  opacity: 0; transition: opacity 0.35s var(--ease);
+}
+.course-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.course-card:hover::before { opacity: 1; }
+.course-num {
+  font-size: 46px; font-weight: 300; line-height: 1; letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.14); font-variant-numeric: tabular-nums;
+  transition: color 0.35s var(--ease);
+}
+.course-card:hover .course-num { color: var(--accent); }
+.course-title { margin-top: 40px; font-size: 18px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
+.course-desc { margin-top: 8px; font-size: 14px; line-height: 1.6; color: var(--text-2); flex: 1; }
+.course-meta {
+  margin-top: 22px; display: flex; align-items: center; justify-content: space-between;
+  font-size: 12px; color: var(--text-3); letter-spacing: 0.04em;
+}
+.course-arrow {
+  color: var(--accent); font-size: 16px; line-height: 1;
+  opacity: 0; transform: translateX(-8px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.course-card:hover .course-arrow { opacity: 1; transform: none; }
+.course-cta { margin-top: 48px; display: flex; gap: 14px; flex-wrap: wrap; }
+@media (prefers-reduced-motion: reduce) {
+  .course-card, .course-card::before, .course-num, .course-arrow { transition: none; }
+}
+
+/* ============ GUIDES ============ */
+.guide-filters { margin-top: 40px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.guide-chip {
+  padding: 8px 16px; border-radius: 9999px; border: 1px solid var(--line);
+  background: transparent; color: var(--text-2); font-size: 13px; font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+.guide-chip:hover { border-color: var(--line-strong); color: var(--text); }
+.guide-chip-active, .guide-chip-active:hover { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+.guide-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guide-count { margin-left: auto; font-size: 13px; color: var(--text-3); white-space: nowrap; }
+
+.guide-grid { margin-top: 32px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 640px) { .guide-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .guide-grid { grid-template-columns: repeat(4, 1fr); } }
+.guide-item { min-width: 0; }
+.guide-hide { animation: guideOut 0.25s ease forwards; pointer-events: none; }
+.guide-pop { animation: guideIn 0.35s var(--ease); }
+.guide-gone { display: none; }
+@keyframes guideOut { to { opacity: 0; transform: scale(0.96); } }
+@keyframes guideIn { from { opacity: 0; transform: scale(0.96); } }
+
+.guide-card {
+  height: 100%; display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 24px;
+  padding: 18px; cursor: pointer;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.guide-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.guide-card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.guide-figure {
+  position: relative; height: 120px; border-radius: 16px; overflow: hidden;
+  background: radial-gradient(70% 85% at 50% 28%, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02) 70%, transparent);
+}
+.guide-figure-svg { width: 100%; height: 100%; display: block; transition: transform 0.45s var(--ease); }
+.guide-card:hover .guide-figure-svg { transform: scale(1.06); }
+.guide-head { margin-top: 14px; display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.guide-name { font-size: 16px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
+.guide-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--text-3); white-space: nowrap; }
+.guide-mohs { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
+.guide-mohs-label { font-size: 11px; color: var(--text-3); letter-spacing: 0.06em; white-space: nowrap; }
+.guide-mohs-scale { display: flex; gap: 3px; flex: 1; }
+.guide-mohs-seg { display: block; height: 4px; flex: 1; border-radius: 2px; background: rgba(255, 255, 255, 0.12); }
+.guide-mohs-on { background: var(--accent); }
+.guide-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s var(--ease); }
+.guide-open .guide-more { grid-template-rows: 1fr; }
+.guide-more-in { overflow: hidden; }
+.guide-more-text { padding-top: 14px; font-size: 13px; line-height: 1.6; color: var(--text-2); }
+.guide-where { padding-top: 8px; font-size: 12px; line-height: 1.6; color: var(--text-3); }
+.guide-where-key { color: var(--accent); font-weight: 600; }
+@media (prefers-reduced-motion: reduce) {
+  .guide-card, .guide-figure-svg, .guide-more { transition: none; }
+  .guide-hide { animation: none; opacity: 0; }
+  .guide-pop { animation: none; }
+}
+</style>
+
+<!-- ============ SECTION: COURSE ============ -->
+<section class="section" id="course">
+  <div class="container">
+    <span class="eyebrow io">Программа</span>
+    <h2 class="h2 io" style="--io-delay: 0.08s">Курс <em class="accent-serif">полевой геологии</em></h2>
+    <p class="lead io" style="--io-delay: 0.16s">Шесть модулей — от чтения ландшафта до собственной экспедиции. Теория на реальных обнажениях, практика с молотком и лупой.</p>
+
+    <div class="course-grid">
+      <div class="course-item io" style="--io-delay: 0s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">01</div>
+          <h3 class="course-title">Чтение ландшафта</h3>
+          <p class="course-desc">Как холмы, террасы и русла рек выдают строение недр под ними.</p>
+          <div class="course-meta"><span>8 уроков · 4 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+      <div class="course-item io" style="--io-delay: 0.06s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">02</div>
+          <h3 class="course-title">Минералы и их свойства</h3>
+          <p class="course-desc">Блеск, спайность, твёрдость — учимся определять минерал прямо в руках.</p>
+          <div class="course-meta"><span>10 уроков · 6 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+      <div class="course-item io" style="--io-delay: 0.12s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">03</div>
+          <h3 class="course-title">Осадочные слои</h3>
+          <p class="course-desc">Читаем страницы каменной летописи: от морского дна до древних пустынь.</p>
+          <div class="course-meta"><span>9 уроков · 5 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+      <div class="course-item io" style="--io-delay: 0.18s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">04</div>
+          <h3 class="course-title">Вулканизм и магма</h3>
+          <p class="course-desc">Огненное происхождение базальтов, гранитов и вулканического стекла.</p>
+          <div class="course-meta"><span>7 уроков · 4 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+      <div class="course-item io" style="--io-delay: 0.24s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">05</div>
+          <h3 class="course-title">Окаменелости</h3>
+          <p class="course-desc">Ищем, извлекаем и датируем следы жизни, которой сотни миллионов лет.</p>
+          <div class="course-meta"><span>11 уроков · 7 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+      <div class="course-item io" style="--io-delay: 0.3s">
+        <article class="course-card">
+          <div class="course-num" aria-hidden="true">06</div>
+          <h3 class="course-title">Полевая экспедиция</h3>
+          <p class="course-desc">Собираем маршрут, снаряжение и первую коллекцию собственных образцов.</p>
+          <div class="course-meta"><span>6 уроков · 12 ч</span><span class="course-arrow" aria-hidden="true">→</span></div>
+        </article>
+      </div>
+    </div>
+
+    <div class="course-cta io" style="--io-delay: 0.1s">
+      <a class="btn-primary" href="#plans">Записаться на курс</a>
+      <a class="btn-ghost" href="#guides">Открыть определитель</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SECTION: GUIDES ============ -->
+<section class="section" id="guides">
+  <div class="container">
+    <span class="eyebrow io">Полевые гиды</span>
+    <h2 class="h2 io" style="--io-delay: 0.08s">Определитель <em class="accent-serif">пород и минералов</em></h2>
+    <p class="lead io" style="--io-delay: 0.16s">Восемь образцов, с которых начинается любая коллекция: как узнать их в поле, где искать и о чём они молчали миллионы лет.</p>
+
+    <div class="guide-filters io" style="--io-delay: 0.1s" role="group" aria-label="Фильтр по типу породы">
+      <button class="guide-chip guide-chip-active" type="button" data-filter="all" aria-pressed="true">Все</button>
+      <button class="guide-chip" type="button" data-filter="igneous" aria-pressed="false">Магматические</button>
+      <button class="guide-chip" type="button" data-filter="sedimentary" aria-pressed="false">Осадочные</button>
+      <button class="guide-chip" type="button" data-filter="metamorphic" aria-pressed="false">Метаморфические</button>
+      <button class="guide-chip" type="button" data-filter="mineral" aria-pressed="false">Минералы</button>
+      <span class="guide-count" id="guideCount" aria-live="polite">8 образцов</span>
+    </div>
+
+    <div class="guide-grid">
+
+      <div class="guide-item io" data-type="igneous" style="--io-delay: 0s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-granite-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a8178"/><stop offset="1" stop-color="#4a443d"/></linearGradient>
+                <linearGradient id="gd-granite-b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a59a8d"/><stop offset="1" stop-color="#6b635a"/></linearGradient>
+              </defs>
+              <ellipse cx="60" cy="88" rx="40" ry="7" fill="#000000" opacity="0.35"/>
+              <polygon points="24,78 18,46 38,26 72,20 100,38 98,68 74,84 40,84" fill="url(#gd-granite-a)"/>
+              <polygon points="38,26 72,20 100,38 64,44" fill="url(#gd-granite-b)" opacity="0.9"/>
+              <polygon points="18,46 38,26 64,44 44,60" fill="#7c7268" opacity="0.55"/>
+              <g fill="#c9bfae" opacity="0.85"><circle cx="52" cy="58" r="1.6"/><circle cx="60" cy="50" r="1.2"/><circle cx="44" cy="52" r="1.4"/><circle cx="70" cy="56" r="1.1"/><circle cx="56" cy="68" r="1.3"/></g>
+              <g fill="#2e2a25"><circle cx="48" cy="62" r="1.2"/><circle cx="64" cy="60" r="1.5"/><circle cx="58" cy="74" r="1.1"/><circle cx="40" cy="66" r="1"/></g>
+              <g fill="#c98d64" opacity="0.75"><circle cx="70" cy="66" r="1.3"/><circle cx="50" cy="72" r="1.1"/></g>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Гранит</h3><span class="guide-tag">Магматическая</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 6</span><span class="guide-mohs-scale" data-mohs="6" aria-label="Твёрдость по Моосу: 6 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Зернистая глубинная порода из кварца, полевого шпата и слюды — фундамент континентов.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> щиты древних гор, обточенные валуны у рек.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="igneous" style="--io-delay: 0.06s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-basalt-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3735"/><stop offset="1" stop-color="#141312"/></linearGradient>
+              </defs>
+              <ellipse cx="54" cy="90" rx="40" ry="6" fill="#000000" opacity="0.4"/>
+              <polygon points="22,38 36,32 36,88 22,90" fill="url(#gd-basalt-a)"/>
+              <polygon points="22,38 29,33 36,32 29,39" fill="#57524d"/>
+              <polygon points="38,28 52,24 52,86 38,88" fill="url(#gd-basalt-a)"/>
+              <polygon points="38,28 45,24 52,24 45,30" fill="#615c56"/>
+              <polygon points="54,26 68,30 68,88 54,86" fill="url(#gd-basalt-a)"/>
+              <polygon points="54,26 61,25 68,30 61,32" fill="#57524d"/>
+              <polygon points="70,34 84,40 84,90 70,88" fill="url(#gd-basalt-a)"/>
+              <polygon points="70,34 77,35 84,40 77,41" fill="#4c4843"/>
+              <rect x="20" y="86" width="66" height="3" rx="1.5" fill="#e8702a" opacity="0.22"/>
+              <path d="M44 70 L46 80" stroke="#e8702a" stroke-width="1.4" opacity="0.35" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Базальт</h3><span class="guide-tag">Магматическая</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 6</span><span class="guide-mohs-scale" data-mohs="6" aria-label="Твёрдость по Моосу: 6 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Застывшая лава: тёмная, плотная, звенит под молотком. Часто застывает шестигранными колоннами.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> лавовые плато, дно океанов, старые вулканические поля.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="igneous" style="--io-delay: 0.12s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-obs-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2a2a33"/><stop offset="0.55" stop-color="#101014"/><stop offset="1" stop-color="#1d1d26"/></linearGradient>
+              </defs>
+              <ellipse cx="58" cy="88" rx="34" ry="6" fill="#000000" opacity="0.4"/>
+              <polygon points="34,84 44,30 60,14 86,40 76,84" fill="url(#gd-obs-a)"/>
+              <polygon points="44,30 60,14 64,38 50,50" fill="#343441" opacity="0.85"/>
+              <path d="M50 32 L58 22" stroke="#d9dcef" stroke-width="2" opacity="0.75" stroke-linecap="round"/>
+              <path d="M46 60 q12 -6 24 2" stroke="#40404e" stroke-width="1.2" fill="none" opacity="0.9"/>
+              <path d="M44 70 q16 -6 30 2" stroke="#40404e" stroke-width="1" fill="none" opacity="0.7"/>
+              <path d="M86 40 L76 84" stroke="#70739a" stroke-width="1" opacity="0.45"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Обсидиан</h3><span class="guide-tag">Магматическая</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 5</span><span class="guide-mohs-scale" data-mohs="5" aria-label="Твёрдость по Моосу: 5 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Вулканическое стекло с раковистым изломом — нож каменного века и зеркало ацтеков.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> молодые вулканы, кислые лавовые потоки.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="sedimentary" style="--io-delay: 0.18s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <ellipse cx="60" cy="88" rx="42" ry="6" fill="#000000" opacity="0.35"/>
+              <rect x="20" y="72" width="78" height="13" rx="6" fill="#7c5c3c"/>
+              <rect x="24" y="62" width="70" height="12" rx="6" fill="#a5794a"/>
+              <rect x="22" y="52" width="66" height="12" rx="6" fill="#8a6845"/>
+              <rect x="28" y="42" width="58" height="12" rx="6" fill="#bb9260"/>
+              <rect x="34" y="34" width="42" height="10" rx="5" fill="#96714a"/>
+              <path d="M26 68 h64" stroke="#5f4730" stroke-width="1" opacity="0.4"/>
+              <path d="M28 58 h58" stroke="#5f4730" stroke-width="1" opacity="0.35"/>
+              <g fill="#5f4730" opacity="0.6"><circle cx="40" cy="78" r="1"/><circle cx="72" cy="67" r="1"/><circle cx="52" cy="47" r="1"/><circle cx="64" cy="57" r="1"/></g>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Песчаник</h3><span class="guide-tag">Осадочная</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 6</span><span class="guide-mohs-scale" data-mohs="6" aria-label="Твёрдость по Моосу: 6 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Спрессованные пески древних пляжей и пустынь — слой за слоем, ветер за ветром.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> обрывы речных долин, карьеры, скалы-останцы.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="sedimentary" style="--io-delay: 0.24s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-lime-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d8cfba"/><stop offset="1" stop-color="#a49a83"/></linearGradient>
+              </defs>
+              <ellipse cx="60" cy="88" rx="40" ry="7" fill="#000000" opacity="0.3"/>
+              <polygon points="26,80 22,50 40,30 78,24 96,44 92,74 66,86" fill="url(#gd-lime-a)"/>
+              <polygon points="40,30 78,24 96,44 60,48" fill="#e4dbc6" opacity="0.9"/>
+              <polygon points="22,50 40,30 60,48 44,64" fill="#b9ae94" opacity="0.8"/>
+              <path d="M76 62 a8 8 0 1 1 -8 -8 a5.5 5.5 0 1 0 5.5 5.5 a3.2 3.2 0 1 1 -3.2 -3.2" fill="none" stroke="#7a7159" stroke-width="1.5" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Известняк</h3><span class="guide-tag">Осадочная</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 3</span><span class="guide-mohs-scale" data-mohs="3" aria-label="Твёрдость по Моосу: 3 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Порода из раковин и кораллов исчезнувших морей. Вскипает под каплей кислоты.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> карстовые плато, пещеры, белые прибрежные обрывы.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="metamorphic" style="--io-delay: 0.3s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-marble-a" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efeae2"/><stop offset="1" stop-color="#b8b1a6"/></linearGradient>
+              </defs>
+              <ellipse cx="60" cy="88" rx="38" ry="6" fill="#000000" opacity="0.3"/>
+              <path d="M30 76 Q20 52 38 34 Q58 16 82 28 Q102 40 94 62 Q86 84 60 86 Q40 88 30 76 Z" fill="url(#gd-marble-a)"/>
+              <path d="M34 58 Q50 46 62 52 T94 46" stroke="#8f877b" stroke-width="1.2" fill="none" opacity="0.75"/>
+              <path d="M40 70 Q58 62 74 68 T96 60" stroke="#9d958a" stroke-width="0.8" fill="none" opacity="0.6"/>
+              <path d="M36 44 Q52 38 60 42 T88 36" stroke="#e8702a" stroke-width="1" fill="none" opacity="0.3"/>
+              <ellipse cx="56" cy="34" rx="20" ry="8" fill="#ffffff" opacity="0.18"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Мрамор</h3><span class="guide-tag">Метаморфическая</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 3</span><span class="guide-mohs-scale" data-mohs="3" aria-label="Твёрдость по Моосу: 3 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Перекристаллизованный известняк: сахарный блеск на изломе, всегда прохладен на ощупь.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> зоны контакта с гранитами, старые каменоломни.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="metamorphic" style="--io-delay: 0.36s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <clipPath id="gd-gneiss-c"><polygon points="20,74 26,40 54,24 92,30 100,58 84,84 40,84"/></clipPath>
+              </defs>
+              <ellipse cx="60" cy="88" rx="40" ry="6" fill="#000000" opacity="0.35"/>
+              <polygon points="20,74 26,40 54,24 92,30 100,58 84,84 40,84" fill="#675f55"/>
+              <g clip-path="url(#gd-gneiss-c)">
+                <path d="M14 40 Q40 30 60 40 T106 36 L106 48 Q80 54 60 48 T14 52 Z" fill="#8d857a"/>
+                <path d="M14 56 Q40 46 60 56 T106 52 L106 62 Q80 68 60 62 T14 66 Z" fill="#38342f"/>
+                <path d="M14 70 Q40 60 60 70 T106 66 L106 78 Q80 84 60 78 T14 82 Z" fill="#7c7469"/>
+              </g>
+              <polygon points="26,40 54,24 92,30 58,36" fill="#9a9186" opacity="0.5"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Гнейс</h3><span class="guide-tag">Метаморфическая</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 6</span><span class="guide-mohs-scale" data-mohs="6" aria-label="Твёрдость по Моосу: 6 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Полосатая порода, пережившая жар и давление горообразования — гранит после испытаний.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> ядра древних горных массивов, докембрийские щиты.</p>
+          </div></div>
+        </article>
+      </div>
+
+      <div class="guide-item io" data-type="mineral" style="--io-delay: 0.42s">
+        <article class="guide-card" tabindex="0" role="button" aria-expanded="false">
+          <div class="guide-figure" aria-hidden="true">
+            <svg class="guide-figure-svg" viewBox="0 0 120 100" focusable="false">
+              <defs>
+                <linearGradient id="gd-quartz-a" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9e6df"/><stop offset="1" stop-color="#8e8a82"/></linearGradient>
+                <linearGradient id="gd-quartz-b" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d3cfc7"/><stop offset="1" stop-color="#77736c"/></linearGradient>
+              </defs>
+              <ellipse cx="60" cy="88" rx="36" ry="6" fill="#000000" opacity="0.4"/>
+              <polygon points="30,86 36,74 62,70 84,76 88,86" fill="#3a3530"/>
+              <polygon points="34,86 34,52 44,38 52,54 50,86" fill="url(#gd-quartz-b)" opacity="0.88"/>
+              <polygon points="52,86 50,38 60,18 70,36 68,86" fill="url(#gd-quartz-a)" opacity="0.92"/>
+              <polygon points="70,86 72,48 84,40 90,56 86,86" fill="url(#gd-quartz-b)" opacity="0.85"/>
+              <path d="M50 38 L60 18 L70 36" stroke="#ffffff" stroke-width="1.2" fill="none" opacity="0.65"/>
+              <path d="M34 52 L44 38 L52 54" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.45"/>
+              <path d="M72 48 L84 40 L90 56" stroke="#ffffff" stroke-width="1" fill="none" opacity="0.45"/>
+              <path d="M60 22 L60 82" stroke="#ffffff" stroke-width="0.8" opacity="0.25"/>
+            </svg>
+          </div>
+          <div class="guide-head"><h3 class="guide-name">Кварц</h3><span class="guide-tag">Минерал</span></div>
+          <div class="guide-mohs"><span class="guide-mohs-label">Моос 7</span><span class="guide-mohs-scale" data-mohs="7" aria-label="Твёрдость по Моосу: 7 из 10"></span></div>
+          <div class="guide-more"><div class="guide-more-in">
+            <p class="guide-more-text">Эталон седьмой ступени Мооса; из его зёрен состоит почти любой песок на планете.</p>
+            <p class="guide-where"><span class="guide-where-key">Где искать:</span> жилы в гранитах, галечники рек, друзы в пустотах.</p>
+          </div></div>
+        </article>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  /* --- Course: cursor-following glow (desktop pointers only) --- */
+  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  var courseCards = Array.prototype.slice.call(document.querySelectorAll('.course-card'));
+  if (fine && courseCards.length) {
+    courseCards.forEach(function (card) {
+      var x = 0, y = 0, queued = false;
+      card.addEventListener('mousemove', function (e) {
+        var r = card.getBoundingClientRect();
+        x = e.clientX - r.left;
+        y = e.clientY - r.top;
+        if (!queued) {
+          queued = true;
+          window.requestAnimationFrame(function () {
+            card.style.setProperty('--mx', x + 'px');
+            card.style.setProperty('--my', y + 'px');
+            queued = false;
+          });
+        }
+      }, { passive: true });
+    });
+  }
+
+  /* --- Guides: build Mohs scales --- */
+  Array.prototype.forEach.call(document.querySelectorAll('.guide-mohs-scale'), function (scale) {
+    var n = parseInt(scale.getAttribute('data-mohs'), 10) || 0;
+    for (var i = 1; i <= 10; i++) {
+      var seg = document.createElement('i');
+      seg.className = 'guide-mohs-seg' + (i <= n ? ' guide-mohs-on' : '');
+      scale.appendChild(seg);
+    }
+  });
+
+  /* --- Guides: filtering --- */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.guide-chip'));
+  var items = Array.prototype.slice.call(document.querySelectorAll('.guide-item'));
+  var counter = document.getElementById('guideCount');
+
+  function pluralize(n) {
+    var m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return n + ' образец';
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return n + ' образца';
+    return n + ' образцов';
+  }
+
+  function applyFilter(type) {
+    var shown = 0;
+    items.forEach(function (item) {
+      var match = type === 'all' || item.getAttribute('data-type') === type;
+      if (match) {
+        shown++;
+        item.classList.remove('guide-gone');
+        item.classList.remove('guide-hide');
+        item.classList.remove('guide-pop');
+        void item.offsetWidth;
+        item.classList.add('guide-pop');
+      } else {
+        item.classList.remove('guide-pop');
+        item.classList.add('guide-hide');
+      }
+    });
+    window.setTimeout(function () {
+      items.forEach(function (item) {
+        if (item.classList.contains('guide-hide')) item.classList.add('guide-gone');
+      });
+    }, 260);
+    if (counter) counter.textContent = pluralize(shown);
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      chips.forEach(function (c) { c.classList.remove('guide-chip-active'); c.setAttribute('aria-pressed', 'false'); });
+      chip.classList.add('guide-chip-active');
+      chip.setAttribute('aria-pressed', 'true');
+      applyFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  /* --- Guides: expandable cards --- */
+  Array.prototype.forEach.call(document.querySelectorAll('.guide-card'), function (card) {
+    function toggle() {
+      var open = card.classList.toggle('guide-open');
+      card.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    card.addEventListener('click', toggle);
+    card.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+</script>
+
+  <!-- ===== plans-tour-footer.html ===== -->
+<style>
+/* ================= PLANS ================= */
+.plan-head { text-align: center; }
+.plan-lead { margin-left: auto; margin-right: auto; }
+
+.plan-period { margin-top: 40px; display: flex; justify-content: center; }
+.plan-period-inner { display: inline-flex; gap: 4px; padding: 4px; background: var(--panel); border: 1px solid var(--line); border-radius: 9999px; }
+.plan-period-btn {
+  padding: 8px 18px; border-radius: 9999px; font-size: 14px; font-weight: 500; color: var(--text-2);
+  white-space: nowrap; transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.plan-period-btn:hover { color: #ffffff; }
+.plan-period-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.plan-period-btn.plan-period-active { background: rgba(255, 255, 255, 0.12); color: #ffffff; }
+.plan-badge { margin-left: 6px; font-size: 11px; font-weight: 600; color: var(--accent); }
+
+.plan-grid { margin: 48px auto 0; display: grid; gap: 20px; grid-template-columns: 1fr; max-width: 1080px; }
+@media (max-width: 899px) { .plan-card { max-width: 480px; width: 100%; margin-left: auto; margin-right: auto; } }
+@media (min-width: 900px) { .plan-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; } }
+
+.plan-card {
+  position: relative; display: flex; flex-direction: column;
+  padding: 34px 28px 30px; background: var(--panel); border: 1px solid var(--line); border-radius: 24px;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.plan-card:hover { transform: translateY(-4px); border-color: var(--line-strong); }
+.plan-card--featured {
+  background: linear-gradient(180deg, rgba(232, 112, 42, 0.10), rgba(255, 255, 255, 0.04) 46%);
+  border-color: rgba(232, 112, 42, 0.55);
+  box-shadow: 0 24px 70px -30px rgba(232, 112, 42, 0.45);
+}
+.plan-card--featured:hover { border-color: rgba(232, 112, 42, 0.8); }
+@media (min-width: 1024px) {
+  .plan-card--featured { transform: scale(1.03); }
+  .plan-card--featured:hover { transform: scale(1.03) translateY(-4px); }
+}
+.plan-chip {
+  position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: #ffffff; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 14px; border-radius: 9999px; white-space: nowrap;
+}
+.plan-name { font-size: 18px; font-weight: 600; color: #ffffff; }
+.plan-desc { margin-top: 6px; font-size: 14px; line-height: 1.5; color: var(--text-3); }
+.plan-pricebox { margin-top: 24px; display: flex; align-items: baseline; gap: 8px; }
+.plan-price { font-size: 44px; font-weight: 500; line-height: 1; letter-spacing: -0.04em; color: #ffffff; }
+.plan-unit { font-size: 14px; color: var(--text-3); }
+.plan-note { margin-top: 8px; font-size: 12px; color: var(--text-3); min-height: 15px; }
+.plan-swap { display: inline-block; transition: opacity 0.18s var(--ease), transform 0.18s var(--ease); }
+.plan-fading { opacity: 0; transform: translateY(6px); }
+.plan-features { margin: 26px 0 30px; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.plan-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--text-2); }
+.plan-check { flex: none; margin-top: 2px; color: rgba(255, 255, 255, 0.5); }
+.plan-card--featured .plan-check { color: var(--accent); }
+.plan-cta { display: block; width: 100%; }
+.plan-foot { margin-top: 28px; text-align: center; font-size: 12px; color: var(--text-3); }
+
+/* ================= TOUR ================= */
+.tour-band { position: relative; overflow: hidden; display: flex; align-items: center; min-height: 620px; padding: 96px 0; }
+.tour-bg {
+  position: absolute; left: 0; right: 0; top: -16%; bottom: -16%;
+  background: url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260609_201152_bba90a12-bf12-459f-91f0-51f237dbaf3b.png&w=1280&q=85') center / cover no-repeat;
+  will-change: transform;
+}
+.tour-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(11, 10, 8, 0.92), rgba(11, 10, 8, 0.35) 30%, rgba(11, 10, 8, 0.35) 65%, rgba(11, 10, 8, 0.94));
+}
+.tour-inner { position: relative; width: 100%; }
+.tour-card {
+  max-width: 620px; padding: 44px;
+  background: rgba(17, 13, 10, 0.55); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 24px;
+  -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+}
+@media (max-width: 639px) { .tour-card { padding: 28px 22px; } }
+.tour-title { font-size: clamp(30px, 3.4vw, 42px); }
+.tour-desc { margin-top: 14px; max-width: 460px; font-size: 15px; line-height: 1.65; color: var(--text-2); }
+
+.tour-dates { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 10px; }
+.tour-chip {
+  padding: 9px 16px; border-radius: 9999px; border: 1px solid rgba(255, 255, 255, 0.22);
+  color: var(--text-2); font-size: 13px; font-weight: 500; white-space: nowrap;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.tour-chip:hover { border-color: rgba(255, 255, 255, 0.45); color: #ffffff; }
+.tour-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tour-chip[aria-checked="true"] { background: var(--accent-soft); border-color: var(--accent); color: #ffffff; }
+
+.tour-form { margin-top: 22px; display: flex; gap: 10px; }
+@media (max-width: 519px) { .tour-form { flex-direction: column; } }
+.tour-input {
+  flex: 1; min-width: 0; padding: 12px 20px; border-radius: 9999px;
+  background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 14px; color: #ffffff; transition: border-color 0.2s var(--ease);
+}
+.tour-input::placeholder { color: var(--text-3); }
+.tour-input:focus { outline: none; border-color: var(--accent); }
+.tour-submit { white-space: nowrap; }
+.tour-invalid .tour-input { border-color: #e5484d; }
+.tour-err { display: none; margin-top: 10px; font-size: 12.5px; color: #ff8f8f; }
+.tour-invalid .tour-err { display: block; }
+@keyframes tourShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.tour-shake { animation: tourShake 0.4s ease; }
+
+.tour-success { margin-top: 24px; display: flex; align-items: flex-start; gap: 16px; }
+.tour-success[hidden] { display: none; }
+.tour-ok { flex: none; color: var(--accent); }
+.tour-ok-circle { stroke-dasharray: 164; stroke-dashoffset: 164; animation: tourDraw 0.6s var(--ease) forwards; }
+.tour-ok-check { stroke-dasharray: 40; stroke-dashoffset: 40; animation: tourDraw 0.35s var(--ease) 0.45s forwards; }
+@keyframes tourDraw { to { stroke-dashoffset: 0; } }
+.tour-success-text { font-size: 15px; line-height: 1.55; color: #ffffff; }
+.tour-again { margin-top: 14px; padding: 9px 20px; font-size: 13px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-shake { animation: none; }
+  .tour-bg { top: 0; bottom: 0; }
+  .tour-ok-circle, .tour-ok-check { animation: none; stroke-dashoffset: 0; }
+  .plan-card, .plan-card:hover { transition: none; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) and (min-width: 1024px) {
+  .plan-card--featured, .plan-card--featured:hover { transform: scale(1.03); }
+}
+
+/* ================= FOOTER ================= */
+.ft-footer { border-top: 1px solid var(--line); padding: 72px 0 36px; }
+.ft-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; }
+.ft-brand { max-width: 240px; }
+.ft-brand-row { display: flex; align-items: center; gap: 10px; }
+.ft-wordmark { font-size: 24px; color: #ffffff; }
+.ft-tagline { margin-top: 14px; font-size: 14px; line-height: 1.6; color: var(--text-3); }
+.ft-cols { display: grid; grid-template-columns: repeat(3, minmax(150px, 1fr)); gap: 40px; }
+.ft-col-title { margin-bottom: 16px; font-size: 12px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-3); }
+.ft-list { padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ft-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; color: rgba(255, 255, 255, 0.6); text-decoration: none; transition: color 0.2s var(--ease);
+}
+.ft-link:hover { color: #ffffff; }
+.ft-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+.ft-icon { flex: none; color: rgba(255, 255, 255, 0.45); }
+.ft-bottom {
+  margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
+}
+.ft-copy { font-size: 13px; color: var(--text-3); }
+.ft-policy { font-size: 13px; }
+@media (max-width: 767px) {
+  .ft-top { flex-direction: column; gap: 40px; }
+  .ft-cols { width: 100%; grid-template-columns: repeat(2, 1fr); gap: 32px; }
+}
+</style>
+
+<!-- ===================== ТАРИФЫ ===================== -->
+<section class="section" id="plans">
+  <div class="container">
+    <div class="plan-head io">
+      <span class="eyebrow">Тарифы</span>
+      <h2 class="h2">Выберите свою <em class="accent-serif">глубину</em></h2>
+      <p class="lead plan-lead">От первого взгляда на гальку до экспедиций с наставником — копайте в удобном вам темпе.</p>
+    </div>
+
+    <div class="plan-period io" style="--io-delay: 0.08s">
+      <div class="plan-period-inner" role="group" aria-label="Период оплаты">
+        <button type="button" class="plan-period-btn plan-period-active" data-period="month" aria-pressed="true">Месяц</button>
+        <button type="button" class="plan-period-btn" data-period="year" aria-pressed="false">Год <span class="plan-badge">−20%</span></button>
+      </div>
+    </div>
+
+    <div class="plan-grid">
+      <article class="plan-card io" style="--io-delay: 0.1s">
+        <h3 class="plan-name">Любитель</h3>
+        <p class="plan-desc">Первое знакомство с камнем под ногами.</p>
+        <div class="plan-pricebox">
+          <span class="plan-price">0</span>
+          <span class="plan-unit">₽</span>
+        </div>
+        <p class="plan-note">навсегда</p>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Базовый определитель пород</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Первые 3 урока курса</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Сообщество исследователей</li>
+        </ul>
+        <button type="button" class="btn-ghost plan-cta">Выбрать</button>
+      </article>
+
+      <article class="plan-card plan-card--featured io" style="--io-delay: 0.18s">
+        <span class="plan-chip">Популярный</span>
+        <h3 class="plan-name">Исследователь</h3>
+        <p class="plan-desc">Для тех, кто готов читать разрезы сам.</p>
+        <div class="plan-pricebox">
+          <span class="plan-price plan-swap" data-month="790" data-year="632">790</span>
+          <span class="plan-unit">₽/мес</span>
+        </div>
+        <p class="plan-note plan-swap" data-month="оплата помесячно" data-year="при оплате за год">оплата помесячно</p>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Полный курс — 6 модулей</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Все полевые гиды</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Интерактивные карты слоёв</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Сертификат Lithos</li>
+        </ul>
+        <button type="button" class="btn-primary plan-cta">Начать копать</button>
+      </article>
+
+      <article class="plan-card io" style="--io-delay: 0.26s">
+        <h3 class="plan-name">Экспедиция</h3>
+        <p class="plan-desc">Максимальная глубина погружения.</p>
+        <div class="plan-pricebox">
+          <span class="plan-price plan-swap" data-month="1 990" data-year="1 592">1 990</span>
+          <span class="plan-unit">₽/мес</span>
+        </div>
+        <p class="plan-note plan-swap" data-month="оплата помесячно" data-year="при оплате за год">оплата помесячно</p>
+        <ul class="plan-features">
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Всё из «Исследователя»</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Живой тур каждый месяц</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Личный наставник-геолог</li>
+          <li class="plan-feature"><svg class="plan-check" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8.5 6.5 12 13 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Полевой набор Lithos</li>
+        </ul>
+        <button type="button" class="btn-ghost plan-cta">Выбрать</button>
+      </article>
+    </div>
+
+    <p class="plan-foot io" style="--io-delay: 0.3s">Цены демонстрационные.</p>
+  </div>
+</section>
+
+<!-- ===================== ЖИВОЙ ТУР ===================== -->
+<section class="section" id="tour">
+  <div class="tour-band">
+    <div class="tour-bg" aria-hidden="true"></div>
+    <div class="tour-overlay" aria-hidden="true"></div>
+    <div class="container tour-inner">
+      <div class="tour-card io">
+        <span class="eyebrow">Живой тур</span>
+        <h2 class="h2 tour-title">Спуститесь в разлом <em class="accent-serif">вживую</em></h2>
+        <p class="tour-desc">Раз в месяц мы выезжаем на настоящий разрез вместе с геологом Lithos: трогаем слои руками, ищем окаменелости и учимся читать породу как текст.</p>
+
+        <div class="tour-formwrap">
+          <div class="tour-dates" role="radiogroup" aria-label="Дата тура">
+            <button type="button" class="tour-chip" role="radio" aria-checked="true" tabindex="0" data-date="12 июля">12 июля · 4 места</button>
+            <button type="button" class="tour-chip" role="radio" aria-checked="false" tabindex="-1" data-date="26 июля">26 июля · 7 мест</button>
+            <button type="button" class="tour-chip" role="radio" aria-checked="false" tabindex="-1" data-date="9 августа">9 августа · 12 мест</button>
+          </div>
+          <form class="tour-form" novalidate>
+            <input class="tour-input" type="email" name="email" placeholder="ваш@email.ru" aria-label="Email для бронирования" aria-describedby="tour-err" autocomplete="email" />
+            <button type="submit" class="btn-primary tour-submit">Забронировать место</button>
+          </form>
+          <p class="tour-err" id="tour-err">Похоже, в адресе опечатка — проверьте email.</p>
+        </div>
+
+        <div class="tour-success" role="status" hidden>
+          <svg class="tour-ok" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <circle class="tour-ok-circle" cx="28" cy="28" r="26" stroke="currentColor" stroke-width="2"/>
+            <path class="tour-ok-check" d="M17 29l8 8 15-17" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div class="tour-success-body">
+            <p class="tour-success-text">Место забронировано на <span class="tour-success-date">12 июля</span> — детали письмом.</p>
+            <button type="button" class="btn-ghost tour-again">Выбрать другую дату</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ФУТЕР ===================== -->
+<footer class="ft-footer">
+  <div class="container">
+    <div class="ft-top io">
+      <div class="ft-brand">
+        <div class="ft-brand-row">
+          <svg width="26" height="26" viewBox="0 0 256 256" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M 256 256 L 128 256 L 0 128 L 128 128 Z M 256 128 L 128 128 L 0 0 L 128 0 Z" />
+          </svg>
+          <span class="ft-wordmark accent-serif">Lithos</span>
+        </div>
+        <p class="ft-tagline">Слои помнят всё.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Разделы сайта">
+        <div class="ft-col">
+          <h3 class="ft-col-title">Разделы</h3>
+          <ul class="ft-list">
+            <li class="ft-item"><a class="ft-link" href="#strata">Геология</a></li>
+            <li class="ft-item"><a class="ft-link" href="#course">Курс</a></li>
+            <li class="ft-item"><a class="ft-link" href="#guides">Гиды</a></li>
+            <li class="ft-item"><a class="ft-link" href="#plans">Тарифы</a></li>
+            <li class="ft-item"><a class="ft-link" href="#tour">Живой тур</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3 class="ft-col-title">Материалы</h3>
+          <ul class="ft-list">
+            <li class="ft-item"><a class="ft-link" href="#dig">Площадка раскопок</a></li>
+            <li class="ft-item"><a class="ft-link" href="#timeline">Летопись времён</a></li>
+            <li class="ft-item"><a class="ft-link" href="#guides">Определитель пород</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h3 class="ft-col-title">Контакты</h3>
+          <ul class="ft-list">
+            <li class="ft-item"><a class="ft-link" href="mailto:hello@lithos.ru">hello@lithos.ru</a></li>
+            <li class="ft-item"><a class="ft-link" href="https://t.me/lithos_geo" target="_blank" rel="noopener"><svg class="ft-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4Z"/></svg>Telegram</a></li>
+            <li class="ft-item"><a class="ft-link" href="https://youtube.com/@lithos_geo" target="_blank" rel="noopener"><svg class="ft-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>YouTube</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="ft-bottom">
+      <p class="ft-copy">© 2026 Lithos. Все породы защищены.</p>
+      <span class="ft-link ft-policy">Политика конфиденциальности</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Plans: billing period toggle ---- */
+  var periodBtns = Array.prototype.slice.call(document.querySelectorAll('.plan-period-btn'));
+  var swapEls = Array.prototype.slice.call(document.querySelectorAll('.plan-swap'));
+  function applyPeriod(period) {
+    swapEls.forEach(function (el) {
+      if (el._swapT) { clearTimeout(el._swapT); el._swapT = 0; el.classList.remove('plan-fading'); }
+      var next = el.getAttribute('data-' + period);
+      if (next === null || next === el.textContent) return;
+      if (reduceMotion) { el.textContent = next; return; }
+      el.classList.add('plan-fading');
+      el._swapT = setTimeout(function () {
+        el._swapT = 0;
+        el.textContent = next;
+        el.classList.remove('plan-fading');
+      }, 180);
+    });
+  }
+  periodBtns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.classList.contains('plan-period-active')) return;
+      periodBtns.forEach(function (b) {
+        var on = b === btn;
+        b.classList.toggle('plan-period-active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      applyPeriod(btn.getAttribute('data-period'));
+    });
+  });
+
+  /* ---- Tour: date chips (radio behavior + roving tabindex) ---- */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.tour-chip'));
+  var successDate = document.querySelector('.tour-success-date');
+  function selectChip(chip) {
+    chips.forEach(function (c) {
+      var on = c === chip;
+      c.setAttribute('aria-checked', on ? 'true' : 'false');
+      c.setAttribute('tabindex', on ? '0' : '-1');
+    });
+    if (successDate) successDate.textContent = chip.getAttribute('data-date');
+  }
+  chips.forEach(function (chip, i) {
+    chip.addEventListener('click', function () { selectChip(chip); });
+    chip.addEventListener('keydown', function (e) {
+      var dir = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+        : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      var next = chips[(i + dir + chips.length) % chips.length];
+      next.focus();
+      selectChip(next);
+    });
+  });
+
+  /* ---- Tour: booking form ---- */
+  var form = document.querySelector('.tour-form');
+  var input = document.querySelector('.tour-input');
+  var formwrap = document.querySelector('.tour-formwrap');
+  var success = document.querySelector('.tour-success');
+  var again = document.querySelector('.tour-again');
+  if (form && input && formwrap && success) {
+    input.addEventListener('input', function () {
+      formwrap.classList.remove('tour-invalid');
+      input.removeAttribute('aria-invalid');
+    });
+    form.addEventListener('animationend', function () { form.classList.remove('tour-shake'); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!/.+@.+\..+/.test(input.value.trim())) {
+        formwrap.classList.add('tour-invalid');
+        input.setAttribute('aria-invalid', 'true');
+        if (!reduceMotion) {
+          form.classList.remove('tour-shake');
+          void form.offsetWidth;
+          form.classList.add('tour-shake');
+        }
+        input.focus();
+        return;
+      }
+      formwrap.hidden = true;
+      success.hidden = false;
+    });
+    if (again) {
+      again.addEventListener('click', function () {
+        success.hidden = true;
+        formwrap.hidden = false;
+        input.focus();
+      });
+    }
+  }
+
+  /* ---- Tour: background parallax ---- */
+  var band = document.querySelector('.tour-band');
+  var bg = document.querySelector('.tour-bg');
+  if (band && bg) {
+    var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var ticking = false;
+    var update = function () {
+      ticking = false;
+      if ((mq && mq.matches) || window.innerWidth < 768) { bg.style.transform = ''; return; }
+      var r = band.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > window.innerHeight) return;
+      var delta = r.top + r.height / 2 - window.innerHeight / 2;
+      bg.style.transform = 'translateY(' + (delta * -0.1).toFixed(1) + 'px)';
+    };
+    var onScroll = function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  }
+})();
+</script>
+
+  <!-- SECTIONS:END -->
+
+</div>
+
+<script>
+(function () {
+  // Scroll-reveal
+  var revealed = document.querySelectorAll('.io');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealed.forEach(function (el) { io.observe(el); });
+  } else {
+    revealed.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // Glass nav after leaving the top of the hero
+  var nav = document.querySelector('.nav');
+  function onScroll() { nav.classList.toggle('scrolled', window.scrollY > 40); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile overlay menu
+  var burger = document.querySelector('.nav-burger');
+  var menu = document.getElementById('navMenu');
+  if (burger && menu) {
+    var setMenu = function (open) {
+      menu.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); }
+    });
+  }
+
+  // Highlight the nav link of the section in view
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-pill .nav-link'));
+  var byId = {};
+  links.forEach(function (l) { byId[l.getAttribute('href').slice(1)] = l; });
+  var watched = Object.keys(byId).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window && watched.length) {
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          byId[en.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    watched.forEach(function (s) { sio.observe(s); });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var SPOTLIGHT_R = 260;
+  var canvas = document.getElementById('revealCanvas');
+  var reveal = document.getElementById('revealLayer');
+  var hero = document.querySelector('.hero');
+  if (!canvas || !reveal) return;
+  var ctx = canvas.getContext('2d');
+  if (!ctx) return;
+
+  // The soft-circle mask is encoded ONCE as a 2R×2R tile (same gradient stops and
+  // radius as before); per frame only mask-position moves — no toDataURL churn.
+  var SIZE = SPOTLIGHT_R * 2;
+  canvas.width = SIZE;
+  canvas.height = SIZE;
+  var g = ctx.createRadialGradient(SPOTLIGHT_R, SPOTLIGHT_R, 0, SPOTLIGHT_R, SPOTLIGHT_R, SPOTLIGHT_R);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.4, 'rgba(255,255,255,1)');
+  g.addColorStop(0.6, 'rgba(255,255,255,0.75)');
+  g.addColorStop(0.75, 'rgba(255,255,255,0.4)');
+  g.addColorStop(0.88, 'rgba(255,255,255,0.12)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.beginPath();
+  ctx.arc(SPOTLIGHT_R, SPOTLIGHT_R, SPOTLIGHT_R, 0, Math.PI * 2);
+  ctx.fill();
+  var url = 'url("' + canvas.toDataURL() + '")';
+  reveal.style.webkitMaskImage = url;
+  reveal.style.maskImage = url;
+  reveal.style.webkitMaskRepeat = 'no-repeat';
+  reveal.style.maskRepeat = 'no-repeat';
+
+  function setPos(x, y) {
+    var pos = (x - SPOTLIGHT_R) + 'px ' + (y - SPOTLIGHT_R) + 'px';
+    reveal.style.webkitMaskPosition = pos;
+    reveal.style.maskPosition = pos;
+  }
+  setPos(-9999, -9999); // hidden until the pointer moves
+
+  // Cursor-driven effect: skip entirely on touch-only devices (it would never show).
+  if (!(window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+
+  var mouse = { x: -999, y: -999 };
+  var smooth = { x: -999, y: -999 };
+  var running = false, rafId = 0, heroVisible = true, moved = false;
+
+  function frame() {
+    smooth.x += (mouse.x - smooth.x) * 0.1;
+    smooth.y += (mouse.y - smooth.y) * 0.1;
+    // mask-position is in layer coordinates; the hero sits at the top of the document
+    setPos(smooth.x, smooth.y + window.scrollY);
+    if (Math.abs(mouse.x - smooth.x) < 0.05 && Math.abs(mouse.y - smooth.y) < 0.05) {
+      running = false;
+      return;
+    }
+    rafId = requestAnimationFrame(frame);
+  }
+  function wake() {
+    if (moved && !running && heroVisible) { running = true; rafId = requestAnimationFrame(frame); }
+  }
+  window.addEventListener('mousemove', function (e) {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+    moved = true;
+    wake();
+  }, { passive: true });
+  window.addEventListener('scroll', function () {
+    // keep the spotlight glued to the cursor while the hero scrolls under it
+    if (moved && heroVisible && !running) { setPos(smooth.x, smooth.y + window.scrollY); }
+  }, { passive: true });
+
+  if ('IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      heroVisible = entries[0].isIntersecting;
+      if (!heroVisible && running) { cancelAnimationFrame(rafId); running = false; }
+      else if (heroVisible) wake();
+    }).observe(hero || reveal);
+  }
+})();
+</script>
+</body>
+</html>

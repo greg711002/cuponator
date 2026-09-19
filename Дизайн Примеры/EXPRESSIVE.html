@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Expressive UI</title>
+<meta name="description" content="Яркий и визуально привлекательный стиль дизайна"/>
+<link rel="icon" href="https://expressive-three.vercel.app/favicon.ico" sizes="256x256" type="image/x-icon"/>
+<link rel="preconnect" href="https://expressive-three.vercel.app" crossorigin/>
+<style>
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:100;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/5849aa7d99f8e15e-s.p.ea0ea436.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:200;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/f0b856f7f1c4bda0-s.p.0a1731ba.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:300;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/e9d5b069f63ab620-s.p.c6182c6b.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:400;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/99e609270109b47d-s.p.64b9304e.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:500;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/effe91970fc4db64-s.p.19510058.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:600;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/23b7a97ae3b5c134-s.p.2902b61f.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:700;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/a7e15459c1805da0-s.p.ec654d65.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:800;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/a7e15459c1805da0-s.p.ec654d65.woff2)format("woff2")}
+@font-face{font-family:IBM Plex Mono;font-style:normal;font-weight:900;font-display:swap;src:url(https://expressive-three.vercel.app/_next/static/media/a7e15459c1805da0-s.p.ec654d65.woff2)format("woff2")}
+
+*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}
+::after,::before{--tw-content:''}
+html,:host{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}
+body{margin:0;line-height:inherit}
+hr{height:0;color:inherit;border-top-width:1px}
+abbr:where([title]){text-decoration:underline dotted}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+b,strong{font-weight:bolder}
+code,kbd,samp,pre{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sub{bottom:-.25em}
+sup{top:-.5em}
+table{text-indent:0;border-color:inherit;border-collapse:collapse}
+button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}
+button,select{text-transform:none}
+button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}
+:-moz-focusring{outline:auto}
+:-moz-ui-invalid{box-shadow:none}
+progress{vertical-align:baseline}
+::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}
+[type=search]{-webkit-appearance:textfield;outline-offset:-2px}
+::-webkit-search-decoration{-webkit-appearance:none}
+::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}
+summary{display:list-item}
+blockquote,dl,dd,h1,h2,h3,h4,h5,h6,hr,figure,p,pre{margin:0}
+fieldset{margin:0;padding:0}
+legend{padding:0}
+ol,ul,menu{list-style:none;margin:0;padding:0}
+dialog{padding:0}
+textarea{resize:vertical}
+input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}
+button,[role=button]{cursor:pointer}
+:disabled{cursor:default}
+img,svg,video,canvas,audio,iframe,embed,object{display:block;vertical-align:middle}
+img,video{max-width:100%;height:auto}
+[hidden]:where(:not([hidden=until-found])){display:none}
+
+:root{
+  --color-surface:#e5e5e5;
+  --color-text:#111827;
+  --color-primary:#db2777;
+  --color-success:#16a34a;
+  --color-warning:#ff5500;
+  --color-danger:#dc2626;
+}
+
+.font-mono{font-family:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.bg-surface{background-color:var(--color-surface)}
+.text-text{color:var(--color-text)}
+.min-h-screen{min-height:100vh}
+.relative{position:relative}
+.absolute{position:absolute}
+.sticky{position:sticky}
+.overflow-hidden{overflow:hidden}
+.z-10{z-index:10}
+.z-20{z-index:20}
+.z-50{z-index:50}
+.top-0{top:0}
+.border-b{border-bottom-width:1px}
+.border-gray-200{border-color:#e5e7eb}
+.backdrop-blur-md{backdrop-filter:blur(12px)}
+.max-w-7xl{max-width:80rem}
+.max-w-5xl{max-width:64rem}
+.max-w-3xl{max-width:48rem}
+.max-w-md{max-width:28rem}
+.mx-auto{margin-left:auto;margin-right:auto}
+.px-4{padding-left:1rem;padding-right:1rem}
+.px-6{padding-left:1.5rem;padding-right:1.5rem}
+.px-8{padding-left:2rem;padding-right:2rem}
+.py-2{padding-top:.5rem;padding-bottom:.5rem}
+.py-3{padding-top:.75rem;padding-bottom:.75rem}
+.py-4{padding-top:1rem;padding-bottom:1rem}
+.py-6{padding-top:1.5rem;padding-bottom:1.5rem}
+.py-16{padding-top:4rem;padding-bottom:4rem}
+.pt-24{padding-top:6rem}
+.pt-12{padding-top:3rem}
+.pt-8{padding-top:2rem}
+.pt-20{padding-top:5rem}
+.pb-16{padding-bottom:4rem}
+.pb-12{padding-bottom:3rem}
+.pb-32{padding-bottom:8rem}
+.pr-8{padding-right:2rem}
+.pl-8{padding-left:2rem}
+.h-20{height:5rem}
+.h-24{height:6rem}
+.w-full{width:100%}
+.w-5{width:1.25rem}
+.w-8{width:2rem}
+.w-2{width:.5rem}
+.h-5{height:1.25rem}
+.h-8{height:2rem}
+.h-2{height:.5rem}
+.flex{display:flex}
+.hidden{display:none}
+.grid{display:grid}
+.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}
+.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.flex-col{flex-direction:column}
+.flex-wrap{flex-wrap:wrap}
+.flex-1{flex:1 1 0%}
+.items-center{align-items:center}
+.justify-center{justify-content:center}
+.justify-between{justify-content:space-between}
+.justify-end{justify-content:flex-end}
+.justify-start{justify-content:flex-start}
+.gap-1{gap:.25rem}
+.gap-2{gap:.5rem}
+.gap-4{gap:1rem}
+.gap-6{gap:1.5rem}
+.gap-8{gap:2rem}
+.gap-12{gap:3rem}
+.gap-16{gap:4rem}
+.text-center{text-align:center}
+.text-left{text-align:left}
+.text-xs{font-size:.75rem;line-height:1rem}
+.text-sm{font-size:.875rem;line-height:1.25rem}
+.text-lg{font-size:1.125rem;line-height:1.75rem}
+.text-xl{font-size:1.25rem;line-height:1.75rem}
+.text-2xl{font-size:1.5rem;line-height:2rem}
+.text-3xl{font-size:1.875rem;line-height:2.25rem}
+.text-4xl{font-size:2.25rem;line-height:2.5rem}
+.text-5xl{font-size:3rem;line-height:1}
+.font-medium{font-weight:500}
+.font-bold{font-weight:700}
+.font-black{font-weight:900}
+.uppercase{text-transform:uppercase}
+.tracking-tight{letter-spacing:-.025em}
+.tracking-tighter{letter-spacing:-.05em}
+.tracking-wide{letter-spacing:.025em}
+.tracking-wider{letter-spacing:.05em}
+.tracking-widest{letter-spacing:.1em}
+.leading-tight{line-height:1.25}
+.leading-relaxed{line-height:1.625}
+.text-white{color:#fff}
+.text-gray-400{color:#9ca3af}
+.text-gray-500{color:#6b7280}
+.text-gray-600{color:#4b5563}
+.text-gray-700{color:#374151}
+.text-gray-800{color:#1f2937}
+.bg-white{background-color:#fff}
+.bg-black{background-color:#000}
+.bg-transparent{background-color:transparent}
+.bg-gray-100{background-color:#f3f4f6}
+.bg-success{background-color:var(--color-success)}
+.bg-warning{background-color:var(--color-warning)}
+.bg-primary{background-color:var(--color-primary)}
+.text-success{color:var(--color-success)}
+.text-danger{color:var(--color-danger)}
+.border{border-width:1px}
+.border-gray-100{border-color:#f3f4f6}
+.border-gray-400{border-color:#9ca3af}
+.border-gray-800{border-color:#1f2937}
+.border-b{border-bottom-width:1px}
+.border-l{border-left-width:1px}
+.rounded{border-radius:.25rem}
+.rounded-lg{border-radius:.5rem}
+.rounded-xl{border-radius:.75rem}
+.rounded-2xl{border-radius:1rem}
+.rounded-full{border-radius:9999px}
+.shadow-sm{box-shadow:0 1px 2px 0 rgb(0 0 0/.05)}
+.shadow-2xl{box-shadow:0 25px 50px -12px rgb(0 0 0/.25)}
+.mb-2{margin-bottom:.5rem}
+.mb-4{margin-bottom:1rem}
+.mb-6{margin-bottom:1.5rem}
+.mb-8{margin-bottom:2rem}
+.mb-10{margin-bottom:2.5rem}
+.mb-12{margin-bottom:3rem}
+.mb-16{margin-bottom:4rem}
+.mb-24{margin-bottom:6rem}
+.mt-6{margin-top:1.5rem}
+.mt-12{margin-top:3rem}
+.mt-24{margin-top:6rem}
+.ml-1{margin-left:.25rem}
+.p-2{padding:.5rem}
+.p-4{padding:1rem}
+.p-6{padding:1.5rem}
+.p-8{padding:2rem}
+.p-12{padding:3rem}
+.space-y-3>:not([hidden])~:not([hidden]){margin-top:.75rem}
+.divide-y>:not([hidden])~:not([hidden]){border-top-width:1px;border-color:#e5e7eb}
+.divide-x>:not([hidden])~:not([hidden]){border-left-width:1px;border-color:#e5e7eb}
+.opacity-90{opacity:.9}
+.transform{transform:translate(var(--tw-translate-x),var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}
+.-translate-y-1\/2{--tw-translate-y:-50%;transform:translateY(-50%)}
+.-translate-x-1\/2{--tw-translate-x:-50%;transform:translateX(-50%)}
+.transition-colors{transition-property:color,background-color,border-color,text-decoration-color,fill,stroke;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+.transition-all{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+.transition-shadow{transition-property:box-shadow;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+.duration-300{transition-duration:.3s}
+.cursor-pointer{cursor:pointer}
+.hover\:text-gray-600:hover{color:#4b5563}
+.hover\:text-warning:hover{color:var(--color-warning)}
+.hover\:text-white:hover{color:#fff}
+.hover\:bg-gray-200:hover{background-color:#e5e7eb}
+.hover\:brightness-105:hover{filter:brightness(1.05)}
+.hover\:brightness-110:hover{filter:brightness(1.1)}
+.hover\:shadow-md:hover{box-shadow:0 4px 6px -1px rgb(0 0 0/.1),0 2px 4px -2px rgb(0 0 0/.1)}
+.hover\:scale-\[1\.02\]:hover{transform:scale(1.02)}
+
+.bg-grid{
+  background-image:
+    linear-gradient(to right,rgba(0,0,0,.04) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(0,0,0,.04) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+
+.connector-line-vertical{
+  position:absolute;
+  left:50%;
+  width:1px;
+  background:repeating-linear-gradient(to bottom,#d1d5db 0,#d1d5db 4px,transparent 4px,transparent 8px);
+  transform:translateX(-50%);
+}
+.connector-line-horizontal{
+  position:absolute;
+  height:1px;
+  background:repeating-linear-gradient(to right,#d1d5db 0,#d1d5db 4px,transparent 4px,transparent 8px);
+}
+.connector-dot{
+  position:absolute;
+  width:12px;
+  height:12px;
+  border-radius:50%;
+}
+
+@media(min-width:640px){
+  .sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}
+  .sm\:flex-row{flex-direction:row}
+  .sm\:w-auto{width:auto}
+  .sm\:mb-0{margin-bottom:0}
+}
+@media(min-width:768px){
+  .md\:flex{display:flex}
+  .md\:flex-row{flex-direction:row}
+  .md\:flex-nowrap{flex-wrap:nowrap}
+  .md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .md\:text-7xl{font-size:4.5rem;line-height:1}
+  .md\:text-xl{font-size:1.25rem;line-height:1.75rem}
+  .md\:text-left{text-align:left}
+  .md\:divide-y-0>:not([hidden])~:not([hidden]){border-top-width:0}
+  .md\:divide-x>:not([hidden])~:not([hidden]){border-left-width:1px}
+}
+@media(min-width:1024px){
+  .lg\:px-8{padding-left:2rem;padding-right:2rem}
+  .lg\:text-\[5\.5rem\]{font-size:5.5rem;line-height:1}
+}
+
+.text-\[\#ff5500\]{color:#ff5500}
+.text-\[10px\]{font-size:10px}
+.bg-\[\#ff5500\]{background-color:#ff5500}
+.bg-\[\#f8f9fa\]{background-color:#f8f9fa}
+.bg-\[\#e5e5e5\]\/80{background-color:rgb(229 229 229/.8)}
+.bg-\[\#e5e7eb\]{background-color:#e5e7eb}
+.bg-\[\#1a1a1a\]{background-color:#1a1a1a}
+.bg-\[\#333\]{background-color:#333}
+.rounded-\[2rem\]{border-radius:2rem}
+.max-w-\[200px\]{max-width:200px}
+.w-16{width:4rem}
+.left-\[-64px\]{left:-64px}
+.right-\[-6px\]{right:-6px}
+.left-\[-6px\]{left:-6px}
+.top-\[-12px\]{top:-12px}
+.top-\[20\%\]{top:20%}
+.left-1\/2{left:50%}
+</style>
+</head>
+<body class="font-mono antialiased bg-surface text-text">
+<main class="min-h-screen bg-grid relative overflow-hidden">
+
+<nav class="border-b border-gray-200 bg-[#e5e5e5]/80 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+<div class="flex items-center">
+<div class="text-3xl font-black tracking-tighter flex items-center">EXPRESSIVE</div>
+</div>
+<div class="hidden md:flex items-center gap-8 text-sm font-medium">
+<button class="flex items-center gap-1 hover:text-gray-600 transition-colors">Продукт <span class="text-xs">▼</span></button>
+<button class="flex items-center gap-1 hover:text-gray-600 transition-colors">Решения <span class="text-xs">▼</span></button>
+<button class="flex items-center gap-1 hover:text-gray-600 transition-colors">Разработка <span class="text-xs">▼</span></button>
+<a href="#" class="hover:text-gray-600 transition-colors">Цены</a>
+<a href="#" class="hover:text-gray-600 transition-colors">Блог</a>
+</div>
+<div class="flex items-center gap-6">
+<a href="#" class="text-sm font-bold tracking-wide uppercase hover:text-gray-600 transition-colors">Войти</a>
+<button class="bg-warning text-text text-sm font-bold tracking-wide uppercase px-6 py-3 rounded-full hover:brightness-105 transition-all shadow-sm">Связаться</button>
+</div>
+</div>
+</nav>
+
+<section class="relative pt-24 pb-16 px-4 flex flex-col items-center text-center z-10">
+<div class="bg-white rounded-full px-4 py-2 flex items-center gap-2 text-sm font-medium mb-12 shadow-sm border border-gray-200">
+<span class="text-[#ff5500] font-bold">Новое:</span>
+<span>Expressive + LLMs = @expressive/ai</span>
+<div class="bg-[#333] text-white rounded-full w-5 h-5 flex items-center justify-center text-xs ml-1">→</div>
+</div>
+<h1 class="text-5xl md:text-7xl lg:text-[5.5rem] font-black tracking-widest mb-6 uppercase">UI ДЛЯ РАЗРАБОТЧИКОВ</h1>
+<p class="max-w-3xl text-gray-700 text-lg md:text-xl mb-10 leading-relaxed font-medium">Expressive помогает командам создавать высокопроизводительные и красивые интерфейсы за минуты, а не месяцы. Улучшайте пользовательский опыт в сайтах, дашбордах и AI-сценариях.</p>
+<div class="flex flex-col sm:flex-row gap-4 mb-24">
+<button class="bg-[#ff5500] text-white font-bold tracking-widest uppercase px-8 py-4 rounded-full hover:brightness-110 transition-all text-sm w-full sm:w-auto shadow-sm">Начать</button>
+<button class="bg-transparent border border-gray-400 text-gray-800 font-bold tracking-widest uppercase px-8 py-4 rounded-full hover:bg-gray-200 transition-all text-sm w-full sm:w-auto">Документация</button>
+</div>
+<div class="bg-white rounded-[2rem] shadow-sm border border-gray-200 flex flex-wrap md:flex-nowrap items-center justify-between w-full max-w-5xl overflow-hidden divide-y md:divide-y-0 md:divide-x divide-gray-200">
+<div class="py-6 px-8 flex-1 text-center md:text-left">
+<div class="text-xs font-bold tracking-tighter text-gray-500 uppercase leading-tight">Нам доверяют</div>
+</div>
+<div class="py-6 px-8 flex-1 flex justify-center font-bold text-xl tracking-wider">SRC.CLUB</div>
+<div class="py-6 px-8 flex-1 flex justify-center font-bold text-xl tracking-wider">BERGSIDE</div>
+<div class="py-6 px-8 flex-1 flex justify-center font-bold text-xl tracking-wider">TYPEUI.SH</div>
+<div class="py-6 px-8 flex-1 flex justify-center font-bold text-xl tracking-wider">FLOWBITE</div>
+<div class="py-6 px-8 flex-1 flex justify-center font-bold text-xl tracking-wider">THEMESBERG</div>
+</div>
+</section>
+
+<div class="relative max-w-5xl mx-auto mt-24 px-4 pb-32">
+
+<!-- Вертикальная линия таймлайна -->
+<div class="connector-line-vertical" style="height:90%;top:0"></div>
+
+<!-- Ряд 1-2: Аналитика (слева) + Ценообразование (справа) -->
+<div class="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-16 mb-24">
+<!-- Левая колонка: карточка аналитики -->
+<div class="relative flex justify-end pr-8">
+<div class="connector-line-horizontal w-8 right-0 top-1/2"></div>
+<div class="connector-dot bg-gray-400 right-[-6px] top-1/2 transform -translate-y-1/2"></div>
+<div class="bg-white rounded-xl p-8 shadow-sm w-full max-w-md border border-gray-100">
+<h2 class="text-2xl font-bold mb-4 leading-tight">Анализ вовлечённости<br/>пользователей</h2>
+<p class="text-gray-600 text-sm mb-8 leading-relaxed">Отслеживайте ключевые метрики взаимодействия и качества: клики, время сессий, удержание, скорость загрузки, показатель отказов и другие.</p>
+<div class="bg-[#f8f9fa] rounded-lg p-4 border border-gray-100">
+<div class="flex gap-2 mb-4">
+<div class="bg-success text-white p-2 rounded flex-1">
+<div class="text-xs opacity-90">Клики</div>
+<div class="text-xl font-bold">2.9k</div>
+<div class="text-[10px]">▲ 22%</div>
+</div>
+<div class="bg-white p-2 rounded flex-1 border border-gray-100">
+<div class="text-xs text-gray-500">Пользователи</div>
+<div class="text-xl font-bold">1.3k</div>
+<div class="text-[10px] text-success">▲ 17%</div>
+</div>
+<div class="bg-white p-2 rounded flex-1 border border-gray-100">
+<div class="text-xs text-gray-500">Время сессии</div>
+<div class="text-xl font-bold">1.7h</div>
+<div class="text-[10px] text-danger">▼ 36%</div>
+</div>
+</div>
+<div class="h-24 relative border-b border-l border-gray-200 mt-6">
+<svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
+<path d="M0,50 Q20,20 40,60 T80,30 T100,40" fill="none" stroke="#db2777" stroke-width="2"></path>
+<path d="M0,70 Q20,80 40,40 T80,60 T100,50" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4 4"></path>
+</svg>
+<div class="absolute bottom-[-20px] left-0 w-full flex justify-between text-[10px] text-gray-400">
+<span>3 PM</span><span>6 PM</span>
+</div>
+</div>
+<div class="flex gap-4 mt-6 text-xs text-gray-500 justify-center">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary"></span> Неделю назад</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-warning"></span> За 6 часов</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Правая колонка: карточка ценообразования -->
+<div class="relative flex justify-start pl-8 pt-12">
+<div class="connector-line-horizontal w-8 left-0 top-[20%]"></div>
+<div class="connector-dot bg-gray-400 left-[-6px] top-[20%] transform -translate-y-1/2"></div>
+<div class="flex flex-col gap-6 w-full max-w-md">
+<div class="bg-white rounded-xl p-8 shadow-sm border border-gray-100 text-center">
+<div class="w-8 h-8 bg-black text-white rounded flex items-center justify-center mx-auto mb-4">$</div>
+<h2 class="text-xl font-bold mb-8">Сколько стоит этот UI?</h2>
+<div class="space-y-3 text-sm text-left mb-8">
+<div class="flex justify-between">
+<span class="text-gray-600">Экспорт библиотеки из 34 компонентов</span>
+<span class="font-bold">Бесплатно</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Хостинг ассетов на 1 месяц</span>
+<span class="font-bold">$0.0014</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Обработка 209 295 запросов</span>
+<span class="font-bold">$16</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Бесплатный месячный кредит</span>
+<span class="font-bold">-$20</span>
+</div>
+<div class="flex justify-between">
+<span class="text-gray-600">Expressive Аналитика</span>
+<span class="font-bold">Включено</span>
+</div>
+</div>
+<div class="flex justify-between items-center bg-gray-100 rounded-full px-4 py-2 font-bold">
+<span>Итого</span>
+<span>$0</span>
+</div>
+</div>
+<div class="bg-[#e5e7eb] rounded-xl p-6 flex items-center justify-between relative">
+<div class="connector-line-horizontal w-16 left-[-64px] top-1/2"></div>
+<div class="connector-dot bg-gray-400 left-[-64px] top-1/2 transform -translate-y-1/2 -translate-x-1/2"></div>
+<p class="text-sm text-gray-700 max-w-[200px]">Нужна автономная корпоративная UI-аналитика?</p>
+<button class="bg-success text-white text-xs font-bold tracking-wide uppercase px-4 py-3 rounded-full hover:brightness-105 transition-all">Expressive Data</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Ряд 3: AI-сценарии (по центру, на всю ширину) -->
+<div class="relative z-10 flex justify-center">
+<div class="connector-dot bg-gray-400 left-1/2 top-[-12px] transform -translate-x-1/2"></div>
+<div class="bg-white rounded-2xl p-12 w-full shadow-sm border border-gray-100 flex flex-col md:flex-row items-center gap-12 hover:shadow-md transition-shadow duration-300">
+<div class="flex-1 flex items-center gap-4">
+<div class="text-4xl">✨</div>
+<h2 class="text-4xl font-black tracking-tight">AI-сценарии</h2>
+</div>
+<div class="flex-1 text-gray-600 leading-relaxed">Интегрируйте Expressive в ваши AI-процессы для генерации и доставки интерфейсов. Наша платформа служит дизайн-основой для AI-инструментов и финальным звеном доставки интерфейсов пользователям.</div>
+</div>
+</div>
+
+</div>
+
+<div class="bg-warning w-full py-16 px-4 relative z-20 flex justify-center mt-12">
+<div class="bg-[#1a1a1a] text-white rounded-full px-8 py-6 w-full max-w-3xl flex flex-col sm:flex-row items-center justify-between shadow-2xl transform hover:scale-[1.02] transition-transform duration-300 cursor-pointer">
+<div class="text-2xl font-bold tracking-wide mb-4 sm:mb-0">Начните бесплатно</div>
+<div class="flex gap-6 text-sm font-medium">
+<span class="flex items-center gap-2 hover:text-warning transition-colors"><span class="text-xl">📄</span> Документация</span>
+<span class="flex items-center gap-2 hover:text-warning transition-colors"><span class="text-xl">💬</span> Написать нам</span>
+</div>
+</div>
+</div>
+
+<footer class="bg-[#1a1a1a] text-white pt-20 pb-12 px-4 relative z-20">
+<div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 mb-16">
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-gray-400 uppercase tracking-widest text-xs mb-2">Продукт</h3>
+<a href="#" class="text-sm hover:text-warning transition-colors">UI-компоненты</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Шаблоны</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Дизайн-система</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Цены</a>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-gray-400 uppercase tracking-widest text-xs mb-2">Ресурсы</h3>
+<a href="#" class="text-sm hover:text-warning transition-colors">Документация</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Обучение UI/UX</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Витрина</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Сравнение</a>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-gray-400 uppercase tracking-widest text-xs mb-2">Разработка</h3>
+<a href="#" class="text-sm hover:text-warning transition-colors">API-справочник</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">GitHub</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Журнал изменений</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Открытый код</a>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-bold text-gray-400 uppercase tracking-widest text-xs mb-2">Компания</h3>
+<a href="#" class="text-sm hover:text-warning transition-colors">О нас</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Блог</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Карьера</a>
+<a href="#" class="text-sm hover:text-warning transition-colors">Контакты</a>
+</div>
+</div>
+<div class="max-w-7xl mx-auto border-t border-gray-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+<div class="text-3xl font-black tracking-tighter text-white">EXPRESSIVE</div>
+<div class="text-xs text-gray-500 flex gap-6">
+<span>© 2026 Expressive, Inc.</span>
+<a href="#" class="hover:text-white transition-colors">Условия</a>
+<a href="#" class="hover:text-white transition-colors">Конфиденциальность</a>
+<a href="#" class="hover:text-white transition-colors">Cookies</a>
+</div>
+</div>
+</footer>
+
+</main>
+</body>
+</html>

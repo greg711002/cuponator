@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Marketo</title>
+<meta name="description" content="Marketo — управление социальными сетями"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*,::after,::before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:Inter,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji";-webkit-tap-highlight-color:transparent}
+body{background:#F7F3EF;color:#2D2D2D;font-family:Inter,Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;margin:0}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+b,strong{font-weight:bolder}
+img,svg,video,canvas{vertical-align:middle;display:block}
+img,video{max-width:100%;height:auto}
+button,input,select,textarea{font:inherit;color:inherit;opacity:1;background-color:transparent;border-radius:0}
+::placeholder{opacity:.5}
+ol,ul{list-style:none}
+::selection{background-color:#F2673C;color:#fff}
+
+.wrap{min-height:100vh;background-color:#F7F3EF;color:#2D2D2D}
+
+/* NAV */
+nav{margin-inline:auto;display:flex;max-width:1400px;align-items:center;justify-content:space-between;padding:2rem 1.5rem}
+.logo{font-size:1.5rem;font-weight:700;letter-spacing:-0.025em}
+.logo span{color:#F2673C}
+.nav-links{display:none;align-items:center;gap:2.5rem;font-size:15px;font-weight:500;color:#4A4A4A}
+.nav-links a{transition:color .15s}
+.nav-links a:hover{color:#2D2D2D}
+.nav-links .active{color:#2D2D2D;display:flex;flex-direction:column}
+.btn-orange{display:flex;height:3rem;align-items:center;justify-content:center;background-color:#F2673C;padding-inline:2rem;font-size:15px;font-weight:700;color:#fff;transition:opacity .15s}
+.btn-orange:hover{opacity:.9}
+
+/* MAIN */
+main{margin-inline:auto;max-width:1400px;padding:3rem 1.5rem;border-left:1px solid transparent;border-right:1px solid transparent}
+
+/* HERO */
+.hero{display:flex;flex-direction:column;gap:3rem;padding-bottom:8rem}
+.hero-text{flex:1}
+.hero-text h1{margin-bottom:1.5rem;font-size:3.5rem;font-weight:700;line-height:1.05;letter-spacing:-0.025em;color:#1C1C1C}
+.hero-text p{margin-bottom:2.5rem;max-width:32rem;font-size:1.125rem;line-height:1.625;color:#5A5A5A}
+.hero-buttons{display:flex;flex-wrap:wrap;align-items:center;gap:1rem}
+.btn-talk{display:flex;height:3.25rem;align-items:center;justify-content:center;background-color:#F2673C;padding-inline:2rem;font-size:1rem;font-weight:700;color:#fff;transition:opacity .15s}
+.btn-talk:hover{opacity:.9}
+.btn-how{display:flex;height:3.25rem;align-items:center;justify-content:center;border:1px solid #D1CCC8;background:transparent;padding-inline:2rem;font-size:1rem;font-weight:700;color:#2D2D2D;transition:border-color .15s}
+.btn-how:hover{border-color:#1C1C1C}
+.hero-img{position:relative;flex:1;margin-top:3rem}
+.hero-img-inner{position:relative;aspect-ratio:4/3;width:100%;max-width:700px;margin-left:auto;overflow:hidden;background:#fff;border:1px solid #D1CCC8}
+.hero-img-inner img{height:100%;width:100%;object-fit:cover}
+
+/* LOGOS */
+.logos{margin-bottom:8rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:2rem;opacity:.6;filter:grayscale(100%)}
+.logo-gigabyte{font-size:1.5rem;font-weight:900;font-style:italic;letter-spacing:.1em;color:#777}
+.logo-gigabyte span{font-size:.75rem;text-transform:uppercase;vertical-align:top;margin-left:.25rem}
+.logo-fb{font-size:1.875rem;font-weight:700;letter-spacing:-0.025em;color:#888}
+.logo-li{display:flex;align-items:center;font-size:1.6rem;font-weight:700;color:#777}
+.logo-li span{margin-left:.25rem;background:#888;color:#fff;padding:.125rem .25rem;border-radius:.25rem;font-size:.875rem;display:inline-flex;align-items:center;justify-content:center}
+.logo-rakuten{font-size:1.875rem;font-weight:800;letter-spacing:-0.05em;color:#888;text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:4px}
+.logo-moto{display:flex;align-items:center;gap:.5rem;font-size:1.5rem;font-weight:700;color:#888}
+.logo-moto-circle{border:1px solid #888;border-radius:9999px;height:2rem;width:2rem;display:flex;justify-content:center;align-items:center;overflow:hidden}
+.logo-moto-circle span{font-size:1.125rem;line-height:1;transform:skewX(-12deg)}
+.logo-istock{font-size:1.875rem;font-weight:800;letter-spacing:-0.05em;color:#777}
+
+/* SERVICES */
+.services{display:flex;flex-direction:column;gap:4rem;padding-bottom:8rem}
+.services-text{padding-top:1rem}
+.services-text h2{margin-bottom:1.5rem;font-size:2.25rem;font-weight:700;letter-spacing:-0.025em;color:#1C1C1C}
+.services-text p{font-size:1.125rem;line-height:1.625;color:#5A5A5A}
+.services-grid{display:grid;gap:1.5rem}
+.service-card{display:flex;flex-direction:column;background:#fff;padding:2rem;border:1px solid #D1CCC8;transition:border-color .15s;cursor:pointer}
+.service-card:hover{border-color:#F2673C}
+.service-icon{margin-bottom:2rem;position:relative}
+.service-icon .bg-circle{position:absolute;inset:0;border-radius:9999px;translate:.5rem -.5rem;width:3.5rem;height:3.5rem}
+.service-icon svg{position:relative;height:3.5rem;width:3.5rem;z-index:10}
+.service-card h3{margin-bottom:1rem;font-size:1.25rem;font-weight:700;color:#1C1C1C}
+.service-card p{color:#6D6D6D;line-height:1.625}
+
+/* FAQ */
+.faq{padding-bottom:8rem}
+.faq-header{text-align:center;margin-bottom:4rem}
+.faq-header h2{font-size:2.25rem;font-weight:700;letter-spacing:-0.025em;color:#1C1C1C}
+.faq-header p{margin-top:1rem;font-size:1.125rem;color:#5A5A5A}
+.faq-grid{max-width:48rem;margin-inline:auto;display:grid;gap:1.5rem}
+.faq-item{background:#fff;padding:2rem;border:1px solid #D1CCC8}
+.faq-item h3{font-size:1.25rem;font-weight:700;color:#1C1C1C;margin-bottom:.5rem}
+.faq-item p{color:#6D6D6D;line-height:1.625}
+
+/* NEWSLETTER */
+.newsletter{padding-bottom:8rem}
+.newsletter-inner{background:#1C1C1C;padding:3rem;text-align:center;color:#fff}
+.newsletter-inner h2{font-size:2.5rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:1.5rem}
+.newsletter-inner > p{font-size:1.125rem;opacity:.8;margin-bottom:2.5rem;max-width:36rem;margin-inline:auto;line-height:1.625}
+.newsletter-form{display:flex;flex-direction:column;justify-content:center;max-width:32rem;margin-inline:auto;gap:1rem}
+.newsletter-form input{flex:1;height:3.5rem;padding-inline:1.5rem;border:1px solid transparent;background:#fff;font-weight:600;outline:none;color:#1C1C1C}
+.newsletter-form input:focus{border-color:#F2673C}
+.newsletter-form button{height:3.5rem;padding-inline:2rem;font-weight:700;font-size:1.125rem;color:#fff;background:#F2673C;transition:opacity .15s;border:none;cursor:pointer}
+.newsletter-form button:hover{opacity:.9}
+.newsletter-form button:active{translate:0 .25rem}
+
+/* FOOTER */
+footer{border-top:1px solid #D1CCC8;background:#F7F3EF}
+.footer-inner{margin-inline:auto;max-width:1400px;padding:3rem 1.5rem;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:1.5rem}
+.footer-inner .logo{color:#1C1C1C}
+.footer-copy{font-weight:500;color:#5A5A5A}
+.footer-links{display:flex;gap:1.5rem;font-weight:700;color:#1C1C1C}
+.footer-links a{transition:color .15s}
+.footer-links a:hover{color:#F2673C}
+
+/* RESPONSIVE */
+@media (min-width:40rem){
+  .newsletter-form{flex-direction:row}
+  .services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (min-width:48rem){
+  nav{padding-inline:3rem}
+  main{padding-inline:3rem}
+  .footer-inner{padding-inline:3rem;flex-direction:row}
+  .hero-text h1{font-size:5rem}
+  .hero-text p{font-size:1.25rem}
+  .newsletter-inner{padding:5rem}
+  .newsletter-inner h2{font-size:3.5rem}
+}
+@media (min-width:64rem){
+  .nav-links{display:flex}
+  .hero{flex-direction:row;align-items:center;gap:2rem}
+  .hero-text{padding-right:3rem}
+  .hero-text h1{font-size:4.5rem}
+  .hero-img{margin-top:0}
+  .services{flex-direction:row}
+  .services-text{width:33.3333%}
+  .services-grid-wrap{width:66.6667%}
+  .services-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:80rem){
+  .hero-text h1{font-size:5.5rem}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Marke<span>to</span></div>
+  <div class="nav-links">
+    <a class="active" href="#">Главная</a>
+    <a href="#">Цены</a>
+    <a href="#services">Услуги</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Контакты</a>
+  </div>
+  <div>
+    <a class="btn-orange" href="#">Связаться</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Управляйте соцсетями вместе с нами</h1>
+      <p>Получайте аналитику, принимайте верные решения и растите органически вместе с нами.</p>
+      <div class="hero-buttons">
+        <a class="btn-talk" href="#">Связаться</a>
+        <a class="btn-how" href="#">Как это работает?</a>
+      </div>
+    </div>
+    <div class="hero-img">
+      <div class="hero-img-inner">
+        <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1470&auto=format&fit=crop" alt="Наша команда за работой"/>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGOS -->
+  <section class="logos">
+    <div class="logo-gigabyte">GIGABYTE<span>&#8482;</span></div>
+    <div class="logo-fb">facebook</div>
+    <div class="logo-li">Linked<span>in</span></div>
+    <div class="logo-rakuten">Rakuten</div>
+    <div class="logo-moto"><div class="logo-moto-circle"><span>M</span></div>motorola</div>
+    <div class="logo-istock">iStock.</div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="services">
+    <div class="services-text">
+      <h2>Наши услуги</h2>
+      <p>Мы предоставляем комплексные решения для стартапов, агентств, брендов и компаний. У нас более 10 000 довольных клиентов. Лучшее решение для брендинга в Калифорнии.</p>
+    </div>
+    <div class="services-grid-wrap">
+      <div class="services-grid">
+        <!-- Card 1 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <div class="bg-circle" style="background-color:#FFF5EC"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#f6339a">
+              <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+              <path d="M3 9h18"></path>
+              <path d="M9 21V9"></path>
+              <path d="m14 13 2 2 4-4"></path>
+            </svg>
+          </div>
+          <h3>Бизнес-планирование</h3>
+          <p>Мы создаём полный бизнес-план для вашего бренда, чтобы достичь целей компании.</p>
+        </div>
+        <!-- Card 2 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <div class="bg-circle" style="background-color:#F2F6FF"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#8B5CF6">
+              <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path>
+              <path d="m12 15-3-3a22 22 0 0 1 3.86-8.238 1.327 1.327 0 0 1 2.052.127l1.722 2.22a1.327 1.327 0 0 1-.127 2.053A22 22 0 0 1 15 12Z"></path>
+              <path d="M9 12a14 14 0 0 0 8.238 3.86 1.327 1.327 0 0 0 2.052-.127l2.22-1.722a1.327 1.327 0 0 0-.127-2.053A14 14 0 0 0 17 4"></path>
+              <path d="m14 10-2 2"></path>
+            </svg>
+          </div>
+          <h3>Маркетинговая стратегия</h3>
+          <p>Маркетинг — ключевой фактор для роста и развития вашей компании.</p>
+        </div>
+        <!-- Card 3 -->
+        <div class="service-card">
+          <div class="service-icon">
+            <div class="bg-circle" style="background-color:#F8FDF6"></div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:#edb200">
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+              <path d="M4 22h16"></path>
+              <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+              <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+              <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+            </svg>
+          </div>
+          <h3>Планы брендинга</h3>
+          <p>В зависимости от категории бренда мы предоставим лучший сервис брендинга.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="faq">
+    <div class="faq-header">
+      <h2>Часто задаваемые вопросы</h2>
+      <p>Всё, что нужно знать о продукте и оплате.</p>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>Вы предлагаете подписку на дизайн?</h3>
+        <p>Мы придерживаемся фиксированных и прозрачных цен. Мы не работаем по подписке, но вы можете привлечь нашу корпоративную команду.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Какие сроки выполнения?</h3>
+        <p>Большинство стартовых и про-проектов выполняются за 4–6 недель в зависимости от сложности ваших требований.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Какова политика возврата?</h3>
+        <p>Мы гарантируем 100% возврат средств, если вы не удовлетворены начальным этапом исследования и стратегии.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="newsletter" class="newsletter">
+    <div class="newsletter-inner">
+      <h2>Будьте в курсе</h2>
+      <p>Подпишитесь на рассылку: ресурсы по flat-дизайну, советы по брендингу и эксклюзивные предложения. Без спама.</p>
+      <form class="newsletter-form" onsubmit="return false;">
+        <input type="email" placeholder="Введите ваш email" required=""/>
+        <button type="submit">Подписаться</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="logo">Marke<span>to</span></div>
+    <p class="footer-copy">&copy; 2026 Marketo. Все права защищены.</p>
+    <div class="footer-links">
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Контакты</a>
+    </div>
+  </div>
+</footer>
+
+</div>
+</body>
+</html>

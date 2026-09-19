@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Measured — Познай своё тело</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  * { font-family: 'Inter', sans-serif; }
+  html { scroll-behavior: smooth; }
+  body { background: #050505; overflow-x: hidden; }
+  ::selection { background: rgba(52, 211, 153, .35); color: #fff; }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #050505; }
+  ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 8px; border: 2px solid #050505; }
+  ::-webkit-scrollbar-thumb:hover { background: #374151; }
+
+  .serif { font-family: 'Playfair Display', 'Instrument Serif', serif; }
+
+  /* ---------- liquid glass ---------- */
+  .liquid-glass {
+    background: rgba(255, 255, 255, 0.01);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.45) 0%, rgba(255,255,255,0.15) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.15) 80%, rgba(255,255,255,0.45) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ---------- hero title ---------- */
+  .hero-title {
+    font-size: clamp(4.5rem, 17vw, 16rem);
+    line-height: .9;
+    letter-spacing: -0.02em;
+  }
+
+  /* ---------- noise ---------- */
+  .noise {
+    position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .9s cubic-bezier(.22,1,.36,1), transform .9s cubic-bezier(.22,1,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- marquee ---------- */
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-track { display: flex; width: max-content; animation: marquee 36s linear infinite; }
+  .outline-text { color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.28); }
+
+  /* ---------- glow cards ---------- */
+  .glow-card { position: relative; }
+  .glow-card::after {
+    content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(52,211,153,.10), transparent 65%);
+    opacity: 0; transition: opacity .45s ease;
+  }
+  .glow-card:hover::after { opacity: 1; }
+
+  /* ---------- nav active ---------- */
+  .nav-pill-btn { transition: color .3s ease, background .3s ease; }
+  .nav-pill-btn.active { color: #fff; background: rgba(255,255,255,.08); }
+
+  /* ---------- mobile menu animations ---------- */
+  @keyframes menuItemIn {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes closeBtnIn {
+    from { opacity: 0; transform: rotate(-90deg) scale(.8); }
+    to   { opacity: 1; transform: rotate(0) scale(1); }
+  }
+  .menu-item { opacity: 0; }
+  .menu-open .menu-item { animation: menuItemIn .7s cubic-bezier(.77,0,.18,1) forwards; }
+  .menu-open .menu-close { animation: closeBtnIn .6s cubic-bezier(.77,0,.18,1) forwards; }
+
+  /* ---------- hero entrance ---------- */
+  @keyframes heroIn { from { opacity: 0; transform: translateY(40px) scale(.98); } to { opacity: 1; transform: none; } }
+  .hero-in { animation: heroIn 1.4s cubic-bezier(.22,1,.36,1) .15s both; }
+
+  @keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,.5);} 50% { box-shadow: 0 0 0 6px rgba(74,222,128,0);} }
+  .pulse-dot { animation: pulseDot 2.4s ease-in-out infinite; }
+
+  @keyframes floatSlow { 0%,100% { transform: translateY(0);} 50% { transform: translateY(-12px);} }
+  .float-slow { animation: floatSlow 7s ease-in-out infinite; }
+
+  .grad-text {
+    background: linear-gradient(120deg, #fff 30%, rgba(52,211,153,.9) 70%, #fff);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
+</style>
+</head>
+<body class="text-white antialiased">
+
+<!-- film grain -->
+<div class="noise"></div>
+
+<!-- scroll progress -->
+<div id="progress" class="fixed top-0 left-0 h-[2px] z-[65] w-0 bg-gradient-to-r from-emerald-400 via-white/80 to-emerald-300"></div>
+
+<!-- global cursor glow -->
+<div id="cursorGlow" class="fixed z-[60] pointer-events-none w-[520px] h-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full hidden md:block"
+     style="background: radial-gradient(circle, rgba(52,211,153,.07) 0%, transparent 60%);"></div>
+
+<!-- ================= NAV ================= -->
+<nav id="nav" class="fixed top-0 inset-x-0 z-50 flex items-center justify-between px-5 sm:px-8 py-5 transition-all duration-500">
+  <a href="#top" class="flex items-center gap-3 group">
+    <svg width="28" height="28" viewBox="0 0 256 256" fill="white" class="transition-transform duration-500 group-hover:rotate-90">
+      <path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z"/>
+    </svg>
+    <span class="text-sm font-medium tracking-wide text-white/90 hidden sm:block">Measured</span>
+  </a>
+
+  <div class="liquid-glass rounded-full absolute left-1/2 -translate-x-1/2 hidden md:flex items-center px-2 py-1.5">
+    <a href="#device"  data-nav="device"  class="nav-pill-btn text-white/70 text-sm font-medium px-4 py-1.5 rounded-full hover:text-white">Устройство</a>
+    <a href="#stories" data-nav="stories" class="nav-pill-btn text-white/70 text-sm font-medium px-4 py-1.5 rounded-full hover:text-white">Истории</a>
+    <a href="#science" data-nav="science" class="nav-pill-btn text-white/70 text-sm font-medium px-4 py-1.5 rounded-full hover:text-white">Наука</a>
+    <a href="#plans"   data-nav="plans"   class="nav-pill-btn text-white/70 text-sm font-medium px-4 py-1.5 rounded-full hover:text-white">Тарифы</a>
+    <a href="#reach"   data-nav="reach"   class="nav-pill-btn text-white/70 text-sm font-medium px-4 py-1.5 rounded-full hover:text-white">Контакты</a>
+  </div>
+
+  <button class="liquid-glass reserve-btn rounded-full hidden md:flex items-center gap-2.5 px-5 py-2.5 hover:bg-white/5 transition-colors">
+    <span class="w-2 h-2 rounded-full bg-green-400 pulse-dot"></span>
+    <span class="text-white text-sm font-medium">Забронировать</span>
+  </button>
+
+  <button id="burger" class="liquid-glass rounded-full md:hidden w-11 h-11 flex flex-col items-center justify-center gap-[6px]">
+    <span class="w-5 h-[1.5px] bg-white block"></span>
+    <span class="w-3.5 h-[1.5px] bg-white block"></span>
+  </button>
+</nav>
+
+<!-- ================= MOBILE MENU ================= -->
+<div id="mobileMenu" class="fixed inset-0 z-[55] bg-[#0a0a0a] hidden flex-col items-center justify-center">
+  <button id="menuClose" class="menu-close liquid-glass rounded-full absolute top-5 right-5 w-11 h-11 flex items-center justify-center">
+    <span class="absolute w-5 h-[1.5px] bg-white rotate-45"></span>
+    <span class="absolute w-5 h-[1.5px] bg-white -rotate-45"></span>
+  </button>
+  <div class="flex flex-col items-center gap-7">
+    <a href="#device"  class="menu-item text-3xl sm:text-4xl text-white/90 font-medium" style="animation-delay:100ms">Устройство</a>
+    <a href="#stories" class="menu-item text-3xl sm:text-4xl text-white/90 font-medium" style="animation-delay:160ms">Истории</a>
+    <a href="#science" class="menu-item text-3xl sm:text-4xl text-white/90 font-medium" style="animation-delay:220ms">Наука</a>
+    <a href="#plans"   class="menu-item text-3xl sm:text-4xl text-white/90 font-medium" style="animation-delay:280ms">Тарифы</a>
+    <a href="#reach"   class="menu-item text-3xl sm:text-4xl text-white/90 font-medium" style="animation-delay:340ms">Контакты</a>
+  </div>
+  <button class="menu-item liquid-glass reserve-btn rounded-full flex items-center gap-2.5 px-6 py-3 mt-12" style="animation-delay:420ms">
+    <span class="w-2 h-2 rounded-full bg-green-400 pulse-dot"></span>
+    <span class="text-white text-sm font-medium">Забронировать</span>
+  </button>
+</div>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section id="hero" class="relative h-screen overflow-hidden">
+  <!-- Layer 0: grid -->
+  <div id="heroGrid" class="absolute -inset-10 z-0 opacity-10 will-change-transform">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="cell" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#cell)"/>
+    </svg>
+  </div>
+
+  <!-- Layer 10: background image -->
+  <div class="absolute inset-0 z-10 bg-center bg-cover bg-no-repeat"
+       style="background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260713_140344_79e1296a-86d7-43fd-9b5f-63ffe560f291.png&w=1280&q=85')"></div>
+
+  <!-- Layer 20: title -->
+  <div class="absolute inset-x-0 z-20 top-20 sm:top-28 md:top-32 text-center pointer-events-none">
+    <p class="hero-in text-[11px] sm:text-xs uppercase tracking-[0.45em] text-white/50 mb-4 sm:mb-6">Идеальный трекер здоровья</p>
+    <h1 class="hero-in serif hero-title text-white uppercase">Measured</h1>
+  </div>
+
+  <!-- Layer 25: overlay haze -->
+  <img src="https://soft-zoom-63098134.figma.site/_assets/v11/3f10f1876e118f72a396e05a6c2d099569478272.png"
+       alt="" class="absolute inset-0 z-[25] w-full h-full object-cover pointer-events-none" />
+
+  <!-- Layer 30: spotlight reveal -->
+  <div id="reveal" class="absolute inset-0 z-30 pointer-events-none" style="clip-path: inset(40% 0 0 0);">
+    <video class="w-full h-full object-cover" autoplay loop muted playsinline preload="auto"
+           src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260713_162101_0d7498c5-29bb-47bf-a99f-2773c0a880a9.mp4"></video>
+  </div>
+
+  <!-- bottom hint -->
+  <div class="absolute bottom-8 inset-x-0 z-40 flex flex-col items-center gap-3 pointer-events-none">
+    <span class="text-[10px] uppercase tracking-[0.4em] text-white/40">Ведите курсором — раскройте движение</span>
+    <span class="w-[1px] h-10 bg-gradient-to-b from-white/40 to-transparent"></span>
+  </div>
+</section>
+
+<!-- ================= MARQUEE ================= -->
+<section class="relative py-10 sm:py-14 border-y border-white/5 overflow-hidden bg-[#070707]">
+  <div class="marquee-track serif select-none">
+    <div class="flex items-center gap-10 pr-10 text-[13vw] sm:text-[6vw] leading-none whitespace-nowrap">
+      <span class="text-white/90">Сон</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">Восстановление</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="text-white/90">Нагрузка</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">ВСР</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="text-white/90">SpO₂</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">Температура</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+    </div>
+    <div class="flex items-center gap-10 pr-10 text-[13vw] sm:text-[6vw] leading-none whitespace-nowrap" aria-hidden="true">
+      <span class="text-white/90">Сон</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">Восстановление</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="text-white/90">Нагрузка</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">ВСР</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="text-white/90">SpO₂</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+      <span class="outline-text italic">Температура</span><span class="text-emerald-400 text-[0.35em]">✦</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DEVICE ================= -->
+<section id="device" class="relative py-28 sm:py-40 px-5 sm:px-10 max-w-7xl mx-auto">
+  <div class="reveal flex items-center gap-3 mb-6">
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+    <span class="text-xs uppercase tracking-[0.35em] text-white/40">01 — Устройство</span>
+  </div>
+  <h2 class="reveal serif text-5xl sm:text-7xl lg:text-8xl leading-[0.95] mb-16 sm:mb-24">
+    Создан, чтобы <span class="italic grad-text">исчезнуть</span>,<br />сделан, чтобы измерять всё.
+  </h2>
+
+  <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+    <!-- sticky visual -->
+    <div class="reveal lg:sticky lg:top-28">
+      <div class="relative rounded-3xl overflow-hidden liquid-glass aspect-[4/5] max-h-[75vh]">
+        <div class="absolute inset-0 bg-center bg-cover scale-105"
+             style="background-image:url('https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260713_140344_79e1296a-86d7-43fd-9b5f-63ffe560f291.png&w=1280&q=85')"></div>
+        <img src="https://soft-zoom-63098134.figma.site/_assets/v11/3f10f1876e118f72a396e05a6c2d099569478272.png"
+             alt="" class="absolute inset-0 w-full h-full object-cover pointer-events-none mix-blend-screen opacity-70" />
+        <div class="absolute bottom-5 left-5 liquid-glass rounded-full px-4 py-2 flex items-center gap-2 float-slow">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot"></span>
+          <span class="text-xs text-white/80 font-medium">Титан · 8,4 г · 5 ATM</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- features -->
+    <div class="flex flex-col">
+      <div class="reveal glow-card liquid-glass rounded-2xl p-7 sm:p-9 mb-5">
+        <div class="flex items-baseline gap-5">
+          <span class="serif italic text-emerald-300/80 text-2xl">01</span>
+          <div>
+            <h3 class="serif text-3xl sm:text-4xl mb-3">Прецизионные биосенсоры</h3>
+            <p class="text-white/55 text-sm sm:text-base leading-relaxed font-light">Четырнадцать датчиков медицинского класса сканируют вашу физиологию 250 раз в секунду — сердце, кожу, движение и кислород в крови — и объединяют всё в один чистый сигнал.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal glow-card liquid-glass rounded-2xl p-7 sm:p-9 mb-5" style="transition-delay:80ms">
+        <div class="flex items-baseline gap-5">
+          <span class="serif italic text-emerald-300/80 text-2xl">02</span>
+          <div>
+            <h3 class="serif text-3xl sm:text-4xl mb-3">Оценка восстановления</h3>
+            <p class="text-white/55 text-sm sm:text-base leading-relaxed font-light">Каждое утро одно число подсказывает, насколько интенсивно можно тренироваться. Оно строится на ВСР, пульсе покоя, сне и частоте дыхания — без догадок.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal glow-card liquid-glass rounded-2xl p-7 sm:p-9 mb-5" style="transition-delay:160ms">
+        <div class="flex items-baseline gap-5">
+          <span class="serif italic text-emerald-300/80 text-2xl">03</span>
+          <div>
+            <h3 class="serif text-3xl sm:text-4xl mb-3">Клинические стадии сна</h3>
+            <p class="text-white/55 text-sm sm:text-base leading-relaxed font-light">Лёгкий, глубокий, REM и бодрствование — данные проверены против полисомнографии в трёх независимых лабораториях сна. Ваши ночи наконец расшифрованы.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal glow-card liquid-glass rounded-2xl p-7 sm:p-9" style="transition-delay:240ms">
+        <div class="flex items-baseline gap-5">
+          <span class="serif italic text-emerald-300/80 text-2xl">04</span>
+          <div>
+            <h3 class="serif text-3xl sm:text-4xl mb-3">Семь дней. Без экрана.</h3>
+            <p class="text-white/55 text-sm sm:text-base leading-relaxed font-light">Неделя работы от батареи и ноль уведомлений на запястье. Measured отслеживает всё молча и говорит, только когда вы спросите.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORIES ================= -->
+<section id="stories" class="relative py-28 sm:py-40 px-5 sm:px-10 bg-[#070707] border-y border-white/5 overflow-hidden">
+  <div class="max-w-7xl mx-auto">
+    <div class="reveal flex items-center gap-3 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+      <span class="text-xs uppercase tracking-[0.35em] text-white/40">02 — Реальные истории</span>
+    </div>
+    <h2 class="reveal serif text-5xl sm:text-7xl lg:text-8xl leading-[0.95] mb-16 sm:mb-24">
+      Его носят те, кто<br /><span class="italic grad-text">слышит своё тело.</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <figure class="reveal glow-card liquid-glass rounded-3xl p-8 sm:p-10 flex flex-col">
+        <div class="serif italic text-6xl text-emerald-300/60 leading-none mb-6">“</div>
+        <blockquote class="serif text-2xl sm:text-[1.7rem] leading-snug text-white/90 flex-1">Он заметил мою перетренированность за две недели до тренера. Теперь оценка восстановления — первое, что я проверяю утром, ещё до почты.</blockquote>
+        <figcaption class="mt-8 flex items-center gap-4">
+          <span class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-400/40 to-white/10 flex items-center justify-center text-sm font-semibold">МК</span>
+          <span><span class="block text-sm font-medium">Мара Ковач</span><span class="block text-xs text-white/40 mt-0.5">Марафонка, Будапешт</span></span>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal glow-card liquid-glass rounded-3xl p-8 sm:p-10 flex flex-col md:translate-y-8" style="transition-delay:120ms">
+        <div class="serif italic text-6xl text-emerald-300/60 leading-none mb-6">“</div>
+        <blockquote class="serif text-2xl sm:text-[1.7rem] leading-snug text-white/90 flex-1">Я перестал гоняться за лайфхаками для сна. Measured показал, что глубокий сон рушится после поздних ужинов — одно изменение, и плюс сорок минут каждую ночь.</blockquote>
+        <figcaption class="mt-8 flex items-center gap-4">
+          <span class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-400/40 to-white/10 flex items-center justify-center text-sm font-semibold">ДО</span>
+          <span><span class="block text-sm font-medium">Дэвид Окафор</span><span class="block text-xs text-white/40 mt-0.5">Основатель стартапа, Лагос</span></span>
+        </figcaption>
+      </figure>
+
+      <figure class="reveal glow-card liquid-glass rounded-3xl p-8 sm:p-10 flex flex-col" style="transition-delay:240ms">
+        <div class="serif italic text-6xl text-emerald-300/60 leading-none mb-6">“</div>
+        <blockquote class="serif text-2xl sm:text-[1.7rem] leading-snug text-white/90 flex-1">Единственный трекер, который я ношу дольше месяца. Без экрана, без шума — только данные, которые реально изменили мои тренировки и отдых.</blockquote>
+        <figcaption class="mt-8 flex items-center gap-4">
+          <span class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-400/40 to-white/10 flex items-center justify-center text-sm font-semibold">АЛ</span>
+          <span><span class="block text-sm font-medium">Анна Линдквист</span><span class="block text-xs text-white/40 mt-0.5">Кроссфит-атлетка, Мальмё</span></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCIENCE ================= -->
+<section id="science" class="relative py-28 sm:py-40 px-5 sm:px-10 overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.07] pointer-events-none">
+    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="cell2" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#64748b" stroke-width="0.6"/>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#cell2)"/>
+    </svg>
+  </div>
+  <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(70% 60% at 50% 40%, rgba(52,211,153,.06), transparent 70%);"></div>
+
+  <div class="relative max-w-7xl mx-auto">
+    <div class="reveal flex items-center gap-3 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+      <span class="text-xs uppercase tracking-[0.35em] text-white/40">03 — Наука</span>
+    </div>
+    <h2 class="reveal serif text-5xl sm:text-7xl lg:text-8xl leading-[0.95] mb-8">
+      Не театр <span class="italic grad-text">велнеса.</span><br />Измерения.
+    </h2>
+    <p class="reveal max-w-xl text-white/50 font-light leading-relaxed mb-16 sm:mb-24">Каждая метрика на вашем запястье проверена по клиническим золотым стандартам. Мы открыто публикуем наши методы, погрешности и даже неудачи.</p>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-3xl overflow-hidden liquid-glass">
+      <div class="reveal glow-card bg-[#0a0a0a] p-8 sm:p-12">
+        <div class="serif text-5xl sm:text-7xl grad-text"><span class="counter" data-target="99.2" data-decimals="1">0</span><span class="text-3xl sm:text-4xl">%</span></div>
+        <p class="mt-4 text-xs uppercase tracking-[0.25em] text-white/40">Точность ВСР<br />против нагрудного ЭКГ-датчика</p>
+      </div>
+      <div class="reveal glow-card bg-[#0a0a0a] p-8 sm:p-12" style="transition-delay:100ms">
+        <div class="serif text-5xl sm:text-7xl grad-text"><span class="counter" data-target="14">0</span></div>
+        <p class="mt-4 text-xs uppercase tracking-[0.25em] text-white/40">Биосенсоров<br />медицинского класса</p>
+      </div>
+      <div class="reveal glow-card bg-[#0a0a0a] p-8 sm:p-12" style="transition-delay:200ms">
+        <div class="serif text-5xl sm:text-7xl grad-text"><span class="counter" data-target="250">0</span><span class="text-3xl sm:text-4xl">Гц</span></div>
+        <p class="mt-4 text-xs uppercase tracking-[0.25em] text-white/40">Частота замеров,<br />круглосуточно</p>
+      </div>
+      <div class="reveal glow-card bg-[#0a0a0a] p-8 sm:p-12" style="transition-delay:300ms">
+        <div class="serif text-5xl sm:text-7xl grad-text"><span class="counter" data-target="7">0</span><span class="text-3xl sm:text-4xl">дн.</span></div>
+        <p class="mt-4 text-xs uppercase tracking-[0.25em] text-white/40">Работы от батареи,<br />без экрана</p>
+      </div>
+    </div>
+
+    <p class="reveal mt-10 text-xs text-white/30 font-light">Валидационные исследования: три независимые лаборатории сна, n = 412 · рецензируемые методики предоставим по запросу.</p>
+  </div>
+</section>
+
+<!-- ================= PLANS ================= -->
+<section id="plans" class="relative py-28 sm:py-40 px-5 sm:px-10 bg-[#070707] border-y border-white/5">
+  <div class="max-w-7xl mx-auto">
+    <div class="reveal flex items-center gap-3 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+      <span class="text-xs uppercase tracking-[0.35em] text-white/40">04 — Тарифы</span>
+    </div>
+    <h2 class="reveal serif text-5xl sm:text-7xl lg:text-8xl leading-[0.95] mb-16 sm:mb-24">
+      Выберите свой <span class="italic grad-text">инструмент.</span>
+    </h2>
+
+    <div class="grid md:grid-cols-3 gap-6 items-stretch">
+      <!-- One -->
+      <div class="reveal glow-card liquid-glass rounded-3xl p-8 sm:p-10 flex flex-col">
+        <p class="text-xs uppercase tracking-[0.3em] text-white/40 mb-6">Measured One</p>
+        <div class="serif text-6xl mb-1">$249</div>
+        <p class="text-white/40 text-sm font-light mb-8">разовый платёж, подписка на 12 месяцев включена</p>
+        <ul class="space-y-3.5 text-sm text-white/70 font-light flex-1">
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Базовое отслеживание здоровья и сна</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Ежедневная оценка восстановления</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>5 дней от батареи</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Корпус из переработанного алюминия</li>
+        </ul>
+        <button class="reserve-btn liquid-glass rounded-full mt-10 py-3.5 text-sm font-medium text-white hover:bg-white/5 transition-colors">Забронировать One</button>
+      </div>
+
+      <!-- Pro (highlight) -->
+      <div class="reveal glow-card rounded-3xl p-8 sm:p-10 flex flex-col relative liquid-glass md:-translate-y-4"
+           style="box-shadow: 0 0 80px rgba(52,211,153,.12), inset 0 1px 1px rgba(255,255,255,.1); transition-delay:120ms">
+        <span class="absolute top-6 right-6 flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-emerald-300">
+          <span class="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot"></span>Чаще всего бронируют
+        </span>
+        <p class="text-xs uppercase tracking-[0.3em] text-emerald-300/90 mb-6">Measured Pro</p>
+        <div class="serif text-6xl grad-text mb-1">$349</div>
+        <p class="text-white/40 text-sm font-light mb-8">разовый платёж, подписка на 24 месяца включена</p>
+        <ul class="space-y-3.5 text-sm text-white/80 font-light flex-1">
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Всё из тарифа One</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Датчики SpO₂ и температуры кожи</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Клинические стадии сна</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>7 дней от батареи, быстрая зарядка</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Корпус из матового титана</li>
+        </ul>
+        <button class="reserve-btn rounded-full mt-10 py-3.5 text-sm font-medium text-black bg-emerald-400 hover:bg-emerald-300 transition-colors">Забронировать Pro</button>
+      </div>
+
+      <!-- Max -->
+      <div class="reveal glow-card liquid-glass rounded-3xl p-8 sm:p-10 flex flex-col" style="transition-delay:240ms">
+        <p class="text-xs uppercase tracking-[0.3em] text-white/40 mb-6">Measured Max</p>
+        <div class="serif text-6xl mb-1">$499</div>
+        <p class="text-white/40 text-sm font-light mb-8">разовый платёж, пожизненная подписка включена</p>
+        <ul class="space-y-3.5 text-sm text-white/70 font-light flex-1">
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Всё из тарифа Pro</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Двухдиапазонный GPS и высотомер</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Сапфировое стекло, 10 ATM</li>
+          <li class="flex gap-3"><span class="text-emerald-400">✓</span>Приоритетные лабораторные отчёты</li>
+        </ul>
+        <button class="reserve-btn liquid-glass rounded-full mt-10 py-3.5 text-sm font-medium text-white hover:bg-white/5 transition-colors">Забронировать Max</button>
+      </div>
+    </div>
+
+    <p class="reveal mt-12 text-center text-xs text-white/30 font-light">Полный возврат средств до отправки · доставка по всему миру в III квартале · 30 дней домашнего теста</p>
+  </div>
+</section>
+
+<!-- ================= REACH US / FOOTER ================= -->
+<section id="reach" class="relative pt-28 sm:pt-40 pb-10 px-5 sm:px-10 overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(60% 50% at 50% 100%, rgba(52,211,153,.08), transparent 70%);"></div>
+
+  <div class="relative max-w-7xl mx-auto text-center">
+    <div class="reveal flex items-center justify-center gap-3 mb-6">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+      <span class="text-xs uppercase tracking-[0.35em] text-white/40">05 — Контакты</span>
+    </div>
+    <h2 class="reveal serif text-[16vw] sm:text-8xl lg:text-9xl leading-[0.95] mb-8">
+      Давайте <span class="italic grad-text">измерим</span> это.
+    </h2>
+    <p class="reveal max-w-md mx-auto text-white/50 font-light leading-relaxed mb-12">Вопросы об устройстве, науке или вашей брони — живой человек ответит в течение дня.</p>
+
+    <form id="reachForm" class="reveal max-w-lg mx-auto flex items-center gap-2 liquid-glass rounded-full p-1.5 pl-6">
+      <input type="email" required placeholder="vy@example.com"
+             class="flex-1 bg-transparent outline-none text-sm text-white placeholder-white/30 min-w-0" />
+      <button type="submit" class="rounded-full bg-emerald-400 hover:bg-emerald-300 transition-colors text-black text-sm font-medium px-6 py-3 whitespace-nowrap">Написать нам</button>
+    </form>
+    <p id="reachDone" class="text-emerald-300 text-sm mt-5 opacity-0 transition-opacity duration-500">Получено — ответим в течение 24 часов. ✳</p>
+
+    <footer class="mt-28 sm:mt-36 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <a href="#top" class="flex items-center gap-3">
+        <svg width="22" height="22" viewBox="0 0 256 256" fill="white"><path d="M 256 64 L 256 128 L 192.5 128 L 160 95 L 128 64 L 96 95 L 63.5 128 L 64 128 L 128 192 L 128 256 L 64.5 256 L 32 223 L 0 192 L 0 64 L 64 0 L 192 0 Z M 256 192 L 256 256 L 192.5 256 L 160 223 L 128 192 L 128 128 L 192 128 Z"/></svg>
+        <span class="text-sm text-white/70 font-medium">Measured</span>
+      </a>
+      <div class="flex items-center gap-6 text-xs text-white/40">
+        <a href="#device" class="hover:text-white transition-colors">Устройство</a>
+        <a href="#stories" class="hover:text-white transition-colors">Истории</a>
+        <a href="#science" class="hover:text-white transition-colors">Наука</a>
+        <a href="#plans" class="hover:text-white transition-colors">Тарифы</a>
+      </div>
+      <p class="text-xs text-white/30">© <span id="year"></span> Measured Health, Inc.</p>
+    </footer>
+  </div>
+</section>
+
+</main>
+
+<script>
+/* ================= HERO: spotlight reveal + grid parallax ================= */
+(function () {
+  const hero   = document.getElementById('hero');
+  const reveal = document.getElementById('reveal');
+  const grid   = document.getElementById('heroGrid');
+
+  let tx = hero.clientWidth / 2, ty = hero.clientHeight * 0.8; // resting spot (mobile fallback)
+  let sx = tx, sy = ty;
+  let gx = 0, gy = 0, gtx = 0, gty = 0;
+
+  hero.addEventListener('pointermove', (e) => {
+    const r = hero.getBoundingClientRect();
+    tx = e.clientX - r.left;
+    ty = e.clientY - r.top;
+    gtx = ((e.clientX - r.left - r.width  / 2) / (r.width  / 2)) * 16;
+    gty = ((e.clientY - r.top  - r.height / 2) / (r.height / 2)) * 16;
+  });
+
+  const RADIUS = 260;
+  const maskCanvas = document.createElement('canvas');
+  const mctx = maskCanvas.getContext('2d');
+
+  function frame() {
+    sx += (tx - sx) * 0.1;               // cursor smoothing
+    sy += (ty - sy) * 0.1;
+    gx += (gtx - gx) * 0.06;             // grid parallax easing
+    gy += (gty - gy) * 0.06;
+    grid.style.transform = `translate(${gx}px, ${gy}px)`;
+
+    const w = hero.clientWidth, h = hero.clientHeight;
+    if (maskCanvas.width !== w || maskCanvas.height !== h) {
+      maskCanvas.width = w; maskCanvas.height = h;
+    }
+    mctx.clearRect(0, 0, w, h);
+    const g = mctx.createRadialGradient(sx, sy, 0, sx, sy, RADIUS);
+    g.addColorStop(0.00, 'rgba(255,255,255,1)');
+    g.addColorStop(0.40, 'rgba(255,255,255,1)');
+    g.addColorStop(0.60, 'rgba(255,255,255,0.75)');
+    g.addColorStop(0.75, 'rgba(255,255,255,0.4)');
+    g.addColorStop(0.88, 'rgba(255,255,255,0.12)');
+    g.addColorStop(1.00, 'rgba(255,255,255,0)');
+    mctx.fillStyle = g;
+    mctx.fillRect(0, 0, w, h);
+
+    const url = 'url(' + maskCanvas.toDataURL() + ')';
+    reveal.style.webkitMaskImage = url;
+    reveal.style.maskImage = url;
+    reveal.style.webkitMaskRepeat = 'no-repeat';
+    reveal.style.maskRepeat = 'no-repeat';
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ================= mobile menu ================= */
+(function () {
+  const menu = document.getElementById('mobileMenu');
+  const burger = document.getElementById('burger');
+  const closeBtn = document.getElementById('menuClose');
+
+  function open() {
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+    requestAnimationFrame(() => menu.classList.add('menu-open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function close() {
+    menu.classList.remove('menu-open');
+    menu.classList.add('hidden');
+    menu.classList.remove('flex');
+    document.body.style.overflow = '';
+  }
+  burger.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+})();
+
+/* ================= global cursor glow ================= */
+(function () {
+  const glow = document.getElementById('cursorGlow');
+  if (!glow || matchMedia('(pointer: coarse)').matches) return;
+  let x = innerWidth / 2, y = innerHeight / 2, sx = x, sy = y;
+  addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; });
+  (function loop() {
+    sx += (x - sx) * 0.08; sy += (y - sy) * 0.08;
+    glow.style.left = sx + 'px'; glow.style.top = sy + 'px';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ================= scroll reveal ================= */
+(function () {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+})();
+
+/* ================= counters ================= */
+(function () {
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      const el = en.target, target = parseFloat(el.dataset.target), dec = parseInt(el.dataset.decimals || '0', 10);
+      const t0 = performance.now(), dur = 1800;
+      (function tick(t) {
+        const p = Math.min((t - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 4);
+        el.textContent = (target * e).toFixed(dec).replace('.', ',');
+        if (p < 1) requestAnimationFrame(tick);
+      })(t0);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.counter').forEach(el => io.observe(el));
+})();
+
+/* ================= glow cards: track pointer ================= */
+document.querySelectorAll('.glow-card').forEach(card => {
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  });
+});
+
+/* ================= nav: scroll state + active section + progress ================= */
+(function () {
+  const nav = document.getElementById('nav');
+  const progress = document.getElementById('progress');
+  const links = document.querySelectorAll('[data-nav]');
+  const sections = ['device', 'stories', 'science', 'plans', 'reach'].map(id => document.getElementById(id));
+
+  addEventListener('scroll', () => {
+    const y = scrollY;
+    nav.style.background = y > 40 ? 'rgba(5,5,5,.55)' : 'transparent';
+    nav.style.backdropFilter = y > 40 ? 'blur(12px)' : 'none';
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.width = (max > 0 ? (y / max) * 100 : 0) + '%';
+
+    let current = null;
+    sections.forEach(s => { if (s && s.getBoundingClientRect().top < innerHeight * 0.4) current = s.id; });
+    links.forEach(l => l.classList.toggle('active', l.dataset.nav === current));
+  }, { passive: true });
+})();
+
+/* ================= reserve buttons + reach form ================= */
+document.querySelectorAll('.reserve-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const label = btn.querySelector('span:last-child') || btn;
+    const original = label.textContent;
+    label.textContent = 'Забронировано ✓';
+    btn.style.pointerEvents = 'none';
+    setTimeout(() => { label.textContent = original; btn.style.pointerEvents = ''; }, 2200);
+  });
+});
+
+document.getElementById('reachForm').addEventListener('submit', e => {
+  e.preventDefault();
+  document.getElementById('reachDone').style.opacity = '1';
+  e.target.querySelector('input').value = '';
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

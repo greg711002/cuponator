@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Джозеф МакФолл — Профиль</title>
+  <meta name="description" content="Минималистичная профильная страница"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Open+Sans:wght@300..800&family=Inconsolata:wght@200..900&display=swap" rel="stylesheet"/>
+  <style>
+    @layer properties {
+      @supports (((-webkit-hyphens:none)) and (not (margin-trim:inline))) or ((-moz-orient:inline) and (not (color:rgb(from red r g b)))) {
+        *,:before,:after,::backdrop {
+          --tw-border-style:solid;--tw-leading:initial;--tw-font-weight:initial;--tw-tracking:initial;
+          --tw-shadow:0 0 #0000;--tw-shadow-color:initial;--tw-shadow-alpha:100%;
+          --tw-inset-shadow:0 0 #0000;--tw-inset-shadow-color:initial;--tw-inset-shadow-alpha:100%;
+          --tw-ring-color:initial;--tw-ring-shadow:0 0 #0000;--tw-inset-ring-color:initial;
+          --tw-inset-ring-shadow:0 0 #0000;--tw-ring-inset:initial;--tw-ring-offset-width:0px;
+          --tw-ring-offset-color:#fff;--tw-ring-offset-shadow:0 0 #0000;--tw-outline-style:solid
+        }
+      }
+    }
+
+    @layer theme {
+      :root, :host {
+        --font-sans:"Open Sans",ui-sans-serif,system-ui,sans-serif;
+        --font-mono:"Inconsolata",ui-monospace,SFMono-Regular,monospace;
+        --font-display:"Inter",ui-sans-serif,system-ui,sans-serif;
+        --color-gray-900:#101828;
+        --color-white:#fff;
+        --spacing:.25rem;
+        --container-2xl:42rem;
+        --text-lg:1.125rem;--text-lg--line-height:calc(1.75/1.125);
+        --text-xl:1.25rem;--text-xl--line-height:calc(1.75/1.25);
+        --text-2xl:1.5rem;--text-2xl--line-height:calc(2/1.5);
+        --text-4xl:2.25rem;--text-4xl--line-height:calc(2.5/2.25);
+        --text-5xl:3rem;--text-5xl--line-height:1;
+        --text-8xl:6rem;--text-8xl--line-height:1;
+        --font-weight-semibold:600;
+        --font-weight-black:900;
+        --tracking-tight:-.025em;
+        --leading-relaxed:1.625;
+        --radius-md:.375rem;
+        --default-transition-duration:.15s;
+        --default-transition-timing-function:cubic-bezier(.4,0,.2,1);
+        --default-font-family:var(--font-sans);
+        --default-mono-font-family:var(--font-mono);
+        --color-primary:#0c0c09;
+        --color-surface:#f4f4f1;
+        --color-text:#0c0c09;
+      }
+    }
+
+    @layer base {
+      *,:after,:before,::backdrop {
+        box-sizing:border-box;border:0 solid;margin:0;padding:0
+      }
+      html,:host {
+        -webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;
+        font-family:var(--default-font-family,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji");
+        -webkit-tap-highlight-color:transparent
+      }
+      h1,h2,h3,h4,h5,h6 { font-size:inherit;font-weight:inherit }
+      a { color:inherit;text-decoration:inherit }
+      img,svg,video,canvas,audio,iframe,embed,object { vertical-align:middle;display:block }
+      img,video { max-width:100%;height:auto }
+      button,input,select,optgroup,textarea {
+        font:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:transparent;border-radius:0
+      }
+      [hidden]:where(:not([hidden=until-found])) { display:none!important }
+    }
+
+    @layer utilities {
+      .pointer-events-none { pointer-events:none }
+      .absolute { position:absolute }
+      .relative { position:relative }
+      .inset-0 { inset:0 }
+      .-z-10 { z-index:-10 }
+      .z-10 { z-index:10 }
+      .mb-6 { margin-bottom:calc(var(--spacing)*6) }
+      .mb-8 { margin-bottom:calc(var(--spacing)*8) }
+      .mb-16 { margin-bottom:calc(var(--spacing)*16) }
+      .flex { display:flex }
+      .h-52 { height:calc(var(--spacing)*52) }
+      .h-full { height:100% }
+      .min-h-screen { min-height:100vh }
+      .w-52 { width:calc(var(--spacing)*52) }
+      .w-full { width:100% }
+      .max-w-2xl { max-width:var(--container-2xl) }
+      .flex-col { flex-direction:column }
+      .items-center { align-items:center }
+      .justify-center { justify-content:center }
+      .overflow-hidden { overflow:hidden }
+      .rounded-full { border-radius:3.40282e38px }
+      .rounded-md { border-radius:var(--radius-md) }
+      .border-4 { border-style:var(--tw-border-style);border-width:4px }
+      .border-gray-900 { border-color:var(--color-gray-900) }
+      .bg-primary { background-color:var(--color-primary) }
+      .bg-surface { background-color:var(--color-surface) }
+      .bg-white { background-color:var(--color-white) }
+      .object-cover { object-fit:cover }
+      .p-4 { padding:calc(var(--spacing)*4) }
+      .px-10 { padding-inline:calc(var(--spacing)*10) }
+      .py-6 { padding-block:calc(var(--spacing)*6) }
+      .text-center { text-align:center }
+      .font-display { font-family:var(--font-display) }
+      .font-sans { font-family:var(--font-sans) }
+      .text-4xl { font-size:var(--text-4xl);line-height:var(--tw-leading,var(--text-4xl--line-height)) }
+      .text-lg { font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height)) }
+      .leading-relaxed { --tw-leading:var(--leading-relaxed);line-height:var(--leading-relaxed) }
+      .font-black { --tw-font-weight:var(--font-weight-black);font-weight:var(--font-weight-black) }
+      .font-semibold { --tw-font-weight:var(--font-weight-semibold);font-weight:var(--font-weight-semibold) }
+      .tracking-tight { --tw-tracking:var(--tracking-tight);letter-spacing:var(--tracking-tight) }
+      .text-primary { color:var(--color-primary) }
+      .text-surface { color:var(--color-surface) }
+      .text-text { color:var(--color-text) }
+      .text-text\/60 { color:#0c0c0999 }
+      @supports (color:color-mix(in lab, red, red)) {
+        .text-text\/60 { color:color-mix(in oklab,var(--color-text)60%,transparent) }
+      }
+      .antialiased { -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale }
+      .shadow-sm {
+        --tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a),0 1px 2px -1px var(--tw-shadow-color,#0000001a);
+        box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)
+      }
+      .transition-colors {
+        transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;
+        transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));
+        transition-duration:var(--tw-duration,var(--default-transition-duration))
+      }
+      @media (hover:hover) {
+        .hover\:bg-primary\/90:hover { background-color:#0c0c09e6 }
+        @supports (color:color-mix(in lab, red, red)) {
+          .hover\:bg-primary\/90:hover { background-color:color-mix(in oklab,var(--color-primary)90%,transparent) }
+        }
+      }
+      .focus-visible\:outline-2:focus-visible { outline-style:var(--tw-outline-style);outline-width:2px }
+      .focus-visible\:outline-offset-2:focus-visible { outline-offset:2px }
+      .focus-visible\:outline-primary:focus-visible { outline-color:var(--color-primary) }
+      .active\:bg-primary\/80:active { background-color:#0c0c09cc }
+      @supports (color:color-mix(in lab, red, red)) {
+        .active\:bg-primary\/80:active { background-color:color-mix(in oklab,var(--color-primary)80%,transparent) }
+      }
+      @media (min-width:40rem) {
+        .sm\:p-8 { padding:calc(var(--spacing)*8) }
+        .sm\:text-5xl { font-size:var(--text-5xl);line-height:var(--tw-leading,var(--text-5xl--line-height)) }
+        .sm\:text-xl { font-size:var(--text-xl);line-height:var(--tw-leading,var(--text-xl--line-height)) }
+      }
+      @media (min-width:48rem) {
+        .md\:text-2xl { font-size:var(--text-2xl);line-height:var(--tw-leading,var(--text-2xl--line-height)) }
+        .md\:text-8xl { font-size:var(--text-8xl);line-height:var(--tw-leading,var(--text-8xl--line-height)) }
+      }
+    }
+
+    body {
+      background-color:var(--color-surface);
+      color:var(--color-text);
+      font-family:var(--font-sans)
+    }
+
+    @property --tw-border-style { syntax:"*";inherits:false;initial-value:solid }
+    @property --tw-leading { syntax:"*";inherits:false }
+    @property --tw-font-weight { syntax:"*";inherits:false }
+    @property --tw-tracking { syntax:"*";inherits:false }
+    @property --tw-shadow { syntax:"*";inherits:false;initial-value:0 0 #0000 }
+    @property --tw-shadow-color { syntax:"*";inherits:false }
+    @property --tw-shadow-alpha { syntax:"<percentage>";inherits:false;initial-value:100% }
+    @property --tw-inset-shadow { syntax:"*";inherits:false;initial-value:0 0 #0000 }
+    @property --tw-inset-shadow-color { syntax:"*";inherits:false }
+    @property --tw-inset-shadow-alpha { syntax:"<percentage>";inherits:false;initial-value:100% }
+    @property --tw-ring-color { syntax:"*";inherits:false }
+    @property --tw-ring-shadow { syntax:"*";inherits:false;initial-value:0 0 #0000 }
+    @property --tw-inset-ring-color { syntax:"*";inherits:false }
+    @property --tw-inset-ring-shadow { syntax:"*";inherits:false;initial-value:0 0 #0000 }
+    @property --tw-ring-inset { syntax:"*";inherits:false }
+    @property --tw-ring-offset-width { syntax:"<length>";inherits:false;initial-value:0 }
+    @property --tw-ring-offset-color { syntax:"*";inherits:false;initial-value:#fff }
+    @property --tw-ring-offset-shadow { syntax:"*";inherits:false;initial-value:0 0 #0000 }
+    @property --tw-outline-style { syntax:"*";inherits:false;initial-value:solid }
+  </style>
+</head>
+<body class="antialiased bg-surface text-text">
+  <div class="relative flex min-h-screen flex-col items-center justify-center p-4 sm:p-8">
+    <div class="pointer-events-none absolute inset-0 -z-10 h-full w-full" style="background-image:repeating-linear-gradient(45deg, rgba(12, 12, 9, 0.03) 0, rgba(12, 12, 9, 0.03) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(-45deg, rgba(12, 12, 9, 0.03) 0, rgba(12, 12, 9, 0.03) 1px, transparent 1px, transparent 32px)"></div>
+    <main class="z-10 flex w-full max-w-2xl flex-col items-center text-center">
+      <div class="mb-6 h-52 w-52 overflow-hidden rounded-full border-4 border-gray-900 bg-white shadow-sm">
+        <img
+          alt="Аватар Дуэйна Хоббса"
+          width="128"
+          height="128"
+          decoding="async"
+          class="h-full w-full object-cover"
+          style="color:transparent"
+          src="https://minimal-xi.vercel.app/_next/image?url=%2Favatar.png&w=256&q=75"
+        />
+      </div>
+      <h1 class="mb-8 font-display text-4xl font-black tracking-tight text-primary sm:text-5xl md:text-8xl">Duane J. Hobbs</h1>
+      <p class="mb-16 font-sans text-lg leading-relaxed text-text/60 sm:text-xl md:text-2xl">Я создаю чистый, ориентированный на пользователя цифровой опыт с минималистичной эстетикой, сильной типографикой и надёжным функционалом.</p>
+      <button class="flex items-center justify-center rounded-md bg-primary px-10 py-6 font-sans text-lg font-semibold text-surface transition-colors hover:bg-primary/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary active:bg-primary/80">Мои работы</button>
+    </main>
+  </div>
+</body>
+</html>

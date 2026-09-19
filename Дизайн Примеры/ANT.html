@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full antialiased">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+<title>Ant Design Style App</title>
+<meta name="description" content="App styled with Ant Design rules"/>
+<style>
+:root{--font-inter:"Inter", sans-serif;--font-mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;--color-red-400:#ff6568;--color-red-600:#e40014;--color-yellow-50:#fefce8;--color-yellow-200:#fff085;--color-yellow-400:#fac800;--color-yellow-700:#a36100;--color-yellow-800:#874b00;--color-yellow-900:#733e0a;--color-green-50:#f0fdf4;--color-green-200:#b9f8cf;--color-green-400:#05df72;--color-green-500:#00c758;--color-green-700:#008138;--color-green-800:#016630;--color-green-900:#0d542b;--color-blue-50:#eff6ff;--color-blue-200:#bedbff;--color-blue-400:#54a2ff;--color-blue-500:#3080ff;--color-blue-700:#1447e6;--color-blue-800:#193cb8;--color-blue-900:#1c398e;--color-purple-100:#f3e8ff;--color-purple-400:#c07eff;--color-purple-500:#ac4bff;--color-purple-700:#8200da;--color-purple-900:#59168b;--color-white:#fff;--spacing:.25rem;--container-md:28rem;--container-3xl:48rem;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--tracking-tight:-.025em;--tracking-wider:.05em;--leading-tight:1.25;--leading-snug:1.375;--leading-relaxed:1.625;--radius-md:.375rem;--radius-lg:.5rem;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4, 0, .2, 1);--default-font-family:var(--font-inter), ui-sans-serif, system-ui, sans-serif;--default-mono-font-family:var(--font-mono);--background:#fff;--foreground:#111827;--primary:#1677ff;--primary-hover:#4096ff;--primary-active:#0958d9;--surface:#fff;--border:#d9d9d9}
+@media (prefers-color-scheme:dark){:root{--background:#000;--foreground:#fff;--primary:#1677ff;--primary-hover:#4096ff;--primary-active:#0958d9;--surface:#141414;--border:#424242}}
+*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}
+html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family);-webkit-tap-highlight-color:transparent}
+hr{height:0;color:inherit;border-top-width:1px}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}
+a{color:inherit;text-decoration:inherit}
+b,strong{font-weight:bolder}
+code,kbd,samp,pre{font-family:var(--default-mono-font-family);font-size:1em}
+img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}
+button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}
+::placeholder{opacity:1}
+@supports (color:color-mix(in lab, red, red)){::placeholder{color:color-mix(in oklab, currentcolor 50%, transparent)}}
+textarea{resize:vertical}
+ol,ul,menu{list-style:none}
+[hidden]:where(:not([hidden=until-found])){display:none!important}
+body{background:var(--background);color:var(--foreground)}
+
+.pointer-events-none{pointer-events:none}.visible{visibility:visible}.absolute{position:absolute}.relative{position:relative}.inset-y-0{inset-block:0}.left-0{left:0}.mx-2{margin-inline:calc(var(--spacing) * 2)}.mx-auto{margin-inline:auto}.mt-1{margin-top:calc(var(--spacing) * 1)}.mt-2{margin-top:calc(var(--spacing) * 2)}.mt-6{margin-top:calc(var(--spacing) * 6)}.mr-1\.5{margin-right:calc(var(--spacing) * 1.5)}.mb-1{margin-bottom:calc(var(--spacing) * 1)}.mb-2{margin-bottom:calc(var(--spacing) * 2)}.mb-4{margin-bottom:calc(var(--spacing) * 4)}.mb-6{margin-bottom:calc(var(--spacing) * 6)}.mb-8{margin-bottom:calc(var(--spacing) * 8)}.mb-10{margin-bottom:calc(var(--spacing) * 10)}.ml-auto{margin-left:auto}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline-flex{display:inline-flex}
+.h-1\.5{height:calc(var(--spacing) * 1.5)}.h-2{height:calc(var(--spacing) * 2)}.h-3\.5{height:calc(var(--spacing) * 3.5)}.h-4{height:calc(var(--spacing) * 4)}.h-5{height:calc(var(--spacing) * 5)}.h-6{height:calc(var(--spacing) * 6)}.h-7{height:calc(var(--spacing) * 7)}.h-8{height:calc(var(--spacing) * 8)}.h-12{height:calc(var(--spacing) * 12)}.h-14{height:calc(var(--spacing) * 14)}.h-full{height:100%}.h-screen{height:100vh}.min-h-\[80px\]{min-height:80px}.min-h-full{min-height:100%}
+.w-1\.5{width:calc(var(--spacing) * 1.5)}.w-2{width:calc(var(--spacing) * 2)}.w-3\.5{width:calc(var(--spacing) * 3.5)}.w-4{width:calc(var(--spacing) * 4)}.w-5{width:calc(var(--spacing) * 5)}.w-6{width:calc(var(--spacing) * 6)}.w-7{width:calc(var(--spacing) * 7)}.w-8{width:calc(var(--spacing) * 8)}.w-24{width:calc(var(--spacing) * 24)}.w-56{width:calc(var(--spacing) * 56)}.w-\[320px\]{width:320px}.w-full{width:100%}.w-px{width:1px}.max-w-3xl{max-width:var(--container-3xl)}.max-w-md{max-width:var(--container-md)}.max-w-none{max-width:none}.min-w-0{min-width:0}
+.flex-1{flex:1}.shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.resize-none{resize:none}.list-disc{list-style-type:disc}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.flex-col{flex-direction:column}.items-baseline{align-items:baseline}.items-center{align-items:center}.items-start{align-items:flex-start}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+.gap-1{gap:calc(var(--spacing) * 1)}.gap-1\.5{gap:calc(var(--spacing) * 1.5)}.gap-2{gap:calc(var(--spacing) * 2)}.gap-2\.5{gap:calc(var(--spacing) * 2.5)}.gap-3{gap:calc(var(--spacing) * 3)}.gap-4{gap:calc(var(--spacing) * 4)}
+:where(.space-y-0\.5>:not(:last-child)){margin-block-end:calc(var(--spacing) * .5)}
+:where(.space-y-1>:not(:last-child)){margin-block-end:calc(var(--spacing) * 1)}
+:where(.space-y-6>:not(:last-child)){margin-block-end:calc(var(--spacing) * 6)}
+.gap-x-8{column-gap:calc(var(--spacing) * 8)}.gap-y-4{row-gap:calc(var(--spacing) * 4)}
+.truncate{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.overflow-hidden{overflow:hidden}.overflow-y-auto{overflow-y:auto}
+.rounded{border-radius:.25rem}.rounded-full{border-radius:3.40282e38px}.rounded-lg{border-radius:var(--radius-lg)}.rounded-md{border-radius:var(--radius-md)}
+.border{border-style:solid;border-width:1px}.border-t{border-top-style:solid;border-top-width:1px}.border-r{border-right-style:solid;border-right-width:1px}.border-b{border-bottom-style:solid;border-bottom-width:1px}.border-l-2{border-left-style:solid;border-left-width:2px}.border-none{border-style:none}
+.border-blue-200{border-color:var(--color-blue-200)}.border-border{border-color:var(--border)}.border-foreground\/30{border-color:color-mix(in oklab, var(--foreground) 30%, transparent)}.border-green-200{border-color:var(--color-green-200)}.border-primary\/20{border-color:color-mix(in oklab, var(--primary) 20%, transparent)}.border-yellow-200{border-color:var(--color-yellow-200)}.border-l-primary{border-left-color:var(--primary)}.border-l-transparent{border-left-color:#0000}
+.bg-background{background-color:var(--background)}.bg-blue-50{background-color:var(--color-blue-50)}.bg-blue-500{background-color:var(--color-blue-500)}.bg-border{background-color:var(--border)}.bg-green-50{background-color:var(--color-green-50)}.bg-green-500{background-color:var(--color-green-500)}.bg-primary{background-color:var(--primary)}.bg-primary\/5{background-color:color-mix(in oklab, var(--primary) 5%, transparent)}.bg-primary\/10{background-color:color-mix(in oklab, var(--primary) 10%, transparent)}.bg-primary\/20{background-color:color-mix(in oklab, var(--primary) 20%, transparent)}.bg-purple-100{background-color:var(--color-purple-100)}.bg-purple-500{background-color:var(--color-purple-500)}.bg-surface{background-color:var(--surface)}.bg-surface\/50{background-color:color-mix(in oklab, var(--surface) 50%, transparent)}.bg-transparent{background-color:#0000}.bg-yellow-50{background-color:var(--color-yellow-50)}
+.p-1{padding:calc(var(--spacing) * 1)}.p-1\.5{padding:calc(var(--spacing) * 1.5)}.p-3{padding:calc(var(--spacing) * 3)}.p-4{padding:calc(var(--spacing) * 4)}.p-8{padding:calc(var(--spacing) * 8)}.px-1\.5{padding-inline:calc(var(--spacing) * 1.5)}.px-2{padding-inline:calc(var(--spacing) * 2)}.px-2\.5{padding-inline:calc(var(--spacing) * 2.5)}.px-3{padding-inline:calc(var(--spacing) * 3)}.px-4{padding-inline:calc(var(--spacing) * 4)}.px-6{padding-inline:calc(var(--spacing) * 6)}.px-8{padding-inline:calc(var(--spacing) * 8)}.py-0\.5{padding-block:calc(var(--spacing) * .5)}.py-1\.5{padding-block:calc(var(--spacing) * 1.5)}.py-2{padding-block:calc(var(--spacing) * 2)}.pt-2{padding-top:calc(var(--spacing) * 2)}.pr-3{padding-right:calc(var(--spacing) * 3)}.pl-2\.5{padding-left:calc(var(--spacing) * 2.5)}.pl-5{padding-left:calc(var(--spacing) * 5)}.pl-8{padding-left:calc(var(--spacing) * 8)}
+.font-mono{font-family:var(--font-mono)}.font-sans{font-family:var(--font-inter), ui-sans-serif, system-ui, sans-serif}
+.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-\[12px\]{font-size:12px}.text-\[13px\]{font-size:13px}.text-\[14px\]{font-size:14px}.text-\[24px\]{font-size:24px}
+.leading-relaxed{line-height:var(--leading-relaxed)}.leading-snug{line-height:var(--leading-snug)}.leading-tight{line-height:var(--leading-tight)}
+.font-bold{font-weight:var(--font-weight-bold)}.font-medium{font-weight:var(--font-weight-medium)}.font-semibold{font-weight:var(--font-weight-semibold)}
+.tracking-tight{letter-spacing:var(--tracking-tight)}.tracking-wider{letter-spacing:var(--tracking-wider)}
+.text-blue-700{color:var(--color-blue-700)}.text-foreground{color:var(--foreground)}.text-foreground\/40{color:color-mix(in oklab, var(--foreground) 40%, transparent)}.text-foreground\/50{color:color-mix(in oklab, var(--foreground) 50%, transparent)}.text-foreground\/60{color:color-mix(in oklab, var(--foreground) 60%, transparent)}.text-foreground\/70{color:color-mix(in oklab, var(--foreground) 70%, transparent)}.text-foreground\/80{color:color-mix(in oklab, var(--foreground) 80%, transparent)}.text-foreground\/90{color:color-mix(in oklab, var(--foreground) 90%, transparent)}.text-green-700{color:var(--color-green-700)}.text-primary{color:var(--primary)}.text-purple-700{color:var(--color-purple-700)}.text-red-600{color:var(--color-red-600)}.text-white{color:var(--color-white)}.text-yellow-700{color:var(--color-yellow-700)}
+.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+.shadow-sm{box-shadow:0 1px 3px 0 #0000001a, 0 1px 2px -1px #0000001a}
+.transition-all{transition-property:all;transition-timing-function:var(--default-transition-timing-function);transition-duration:var(--default-transition-duration)}
+.transition-colors{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke;transition-timing-function:var(--default-transition-timing-function);transition-duration:var(--default-transition-duration)}
+.focus-within\:border-primary:focus-within{border-color:var(--primary)}
+.focus-within\:ring-1:focus-within{box-shadow:0 0 0 1px var(--primary)}
+.focus-within\:ring-primary\/20:focus-within{--tw-ring-color:color-mix(in oklab, var(--primary) 20%, transparent)}
+@media (hover:hover){.hover\:bg-background:hover{background-color:var(--background)}.hover\:bg-primary-hover:hover{background-color:var(--primary-hover)}.hover\:bg-surface:hover{background-color:var(--surface)}.hover\:text-foreground:hover{color:var(--foreground)}}
+.focus\:border-primary:focus{border-color:var(--primary)}
+.focus\:ring-1:focus{box-shadow:0 0 0 1px var(--primary)}
+.focus\:ring-primary\/20:focus{--tw-ring-color:color-mix(in oklab, var(--primary) 20%, transparent)}
+.focus\:outline-none:focus{outline-style:none}
+.active\:bg-primary-active:active{background-color:var(--primary-active)}
+@media (min-width:40rem){.sm\:block{display:block}}
+@media (min-width:48rem){.md\:flex{display:flex}}
+@media (prefers-color-scheme:dark){.dark\:border-blue-800{border-color:var(--color-blue-800)}.dark\:border-green-800{border-color:var(--color-green-800)}.dark\:border-yellow-800{border-color:var(--color-yellow-800)}.dark\:bg-blue-900\/30{background-color:color-mix(in oklab, var(--color-blue-900) 30%, transparent)}.dark\:bg-green-900\/30{background-color:color-mix(in oklab, var(--color-green-900) 30%, transparent)}.dark\:bg-purple-900\/30{background-color:color-mix(in oklab, var(--color-purple-900) 30%, transparent)}.dark\:bg-yellow-900\/30{background-color:color-mix(in oklab, var(--color-yellow-900) 30%, transparent)}.dark\:text-blue-400{color:var(--color-blue-400)}.dark\:text-green-400{color:var(--color-green-400)}.dark\:text-purple-400{color:var(--color-purple-400)}.dark\:text-red-400{color:var(--color-red-400)}.dark\:text-yellow-400{color:var(--color-yellow-400)}}
+</style>
+</head>
+<body class="min-h-full flex flex-col font-sans">
+<div class="flex flex-col h-screen bg-background text-foreground font-sans overflow-hidden">
+<!-- HEADER -->
+<header class="h-14 border-b border-border bg-surface flex items-center justify-between px-4 shrink-0">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded bg-primary flex items-center justify-center">
+<svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+</div>
+<span class="text-[14px] font-semibold tracking-tight">TaskFlow</span>
+</div>
+<div class="h-4 w-px bg-border mx-2"></div>
+<button class="h-7 px-3 text-[12px] font-medium rounded bg-primary text-white hover:bg-primary-hover active:bg-primary-active transition-colors flex items-center gap-1.5 shadow-sm">
+<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>Новая задача</button>
+</div>
+<div class="flex-1 max-w-md px-8 hidden sm:block">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+<svg class="w-3.5 h-3.5 text-foreground/40" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+</div>
+<input type="text" placeholder="Поиск задач, проектов, пользователей... (Cmd+K)" class="h-8 w-full pl-8 pr-3 text-[12px] bg-background border border-border rounded-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all"/>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="text-foreground/60 hover:text-foreground transition-colors">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+</button>
+<div class="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-[12px] font-medium text-primary cursor-pointer">JD</div>
+</div>
+</header>
+
+<div class="flex-1 flex overflow-hidden">
+<!-- SIDEBAR -->
+<nav class="w-56 border-r border-border bg-surface/50 flex flex-col hidden md:flex shrink-0">
+<div class="p-3">
+<div class="space-y-0.5">
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] text-foreground/80 hover:bg-background rounded-md transition-colors">
+<svg class="w-4 h-4 text-foreground/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path></svg>Входящие<span class="ml-auto text-[12px] text-foreground/40 font-mono">3</span>
+</button>
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] font-medium bg-primary/10 text-primary rounded-md transition-colors">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>Мои задачи</button>
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] text-foreground/80 hover:bg-background rounded-md transition-colors">
+<svg class="w-4 h-4 text-foreground/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>Доска</button>
+</div>
+<div class="mt-6 mb-2 px-2.5 text-[12px] font-semibold text-foreground/50 uppercase tracking-wider">Проекты</div>
+<div class="space-y-0.5">
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] text-foreground/80 hover:bg-background rounded-md transition-colors">
+<span class="w-2 h-2 rounded-full bg-blue-500"></span>Frontend Core</button>
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] text-foreground/80 hover:bg-background rounded-md transition-colors">
+<span class="w-2 h-2 rounded-full bg-purple-500"></span>API Services</button>
+<button class="w-full flex items-center gap-2.5 px-2.5 py-1.5 text-[14px] text-foreground/80 hover:bg-background rounded-md transition-colors">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>Design System</button>
+</div>
+</div>
+</nav>
+
+<!-- ISSUE LIST -->
+<div class="w-[320px] border-r border-border bg-background flex flex-col shrink-0">
+<div class="h-12 border-b border-border flex items-center justify-between px-4 shrink-0">
+<h2 class="text-[14px] font-semibold">Мои задачи</h2>
+<div class="flex gap-1">
+<button class="p-1 text-foreground/50 hover:text-foreground hover:bg-surface rounded transition-colors">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<!-- Issue 1 - Active -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors bg-primary/5 border-l-2 border-l-primary">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">API-42</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800">В работе</span>
+</div>
+<p class="text-[14px] leading-snug truncate font-medium text-primary">Реализовать лимит запросов для публичных эндпоинтов</p>
+</div>
+</div>
+</div>
+<!-- Issue 2 -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors border-l-2 border-l-transparent hover:bg-surface">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">FRN-18</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-surface text-foreground/70 border-border">К выполнению</span>
+</div>
+<p class="text-[14px] leading-snug truncate text-foreground/90">Исправить ошибку гидратации в навигации</p>
+</div>
+</div>
+</div>
+<!-- Issue 3 -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors border-l-2 border-l-transparent hover:bg-surface">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">DS-09</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-yellow-50 text-yellow-700 border-yellow-200 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800">На проверке</span>
+</div>
+<p class="text-[14px] leading-snug truncate text-foreground/90">Обновить hover-состояния кнопок по новой спеке</p>
+</div>
+</div>
+</div>
+<!-- Issue 4 -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors border-l-2 border-l-transparent hover:bg-surface">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">API-39</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800">Выполнено</span>
+</div>
+<p class="text-[14px] leading-snug truncate text-foreground/90">Оптимизация пула подключений к базе данных</p>
+</div>
+</div>
+</div>
+<!-- Issue 5 -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors border-l-2 border-l-transparent hover:bg-surface">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">FRN-15</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-surface text-foreground/70 border-border">К выполнению</span>
+</div>
+<p class="text-[14px] leading-snug truncate text-foreground/90">Добавить скелетоны загрузки на дашборд</p>
+</div>
+</div>
+</div>
+<!-- Issue 6 -->
+<div class="p-3 border-b border-border cursor-pointer transition-colors border-l-2 border-l-transparent hover:bg-surface">
+<div class="flex items-start gap-2.5">
+<input type="checkbox" class="mt-1 rounded border-foreground/30 text-primary focus:ring-primary/20 cursor-pointer"/>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<span class="text-[12px] font-mono text-foreground/50">FRN-14</span>
+<span class="text-[10px] px-1.5 py-0.5 rounded font-medium border bg-surface text-foreground/70 border-border">К выполнению</span>
+</div>
+<p class="text-[14px] leading-snug truncate text-foreground/90">Перейти на новую систему маршрутизации</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div class="flex-1 bg-surface flex flex-col min-w-0">
+<div class="h-12 border-b border-border flex items-center justify-between px-6 shrink-0">
+<div class="flex items-center gap-2 text-[12px] text-foreground/60 font-mono">
+<span>API Services</span>
+<span>/</span>
+<span class="font-medium text-foreground">API-42</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="h-7 px-2.5 text-[12px] font-medium rounded border border-border bg-background hover:bg-surface transition-colors">Поделиться</button>
+<button class="p-1.5 text-foreground/60 hover:text-foreground hover:bg-background rounded transition-colors">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"></path></svg>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<div class="max-w-3xl mx-auto p-8">
+<h1 class="text-[24px] font-semibold mb-6 leading-tight">Реализовать лимит запросов для публичных эндпоинтов</h1>
+<div class="grid grid-cols-2 gap-y-4 gap-x-8 mb-8 p-4 rounded-lg border border-border bg-background text-[13px]">
+<div class="flex items-center">
+<span class="w-24 text-foreground/50">Исполнитель</span>
+<div class="flex items-center gap-2">
+<div class="w-5 h-5 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[10px] font-bold">JD</div>
+<span class="font-medium">Jane Doe</span>
+</div>
+</div>
+<div class="flex items-center">
+<span class="w-24 text-foreground/50">Статус</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-[12px] font-medium bg-blue-50 text-blue-700 border border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-1.5"></span>В работе</span>
+</div>
+<div class="flex items-center">
+<span class="w-24 text-foreground/50">Приоритет</span>
+<span class="flex items-center gap-1.5 font-medium text-red-600 dark:text-red-400">
+<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>Высокий</span>
+</div>
+<div class="flex items-center">
+<span class="w-24 text-foreground/50">Метки</span>
+<div class="flex gap-1.5">
+<span class="px-2 py-0.5 rounded border border-border bg-surface text-[11px]">backend</span>
+<span class="px-2 py-0.5 rounded border border-border bg-surface text-[11px]">security</span>
+</div>
+</div>
+</div>
+<div class="prose prose-sm dark:prose-invert max-w-none mb-10 text-[14px] text-foreground/80 leading-relaxed">
+<p>Необходимо реализовать ограничение частоты запросов для всех эндпоинтов <code>/api/v1/public/*</code>, чтобы предотвратить злоупотребления и обеспечить стабильность сервиса.</p>
+<p><strong>Требования:</strong></p>
+<ul class="list-disc pl-5 space-y-1 mt-2 mb-4">
+<li>Лимит: 100 запросов в минуту на IP.</li>
+<li>Возвращать HTTP <code>429 Too Many Requests</code> при превышении лимита.</li>
+<li>Включить заголовки <code>X-RateLimit-Limit</code> и <code>X-RateLimit-Remaining</code> в ответ.</li>
+<li>Использовать Redis для хранения распределённых счётчиков.</li>
+</ul>
+<p>Подробности подключения к Redis смотрите в документации по архитектуре.</p>
+</div>
+<hr class="border-border mb-8"/>
+<div>
+<h3 class="text-[14px] font-semibold mb-4">Активность</h3>
+<div class="space-y-6">
+<div class="flex gap-3">
+<div class="w-8 h-8 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 flex items-center justify-center text-[12px] font-bold shrink-0">MR</div>
+<div class="flex-1">
+<div class="flex items-baseline gap-2 mb-1">
+<span class="text-[13px] font-semibold">Mark Richards</span>
+<span class="text-[12px] text-foreground/50">2 часа назад</span>
+</div>
+<div class="text-[14px] text-foreground/80 bg-background border border-border rounded-md p-3">Я настроил кластер Redis на стейджинге. Используйте переменную окружения <code>REDIS_URL_RATE_LIMIT</code>.</div>
+</div>
+</div>
+<div class="flex gap-3 pt-2">
+<div class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center text-[12px] font-bold shrink-0">JD</div>
+<div class="flex-1 border border-border rounded-md bg-background overflow-hidden focus-within:border-primary focus-within:ring-1 focus-within:ring-primary/20 transition-all">
+<textarea placeholder="Оставить комментарий..." class="w-full p-3 text-[14px] bg-transparent border-none focus:outline-none resize-none min-h-[80px]"></textarea>
+<div class="bg-surface border-t border-border px-3 py-2 flex justify-between items-center">
+<div class="flex gap-2">
+<button class="p-1 text-foreground/50 hover:text-foreground transition-colors">
+<svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+</button>
+</div>
+<button class="h-7 px-3 text-[12px] font-medium rounded bg-primary text-white hover:bg-primary-hover transition-colors">Комментарий</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

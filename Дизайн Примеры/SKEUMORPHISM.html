@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Studio Console SC-48 — Скевоморфный Микшер</title>
+<meta name="description" content="Премиальный скевоморфный интерфейс студийного микшерного пульта с реалистичными текстурами, янтарным LCD и тактильными элементами управления."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400..900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --font-orbitron: "Orbitron", sans-serif;
+  --font-inter: "Inter", sans-serif;
+  --font-digital: var(--font-orbitron);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-red-600: #e40014;
+  --color-amber-500: #f99c00;
+  --color-amber-600: #dd7400;
+  --color-amber-700: #b75000;
+  --color-black: #000;
+  --color-white: #fff;
+  --spacing: .25rem;
+  --container-md: 28rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --text-xs: .75rem;
+  --text-xs--line-height: calc(1 / .75);
+  --text-sm: .875rem;
+  --text-sm--line-height: calc(1.25 / .875);
+  --text-xl: 1.25rem;
+  --text-xl--line-height: calc(1.75 / 1.25);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: calc(2.25 / 1.875);
+  --font-weight-bold: 700;
+  --font-weight-black: 900;
+  --tracking-wider: .05em;
+  --tracking-widest: .1em;
+  --leading-relaxed: 1.625;
+  --radius-sm: .25rem;
+  --radius-lg: .5rem;
+  --radius-xl: .75rem;
+  --drop-shadow-md: 0 3px 3px #0000001f;
+  --default-transition-duration: .15s;
+  --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  --default-font-family: var(--font-inter);
+  --default-mono-font-family: var(--font-mono);
+  --bg-page: #e8dcc8;
+  --bg-felt: #c8bfa8;
+  --case-top: #d4c9a8;
+  --case-mid: #bfb490;
+  --case-base: #a89e7a;
+  --case-shadow: #7a7055;
+  --amber: #e87c14;
+  --amber-light: #f5a840;
+  --amber-pale: #fad090;
+  --amber-dark: #a84e00;
+  --green-led: #22c45a;
+  --red-led: #e03030;
+  --screen-bg: #1a1a0e;
+  --screen-amber: #e87c14;
+  --meter-green: #44c464;
+  --meter-yellow: #d4c020;
+  --meter-red: #d43020;
+  --knob-top: #c8c0a0;
+  --knob-mid: #9a9070;
+  --knob-rim: #6a6050;
+  --panel-light: #d0c8a8;
+  --panel-shadow: #8a8468;
+  --screw-top: #b0a888;
+  --text-engraved: #6a6245;
+  --text-raised: #f0ead8;
+}
+
+*, *:before, *:after, ::backdrop {
+  box-sizing: border-box;
+  border: 0 solid;
+  margin: 0;
+  padding: 0;
+}
+
+html, :host {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-page);
+  min-height: 100vh;
+  color: var(--text-engraved);
+  background-image: radial-gradient(at 50% 0, #fff5dc8c 0%, #0000 65%), radial-gradient(at 50% 100%, #645a3c59 0%, #0000 65%), repeating-linear-gradient(0deg, #0000, #0000 3px, #00000009 3px 4px), repeating-linear-gradient(90deg, #0000, #0000 3px, #00000006 3px 4px);
+}
+
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+a { color: inherit; text-decoration: inherit; }
+b, strong { font-weight: bolder; }
+ol, ul, menu { list-style: none; }
+img, svg, video, canvas, audio, iframe, embed, object { vertical-align: middle; display: block; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, optgroup, textarea { font: inherit; font-feature-settings: inherit; font-variation-settings: inherit; letter-spacing: inherit; color: inherit; opacity: 1; background-color: #0000; border-radius: 0; }
+
+/* Utility classes */
+.pointer-events-none { pointer-events: none; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.inset-0 { inset: 0; }
+.-top-3 { top: calc(var(--spacing) * -3); }
+.top-1\/2 { top: 50%; }
+.top-2 { top: calc(var(--spacing) * 2); }
+.top-3 { top: calc(var(--spacing) * 3); }
+.top-4 { top: calc(var(--spacing) * 4); }
+.top-\[2px\] { top: 2px; }
+.top-\[8\%\] { top: 8%; }
+.right-2 { right: calc(var(--spacing) * 2); }
+.right-3 { right: calc(var(--spacing) * 3); }
+.right-4 { right: calc(var(--spacing) * 4); }
+.bottom-2 { bottom: calc(var(--spacing) * 2); }
+.bottom-3 { bottom: calc(var(--spacing) * 3); }
+.left-0 { left: 0; }
+.right-0 { right: 0; }
+.left-2 { left: calc(var(--spacing) * 2); }
+.left-3 { left: calc(var(--spacing) * 3); }
+.left-4 { left: calc(var(--spacing) * 4); }
+.left-1\/2 { left: 50%; }
+.z-10 { z-index: 10; }
+.mx-\[1px\] { margin-inline: 1px; }
+.mx-auto { margin-inline: auto; }
+.my-auto { margin-block: auto; }
+.mt-4 { margin-top: calc(var(--spacing) * 4); }
+.mt-8 { margin-top: calc(var(--spacing) * 8); }
+.mt-auto { margin-top: auto; }
+.mb-2 { margin-bottom: calc(var(--spacing) * 2); }
+.mb-4 { margin-bottom: calc(var(--spacing) * 4); }
+.mb-16 { margin-bottom: calc(var(--spacing) * 16); }
+.ml-1 { margin-left: calc(var(--spacing) * 1); }
+.flex { display: flex; }
+.grid { display: grid; }
+.hidden { display: none; }
+.h-0 { height: 0; }
+.h-2 { height: calc(var(--spacing) * 2); }
+.h-3 { height: calc(var(--spacing) * 3); }
+.h-4 { height: calc(var(--spacing) * 4); }
+.h-6 { height: calc(var(--spacing) * 6); }
+.h-8 { height: calc(var(--spacing) * 8); }
+.h-10 { height: calc(var(--spacing) * 10); }
+.h-12 { height: calc(var(--spacing) * 12); }
+.h-14 { height: calc(var(--spacing) * 14); }
+.h-20 { height: calc(var(--spacing) * 20); }
+.h-32 { height: calc(var(--spacing) * 32); }
+.h-48 { height: calc(var(--spacing) * 48); }
+.h-full { height: 100%; }
+.h-px { height: 1px; }
+.min-h-screen { min-height: 100vh; }
+.w-0 { width: 0; }
+.w-2 { width: calc(var(--spacing) * 2); }
+.w-3 { width: calc(var(--spacing) * 3); }
+.w-4 { width: calc(var(--spacing) * 4); }
+.w-8 { width: calc(var(--spacing) * 8); }
+.w-10 { width: calc(var(--spacing) * 10); }
+.w-14 { width: calc(var(--spacing) * 14); }
+.w-20 { width: calc(var(--spacing) * 20); }
+.w-full { width: 100%; }
+.max-w-4xl { max-width: var(--container-4xl); }
+.max-w-5xl { max-width: var(--container-5xl); }
+.max-w-md { max-width: var(--container-md); }
+.flex-1 { flex: 1; }
+.flex-shrink-0 { flex-shrink: 0; }
+.origin-bottom { transform-origin: bottom; }
+.-translate-x-1\/2 { translate: -50% 0; }
+.cursor-pointer { cursor: pointer; }
+.grid-cols-1 { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+.flex-col { flex-direction: column; }
+.flex-col-reverse { flex-direction: column-reverse; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.items-end { align-items: flex-end; }
+.items-start { align-items: flex-start; }
+.justify-around { justify-content: space-around; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: calc(var(--spacing) * 1); }
+.gap-2 { gap: calc(var(--spacing) * 2); }
+.gap-3 { gap: calc(var(--spacing) * 3); }
+.gap-4 { gap: calc(var(--spacing) * 4); }
+.gap-6 { gap: calc(var(--spacing) * 6); }
+.gap-8 { gap: calc(var(--spacing) * 8); }
+.gap-12 { gap: calc(var(--spacing) * 12); }
+.gap-16 { gap: calc(var(--spacing) * 16); }
+.gap-\[2px\] { gap: 2px; }
+.overflow-hidden { overflow: hidden; }
+.rounded { border-radius: .25rem; }
+.rounded-\[20px\] { border-radius: 20px; }
+.rounded-\[24px\] { border-radius: 24px; }
+.rounded-full { border-radius: 3.40282e38px; }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-sm { border-radius: var(--radius-sm); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.border { border-style: solid; border-width: 1px; }
+.border-2 { border-style: solid; border-width: 2px; }
+.border-4 { border-style: solid; border-width: 4px; }
+.border-t-4 { border-top-style: solid; border-top-width: 4px; }
+.border-t-\[8px\] { border-top-style: solid; border-top-width: 8px; }
+.border-b-\[8px\] { border-bottom-style: solid; border-bottom-width: 8px; }
+.border-l-\[12px\] { border-left-style: solid; border-left-width: 12px; }
+.border-amber-500\/30 { border-color: #f99c004d; }
+.border-amber-600\/30 { border-color: #dd74004d; }
+.border-black\/10 { border-color: #0000001a; }
+.border-black\/20 { border-color: #0003; }
+.border-transparent { border-color: #0000; }
+.border-white\/10 { border-color: #ffffff1a; }
+.border-l-\[\#fffada\] { border-left-color: #fffada; }
+.bg-amber-500 { background-color: var(--color-amber-500); }
+.bg-amber-500\/30 { background-color: #f99c004d; }
+.bg-black\/5 { background-color: #0000000d; }
+.bg-black\/10 { background-color: #0000001a; }
+.bg-red-600 { background-color: var(--color-red-600); }
+.p-3 { padding: calc(var(--spacing) * 3); }
+.p-4 { padding: calc(var(--spacing) * 4); }
+.p-5 { padding: calc(var(--spacing) * 5); }
+.p-6 { padding: calc(var(--spacing) * 6); }
+.p-\[3px\] { padding: 3px; }
+.px-1 { padding-inline: calc(var(--spacing) * 1); }
+.px-2 { padding-inline: calc(var(--spacing) * 2); }
+.px-4 { padding-inline: calc(var(--spacing) * 4); }
+.px-6 { padding-inline: calc(var(--spacing) * 6); }
+.py-2 { padding-block: calc(var(--spacing) * 2); }
+.py-3 { padding-block: calc(var(--spacing) * 3); }
+.py-4 { padding-block: calc(var(--spacing) * 4); }
+.pt-4 { padding-top: calc(var(--spacing) * 4); }
+.pb-2 { padding-bottom: calc(var(--spacing) * 2); }
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.font-sans { font-family: var(--font-inter); }
+.text-2xl { font-size: var(--text-2xl); line-height: var(--text-2xl--line-height); }
+.text-3xl { font-size: var(--text-3xl); line-height: var(--text-3xl--line-height); }
+.text-sm { font-size: var(--text-sm); line-height: var(--text-sm--line-height); }
+.text-xl { font-size: var(--text-xl); line-height: var(--text-xl--line-height); }
+.text-xs { font-size: var(--text-xs); line-height: var(--text-xs--line-height); }
+.text-\[8px\] { font-size: 8px; }
+.text-\[9px\] { font-size: 9px; }
+.text-\[10px\] { font-size: 10px; }
+.text-\[11px\] { font-size: 11px; }
+.leading-relaxed { line-height: var(--leading-relaxed); }
+.font-black { font-weight: var(--font-weight-black); }
+.font-bold { font-weight: var(--font-weight-bold); }
+.tracking-\[0\.2em\] { letter-spacing: .2em; }
+.tracking-\[0\.3em\] { letter-spacing: .3em; }
+.tracking-\[0\.4em\] { letter-spacing: .4em; }
+.tracking-wider { letter-spacing: var(--tracking-wider); }
+.tracking-widest { letter-spacing: var(--tracking-widest); }
+.text-\[\#fffada\] { color: #fffada; }
+.uppercase { text-transform: uppercase; }
+.antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.opacity-20 { opacity: .2; }
+.opacity-60 { opacity: .6; }
+.opacity-80 { opacity: .8; }
+.opacity-90 { opacity: .9; }
+.shadow-\[0_0_4px_\#f98806\] { box-shadow: 0 0 4px #f98806; }
+.shadow-\[0_0_8px_rgba\(220\,48\,48\,0\.8\)\] { box-shadow: 0 0 8px rgba(220,48,48,0.8); }
+.shadow-\[0_30px_60px_rgba\(0\,0\,0\,0\.4\)\] { box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+.shadow-\[inset_0_4px_10px_rgba\(0\,0\,0\,0\.4\)\] { box-shadow: inset 0 4px 10px rgba(0,0,0,0.4); }
+.shadow-inner { box-shadow: inset 0 2px 4px 0 #0000000d; }
+.shadow-lg { box-shadow: 0 10px 15px -3px #0000001a, 0 4px 6px -4px #0000001a; }
+.shadow-md { box-shadow: 0 4px 6px -1px #0000001a, 0 2px 4px -2px #0000001a; }
+.drop-shadow-md { filter: drop-shadow(0 3px 3px #0000001f); }
+.transition-colors { transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+.transition-transform { transition-property: transform, translate, scale, rotate; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+.group-active\:scale-95:is(:where(.group):active *) { scale: 95% 95%; }
+
+@media (hover: hover) {
+  .hover\:text-amber-700:hover { color: var(--color-amber-700); }
+}
+
+@media (min-width: 40rem) {
+  .sm\:flex { display: flex; }
+  .sm\:p-8 { padding: calc(var(--spacing) * 8); }
+  .sm\:text-3xl { font-size: var(--text-3xl); line-height: var(--text-3xl--line-height); }
+  .sm\:text-sm { font-size: var(--text-sm); line-height: var(--text-sm--line-height); }
+}
+
+@media (min-width: 48rem) {
+  .md\:flex { display: flex; }
+  .md\:hidden { display: none; }
+  .md\:w-80 { width: calc(var(--spacing) * 80); }
+  .md\:-translate-y-4 { translate: 0 calc(var(--spacing) * -4); }
+  .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .md\:flex-row { flex-direction: row; }
+  .md\:p-12 { padding: calc(var(--spacing) * 12); }
+}
+
+@media (min-width: 64rem) {
+  .lg\:w-64 { width: calc(var(--spacing) * 64); }
+  .lg\:flex-row { flex-direction: row; }
+  .lg\:p-10 { padding: calc(var(--spacing) * 10); }
+}
+
+/* Component styles */
+.casing-outer {
+  background: linear-gradient(175deg, #ddd4b0 0%, #c8bc90 30%, #b8ac80 55%, #ccc09a 80%, #d8cca8 100%);
+  border: none;
+  box-shadow: inset 0 3px 6px #ffffff8c, inset 0 -4px 10px #0000004d, 0 18px 55px #5046288c, 0 4px 12px #0000004d, 0 0 0 1px #5a503280;
+}
+
+.casing-inner {
+  background: linear-gradient(#c0b88a 0%, #b0a870 60%, #c8bc90 100%);
+  border-top: 1px solid #0000002e;
+  border-bottom: 1px solid #ffffff4d;
+  box-shadow: inset 0 4px 12px #00000038, inset 0 -1px 4px #ffffff2e, 0 1px #ffffff4d;
+}
+
+.screen-inset {
+  background: var(--screen-bg);
+  border: 1px solid #3a3820;
+  border-top: 2px solid #0a0a06;
+  border-left: 2px solid #0d0d08;
+  box-shadow: inset 0 5px 18px #000000f2, inset 0 0 8px #000000e6, 0 1px 2px #ffffff38, 0 0 0 1px #0009;
+}
+
+.glass-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-screen:after {
+  content: "";
+  pointer-events: none;
+  z-index: 2;
+  background: linear-gradient(135deg, #fff8dc12 0%, #fff8dc05 40%, #0000 60%);
+  position: absolute;
+  inset: 0;
+}
+
+.lcd-text {
+  font-family: var(--font-digital);
+  color: var(--screen-amber);
+  text-shadow: 0 0 6px #e87c14d9, 0 0 14px #e87c1466;
+}
+
+.lcd-dim {
+  font-family: var(--font-digital);
+  color: #e87c1461;
+  text-shadow: none;
+}
+
+.vu-green { background: #44c464; box-shadow: 0 0 4px #44c464e6; }
+.vu-yellow { background: #d4c020; box-shadow: 0 0 4px #d4c020e6; }
+.vu-red { background: #d43020; box-shadow: 0 0 5px #d43020e6; }
+.vu-off { background: #0006; box-shadow: inset 0 1px 2px #0009; }
+
+.btn-amber {
+  background: linear-gradient(180deg, var(--amber-pale) 0%, var(--amber) 45%, var(--amber-dark) 100%);
+  cursor: pointer;
+  border: none;
+  transition: all 80ms;
+  position: relative;
+  top: 0;
+  box-shadow: inset 0 2px 5px #ffffffa6, inset 0 -3px 7px #00000073, 0 6px 14px #00000073, 0 2px 4px #00000040, 0 0 0 1px #6b3000;
+}
+.btn-amber:hover { filter: brightness(1.07); }
+.btn-amber:active { filter: brightness(.93); top: 3px; box-shadow: inset 0 5px 12px #0009, 0 1px 3px #00000080, 0 0 0 1px #6b3000; }
+
+.btn-panel {
+  cursor: pointer;
+  color: var(--text-engraved);
+  background: linear-gradient(#e0d8ba 0%, #c8c0a0 50%, #b0a880 100%);
+  border: none;
+  transition: all 80ms;
+  position: relative;
+  top: 0;
+  box-shadow: inset 0 2px 4px #ffffff8c, inset 0 -2px 5px #00000047, 0 5px 10px #00000061, 0 0 0 1px #50462880;
+}
+.btn-panel:hover { filter: brightness(1.06); }
+.btn-panel:active { top: 2px; box-shadow: inset 0 4px 10px #0006, 0 1px 2px #0000004d, 0 0 0 1px #50462880; }
+
+.knob {
+  background: radial-gradient(circle at 38% 32%, var(--knob-top) 0%, var(--knob-mid) 55%, var(--knob-rim) 100%);
+  box-shadow: inset 0 2px 5px #ffffff73, inset 0 -3px 7px #0000007a, 0 6px 16px #0000008c, 0 0 0 3px #50462899, 0 0 0 5px #b4aa8266;
+}
+
+.knob-marker {
+  background: linear-gradient(#e87c14e6 0%, #a0460099 100%);
+  border-radius: 2px;
+  width: 3px;
+  height: 40%;
+  box-shadow: 0 0 4px #e87c14b3;
+}
+
+.slider-track {
+  background: #100f08;
+  border: 1px solid #00000080;
+  box-shadow: inset 0 3px 8px #000000e6, 0 1px #ffffff2e;
+}
+
+.slider-fill {
+  background: linear-gradient(90deg, var(--amber) 0%, var(--amber-light) 100%);
+  box-shadow: inset 0 1px 2px #ffffff8c, 0 0 10px #e87c148c;
+}
+
+.slider-thumb {
+  background: linear-gradient(#e0d8b8 0%, #9a9070 55%, #6a6040 100%);
+  box-shadow: inset 0 1px 3px #ffffffb3, inset 0 -1px 3px #0006, 0 4px 10px #000000b3, 0 0 0 1px #3c372399;
+}
+
+.engraved-text {
+  color: #504428b3;
+  text-shadow: 0 1px 1px #ffffff73;
+}
+
+.led-green {
+  background: radial-gradient(circle at 40% 35%, #8f9 0%, #22c45a 55%, #0a5a1e 100%);
+  box-shadow: 0 0 6px #22c45ae6, 0 0 14px #22c45a80;
+}
+
+.led-amber {
+  background: radial-gradient(circle at 40% 35%, var(--amber-pale) 0%, var(--amber) 55%, var(--amber-dark) 100%);
+  box-shadow: 0 0 6px #e87c14e6, 0 0 14px #e87c1480;
+}
+
+.led-red {
+  background: radial-gradient(circle at 40% 35%, #f99 0%, #e03030 55%, #5a0a0a 100%);
+  box-shadow: 0 0 6px #e03030e6, 0 0 14px #e0303080;
+}
+
+.screw {
+  background: radial-gradient(circle at 42% 35%, #d8d0b0 0%, #a09870 50%, #706848 100%);
+  position: relative;
+  box-shadow: inset 0 1px 2px #ffffff80, inset 0 -1px 2px #0006, 0 2px 6px #00000080;
+}
+.screw:before, .screw:after {
+  content: "";
+  background: #0006;
+  border-radius: 1px;
+  position: absolute;
+}
+.screw:before {
+  width: 55%; height: 2px; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+.screw:after {
+  width: 55%; height: 2px; top: 50%; left: 50%;
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+@keyframes bar-bounce {
+  0%, 100% { transform: scaleY(.2); }
+  50% { transform: scaleY(1); }
+}
+
+.waveform-bar {
+  background: linear-gradient(180deg, var(--amber-light) 0%, var(--amber) 60%, var(--amber-dark) 100%);
+  transform-origin: bottom;
+  border-radius: 2px 2px 0 0;
+  animation: .7s ease-in-out infinite bar-bounce;
+  box-shadow: 0 0 4px #e87c148c;
+}
+
+.rail-divider {
+  background: linear-gradient(90deg, #0000, #0003 15%, #00000059 50%, #0003 85%, #0000);
+  border-radius: 2px;
+  height: 4px;
+  box-shadow: 0 1px #ffffff47;
+}
+
+@keyframes pulse-amber {
+  0%, 100% { opacity: .7; }
+  50% { opacity: 1; }
+}
+
+@keyframes led-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: .15; }
+}
+
+.animate-pulse-amber { animation: 1.8s ease-in-out infinite pulse-amber; }
+.animate-led-blink { animation: 1s step-end infinite led-blink; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-felt); box-shadow: inset 0 0 4px #0000004d; }
+::-webkit-scrollbar-thumb { background: linear-gradient(#c8bc90, #a09070); border: 1px solid #0000004d; border-radius: 4px; }
+</style>
+</head>
+<body class="antialiased">
+
+<div class="min-h-screen p-4 sm:p-8 md:p-12 flex flex-col items-center gap-16 font-sans">
+
+<!-- HEADER -->
+<header class="w-full max-w-5xl casing-outer rounded-xl p-3 flex items-center justify-between">
+  <div class="flex items-center gap-4 px-4">
+    <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+    <div class="w-3 h-3 rounded-full bg-red-600 shadow-[0_0_8px_rgba(220,48,48,0.8)]"></div>
+    <span class="engraved-text font-black tracking-[0.4em] uppercase text-sm">AnalogWeb</span>
+  </div>
+  <nav class="hidden md:flex items-center gap-6 px-4">
+    <a href="#features" class="engraved-text text-[10px] font-bold tracking-widest uppercase hover:text-amber-700 transition-colors">Функции</a>
+    <a href="#modules" class="engraved-text text-[10px] font-bold tracking-widest uppercase hover:text-amber-700 transition-colors">Модули</a>
+    <a href="#pricing" class="engraved-text text-[10px] font-bold tracking-widest uppercase hover:text-amber-700 transition-colors">Цены</a>
+    <a href="#buy" class="btn-amber px-6 py-2 rounded text-[10px] font-black tracking-widest text-[#fffada] uppercase" style="text-shadow:0 1px 2px rgba(0,0,0,0.5)">Получить</a>
+  </nav>
+  <div class="flex md:hidden px-4">
+    <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+  </div>
+</header>
+
+<!-- HERO SECTION -->
+<section class="w-full max-w-5xl casing-outer rounded-[24px] p-6 lg:p-10 flex flex-col gap-6">
+  <div class="flex items-center justify-between px-2">
+    <div class="flex items-center gap-4">
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+      <div class="flex flex-col">
+        <h1 class="engraved-text font-black tracking-[0.3em] text-xl uppercase">Главный Пульт</h1>
+        <span class="engraved-text text-[10px] tracking-widest opacity-60 uppercase">Лучший скевоморфный фреймворк</span>
+      </div>
+    </div>
+    <div class="hidden sm:flex items-center gap-4">
+      <div class="flex flex-col items-center gap-1">
+        <div class="w-3 h-3 rounded-full led-green"></div>
+        <span class="engraved-text text-[8px] tracking-wider">PWR</span>
+      </div>
+      <div class="flex flex-col items-center gap-1">
+        <div class="w-3 h-3 rounded-full led-amber animate-led-blink"></div>
+        <span class="engraved-text text-[8px] tracking-wider">DAT</span>
+      </div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+    </div>
+  </div>
+
+  <div class="rail-divider"></div>
+
+  <div class="casing-inner rounded-xl p-6 flex flex-col lg:flex-row gap-8">
+    <div class="flex-1 flex flex-col gap-6">
+      <!-- LCD Screen -->
+      <div class="screen-inset glass-screen rounded-lg h-48 relative p-4 flex flex-col justify-between">
+        <div class="absolute inset-0 pointer-events-none opacity-20" style="background-image:repeating-linear-gradient(0deg, transparent, transparent 2px, #000 2px, #000 4px)"></div>
+        <div class="relative z-10 flex justify-between items-start">
+          <span class="lcd-text text-sm tracking-widest">SYS.RDY</span>
+          <span class="lcd-text text-sm tracking-widest">v2.0.4</span>
+        </div>
+        <div class="relative z-10 text-center flex flex-col gap-2 my-auto">
+          <h2 class="lcd-text text-2xl sm:text-3xl font-bold tracking-widest uppercase">Почувствуй Веб</h2>
+          <p class="lcd-dim text-xs sm:text-sm tracking-widest max-w-md mx-auto">Создавайте тактильные, погружающие интерфейсы, которые хочется потрогать. Ощутите тепло аналогового дизайна в цифровом мире.</p>
+        </div>
+        <div class="relative z-10 flex justify-between items-end">
+          <span class="lcd-text text-[10px] tracking-widest animate-pulse-amber">● LIVE</span>
+          <div class="flex gap-4">
+            <span class="lcd-dim text-[10px] tracking-widest border border-amber-500/30 px-1">HTML</span>
+            <span class="lcd-dim text-[10px] tracking-widest border border-amber-500/30 px-1">CSS</span>
+            <span class="lcd-dim text-[10px] tracking-widest border border-amber-500/30 px-1">JS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="flex flex-wrap items-center justify-between gap-6 bg-black/5 p-4 rounded-lg border border-white/10 shadow-inner">
+        <div class="flex items-center gap-4">
+          <button class="btn-amber w-20 h-20 rounded-full flex flex-col items-center justify-center gap-1 group">
+            <span class="text-[#fffada] text-[10px] font-bold tracking-widest uppercase drop-shadow-md group-active:scale-95 transition-transform">Старт</span>
+            <div class="w-0 h-0 border-t-[8px] border-b-[8px] border-l-[12px] border-transparent border-l-[#fffada] ml-1 opacity-90"></div>
+          </button>
+          <div class="flex flex-col gap-2">
+            <span class="engraved-text text-[10px] font-bold tracking-[0.2em] uppercase">Главный Запуск</span>
+            <span class="engraved-text text-[8px] tracking-widest opacity-60">Нажмите для запуска</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-6">
+          <div class="flex flex-col items-center gap-1">
+            <div class="knob w-14 h-14 rounded-full relative flex items-center justify-center">
+              <div class="knob-marker absolute top-[8%] left-1/2 -translate-x-1/2 origin-bottom" style="transform:translateX(-50%) rotate(98deg);transform-origin:50% 92%"></div>
+            </div>
+            <span class="engraved-text font-bold tracking-widest uppercase font-sans text-[11px]">Сила</span>
+          </div>
+          <div class="flex flex-col items-center gap-1">
+            <div class="knob w-14 h-14 rounded-full relative flex items-center justify-center">
+              <div class="knob-marker absolute top-[8%] left-1/2 -translate-x-1/2 origin-bottom" style="transform:translateX(-50%) rotate(126deg);transform-origin:50% 92%"></div>
+            </div>
+            <span class="engraved-text font-bold tracking-widest uppercase font-sans text-[11px]">Тепло</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="w-full lg:w-64 flex flex-col gap-6">
+      <!-- Signal output -->
+      <div class="screen-inset glass-screen rounded-lg p-4 flex flex-col gap-4 h-48">
+        <span class="lcd-text text-[10px] tracking-widest text-center">ВЫХОД СИГНАЛА</span>
+        <div class="flex-1 flex flex-col justify-center gap-4">
+          <div class="flex items-center gap-3">
+            <span class="lcd-dim text-[10px]">L</span>
+            <div class="flex-1">
+              <div class="flex gap-[2px] h-3">
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-green"></div>
+                <div class="h-full w-2 rounded-sm vu-yellow"></div>
+                <div class="h-full w-2 rounded-sm vu-yellow"></div>
+                <div class="h-full w-2 rounded-sm vu-red"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+              </div>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="lcd-dim text-[10px]">R</span>
+            <div class="flex-1">
+              <div class="flex gap-[2px] h-3">
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+                <div class="h-full w-2 rounded-sm vu-off"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Waveform -->
+        <div class="screen-inset glass-screen w-full h-full rounded-sm flex items-end justify-around px-2 pt-4 pb-2 overflow-hidden">
+          <div class="absolute inset-0 pointer-events-none" style="background-image:linear-gradient(rgba(232,124,20,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(232,124,20,0.07) 1px, transparent 1px);background-size:20px 20px"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:35%;animation-duration:0.5s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:55%;animation-duration:0.62s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:80%;animation-duration:0.74s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:65%;animation-duration:0.86s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:90%;animation-duration:0.98s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:45%;animation-duration:1.1s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:70%;animation-duration:1.22s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:60%;animation-duration:0.5s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:85%;animation-duration:0.62s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:50%;animation-duration:0.74s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:75%;animation-duration:0.86s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:40%;animation-duration:0.98s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:95%;animation-duration:1.1s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:55%;animation-duration:1.22s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:68%;animation-duration:0.5s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:78%;animation-duration:0.62s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:52%;animation-duration:0.74s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:88%;animation-duration:0.86s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:62%;animation-duration:0.98s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:72%;animation-duration:1.1s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:45%;animation-duration:1.22s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:83%;animation-duration:0.5s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:58%;animation-duration:0.62s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:67%;animation-duration:0.74s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:77%;animation-duration:0.86s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:48%;animation-duration:0.98s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:92%;animation-duration:1.1s;animation-delay:0.08s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:60%;animation-duration:1.22s;animation-delay:0.16s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:73%;animation-duration:0.5s;animation-delay:0.24s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:55%;animation-duration:0.62s;animation-delay:0.32s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:80%;animation-duration:0.74s;animation-delay:0s"></div>
+          <div class="waveform-bar flex-1 mx-[1px]" style="height:42%;animation-duration:0.86s;animation-delay:0.08s"></div>
+          <div class="absolute left-0 right-0 top-1/2 h-px bg-amber-500/30"></div>
+        </div>
+      </div>
+
+      <!-- Sliders -->
+      <div class="flex justify-around bg-black/5 p-4 rounded-lg border border-white/10 shadow-inner flex-1">
+        <div class="flex flex-col items-center gap-4">
+          <div class="slider-track w-4 h-32 rounded-full p-[3px] flex flex-col-reverse">
+            <div class="slider-fill w-full rounded-full relative" style="height:90%">
+              <div class="slider-thumb absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-6 rounded-sm cursor-pointer"></div>
+            </div>
+          </div>
+          <span class="engraved-text text-[9px] font-bold tracking-widest">ДИЗАЙН</span>
+        </div>
+        <div class="flex flex-col items-center gap-4">
+          <div class="slider-track w-4 h-32 rounded-full p-[3px] flex flex-col-reverse">
+            <div class="slider-fill w-full rounded-full relative" style="height:80%">
+              <div class="slider-thumb absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-6 rounded-sm cursor-pointer"></div>
+            </div>
+          </div>
+          <span class="engraved-text text-[9px] font-bold tracking-widest">КОД</span>
+        </div>
+        <div class="flex flex-col items-center gap-4">
+          <div class="slider-track w-4 h-32 rounded-full p-[3px] flex flex-col-reverse">
+            <div class="slider-fill w-full rounded-full relative" style="height:100%">
+              <div class="slider-thumb absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-6 rounded-sm cursor-pointer"></div>
+            </div>
+          </div>
+          <span class="engraved-text text-[9px] font-bold tracking-widest">ВАЙБ</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES / CORE MODULES -->
+<section id="features" class="w-full max-w-5xl flex flex-col gap-4">
+  <h3 class="engraved-text text-xl font-black tracking-[0.4em] uppercase text-center mb-4">Основные Модули</h3>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Card 1: Tactile Inputs -->
+    <div class="casing-outer rounded-xl p-5 flex flex-col gap-4 relative">
+      <div class="absolute top-4 right-4 flex gap-8">
+        <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+        <div class="w-3 h-3 rounded-full led-amber"></div>
+      </div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0 absolute top-4 left-4"></div>
+      <div class="mt-8">
+        <h4 class="engraved-text text-sm font-bold tracking-widest uppercase mb-2">Тактильный Ввод</h4>
+        <p class="engraved-text text-[11px] leading-relaxed opacity-80">Кнопки нажимаются, ручки вращаются, а слайдеры скользят. Сложные многослойные CSS-тени и градиенты имитируют реальное физическое сопротивление и глубину.</p>
+      </div>
+      <div class="mt-auto bg-black/10 p-3 rounded-lg border border-black/10 flex justify-around">
+        <div class="flex flex-col items-center gap-1">
+          <div class="knob w-8 h-8 rounded-full relative flex items-center justify-center">
+            <div class="knob-marker absolute top-[8%] left-1/2 -translate-x-1/2 origin-bottom" style="transform:translateX(-50%) rotate(56deg);transform-origin:50% 92%"></div>
+          </div>
+          <span class="engraved-text font-bold tracking-widest uppercase font-sans text-[8px]">Res</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <div class="knob w-8 h-8 rounded-full relative flex items-center justify-center">
+            <div class="knob-marker absolute top-[8%] left-1/2 -translate-x-1/2 origin-bottom" style="transform:translateX(-50%) rotate(-28deg);transform-origin:50% 92%"></div>
+          </div>
+          <span class="engraved-text font-bold tracking-widest uppercase font-sans text-[8px]">Fric</span>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+          <div class="knob w-8 h-8 rounded-full relative flex items-center justify-center">
+            <div class="knob-marker absolute top-[8%] left-1/2 -translate-x-1/2 origin-bottom" style="transform:translateX(-50%) rotate(98deg);transform-origin:50% 92%"></div>
+          </div>
+          <span class="engraved-text font-bold tracking-widest uppercase font-sans text-[8px]">Snap</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2: Liquid Displays -->
+    <div class="casing-outer rounded-xl p-5 flex flex-col gap-4 relative">
+      <div class="absolute top-4 right-4 flex gap-8">
+        <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+        <div class="w-3 h-3 rounded-full led-green"></div>
+      </div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0 absolute top-4 left-4"></div>
+      <div class="mt-8">
+        <h4 class="engraved-text text-sm font-bold tracking-widest uppercase mb-2">ЖК-Дисплеи</h4>
+        <p class="engraved-text text-[11px] leading-relaxed opacity-80">Янтарные LCD и фосфорные дисплеи с реалистичным свечением, строками развёртки и бликами стекла. Воссоздают атмосферу экранов винтажной аппаратуры.</p>
+      </div>
+      <div class="mt-auto screen-inset glass-screen h-12 rounded flex items-center justify-center">
+        <span class="lcd-text text-xs tracking-widest animate-pulse-amber">TEST OK</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Premium Materials -->
+    <div class="casing-outer rounded-xl p-5 flex flex-col gap-4 relative">
+      <div class="absolute top-4 right-4 flex gap-8">
+        <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+        <div class="w-3 h-3 rounded-full led-red animate-led-blink"></div>
+      </div>
+      <div class="screw w-4 h-4 rounded-full flex-shrink-0 absolute top-4 left-4"></div>
+      <div class="mt-8">
+        <h4 class="engraved-text text-sm font-bold tracking-widest uppercase mb-2">Премиум Материалы</h4>
+        <p class="engraved-text text-[11px] leading-relaxed opacity-80">Матовый алюминий, тёплая кремовая покраска, гравированные надписи и конструкционные винты. Выглядит массивно, потому что ощущается массивно.</p>
+      </div>
+      <div class="mt-auto flex justify-between items-center px-4 bg-black/5 p-3 rounded-lg">
+        <button class="btn-panel px-4 py-2 rounded shadow-md engraved-text text-[9px] font-bold">РЕЖИМ A</button>
+        <button class="btn-panel px-4 py-2 rounded shadow-[inset_0_4px_10px_rgba(0,0,0,0.4)] top-[2px] engraved-text text-[9px] font-bold">РЕЖИМ B</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="w-full max-w-4xl flex flex-col items-center gap-12 mt-8 mb-16">
+  <h3 class="engraved-text text-xl font-black tracking-[0.4em] uppercase text-center">Стойки Лицензий</h3>
+  <div class="flex flex-col md:flex-row gap-8 w-full justify-center">
+
+    <!-- Hobbyist -->
+    <div class="casing-inner rounded-[20px] p-6 w-full md:w-80 flex flex-col items-center text-center gap-6 border-2 border-black/10 relative overflow-hidden">
+      <div class="absolute top-2 left-2"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute top-2 right-2"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute bottom-2 left-2"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute bottom-2 right-2"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <h4 class="engraved-text text-xl font-black tracking-widest mt-4">ЛЮБИТЕЛЬ</h4>
+      <div class="screen-inset glass-screen rounded w-full py-4 text-center">
+        <span class="lcd-text text-3xl font-bold tracking-widest">$29</span>
+      </div>
+      <ul class="flex flex-col gap-3 w-full text-left px-4">
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Базовые компоненты</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Янтарная LCD-тема</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Поддержка сообщества</span>
+        </li>
+      </ul>
+      <button class="w-full btn-panel py-3 rounded-lg mt-auto font-bold tracking-widest engraved-text uppercase hover:text-amber-700">Выбрать</button>
+    </div>
+
+    <!-- Studio Pro -->
+    <div class="casing-outer rounded-[20px] p-6 w-full md:w-80 flex flex-col items-center text-center gap-6 border-4 border-amber-600/30 relative transform md:-translate-y-4 shadow-[0_30px_60px_rgba(0,0,0,0.4)]">
+      <div class="absolute top-3 left-3"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute top-3 right-3"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute bottom-3 left-3"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <div class="absolute bottom-3 right-3"><div class="screw w-4 h-4 rounded-full flex-shrink-0"></div></div>
+      <h4 class="engraved-text text-xl font-black tracking-widest mt-4">STUDIO PRO</h4>
+      <div class="screen-inset glass-screen rounded w-full py-4 text-center">
+        <span class="lcd-text text-3xl font-bold tracking-widest">$99</span>
+      </div>
+      <ul class="flex flex-col gap-3 w-full text-left px-4">
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Все Pro-компоненты</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Тёмная и светлая темы</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Исходник в Figma</span>
+        </li>
+        <li class="flex items-center gap-3">
+          <div class="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_4px_#f98806]"></div>
+          <span class="engraved-text text-xs font-bold">Приоритетная поддержка</span>
+        </li>
+      </ul>
+      <button class="w-full btn-amber py-3 rounded-lg mt-auto font-bold tracking-widest text-[#fffada] uppercase shadow-lg text-sm">В стойку</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="w-full max-w-5xl casing-outer rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6 opacity-90 border-t-4 border-black/20">
+  <div class="flex items-center gap-4">
+    <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+    <span class="engraved-text text-xs font-bold tracking-widest uppercase">AnalogWeb Components &copy; 2026</span>
+  </div>
+  <div class="flex gap-4">
+    <a href="#" class="engraved-text text-[10px] font-bold tracking-wider hover:text-amber-700 uppercase">Twitter</a>
+    <a href="#" class="engraved-text text-[10px] font-bold tracking-wider hover:text-amber-700 uppercase">GitHub</a>
+    <a href="#" class="engraved-text text-[10px] font-bold tracking-wider hover:text-amber-700 uppercase">Discord</a>
+  </div>
+  <div class="screw w-4 h-4 rounded-full flex-shrink-0"></div>
+</footer>
+
+</div>
+
+</body>
+</html>

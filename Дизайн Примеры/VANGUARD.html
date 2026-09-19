@@ -1,0 +1,1629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VANGUARD — креативное агентство</title>
+<style>
+@import url('https://db.onlinewebfonts.com/c/8b75d9dcff6a48c35a46656192adf019?family=FSP+DEMO+-+PODIUM+Sharp+4.11');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0a0a; font-family: 'Inter', sans-serif; }
+button { border: none; background: none; cursor: pointer; font: inherit; color: inherit; }
+a { text-decoration: none; }
+
+/* PODIUM Sharp (demo) has no Cyrillic — Oswald is the Cyrillic display fallback */
+.font-podium { font-family: 'FSP DEMO - PODIUM Sharp 4.11', 'Oswald', 'Inter', sans-serif; }
+.font-inter { font-family: 'Inter', sans-serif; }
+
+/* ---------- Design tokens (site shell) ---------- */
+:root {
+  --bg: #0a0a0a;
+  --panel: rgba(255, 255, 255, 0.04);
+  --panel-2: rgba(255, 255, 255, 0.07);
+  --line: rgba(255, 255, 255, 0.12);
+  --line-strong: rgba(255, 255, 255, 0.28);
+  --text: #ffffff;
+  --text-2: rgba(255, 255, 255, 0.72);
+  --text-3: rgba(255, 255, 255, 0.45);
+  --accent: #e12626;
+  --accent-2: #b91c1c;
+  --accent-soft: rgba(225, 38, 38, 0.16);
+  --radius: 2px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* ---------- Shared section shell ---------- */
+.section { position: relative; padding: 110px 0; }
+@media (max-width: 767px) { .section { padding: 68px 0; } }
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+@media (min-width: 640px) { .container { padding: 0 40px; } }
+@media (min-width: 1024px) { .container { padding: 0 64px; } }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 14px;
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent);
+}
+.eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--accent); }
+.h2 {
+  margin-top: 20px; color: var(--text); text-transform: uppercase;
+  font-family: 'FSP DEMO - PODIUM Sharp 4.11', 'Oswald', 'Inter', sans-serif; font-weight: 700;
+  font-size: clamp(34px, 4.8vw, 64px); line-height: 0.98; letter-spacing: -0.01em;
+}
+.h2-accent { color: var(--accent); }
+.lead { margin-top: 18px; max-width: 560px; color: var(--text-2); font-size: 15px; line-height: 1.65; }
+@media (min-width: 640px) { .lead { font-size: 16px; } }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--accent); color: #ffffff; font-family: 'Inter', sans-serif;
+  padding: 14px 28px; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1), transform 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-primary:hover { background: var(--accent-2); }
+.btn-primary:active { transform: scale(0.97); }
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid var(--line-strong); color: #ffffff; font-family: 'Inter', sans-serif;
+  padding: 13px 27px; font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: var(--radius);
+  transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-ghost:hover { border-color: rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.08); }
+
+/* Scroll-reveal */
+.io { opacity: 0; transform: translateY(26px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: var(--io-delay, 0s); }
+.io.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .io { opacity: 1; transform: none; transition: none; } }
+
+/* ---------- Hero section: single viewport-height, video behind everything ---------- */
+.hero {
+  position: relative; height: 100vh; height: 100dvh; overflow: hidden;
+  display: flex; flex-direction: column; background: #000000;
+}
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- Navbar: fixed over the whole site; px-6 sm:px-10 lg:px-16, py-5 lg:py-7 ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+}
+@media (min-width: 640px) { .nav { padding: 20px 40px; } }
+@media (min-width: 1024px) { .nav { padding: 28px 64px; } }
+.nav::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; opacity: 0;
+  background: linear-gradient(rgba(8, 8, 8, 0.92), rgba(8, 8, 8, 0.65));
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  transition: opacity 0.4s var(--ease);
+}
+.nav.scrolled::before { opacity: 1; }
+
+/* brand: font-podium white bold uppercase text-2xl sm:text-3xl tracking-wider */
+.nav-brand {
+  color: #ffffff; font-weight: 700; text-transform: uppercase;
+  font-size: 24px; line-height: 32px; letter-spacing: 0.05em;
+}
+@media (min-width: 640px) { .nav-brand { font-size: 30px; line-height: 36px; } }
+
+/* center links: hidden below md; in-flow flex child of the justify-between bar
+   (never overlaps brand/CTA — matches the spec's React layout) */
+.nav-links { display: none; }
+@media (min-width: 768px) { .nav-links { display: flex; align-items: center; gap: 12px; } }
+@media (min-width: 1024px) { .nav-links { gap: 40px; } }
+/* font-inter text-sm text-white/80 tracking-widest uppercase hover:text-white */
+.nav-link {
+  font-family: 'Inter', sans-serif; font-size: 14px; line-height: 20px;
+  color: rgba(255, 255, 255, 0.8); letter-spacing: 0.1em; text-transform: uppercase; white-space: nowrap;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-link:hover { color: #ffffff; }
+.nav-link.active { color: #ffffff; }
+
+/* GET IN TOUCH: hidden below md; border white/30 hover:white/60, px-6 py-3, text-xs, hover:bg-white/10 */
+.nav-cta { display: none; }
+@media (min-width: 768px) {
+  .nav-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff;
+    padding: 12px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .nav-cta:hover { border-color: rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.1); }
+}
+
+/* hamburger: visible below md; bars w-6/w-6/w-4 h-0.5, space-y-1.5 */
+.nav-burger { display: flex; flex-direction: column; align-items: flex-start; padding: 4px; }
+.nav-burger-bar { height: 2px; background: #ffffff; }
+.nav-burger-bar + .nav-burger-bar { margin-top: 6px; }
+.nav-burger-bar:nth-child(1) { width: 24px; }
+.nav-burger-bar:nth-child(2) { width: 24px; }
+.nav-burger-bar:nth-child(3) { width: 16px; }
+@media (min-width: 768px) { .nav-burger { display: none; } }
+
+/* ---------- Mobile menu overlay: fixed inset-0 z-50 bg-black/95 backdrop-blur-sm ---------- */
+.mmenu {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(0, 0, 0, 0.95);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+  display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden;
+  transition: all 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mmenu.open { opacity: 1; visibility: visible; }
+@media (min-width: 768px) { .mmenu { display: none; } }
+
+/* header row matches the navbar (below-md paddings) */
+.mmenu-head { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; }
+@media (min-width: 640px) { .mmenu-head { padding: 20px 40px; } }
+.mmenu-close { color: #ffffff; padding: 4px; display: flex; }
+
+.mmenu-body { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 24px; }
+/* staggered items: opacity/translateY driven by the open state; delay set inline (i * 80 + 100ms) */
+.mmenu-item {
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mmenu.open .mmenu-item { opacity: 1; transform: translateY(0); }
+/* links: font-podium text-4xl sm:text-5xl white uppercase */
+.mmenu-link { color: #ffffff; text-transform: uppercase; font-size: 36px; line-height: 40px; font-weight: 700; }
+@media (min-width: 640px) { .mmenu-link { font-size: 48px; line-height: 1; } }
+.mmenu-cta {
+  margin-top: 32px;
+  display: inline-flex; align-items: center; gap: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3); color: #ffffff;
+  padding: 12px 24px; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mmenu-cta:hover { border-color: rgba(255, 255, 255, 0.6); background: rgba(255, 255, 255, 0.1); }
+
+/* ---------- Hero content: vertically centered, left-aligned ---------- */
+.hero-main { position: relative; z-index: 10; flex: 1; display: flex; align-items: center; padding: 88px 24px 24px; }
+@media (min-width: 640px) { .hero-main { padding: 88px 40px 24px; } }
+@media (min-width: 1024px) { .hero-main { padding: 108px 64px 32px; } }
+
+/* 2. heading: font-podium white uppercase leading-[0.92] tracking-tight, clamp(2.8rem,8vw,7rem) */
+.headline { color: #ffffff; text-transform: uppercase; line-height: 0.92; letter-spacing: -0.025em; font-weight: 700; }
+.headline-line { display: block; font-size: clamp(2.8rem, 8vw, 7rem); }
+
+/* 3. subtext: text-white/70 text-sm sm:text-base leading-relaxed max-w-md, mt-6 lg:mt-8 */
+.subtext {
+  margin-top: 24px; color: rgba(255, 255, 255, 0.7); font-family: 'Inter', sans-serif;
+  font-size: 14px; line-height: 1.625; max-width: 28rem;
+}
+@media (min-width: 640px) { .subtext { font-size: 16px; } }
+@media (min-width: 1024px) { .subtext { margin-top: 32px; } }
+.subtext-bold { color: #ffffff; font-weight: 700; }
+
+/* 4. CTA row: mt-8 lg:mt-10, flex flex-wrap items-center gap-4 sm:gap-6 */
+.cta-row { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+@media (min-width: 640px) { .cta-row { gap: 24px; } }
+@media (min-width: 1024px) { .cta-row { margin-top: 40px; } }
+
+/* SEE OUR WORK: bg-black hover:bg-neutral-900, px-5 sm:px-7 py-3 sm:py-4, text-[11px] sm:text-xs */
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #000000; color: #ffffff; font-family: 'Inter', sans-serif;
+  padding: 12px 20px; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (min-width: 640px) { .cta-btn { padding: 16px 28px; font-size: 12px; } }
+.cta-btn:hover { background: #171717; }
+.cta-arrow { transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1); }
+.cta-btn:hover .cta-arrow { transform: translate(2px, -2px); }
+
+/* award badge: hidden sm:flex; icon w-8 h-8 text-white/50; text white/60 text-xs tracking-wider */
+.award { display: none; }
+@media (min-width: 640px) { .award { display: flex; align-items: center; gap: 12px; } }
+.award-icon { color: rgba(255, 255, 255, 0.5); flex: none; }
+.award-text {
+  color: rgba(255, 255, 255, 0.6); font-family: 'Inter', sans-serif;
+  font-size: 12px; letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.35;
+}
+
+/* 5. stats row: mt-8 sm:mt-10 lg:mt-14, flex flex-wrap gap-6 sm:gap-12 lg:gap-16 */
+.stats { margin-top: 32px; display: flex; flex-wrap: wrap; gap: 24px; }
+@media (min-width: 640px) { .stats { margin-top: 40px; gap: 48px; } }
+@media (min-width: 1024px) { .stats { margin-top: 56px; gap: 64px; } }
+.stat-value {
+  font-family: 'Inter', sans-serif; color: #ffffff; font-weight: 700;
+  font-size: 24px; line-height: 32px; letter-spacing: -0.025em;
+}
+@media (min-width: 640px) { .stat-value { font-size: 36px; line-height: 40px; } }
+@media (min-width: 1024px) { .stat-value { font-size: 48px; line-height: 1; } }
+.stat-label {
+  color: rgba(255, 255, 255, 0.5); font-family: 'Inter', sans-serif;
+  font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 4px;
+}
+@media (min-width: 640px) { .stat-label { font-size: 12px; } }
+
+/* ---------- Animations (spec: @layer utilities) ---------- */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-fade-up { animation: fade-up 0.8s ease-out forwards; }
+.animate-fade-up-delay-1 { animation: fade-up 0.8s ease-out 0.2s forwards; opacity: 0; }
+.animate-fade-up-delay-2 { animation: fade-up 0.8s ease-out 0.4s forwards; opacity: 0; }
+.animate-fade-up-delay-3 { animation: fade-up 0.8s ease-out 0.6s forwards; opacity: 0; }
+.animate-fade-up-delay-4 { animation: fade-up 0.8s ease-out 0.8s forwards; opacity: 0; }
+.animate-fade-in { animation: fade-in 0.8s ease-out forwards; }
+.animate-fade-in-delay { animation: fade-in 0.8s ease-out 0.3s forwards; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up, .animate-fade-up-delay-1, .animate-fade-up-delay-2,
+  .animate-fade-up-delay-3, .animate-fade-up-delay-4,
+  .animate-fade-in, .animate-fade-in-delay { animation: none; opacity: 1; }
+  .mmenu, .mmenu-item { transition: none; }
+  .mmenu-item { opacity: 1; transform: none; }
+}
+
+/* focus ring for keyboard users */
+.nav-brand:focus-visible, .nav-link:focus-visible, .nav-cta:focus-visible, .nav-burger:focus-visible,
+.mmenu-close:focus-visible, .mmenu-link:focus-visible, .mmenu-cta:focus-visible, .cta-btn:focus-visible {
+  outline: 2px solid #ffffff; outline-offset: 3px;
+}
+.btn-primary:focus-visible, .btn-ghost:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* PODIUM demo watermarks the glyphs 4 + % & ! ( ) — digit/symbol displays render in Oswald instead */
+.std-counter-num.font-podium, .std-counter-num.font-podium .std-count-suffix,
+.off-num.font-podium, .prj-po-num.font-podium {
+  font-family: 'Oswald', 'Inter', sans-serif;
+}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <video class="hero-video" autoplay muted loop playsinline
+    src="https://storage.yandexcloud.net/promto-user-static-sites-prod/landing-videos/hf_20260606_154941_df1a96e1-a06f-450c-bd02-d863414cc1a0.mp4"></video>
+
+  <nav class="nav">
+    <a class="nav-brand font-podium" href="#top">VANGUARD</a>
+
+    <div class="nav-links">
+      <a class="nav-link" href="#projects">Проекты</a>
+      <a class="nav-link" href="#studio">Студия</a>
+      <a class="nav-link" href="#offerings">Услуги</a>
+      <a class="nav-link" href="#inquire">Заявка</a>
+    </div>
+
+    <a class="nav-cta" href="#inquire">
+      Связаться
+      <!-- lucide arrow-up-right -->
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+
+    <button class="nav-burger" id="navBurger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileMenu">
+      <span class="nav-burger-bar"></span>
+      <span class="nav-burger-bar"></span>
+      <span class="nav-burger-bar"></span>
+    </button>
+  </nav>
+
+  <main class="hero-main">
+    <div class="hero-inner">
+      <h1 class="headline font-podium animate-fade-up-delay-1">
+        <span class="headline-line">Дизайн.</span>
+        <span class="headline-line">Дерзость.</span>
+        <span class="headline-line">Доминация.</span>
+      </h1>
+
+      <p class="subtext animate-fade-up-delay-2">
+        Мы создаём дерзкие айдентики,<br />
+        которые не просто ловят взгляды — <span class="subtext-bold">они ведут за собой.</span>
+      </p>
+
+      <div class="cta-row animate-fade-up-delay-3">
+        <a class="cta-btn" href="#projects">
+          Смотреть работы
+          <!-- lucide arrow-up-right -->
+          <svg class="cta-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+        </a>
+        <div class="award">
+          <!-- lucide award, w-8 h-8 -->
+          <svg class="award-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526" /><circle cx="12" cy="8" r="6" /></svg>
+          <div class="award-text">Бренд-студия<br />топ-рейтинга</div>
+        </div>
+      </div>
+
+      <div class="stats animate-fade-up-delay-4">
+        <div class="stat">
+          <div class="stat-value">250+</div>
+          <div class="stat-label">Брендов преображено</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">95%</div>
+          <div class="stat-label">Клиентов возвращаются</div>
+        </div>
+        <div class="stat">
+          <div class="stat-value">10+</div>
+          <div class="stat-label">Лет в игре</div>
+        </div>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- SECTIONS:BEGIN -->
+
+<!-- ===== projects.html ===== -->
+<style>
+/* ================= PROJECTS ================= */
+.prj-head { max-width: 720px; }
+
+/* Фильтры */
+.prj-bar { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.prj-chip {
+  font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-2);
+  border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 18px;
+  transition: color 150ms cubic-bezier(0.4, 0, 0.2, 1), border-color 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.prj-chip:hover { color: #ffffff; border-color: var(--line-strong); }
+.prj-chip.prj-chip--on { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+.prj-chip:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.prj-count { margin-left: auto; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+
+/* Сетка */
+.prj-grid { margin-top: 28px; display: grid; grid-template-columns: 1fr; gap: 20px; }
+@media (min-width: 640px) { .prj-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .prj-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.prj-grid .prj-item.prj-fading { opacity: 0; transform: scale(0.96); }
+.prj-grid .prj-item.prj-off { display: none; }
+/* Совмещаем с .io: на появлении работает stagger через --io-delay,
+   при фильтрации JS обнуляет задержку инлайном */
+.prj-item { transition: opacity 0.32s var(--ease), transform 0.32s var(--ease); transition-delay: var(--io-delay, 0s); }
+
+.prj-card {
+  height: 100%; display: flex; flex-direction: column;
+  background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden;
+  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+  will-change: transform;
+}
+.prj-card:hover { border-color: var(--line-strong); }
+
+/* Обложка-постер */
+.prj-cover { position: relative; aspect-ratio: 4 / 5; overflow: hidden; }
+.prj-noise {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0.09;
+  background-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.prj-glare {
+  position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.16), transparent 58%);
+  transition: opacity 0.25s var(--ease);
+}
+.prj-card:hover .prj-glare { opacity: 1; }
+.prj-view {
+  position: absolute; left: 16px; bottom: 14px; z-index: 3;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: #ffffff;
+  background: rgba(0, 0, 0, 0.55); padding: 8px 12px; border-radius: var(--radius);
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.prj-card:hover .prj-view { opacity: 1; transform: none; }
+
+/* Мета */
+.prj-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 16px 16px 18px; }
+.prj-name { color: #ffffff; font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; }
+.prj-tags { display: flex; align-items: baseline; gap: 12px; white-space: nowrap; }
+.prj-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); }
+.prj-year { font-size: 10px; letter-spacing: 0.16em; color: var(--text-3); }
+
+/* --- Постеры (чистый CSS/SVG, без картинок) --- */
+.prj-po { position: absolute; inset: 0; }
+.prj-po-word { position: absolute; text-transform: uppercase; line-height: 0.9; font-weight: 700; }
+
+/* 1. NEONMILK — энергетик, кислота и скорость */
+.prj-po--neonmilk { background: #0b0d06; }
+.prj-po--neonmilk::before {
+  content: ''; position: absolute; inset: -20%;
+  background: repeating-linear-gradient(115deg, transparent 0 26px, rgba(216, 255, 58, 0.16) 26px 30px);
+  transform: translateX(-4%);
+}
+.prj-po--neonmilk .prj-po-word { left: 18px; top: 22px; font-size: 58px; color: #d8ff3a; text-shadow: 4px 4px 0 rgba(225, 38, 38, 0.55); }
+.prj-po--neonmilk .prj-po-vert {
+  position: absolute; right: 12px; bottom: 16px; writing-mode: vertical-rl;
+  font-size: 12px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(216, 255, 58, 0.7);
+}
+.prj-po--neonmilk .prj-po-can {
+  position: absolute; left: 22px; bottom: -30px; width: 46%; aspect-ratio: 1 / 2.2;
+  border-radius: 60px 60px 0 0; border: 2px solid rgba(216, 255, 58, 0.8);
+  background: linear-gradient(160deg, rgba(216, 255, 58, 0.22), rgba(0, 0, 0, 0.4) 70%);
+}
+
+/* 2. OREBLACK — стритвир, ч/б типографика */
+.prj-po--oreblack { background: #101010; }
+.prj-po--oreblack::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 44px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 44px);
+}
+.prj-po--oreblack .prj-po-o { position: absolute; left: 8px; top: 4px; font-size: 150px; font-weight: 700; color: #f2f2f2; }
+.prj-po--oreblack .prj-po-b {
+  position: absolute; right: 10px; bottom: 2px; font-size: 150px; font-weight: 700;
+  color: transparent; -webkit-text-stroke: 2px rgba(255, 255, 255, 0.85);
+}
+.prj-po--oreblack .prj-po-sticker {
+  position: absolute; left: 22px; bottom: 58px; transform: rotate(-8deg);
+  background: var(--accent); color: #ffffff; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.2em; text-transform: uppercase; padding: 7px 12px;
+}
+
+/* 3. HALTA — финтех, холодный синий график */
+.prj-po--halta { background: linear-gradient(180deg, #0b1424 0%, #0a0a0a 80%); }
+.prj-po--halta::before {
+  content: ''; position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, rgba(72, 131, 246, 0.12) 0 1px, transparent 1px 38px),
+    repeating-linear-gradient(90deg, rgba(72, 131, 246, 0.12) 0 1px, transparent 1px 38px);
+}
+.prj-po--halta .prj-po-chart { position: absolute; inset: 0; width: 100%; height: 100%; }
+.prj-po--halta .prj-po-word { left: 18px; top: 20px; font-size: 15px; letter-spacing: 0.4em; color: rgba(148, 187, 255, 0.85); font-weight: 600; }
+.prj-po--halta .prj-po-num { position: absolute; left: 16px; bottom: 52px; font-size: 64px; font-weight: 700; color: #ffffff; letter-spacing: -0.02em; }
+.prj-po--halta .prj-po-sub { position: absolute; left: 18px; bottom: 30px; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(148, 187, 255, 0.6); }
+
+/* 4. VOLNA — фестиваль, красные волны */
+.prj-po--volna { background: #150606; }
+.prj-po--volna::before {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-radial-gradient(circle at 50% 130%, rgba(225, 38, 38, 0.32) 0 2px, transparent 2px 30px);
+}
+.prj-po--volna .prj-po-word { left: 50%; top: 26%; transform: translateX(-50%); font-size: 66px; color: #ffffff; text-shadow: 0 6px 0 rgba(225, 38, 38, 0.45); }
+.prj-po--volna .prj-po-line { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; }
+.prj-po--volna .prj-po-fest {
+  position: absolute; left: 50%; transform: translateX(-50%); top: calc(26% + 74px);
+  font-size: 11px; letter-spacing: 0.6em; text-transform: uppercase; color: rgba(255, 255, 255, 0.65);
+}
+
+/* 5. KRUG — медиа, инверсия в белое */
+.prj-po--krug { background: #ececec; }
+.prj-po--krug .prj-po-circle {
+  position: absolute; left: 50%; top: 44%; transform: translate(-50%, -50%);
+  width: 66%; aspect-ratio: 1; border-radius: 50%; background: #0d0d0d;
+  display: flex; align-items: center; justify-content: center;
+}
+.prj-po--krug .prj-po-circle .prj-po-word { position: static; font-size: 44px; color: #ffffff; }
+.prj-po--krug .prj-po-dot { position: absolute; right: 18%; top: 22%; width: 14px; height: 14px; border-radius: 50%; background: var(--accent); }
+.prj-po--krug .prj-po-caption {
+  position: absolute; left: 0; right: 0; bottom: 26px; text-align: center;
+  font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: #191919;
+}
+
+/* 6. TIGRIS — киберспорт, когти и глитч */
+.prj-po--tigris { background: #120808; }
+.prj-po--tigris::before {
+  content: ''; position: absolute; inset: -10%;
+  background: repeating-linear-gradient(65deg, transparent 0 40px, rgba(225, 38, 38, 0.42) 40px 50px, transparent 50px 54px);
+}
+.prj-po--tigris .prj-po-word {
+  left: 16px; bottom: 48px; font-size: 56px; color: #ffffff;
+  text-shadow: 3px 0 rgba(225, 38, 38, 0.9), -3px 0 rgba(72, 131, 246, 0.8);
+}
+.prj-po--tigris .prj-po-tag { position: absolute; left: 18px; top: 20px; font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase; color: rgba(255, 255, 255, 0.6); }
+
+/* Низ секции */
+.prj-cta { margin-top: 44px; display: flex; }
+
+@media (max-width: 639px) {
+  .prj-count { margin-left: 0; width: 100%; }
+  .prj-po--oreblack .prj-po-o, .prj-po--oreblack .prj-po-b { font-size: 120px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prj-item, .prj-card, .prj-glare, .prj-view { transition: none; }
+  .prj-card { transform: none; }
+}
+</style>
+
+<section class="section" id="projects">
+  <div class="container">
+    <div class="prj-head">
+      <span class="eyebrow io">Работы</span>
+      <h2 class="h2 io" style="--io-delay: 0.08s">Кейсы, которые <span class="h2-accent">ведут</span></h2>
+      <p class="lead io" style="--io-delay: 0.16s">Каждый бренд здесь — манифест. Мы не украшаем — мы формулируем характер и отдаём его рынку без сдачи.</p>
+    </div>
+
+    <div class="prj-bar io" style="--io-delay: 0.2s" role="group" aria-label="Фильтр кейсов">
+      <button class="prj-chip prj-chip--on" type="button" data-filter="all" aria-pressed="true">Все</button>
+      <button class="prj-chip" type="button" data-filter="branding" aria-pressed="false">Брендинг</button>
+      <button class="prj-chip" type="button" data-filter="web" aria-pressed="false">Веб</button>
+      <button class="prj-chip" type="button" data-filter="motion" aria-pressed="false">Моушн</button>
+      <span class="prj-count" id="prjCount" aria-live="polite">6 кейсов</span>
+    </div>
+
+    <div class="prj-grid" id="prjGrid">
+      <div class="prj-item io" data-type="motion" style="--io-delay: 0.05s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--neonmilk" aria-hidden="true">
+              <span class="prj-po-can"></span>
+              <span class="prj-po-word font-podium">Neon<br />Milk</span>
+              <span class="prj-po-vert">Energy · Overdrive</span>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Neonmilk</h3>
+            <div class="prj-tags"><span class="prj-tag">Моушн</span><span class="prj-year">2026</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="prj-item io" data-type="branding" style="--io-delay: 0.1s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--oreblack" aria-hidden="true">
+              <span class="prj-po-o font-podium">O</span>
+              <span class="prj-po-b font-podium">B</span>
+              <span class="prj-po-sticker">SS'25</span>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Oreblack</h3>
+            <div class="prj-tags"><span class="prj-tag">Брендинг</span><span class="prj-year">2025</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="prj-item io" data-type="web" style="--io-delay: 0.15s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--halta" aria-hidden="true">
+              <svg class="prj-po-chart" viewBox="0 0 300 375" preserveAspectRatio="none" aria-hidden="true">
+                <polyline points="0,330 60,300 110,312 160,240 210,255 260,150 300,120"
+                  fill="none" stroke="#4883f6" stroke-width="2.5" stroke-linejoin="round" />
+                <polyline points="0,330 60,300 110,312 160,240 210,255 260,150 300,120"
+                  fill="none" stroke="rgba(72,131,246,0.25)" stroke-width="9" stroke-linejoin="round" />
+              </svg>
+              <span class="prj-po-word">Halta</span>
+              <span class="prj-po-num font-podium">+312%</span>
+              <span class="prj-po-sub">Конверсия за квартал</span>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Halta</h3>
+            <div class="prj-tags"><span class="prj-tag">Веб</span><span class="prj-year">2025</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="prj-item io" data-type="branding" style="--io-delay: 0.2s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--volna" aria-hidden="true">
+              <span class="prj-po-word font-podium">Volna</span>
+              <span class="prj-po-fest">Фестиваль</span>
+              <svg class="prj-po-line" viewBox="0 0 300 60" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M0 40 Q 40 10 75 34 T 150 34 T 225 34 T 300 30 L 300 60 L 0 60 Z" fill="rgba(225,38,38,0.55)" />
+              </svg>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Volna</h3>
+            <div class="prj-tags"><span class="prj-tag">Брендинг</span><span class="prj-year">2024</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="prj-item io" data-type="web" style="--io-delay: 0.25s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--krug" aria-hidden="true">
+              <span class="prj-po-dot"></span>
+              <span class="prj-po-circle"><span class="prj-po-word font-podium">Krug</span></span>
+              <span class="prj-po-caption">Медиа о главном</span>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Krug</h3>
+            <div class="prj-tags"><span class="prj-tag">Веб</span><span class="prj-year">2026</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="prj-item io" data-type="motion" style="--io-delay: 0.3s">
+        <article class="prj-card">
+          <div class="prj-cover">
+            <div class="prj-po prj-po--tigris" aria-hidden="true">
+              <span class="prj-po-tag">Esports</span>
+              <span class="prj-po-word font-podium">Tigris</span>
+            </div>
+            <div class="prj-noise" aria-hidden="true"></div>
+            <div class="prj-glare" aria-hidden="true"></div>
+            <span class="prj-view">Смотреть кейс →</span>
+          </div>
+          <div class="prj-meta">
+            <h3 class="prj-name font-podium">Tigris</h3>
+            <div class="prj-tags"><span class="prj-tag">Моушн</span><span class="prj-year">2024</span></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="prj-cta io" style="--io-delay: 0.1s">
+      <a class="btn-ghost" href="#inquire">Обсудить свой проект</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var grid = document.getElementById('prjGrid');
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.prj-chip'));
+  var counter = document.getElementById('prjCount');
+  if (!grid || !chips.length) return;
+
+  var items = Array.prototype.slice.call(grid.querySelectorAll('.prj-item'));
+  var PRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function plural(n) {
+    var d10 = n % 10, d100 = n % 100;
+    if (d10 === 1 && d100 !== 11) return n + ' кейс';
+    if (d10 >= 2 && d10 <= 4 && (d100 < 12 || d100 > 14)) return n + ' кейса';
+    return n + ' кейсов';
+  }
+
+  function applyFilter(type) {
+    var visible = 0;
+    items.forEach(function (item) {
+      item.style.transitionDelay = '0s';
+      var show = type === 'all' || item.getAttribute('data-type') === type;
+      if (show) visible++;
+      if (item._ft) { clearTimeout(item._ft); item._ft = 0; }
+      if (PRM) {
+        item.classList.toggle('prj-off', !show);
+        item.classList.remove('prj-fading');
+        return;
+      }
+      if (show) {
+        if (item.classList.contains('prj-off')) {
+          item.classList.remove('prj-off');
+          item.classList.add('prj-fading');
+          void item.offsetWidth;
+        }
+        item.classList.remove('prj-fading');
+      } else {
+        item.classList.add('prj-fading');
+        item._ft = setTimeout(function () {
+          item._ft = 0;
+          item.classList.add('prj-off');
+        }, 330);
+      }
+    });
+    if (counter) counter.textContent = plural(visible);
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      if (chip.classList.contains('prj-chip--on')) return;
+      chips.forEach(function (c) {
+        var on = c === chip;
+        c.classList.toggle('prj-chip--on', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      applyFilter(chip.getAttribute('data-filter'));
+    });
+  });
+
+  /* --- 3D-tilt + блик: только точный указатель и без reduced-motion --- */
+  var fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  if (!fine || PRM) return;
+
+  Array.prototype.slice.call(grid.querySelectorAll('.prj-card')).forEach(function (card) {
+    var raf = 0, px = 0.5, py = 0.5;
+    function paint() {
+      raf = 0;
+      card.style.setProperty('--ry', ((px - 0.5) * 12).toFixed(2) + 'deg');
+      card.style.setProperty('--rx', ((0.5 - py) * 12).toFixed(2) + 'deg');
+      card.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+      card.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+    }
+    card.addEventListener('mousemove', function (e) {
+      var r = card.getBoundingClientRect();
+      px = (e.clientX - r.left) / r.width;
+      py = (e.clientY - r.top) / r.height;
+      if (!raf) raf = requestAnimationFrame(paint);
+    }, { passive: true });
+    card.addEventListener('mouseleave', function () {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      card.style.setProperty('--rx', '0deg');
+      card.style.setProperty('--ry', '0deg');
+    });
+  });
+})();
+</script>
+
+<!-- ===== studio.html ===== -->
+<style>
+/* ================= МАРКИ-СТРОКА (разделитель перед студией) ================= */
+.std-marquee {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.std-marquee-inner {
+  display: flex;
+  width: max-content;
+  animation: std-marquee-scroll 26s linear infinite;
+}
+.std-marquee-track {
+  display: inline-flex;
+  align-items: baseline;
+  flex: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: clamp(44px, 6.5vw, 84px);
+  line-height: 1.1;
+  color: var(--text);
+}
+.std-mq { display: inline-block; }
+.std-mq-sep { display: inline-block; margin: 0 30px; color: var(--text-3); font-weight: 400; }
+.std-mq-red { color: var(--accent); }
+.std-mq-stroke { color: rgba(255, 255, 255, 0.92); }
+@supports ((-webkit-text-stroke: 1px #fff)) {
+  .std-mq-stroke { color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.92); }
+}
+@keyframes std-marquee-scroll {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .std-marquee-inner { animation: none; }
+}
+
+/* ================= СТУДИЯ ================= */
+.std-head { max-width: 760px; }
+
+/* Манифест */
+.std-manifesto { margin-top: 56px; max-width: 900px; display: flex; flex-direction: column; gap: 26px; }
+.std-line {
+  font-family: 'Inter', sans-serif; font-weight: 500;
+  font-size: clamp(20px, 2.6vw, 30px); line-height: 1.35; color: var(--text);
+  border-left: 2px solid var(--accent); padding-left: 22px;
+}
+.std-line-mark { color: var(--accent); }
+
+/* Счётчики: ячейки с волосяными разделителями */
+.std-counters {
+  margin-top: 72px;
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px;
+  background: var(--line); border: 1px solid var(--line); border-radius: var(--radius);
+  overflow: hidden;
+}
+@media (min-width: 1024px) { .std-counters { grid-template-columns: repeat(4, 1fr); } }
+.std-counter { background: var(--bg); padding: 30px 24px 26px; }
+.std-counter-num {
+  font-weight: 700; color: var(--text);
+  font-size: clamp(44px, 5vw, 64px); line-height: 1; letter-spacing: -0.01em;
+}
+.std-count-suffix { color: var(--accent); }
+.std-counter-label {
+  margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 12px;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3);
+  overflow-wrap: break-word;
+}
+@media (max-width: 379px) { .std-counter { padding: 24px 16px 20px; } }
+
+/* Принципы */
+.std-principles { margin-top: 72px; display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 768px) { .std-principles { grid-template-columns: repeat(3, 1fr); gap: 20px; } }
+.std-principle {
+  border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel);
+  padding: 28px 26px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease), background-color 0.3s var(--ease);
+}
+.std-principle:hover { border-color: var(--line-strong); background: var(--panel-2); transform: translateY(-4px); }
+.std-principle-num {
+  color: var(--accent); font-weight: 700; font-size: 30px; line-height: 1;
+}
+.std-principle-title {
+  margin-top: 18px; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 15px;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text);
+}
+.std-principle-text { margin-top: 10px; font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; color: var(--text-2); }
+@media (prefers-reduced-motion: reduce) {
+  .std-principle { transition: none; }
+  .std-principle:hover { transform: none; }
+}
+</style>
+
+<!-- ===== Бегущая строка ===== -->
+<div class="std-marquee" aria-label="Дизайн — Дерзость — Доминация — Vanguard">
+  <div class="std-marquee-inner">
+    <span class="std-marquee-track font-podium"><span class="std-mq std-mq-stroke">Дизайн</span><span class="std-mq-sep">—</span><span class="std-mq">Дерзость</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Доминация</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-stroke">Vanguard</span><span class="std-mq-sep">—</span><span class="std-mq">Дизайн</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Дерзость</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-stroke">Доминация</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Vanguard</span><span class="std-mq-sep">—</span></span>
+    <span class="std-marquee-track font-podium" aria-hidden="true"><span class="std-mq std-mq-stroke">Дизайн</span><span class="std-mq-sep">—</span><span class="std-mq">Дерзость</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Доминация</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-stroke">Vanguard</span><span class="std-mq-sep">—</span><span class="std-mq">Дизайн</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Дерзость</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-stroke">Доминация</span><span class="std-mq-sep">—</span><span class="std-mq std-mq-red">Vanguard</span><span class="std-mq-sep">—</span></span>
+  </div>
+</div>
+
+<!-- ===== Студия ===== -->
+<section class="section" id="studio">
+  <div class="container">
+    <div class="std-head io">
+      <span class="eyebrow">Студия</span>
+      <h2 class="h2">Мы — не подрядчик.<br />Мы — <span class="h2-accent">авангард</span></h2>
+      <p class="lead">VANGUARD — независимый диджитал-коллектив. Мы берём бренды, которым тесно, и выводим их туда, где на них смотрят все.</p>
+    </div>
+
+    <div class="std-manifesto">
+      <p class="std-line io" style="--io-delay: 0.05s">Скучный бренд умирает в ленте за <span class="std-line-mark">0,3 секунды</span>. Ваш обязан останавливать большой палец.</p>
+      <p class="std-line io" style="--io-delay: 0.15s">Мы проектируем айдентику как оружие: точный прицел, громкий выстрел, след — <span class="std-line-mark">навсегда</span>.</p>
+      <p class="std-line io" style="--io-delay: 0.25s">Красиво — это минимум. Мы делаем так, чтобы рынок пересчитывали <span class="std-line-mark">по вам</span>.</p>
+    </div>
+
+    <div class="std-counters io" style="--io-delay: 0.1s">
+      <div class="std-counter">
+        <div class="std-counter-num font-podium"><span class="std-count" data-count="12">0</span></div>
+        <div class="std-counter-label">Международных наград</div>
+      </div>
+      <div class="std-counter">
+        <div class="std-counter-num font-podium"><span class="std-count" data-count="24">0</span></div>
+        <div class="std-counter-label">Человека в команде</div>
+      </div>
+      <div class="std-counter">
+        <div class="std-counter-num font-podium"><span class="std-count" data-count="6">0</span></div>
+        <div class="std-counter-label">Стран с клиентами</div>
+      </div>
+      <div class="std-counter">
+        <div class="std-counter-num font-podium"><span class="std-count" data-count="120">0</span><span class="std-count-suffix">+</span></div>
+        <div class="std-counter-label">Запущенных кампаний</div>
+      </div>
+    </div>
+
+    <div class="std-principles">
+      <div class="std-principle io" style="--io-delay: 0s">
+        <div class="std-principle-num font-podium">01</div>
+        <div class="std-principle-title">Точность</div>
+        <p class="std-principle-text">Стратегия раньше пикселей: каждое решение опирается на позиционирование, а не на вкусовщину.</p>
+      </div>
+      <div class="std-principle io" style="--io-delay: 0.08s">
+        <div class="std-principle-num font-podium">02</div>
+        <div class="std-principle-title">Громкость</div>
+        <p class="std-principle-text">Бренд слышно без звука: айдентика, которую замечают раньше, чем читают название.</p>
+      </div>
+      <div class="std-principle io" style="--io-delay: 0.16s">
+        <div class="std-principle-num font-podium">03</div>
+        <div class="std-principle-title">Скорость</div>
+        <p class="std-principle-text">От брифа до запуска — недели, не кварталы. Темп без скидок на качество.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var counters = document.querySelectorAll('.std-count');
+  if (!counters.length) return;
+  var PRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setFinal(el) { el.textContent = el.getAttribute('data-count') || ''; }
+
+  if (PRM || !('IntersectionObserver' in window)) {
+    Array.prototype.forEach.call(counters, setFinal);
+    return;
+  }
+
+  var DUR = 1200;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      io.unobserve(en.target);
+      var el = en.target;
+      var target = parseInt(el.getAttribute('data-count'), 10);
+      if (isNaN(target)) { setFinal(el); return; }
+      var start = null;
+      function tick(ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / DUR);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.4 });
+
+  Array.prototype.forEach.call(counters, function (el) { io.observe(el); });
+})();
+</script>
+
+<!-- ===== offerings.html ===== -->
+<style>
+/* ================= OFFERINGS ================= */
+.off-head { max-width: 720px; }
+
+/* Аккордеон */
+.off-acc { margin-top: 56px; border-bottom: 1px solid var(--line); }
+.off-item { position: relative; }
+.off-row {
+  position: relative; width: 100%; text-align: left; cursor: pointer;
+  display: grid; grid-template-columns: 88px 1fr auto; align-items: center; gap: 24px;
+  padding: 26px 10px 26px 24px;
+  border-top: 1px solid var(--line);
+}
+.off-row::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
+  background: var(--accent); transform: scaleY(0); transform-origin: top;
+  transition: transform 0.3s var(--ease);
+}
+.off-row:hover::before, .off-item.open .off-row::before { transform: scaleY(1); }
+.off-row:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.off-num {
+  color: var(--accent); font-weight: 700; font-size: clamp(22px, 2.6vw, 34px);
+  line-height: 1; text-transform: uppercase;
+}
+.off-name {
+  color: var(--text); font-weight: 700; text-transform: uppercase;
+  font-size: clamp(21px, 3vw, 38px); line-height: 1.05;
+  transition: transform 0.3s var(--ease), color 0.3s var(--ease);
+}
+.off-row:hover .off-name { transform: translateX(6px); }
+.off-item.open .off-name { color: var(--text); }
+
+.off-plus { flex: none; color: var(--text-3); display: flex; transition: transform 0.35s var(--ease), color 0.3s var(--ease); }
+.off-row:hover .off-plus { color: var(--text); }
+.off-item.open .off-plus { transform: rotate(45deg); color: var(--accent); }
+
+/* Раскрытие: grid-rows 0fr -> 1fr */
+.off-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.5s var(--ease); }
+.off-item.open .off-panel { grid-template-rows: 1fr; }
+.off-panel-in { overflow: hidden; min-height: 0; }
+.off-panel-grid {
+  display: grid; grid-template-columns: 1fr; gap: 20px;
+  padding: 2px 10px 30px calc(88px + 24px + 24px);
+}
+@media (max-width: 767px) {
+  .off-row { grid-template-columns: 52px 1fr auto; gap: 14px; padding: 20px 6px 20px 16px; }
+  .off-panel-grid { padding: 2px 6px 24px calc(52px + 14px + 16px); }
+}
+@media (max-width: 479px) {
+  .off-panel-grid { padding-left: 16px; }
+  .off-chip { white-space: normal; }
+}
+@media (min-width: 1024px) { .off-panel-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 48px; } }
+
+.off-desc { color: var(--text-2); font-size: 15px; line-height: 1.65; max-width: 560px; }
+.off-side { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.off-term {
+  color: var(--accent); font-size: 11px; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+.off-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.off-chip {
+  border: 1px solid var(--line); border-radius: var(--radius);
+  color: var(--text-2); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 7px 12px; white-space: nowrap;
+}
+
+/* Процесс */
+.off-process { margin-top: 72px; display: flex; align-items: center; gap: 12px; }
+.off-step { display: flex; align-items: center; gap: 14px; }
+.off-step-num {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid var(--accent); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600;
+}
+.off-step-label {
+  color: var(--text); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase; white-space: nowrap;
+}
+.off-arrow { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-3); min-width: 24px; }
+@media (max-width: 767px) {
+  .off-process { flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 52px; }
+  .off-step { width: 100%; }
+  .off-arrow { flex: none; transform: rotate(90deg); margin-left: 15px; }
+}
+
+/* CTA */
+.off-cta { margin-top: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 16px; }
+@media (max-width: 767px) { .off-cta { margin-top: 48px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .off-row::before, .off-name, .off-plus, .off-panel { transition: none; }
+}
+</style>
+
+<!-- ================= УСЛУГИ ================= -->
+<section class="section" id="offerings">
+  <div class="container">
+    <div class="off-head io">
+      <span class="eyebrow">Услуги</span>
+      <h2 class="h2 font-podium">Оружейная <span class="h2-accent">бренда</span></h2>
+      <p class="lead">Четыре направления, один результат: бренд, который замечают, запоминают и выбирают. Без воды и «посмотрим по ходу».</p>
+    </div>
+
+    <div class="off-acc io" style="--io-delay: 0.1s">
+      <div class="off-item">
+        <button class="off-row" type="button" id="offBtn0" aria-expanded="false" aria-controls="offPanel0">
+          <span class="off-num font-podium">01</span>
+          <span class="off-name font-podium">Брендинг и айдентика</span>
+          <span class="off-plus" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+          </span>
+        </button>
+        <div class="off-panel" id="offPanel0" role="region" aria-labelledby="offBtn0" aria-hidden="true">
+          <div class="off-panel-in">
+            <div class="off-panel-grid">
+              <p class="off-desc">Собираем бренд, который невозможно перепутать: смысл, характер, голос и лицо. От платформы до гайдлайна — всё, чтобы конкуренты нервно обновляли референсы.</p>
+              <div class="off-side">
+                <span class="off-term">Срок · 4–8 недель</span>
+                <div class="off-chips">
+                  <span class="off-chip">Платформа бренда</span><span class="off-chip">Нейминг</span><span class="off-chip">Логотип</span><span class="off-chip">Фирменный стиль</span><span class="off-chip">Гайдлайны</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="off-item">
+        <button class="off-row" type="button" id="offBtn1" aria-expanded="false" aria-controls="offPanel1">
+          <span class="off-num font-podium">02</span>
+          <span class="off-name font-podium">Веб и продукт</span>
+          <span class="off-plus" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+          </span>
+        </button>
+        <div class="off-panel" id="offPanel1" role="region" aria-labelledby="offBtn1" aria-hidden="true">
+          <div class="off-panel-in">
+            <div class="off-panel-grid">
+              <p class="off-desc">Сайты и продукты, где дизайн работает на конверсию, а не на портфолио дизайнера. Быстро, резко, по делу — и да, метрики мы тоже считаем.</p>
+              <div class="off-side">
+                <span class="off-term">Срок · 6–12 недель</span>
+                <div class="off-chips">
+                  <span class="off-chip">Сайты</span><span class="off-chip">Лендинги</span><span class="off-chip">E-commerce</span><span class="off-chip">Интерфейсы продуктов</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="off-item">
+        <button class="off-row" type="button" id="offBtn2" aria-expanded="false" aria-controls="offPanel2">
+          <span class="off-num font-podium">03</span>
+          <span class="off-name font-podium">Моушн и 3D</span>
+          <span class="off-plus" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+          </span>
+        </button>
+        <div class="off-panel" id="offPanel2" role="region" aria-labelledby="offBtn2" aria-hidden="true">
+          <div class="off-panel-in">
+            <div class="off-panel-grid">
+              <p class="off-desc">Движение, которое цепляет за первые полсекунды. Ролики, анимация айдентики и 3D-кампании, после которых листать ленту дальше уже неинтересно.</p>
+              <div class="off-side">
+                <span class="off-term">Срок · 3–6 недель</span>
+                <div class="off-chips">
+                  <span class="off-chip">Рекламные ролики</span><span class="off-chip">Анимация айдентики</span><span class="off-chip">3D-кампании</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="off-item">
+        <button class="off-row" type="button" id="offBtn3" aria-expanded="false" aria-controls="offPanel3">
+          <span class="off-num font-podium">04</span>
+          <span class="off-name font-podium">Стратегия и запуск</span>
+          <span class="off-plus" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14" /><path d="M5 12h14" /></svg>
+          </span>
+        </button>
+        <div class="off-panel" id="offPanel3" role="region" aria-labelledby="offBtn3" aria-hidden="true">
+          <div class="off-panel-in">
+            <div class="off-panel-grid">
+              <p class="off-desc">Формулируем, кому и зачем нужен ваш бренд, и выводим его на рынок так, чтобы это заметили. Позиционирование, коммуникация, запуск — без стратегий в стол.</p>
+              <div class="off-side">
+                <span class="off-term">Срок · 4–10 недель</span>
+                <div class="off-chips">
+                  <span class="off-chip">Позиционирование</span><span class="off-chip">Коммуникационная стратегия</span><span class="off-chip">Запуск кампаний</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="off-process io" style="--io-delay: 0.15s" aria-label="Как мы работаем">
+      <div class="off-step"><span class="off-step-num">1</span><span class="off-step-label">Диагностика</span></div>
+      <span class="off-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
+      <div class="off-step"><span class="off-step-num">2</span><span class="off-step-label">Концепция</span></div>
+      <span class="off-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
+      <div class="off-step"><span class="off-step-num">3</span><span class="off-step-label">Дизайн</span></div>
+      <span class="off-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
+      <div class="off-step"><span class="off-step-num">4</span><span class="off-step-label">Запуск</span></div>
+    </div>
+
+    <div class="off-cta io" style="--io-delay: 0.2s">
+      <a class="btn-primary" href="#inquire">Запустить проект</a>
+      <a class="btn-ghost" href="#inquire">Задать вопрос</a>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  var items = Array.prototype.slice.call(document.querySelectorAll('#offerings .off-item'));
+  if (!items.length) return;
+
+  function setItem(item, open) {
+    item.classList.toggle('open', open);
+    var btn = item.querySelector('.off-row');
+    var panel = item.querySelector('.off-panel');
+    if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (panel) panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+
+  items.forEach(function (item) {
+    var btn = item.querySelector('.off-row');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      var wasOpen = item.classList.contains('open');
+      items.forEach(function (it) { setItem(it, false); });
+      if (!wasOpen) setItem(item, true);
+    });
+  });
+
+  // Первое направление раскрыто по умолчанию
+  setItem(items[0], true);
+})();
+</script>
+
+<!-- ===== inquire-footer.html ===== -->
+<style>
+/* ================= INQUIRE ================= */
+.inq-grid { margin-top: 48px; display: grid; grid-template-columns: 1fr; gap: 48px; }
+@media (min-width: 1024px) { .inq-grid { grid-template-columns: 3fr 2fr; gap: 64px; align-items: start; } }
+
+.inq-form { display: flex; flex-direction: column; gap: 22px; }
+.inq-row { display: grid; grid-template-columns: 1fr; gap: 22px; }
+@media (min-width: 640px) { .inq-row { grid-template-columns: 1fr 1fr; } }
+
+.inq-field { display: flex; flex-direction: column; }
+.inq-label {
+  display: block; margin-bottom: 8px;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.5);
+}
+.inq-input {
+  width: 100%; background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 13px 16px; color: #ffffff;
+  font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.5;
+  transition: border-color 0.2s var(--ease);
+}
+.inq-input::placeholder { color: rgba(255, 255, 255, 0.35); }
+.inq-input:focus { outline: none; border-color: var(--accent); }
+.inq-textarea { resize: vertical; min-height: 108px; }
+
+.inq-err { display: none; margin-top: 8px; font-size: 12.5px; line-height: 1.4; color: #ff8f8f; }
+.inq-field--invalid .inq-input { border-color: #e5484d; }
+.inq-field--invalid .inq-err { display: block; }
+
+.inq-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.inq-chip {
+  padding: 10px 18px; border: 1px solid var(--line-strong); border-radius: var(--radius);
+  color: rgba(255, 255, 255, 0.75); font-family: 'Inter', sans-serif;
+  font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap;
+  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.inq-chip:hover { border-color: rgba(255, 255, 255, 0.55); color: #ffffff; }
+.inq-chip--on { background: var(--accent); border-color: var(--accent); color: #ffffff; }
+.inq-chip--on:hover { border-color: var(--accent); }
+
+.inq-submit { margin-top: 6px; align-self: flex-start; }
+
+@keyframes inqShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+.inq-shake { animation: inqShake 0.4s ease; }
+
+.inq-success { display: flex; align-items: flex-start; gap: 18px; padding: 28px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--panel); }
+.inq-success[hidden] { display: none; }
+.inq-ok { flex: none; color: var(--accent); }
+.inq-ok-circle { stroke-dasharray: 164; stroke-dashoffset: 164; animation: inqDraw 0.6s var(--ease) forwards; }
+.inq-ok-check { stroke-dasharray: 40; stroke-dashoffset: 40; animation: inqDraw 0.35s var(--ease) 0.45s forwards; }
+@keyframes inqDraw { to { stroke-dashoffset: 0; } }
+.inq-success-text { color: #ffffff; font-size: 15px; line-height: 1.55; }
+.inq-again { margin-top: 16px; padding: 10px 20px; font-size: 11px; }
+
+.inq-contacts { display: flex; flex-direction: column; gap: 26px; }
+.inq-cblock { border-top: 1px solid var(--line); padding-top: 18px; }
+.inq-clabel {
+  display: block; margin-bottom: 10px;
+  font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
+}
+.inq-cvalue { color: rgba(255, 255, 255, 0.85); font-size: 16px; line-height: 1.5; }
+.inq-clink { display: inline-flex; align-items: center; gap: 8px; color: #ffffff; font-size: 17px; transition: color 0.2s var(--ease); }
+.inq-clink:hover { color: var(--accent); }
+.inq-cicon { flex: none; }
+
+#inquire .btn-primary:focus-visible, #inquire .btn-ghost:focus-visible,
+.inq-chip:focus-visible, .inq-clink:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inq-shake { animation: none; }
+  .inq-ok-circle, .inq-ok-check { animation: none; stroke-dashoffset: 0; }
+  .inq-input, .inq-chip, .inq-clink { transition: none; }
+}
+
+/* ================= FOOTER ================= */
+.ft-footer { border-top: 1px solid var(--line); }
+.ft-cta {
+  display: block; padding: 64px 0;
+  color: #ffffff; text-transform: uppercase; font-weight: 700;
+  font-size: clamp(40px, 7vw, 96px); line-height: 0.95; letter-spacing: -0.01em;
+}
+@media (min-width: 1024px) { .ft-cta { padding: 88px 0; } }
+.ft-cta-loud { transition: color 0.3s var(--ease); }
+.ft-cta:hover .ft-cta-loud { color: var(--accent); }
+
+.ft-mid { border-top: 1px solid var(--line); padding: 48px 0; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; }
+.ft-brand { max-width: 260px; }
+.ft-brand-name { color: #ffffff; font-size: 24px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+.ft-tagline { margin-top: 10px; color: rgba(255, 255, 255, 0.45); font-size: 14px; line-height: 1.6; }
+.ft-cols { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 48px; }
+@media (max-width: 479px) { .ft-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; } }
+.ft-col-title {
+  margin-bottom: 14px; font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.45);
+}
+.ft-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.ft-link { color: rgba(255, 255, 255, 0.6); font-size: 14px; transition: color 0.2s var(--ease); }
+.ft-link:hover { color: #ffffff; }
+.ft-bottom {
+  border-top: 1px solid var(--line); padding: 20px 0 36px;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px;
+}
+.ft-copy, .ft-policy { color: rgba(255, 255, 255, 0.4); font-size: 12px; }
+
+.ft-cta:focus-visible, .ft-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .ft-cta-loud, .ft-link { transition: none; } }
+</style>
+
+<!-- ===================== ЗАЯВКА ===================== -->
+<section class="section" id="inquire">
+  <div class="container">
+    <div class="inq-head io">
+      <span class="eyebrow">Заявка</span>
+      <h2 class="h2">Готовы <span class="h2-accent">доминировать</span>?</h2>
+      <p class="lead">Расскажите о задаче — вернёмся с планом атаки в течение дня.</p>
+    </div>
+
+    <div class="inq-grid">
+      <div class="inq-formcol io" style="--io-delay: 0.1s">
+        <div class="inq-formwrap" id="inqFormwrap">
+          <form class="inq-form" id="inqForm" novalidate>
+            <div class="inq-row">
+              <div class="inq-field">
+                <label class="inq-label" for="inqName">Имя</label>
+                <input class="inq-input" id="inqName" type="text" name="name" placeholder="Как к вам обращаться" autocomplete="name" aria-describedby="inqErrName" />
+                <p class="inq-err" id="inqErrName">Представьтесь — без имени никак.</p>
+              </div>
+              <div class="inq-field">
+                <label class="inq-label" for="inqEmail">Email</label>
+                <input class="inq-input" id="inqEmail" type="email" name="email" placeholder="you@company.com" autocomplete="email" aria-describedby="inqErrEmail" />
+                <p class="inq-err" id="inqErrEmail">Похоже, в адресе опечатка — проверьте email.</p>
+              </div>
+            </div>
+
+            <div class="inq-field">
+              <label class="inq-label" for="inqAbout">О проекте</label>
+              <textarea class="inq-input inq-textarea" id="inqAbout" name="about" rows="4" placeholder="Что строим, зачем и к какому сроку"></textarea>
+            </div>
+
+            <div class="inq-field">
+              <span class="inq-label" id="inqBudgetLabel">Бюджет</span>
+              <div class="inq-chips" role="radiogroup" aria-labelledby="inqBudgetLabel">
+                <button type="button" class="inq-chip inq-chip--on" role="radio" aria-checked="true" tabindex="0">до 1 млн ₽</button>
+                <button type="button" class="inq-chip" role="radio" aria-checked="false" tabindex="-1">1–3 млн ₽</button>
+                <button type="button" class="inq-chip" role="radio" aria-checked="false" tabindex="-1">3+ млн ₽</button>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary inq-submit">
+              Отправить заявку
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+            </button>
+          </form>
+        </div>
+
+        <div class="inq-success" id="inqSuccess" role="status" hidden>
+          <svg class="inq-ok" width="56" height="56" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <circle class="inq-ok-circle" cx="28" cy="28" r="26" stroke="currentColor" stroke-width="2" />
+            <path class="inq-ok-check" d="M17 29l8 8 15-17" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <div>
+            <p class="inq-success-text">Заявка принята — ответим в течение дня.</p>
+            <button type="button" class="btn-ghost inq-again" id="inqAgain">Отправить ещё</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="inq-contacts io" style="--io-delay: 0.18s">
+        <div class="inq-cblock">
+          <span class="inq-clabel">Почта</span>
+          <a class="inq-clink" href="mailto:hello@vanguard.agency">hello@vanguard.agency</a>
+        </div>
+        <div class="inq-cblock">
+          <span class="inq-clabel">Телефон</span>
+          <a class="inq-clink" href="tel:+74950000000">+7 495 000-00-00</a>
+        </div>
+        <div class="inq-cblock">
+          <span class="inq-clabel">Мессенджеры</span>
+          <a class="inq-clink" href="https://t.me/vanguard_agency" target="_blank" rel="noopener">
+            <svg class="inq-cicon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13" /><path d="M22 2 15 22l-4-9-9-4Z" /></svg>
+            Telegram
+          </a>
+        </div>
+        <div class="inq-cblock">
+          <span class="inq-clabel">Офис</span>
+          <p class="inq-cvalue">Москва, Большая Садовая, 1</p>
+        </div>
+        <div class="inq-cblock">
+          <span class="inq-clabel">Часы</span>
+          <p class="inq-cvalue">Пн–Пт, 10:00–20:00</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ФУТЕР ===================== -->
+<footer class="ft-footer">
+  <div class="container">
+    <a class="ft-cta font-podium io" href="#inquire">Давайте делать <span class="ft-cta-loud">громко</span></a>
+
+    <div class="ft-mid io" style="--io-delay: 0.08s">
+      <div class="ft-brand">
+        <div class="ft-brand-name font-podium">VANGUARD</div>
+        <p class="ft-tagline">Креативное агентство полного цикла.</p>
+      </div>
+
+      <nav class="ft-cols" aria-label="Разделы сайта">
+        <div class="ft-col">
+          <div class="ft-col-title">Разделы</div>
+          <ul class="ft-list">
+            <li><a class="ft-link" href="#projects">Проекты</a></li>
+            <li><a class="ft-link" href="#studio">Студия</a></li>
+            <li><a class="ft-link" href="#offerings">Услуги</a></li>
+            <li><a class="ft-link" href="#inquire">Заявка</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <div class="ft-col-title">Соцсети</div>
+          <ul class="ft-list">
+            <li><a class="ft-link" href="https://t.me/vanguard_agency" target="_blank" rel="noopener">Telegram</a></li>
+            <li><a class="ft-link" href="https://behance.net/vanguard_agency" target="_blank" rel="noopener">Behance</a></li>
+            <li><a class="ft-link" href="https://youtube.com/@vanguard_agency" target="_blank" rel="noopener">YouTube</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+
+    <div class="ft-bottom">
+      <p class="ft-copy">© 2026 VANGUARD. Дерзость защищена.</p>
+      <span class="ft-policy">Политика конфиденциальности</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var PRM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Бюджет: radio-чипы с roving tabindex ---- */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.inq-chip'));
+  function selectChip(chip) {
+    chips.forEach(function (c) {
+      var on = c === chip;
+      c.classList.toggle('inq-chip--on', on);
+      c.setAttribute('aria-checked', on ? 'true' : 'false');
+      c.setAttribute('tabindex', on ? '0' : '-1');
+    });
+  }
+  chips.forEach(function (chip, i) {
+    chip.addEventListener('click', function () { selectChip(chip); });
+    chip.addEventListener('keydown', function (e) {
+      var dir = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1
+        : (e.key === 'ArrowLeft' || e.key === 'ArrowUp') ? -1 : 0;
+      if (!dir) return;
+      e.preventDefault();
+      var next = chips[(i + dir + chips.length) % chips.length];
+      next.focus();
+      selectChip(next);
+    });
+  });
+
+  /* ---- Форма заявки ---- */
+  var form = document.getElementById('inqForm');
+  var nameEl = document.getElementById('inqName');
+  var emailEl = document.getElementById('inqEmail');
+  var wrap = document.getElementById('inqFormwrap');
+  var success = document.getElementById('inqSuccess');
+  var again = document.getElementById('inqAgain');
+
+  if (form && nameEl && emailEl && wrap && success) {
+    function fieldOf(el) { return el.closest ? el.closest('.inq-field') : null; }
+    function clearInvalid(el) {
+      var f = fieldOf(el);
+      if (f) f.classList.remove('inq-field--invalid');
+      el.removeAttribute('aria-invalid');
+    }
+    nameEl.addEventListener('input', function () { clearInvalid(nameEl); });
+    emailEl.addEventListener('input', function () { clearInvalid(emailEl); });
+    form.addEventListener('animationend', function () { form.classList.remove('inq-shake'); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var bad = [];
+      if (!nameEl.value.trim()) bad.push(nameEl);
+      if (!/.+@.+\..+/.test(emailEl.value.trim())) bad.push(emailEl);
+      if (bad.length) {
+        bad.forEach(function (el) {
+          var f = fieldOf(el);
+          if (f) f.classList.add('inq-field--invalid');
+          el.setAttribute('aria-invalid', 'true');
+        });
+        if (!PRM) {
+          form.classList.remove('inq-shake');
+          void form.offsetWidth;
+          form.classList.add('inq-shake');
+        }
+        bad[0].focus();
+        return;
+      }
+      wrap.hidden = true;
+      success.hidden = false;
+    });
+
+    if (again) {
+      again.addEventListener('click', function () {
+        form.reset();
+        clearInvalid(nameEl);
+        clearInvalid(emailEl);
+        if (chips.length) selectChip(chips[0]);
+        success.hidden = true;
+        wrap.hidden = false;
+        nameEl.focus();
+      });
+    }
+  }
+})();
+</script>
+
+<!-- SECTIONS:END -->
+
+<div class="mmenu" id="mobileMenu" aria-hidden="true">
+  <div class="mmenu-head">
+    <span class="nav-brand font-podium">VANGUARD</span>
+    <button class="mmenu-close" id="menuClose" type="button" aria-label="Закрыть меню">
+      <!-- lucide x -->
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg>
+    </button>
+  </div>
+  <div class="mmenu-body">
+    <a class="mmenu-item mmenu-link font-podium" style="transition-delay: 100ms" href="#projects">Проекты</a>
+    <a class="mmenu-item mmenu-link font-podium" style="transition-delay: 180ms" href="#studio">Студия</a>
+    <a class="mmenu-item mmenu-link font-podium" style="transition-delay: 260ms" href="#offerings">Услуги</a>
+    <a class="mmenu-item mmenu-link font-podium" style="transition-delay: 340ms" href="#inquire">Заявка</a>
+    <a class="mmenu-item mmenu-cta" style="transition-delay: 420ms" href="#inquire">
+      Связаться
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10" /><path d="M7 17 17 7" /></svg>
+    </a>
+  </div>
+</div>
+
+<script>
+(function () {
+  var burger = document.getElementById('navBurger');
+  var menu = document.getElementById('mobileMenu');
+  var closeBtn = document.getElementById('menuClose');
+  if (!burger || !menu) return;
+
+  function setOpen(open) {
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+  }
+  burger.addEventListener('click', function () { setOpen(true); });
+  if (closeBtn) closeBtn.addEventListener('click', function () { setOpen(false); });
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest && e.target.closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.classList.contains('open')) { setOpen(false); burger.focus(); }
+  });
+})();
+</script>
+
+<script>
+(function () {
+  // Scroll-reveal
+  var revealed = document.querySelectorAll('.io');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    revealed.forEach(function (el) { io.observe(el); });
+  } else {
+    revealed.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // Glass nav after leaving the top of the hero
+  var nav = document.querySelector('.nav');
+  if (nav) {
+    var onScroll = function () { nav.classList.toggle('scrolled', window.scrollY > 40); };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Highlight the nav link of the section in view
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav-links .nav-link'));
+  var byId = {};
+  links.forEach(function (l) { byId[l.getAttribute('href').slice(1)] = l; });
+  var watched = Object.keys(byId).map(function (id) { return document.getElementById(id); }).filter(Boolean);
+  if ('IntersectionObserver' in window && watched.length) {
+    var sio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          links.forEach(function (l) { l.classList.remove('active'); });
+          byId[en.target.id].classList.add('active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    watched.forEach(function (s) { sio.observe(s); });
+  }
+})();
+</script>
+</body>
+</html>

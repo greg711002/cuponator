@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Строим Будущее - Киберпанк</title>
+<meta name="description" content="Создаём цифровые экосистемы будущего"/>
+<style>
+@font-face{font-family:Audiowide;font-style:normal;font-weight:400;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/5118a467bb6b5764-s.75bfa09d.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Audiowide;font-style:normal;font-weight:400;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/2293d94da4a039c8-s.p.3ca4c311.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Audiowide Fallback;src:local(Arial);ascent-override:78.1%;descent-override:22.5%;line-gap-override:0.0%;size-adjust:126.73%}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/2c55a0e60120577a-s.2a48534a.woff2)format("woff2");unicode-range:U+460-52F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/9c72aa0f40e4eef8-s.18a48cbc.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/ad66f9afd8947f86-s.7a40eb73.woff2)format("woff2");unicode-range:U+1F??}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/5476f68d60460930-s.c995e352.woff2)format("woff2");unicode-range:U+370-377,U+37A-37F,U+384-38A,U+38C,U+38E-3A1,U+3A3-3FF}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/2bbe8d2671613f1f-s.76dcb0b2.woff2)format("woff2");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/1bffadaabf893a1e-s.7cd81963.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Inter;font-style:normal;font-weight:100 900;font-display:swap;src:url(https://futuristic-nine.vercel.app/_next/static/media/83afe278b6a6bb3c-s.p.3a6ba036.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Inter Fallback;src:local(Arial);ascent-override:90.44%;descent-override:22.52%;line-gap-override:0.0%;size-adjust:107.12%}
+
+:root, :host {
+  --font-audiowide: "Audiowide", "Audiowide Fallback";
+  --font-inter: "Inter", "Inter Fallback";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-cyan-300: #53eafd;
+  --color-cyan-400: #00d2ef;
+  --color-cyan-500: #00b7d7;
+  --color-cyan-900: #104e64;
+  --color-cyan-950: #053345;
+  --color-fuchsia-400: #ec6cff;
+  --color-fuchsia-500: #e12afb;
+  --color-fuchsia-900: #721378;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #9f9fa9;
+  --color-zinc-500: #71717b;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+  --color-black: #000;
+  --color-white: #fff;
+  --spacing: .25rem;
+  --container-lg: 32rem;
+  --container-2xl: 42rem;
+  --text-xs: .75rem;
+  --text-xs--line-height: calc(1 / .75);
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: calc(2 / 1.5);
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --tracking-tighter: -.05em;
+  --tracking-wider: .05em;
+  --tracking-widest: .1em;
+  --leading-tight: 1.25;
+  --leading-relaxed: 1.625;
+  --radius-3xl: 1.5rem;
+  --blur-md: 12px;
+  --default-transition-duration: .15s;
+  --default-transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+  --default-font-family: var(--font-inter);
+  --default-mono-font-family: var(--font-mono);
+  --color-cyber-cyan: #0ff;
+  --color-cyber-pink: #f0f;
+}
+
+*, :after, :before, ::backdrop {
+  box-sizing: border-box;
+  border: 0 solid;
+  margin: 0;
+  padding: 0;
+}
+
+html, :host {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  line-height: 1.5;
+  font-family: var(--default-font-family, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji");
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+a { color: inherit; text-decoration: inherit; }
+b, strong { font-weight: bolder; }
+img, svg, video, canvas, audio, iframe, embed, object { vertical-align: middle; display: block; }
+img, video { max-width: 100%; height: auto; }
+button, input, select, optgroup, textarea { font: inherit; font-feature-settings: inherit; font-variation-settings: inherit; letter-spacing: inherit; color: inherit; opacity: 1; background-color: transparent; border-radius: 0; }
+ol, ul, menu { list-style: none; }
+
+body {
+  color: #ededed;
+  background: #050505;
+  margin: 0;
+  padding: 0;
+}
+
+.pointer-events-none { pointer-events: none; }
+.absolute { position: absolute; }
+.relative { position: relative; }
+.inset-0 { inset: 0; }
+.-top-8 { top: -2rem; }
+.top-0 { top: 0; }
+.top-1\/2 { top: 50%; }
+.top-\[20\%\] { top: 20%; }
+.top-\[40\%\] { top: 40%; }
+.-right-12 { right: -3rem; }
+.right-0 { right: 0; }
+.right-8 { right: 2rem; }
+.right-\[-10\%\] { right: -10%; }
+.bottom-12 { bottom: 3rem; }
+.bottom-\[10\%\] { bottom: 10%; }
+.-left-12 { left: -3rem; }
+.left-1\/2 { left: 50%; }
+.left-8 { left: 2rem; }
+.left-\[-10\%\] { left: -10%; }
+.z-0 { z-index: 0; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-50 { z-index: 50; }
+.mx-auto { margin-inline: auto; }
+.mt-8 { margin-top: 2rem; }
+.mr-\[-5vw\] { margin-right: -5vw; }
+.mb-0\.5 { margin-bottom: .125rem; }
+.ml-2 { margin-left: .5rem; }
+.ml-\[-5vw\] { margin-left: -5vw; }
+.block { display: block; }
+.flex { display: flex; }
+.hidden { display: none; }
+.aspect-\[3\/4\] { aspect-ratio: 3/4; }
+.h-8 { height: 2rem; }
+.h-10 { height: 2.5rem; }
+.h-12 { height: 3rem; }
+.h-\[1px\] { height: 1px; }
+.h-\[40vw\] { height: 40vw; }
+.h-\[60vw\] { height: 60vw; }
+.h-full { height: 100%; }
+.min-h-\[calc\(100vh-140px\)\] { min-height: calc(100vh - 140px); }
+.min-h-screen { min-height: 100vh; }
+.w-10 { width: 2.5rem; }
+.w-12 { width: 3rem; }
+.w-\[1px\] { width: 1px; }
+.w-\[40vw\] { width: 40vw; }
+.w-\[60vw\] { width: 60vw; }
+.w-full { width: 100%; }
+.max-w-2xl { max-width: 42rem; }
+.max-w-\[180px\] { max-width: 180px; }
+.max-w-\[200px\] { max-width: 200px; }
+.max-w-\[1600px\] { max-width: 1600px; }
+.max-w-lg { max-width: 32rem; }
+.-translate-x-1\/2 { transform: translateX(-50%); }
+.-translate-y-1\/2 { transform: translateY(-50%); }
+.-translate-x-1\/2.-translate-y-1\/2 { transform: translate(-50%, -50%); }
+.cursor-default { cursor: default; }
+.flex-col { flex-direction: column; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.justify-center { justify-content: center; }
+.gap-1 { gap: .25rem; }
+.gap-2 { gap: .5rem; }
+.gap-4 { gap: 1rem; }
+.gap-12 { gap: 3rem; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-hidden { overflow-x: hidden; }
+.rounded-3xl { border-radius: 1.5rem; }
+.rounded-full { border-radius: 9999px; }
+.border { border-style: solid; border-width: 1px; }
+.border-cyan-500\/50 { border-color: #00b7d780; }
+.border-fuchsia-500\/50 { border-color: #e12afb80; }
+.border-zinc-800 { border-color: #27272a; }
+.bg-\[\#050505\] { background-color: #050505; }
+.bg-black\/60 { background-color: rgba(0,0,0,0.6); }
+.bg-cyan-400 { background-color: #00d2ef; }
+.bg-cyan-900\/20 { background-color: rgba(16,78,100,0.2); }
+.bg-fuchsia-900\/10 { background-color: rgba(114,19,120,0.1); }
+.bg-zinc-900\/80 { background-color: rgba(24,24,27,0.8); }
+.bg-zinc-950\/80 { background-color: rgba(9,9,11,0.8); }
+.object-cover { object-fit: cover; }
+.object-center { object-position: center; }
+.p-2 { padding: .5rem; }
+.px-4 { padding-inline: 1rem; }
+.px-6 { padding-inline: 1.5rem; }
+.px-8 { padding-inline: 2rem; }
+.py-1\.5 { padding-block: .375rem; }
+.py-2\.5 { padding-block: .625rem; }
+.py-6 { padding-block: 1.5rem; }
+.pr-6 { padding-right: 1.5rem; }
+.text-center { text-align: center; }
+.font-audiowide { font-family: var(--font-audiowide); }
+.font-mono { font-family: var(--font-mono); }
+.font-sans { font-family: var(--font-inter); }
+.text-2xl { font-size: 1.5rem; line-height: calc(2 / 1.5); }
+.text-xs { font-size: .75rem; line-height: calc(1 / .75); }
+.text-\[10px\] { font-size: 10px; }
+.text-\[22vw\] { font-size: 22vw; }
+.leading-\[0\.8\] { line-height: .8; }
+.leading-relaxed { line-height: 1.625; }
+.leading-tight { line-height: 1.25; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.tracking-\[0\.2em\] { letter-spacing: .2em; }
+.tracking-tighter { letter-spacing: -.05em; }
+.tracking-wider { letter-spacing: .05em; }
+.tracking-widest { letter-spacing: .1em; }
+.text-black { color: #000; }
+.text-cyan-400 { color: #00d2ef; }
+.text-fuchsia-400 { color: #ec6cff; }
+.text-white { color: #fff; }
+.text-zinc-100 { color: #f4f4f5; }
+.text-zinc-300 { color: #d4d4d8; }
+.text-zinc-400 { color: #9f9fa9; }
+.text-zinc-500 { color: #71717b; }
+.text-zinc-900 { color: #18181b; }
+.uppercase { text-transform: uppercase; }
+.antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+.opacity-80 { opacity: .8; }
+.mix-blend-screen { mix-blend-mode: screen; }
+.shadow-\[0_0_10px_rgba\(255\,0\,255\,0\.3\)\] { box-shadow: 0 0 10px rgba(255,0,255,0.3); }
+.blur-\[100px\] { filter: blur(100px); }
+.blur-\[120px\] { filter: blur(120px); }
+.grayscale { filter: grayscale(100%); }
+.backdrop-blur-md { -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+.transition-all { transition-property: all; transition-timing-function: cubic-bezier(.4,0,.2,1); transition-duration: .15s; }
+.transition-colors { transition-property: color, background-color, border-color, outline-color, text-decoration-color, fill, stroke; transition-timing-function: cubic-bezier(.4,0,.2,1); transition-duration: .15s; }
+
+.selection\:bg-cyan-500\/30 ::selection,
+.selection\:bg-cyan-500\/30::selection { background-color: rgba(0,183,215,0.3); }
+
+@media (hover: hover) {
+  .hover\:border-cyan-400:hover { border-color: #00d2ef; }
+  .hover\:border-cyan-400\/50:hover { border-color: rgba(0,210,239,0.5); }
+  .hover\:border-cyan-500\/30:hover { border-color: rgba(0,183,215,0.3); }
+  .hover\:border-cyan-500\/50:hover { border-color: rgba(0,183,215,0.5); }
+  .hover\:border-fuchsia-500\/50:hover { border-color: rgba(225,42,251,0.5); }
+  .hover\:bg-cyan-300:hover { background-color: #53eafd; }
+  .hover\:bg-cyan-950\/30:hover { background-color: rgba(5,51,69,0.3); }
+  .hover\:text-cyan-400:hover { color: #00d2ef; }
+  .hover\:text-fuchsia-400:hover { color: #ec6cff; }
+  .hover\:shadow-\[0_0_20px_rgba\(0\,255\,255\,0\.6\)\]:hover { box-shadow: 0 0 20px rgba(0,255,255,0.6); }
+  .hover\:grayscale-0:hover { filter: grayscale(0%); }
+}
+
+@media (min-width: 48rem) {
+  .md\:right-0 { right: 0; }
+  .md\:left-0 { left: 0; }
+  .md\:flex { display: flex; }
+  .md\:aspect-square { aspect-ratio: 1; }
+}
+@media (min-width: 64rem) {
+  .lg\:flex { display: flex; }
+}
+
+.text-outline-cyan { -webkit-text-stroke: 1px #0ff; color: transparent; }
+.text-outline-white { -webkit-text-stroke: 1px rgba(255,255,255,0.2); color: transparent; }
+.glow-cyan { text-shadow: 0 0 10px #0ff, 0 0 20px #0ff; }
+.glow-pink { text-shadow: 0 0 10px #f0f, 0 0 20px #f0f; }
+.box-glow-cyan { box-shadow: 0 0 10px rgba(0,255,255,0.5), inset 0 0 10px rgba(0,255,255,0.2); }
+</style>
+</head>
+<body class="font-sans antialiased bg-[#050505] text-zinc-100 overflow-x-hidden">
+<div class="relative min-h-screen w-full bg-[#050505] text-zinc-300 overflow-hidden font-sans selection:bg-cyan-500/30">
+
+  <!-- Background glows -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-cyan-900/20 rounded-full blur-[120px] pointer-events-none"></div>
+  <div class="absolute top-0 right-0 w-[40vw] h-[40vw] bg-fuchsia-900/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+  <!-- Navigation -->
+  <nav class="relative z-50 flex items-center justify-between px-8 py-6 max-w-[1600px] mx-auto w-full">
+    <div class="flex flex-col gap-4">
+      <div class="flex items-center gap-1 text-2xl font-bold tracking-tighter">
+        <span class="text-cyan-400 font-audiowide">((</span>
+        <span class="text-white font-audiowide">00D</span>
+        <span class="text-cyan-400 font-audiowide">))</span>
+      </div>
+      <div class="max-w-[180px] text-[10px] leading-tight tracking-widest text-zinc-500 font-mono uppercase">Создаём цифровые экосистемы будущего</div>
+    </div>
+    <div class="hidden lg:flex items-center gap-12 text-xs font-semibold tracking-[0.2em] text-zinc-400">
+      <a href="#" class="hover:text-cyan-400 transition-colors glow-cyan hover:glow-cyan">ЛАБОРАТОРИЯ</a>
+      <a href="#" class="hover:text-cyan-400 transition-colors hover:glow-cyan">УСЛУГИ</a>
+      <a href="#" class="hover:text-cyan-400 transition-colors hover:glow-cyan">ТЕХНОЛОГИИ</a>
+      <a href="#" class="hover:text-cyan-400 transition-colors hover:glow-cyan">ИНДУСТРИИ</a>
+      <a href="#" class="hover:text-cyan-400 transition-colors hover:glow-cyan">О НАС</a>
+    </div>
+    <div class="hidden md:flex items-center gap-4">
+      <button class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest text-cyan-400 border border-cyan-500/50 hover:bg-cyan-950/30 hover:border-cyan-400 transition-all box-glow-cyan uppercase">Запросить демо</button>
+      <button class="px-6 py-2.5 rounded-full text-xs font-bold tracking-widest text-black bg-cyan-400 hover:bg-cyan-300 hover:shadow-[0_0_20px_rgba(0,255,255,0.6)] transition-all uppercase">Создать с нами</button>
+      <button class="w-10 h-10 rounded-full border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-cyan-400 hover:border-cyan-400/50 transition-colors ml-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main content -->
+  <main class="relative flex flex-col items-center justify-center min-h-[calc(100vh-140px)] w-full max-w-[1600px] mx-auto px-8">
+
+    <!-- Big background text -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center w-full h-full pointer-events-none z-0 overflow-hidden opacity-80">
+      <div class="font-audiowide text-[22vw] leading-[0.8] tracking-tighter text-outline-white flex flex-col w-full text-center">
+        <span class="ml-[-5vw]">BUILD</span>
+        <span class="mr-[-5vw] text-zinc-900 text-outline-cyan glow-cyan">FUTURE</span>
+      </div>
+    </div>
+
+    <!-- Central image with badges -->
+    <div class="relative z-10 w-full max-w-2xl aspect-[3/4] md:aspect-square flex items-center justify-center mt-8">
+      <div class="relative w-full h-full rounded-full">
+        <img alt="Cyberpunk Cyborg" decoding="async" class="object-cover object-center rounded-3xl opacity-80 mix-blend-screen" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent;-webkit-mask-image:radial-gradient(circle, black 40%, transparent 70%);mask-image:radial-gradient(circle, black 40%, transparent 70%)" src="https://images.unsplash.com/photo-1535295972055-1c762f4483e5?q=80&w=800&auto=format&fit=crop"/>
+      </div>
+
+      <!-- Predict badge -->
+      <div class="absolute top-[20%] left-[-10%] md:left-0">
+        <div class="px-4 py-1.5 rounded-full border border-cyan-500/50 bg-black/60 backdrop-blur-md text-cyan-400 text-xs font-bold tracking-widest uppercase box-glow-cyan">Прогноз</div>
+        <div class="absolute top-1/2 -right-12 w-12 h-[1px] bg-cyan-500/50"></div>
+      </div>
+
+      <!-- Prototype badge -->
+      <div class="absolute bottom-[10%] left-1/2 -translate-x-1/2">
+        <div class="px-4 py-1.5 rounded-full border border-fuchsia-500/50 bg-black/60 backdrop-blur-md text-fuchsia-400 text-xs font-bold tracking-widest uppercase shadow-[0_0_10px_rgba(255,0,255,0.3)]">Прототип</div>
+        <div class="absolute -top-8 left-1/2 w-[1px] h-8 bg-fuchsia-500/50"></div>
+      </div>
+
+      <!-- Propel badge -->
+      <div class="absolute top-[40%] right-[-10%] md:right-0">
+        <div class="px-4 py-1.5 rounded-full border border-cyan-500/50 bg-black/60 backdrop-blur-md text-cyan-400 text-xs font-bold tracking-widest uppercase box-glow-cyan">Развитие</div>
+        <div class="absolute top-1/2 -left-12 w-12 h-[1px] bg-cyan-500/50"></div>
+      </div>
+    </div>
+
+    <!-- Bottom left text -->
+    <div class="absolute bottom-12 left-8 z-20 flex flex-col gap-4 max-w-lg">
+      <p class="font-mono text-xs tracking-[0.2em] text-zinc-400 uppercase">Мы не мечтаем о будущем — <span class="text-cyan-400">Мы создаём его</span></p>
+      <div class="flex flex-wrap gap-2">
+        <span class="px-4 py-1.5 rounded-full border border-zinc-800 bg-zinc-950/80 text-[10px] font-bold tracking-widest text-zinc-300 uppercase hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">ИИ-дизайн</span>
+        <span class="px-4 py-1.5 rounded-full border border-zinc-800 bg-zinc-950/80 text-[10px] font-bold tracking-widest text-zinc-300 uppercase hover:border-fuchsia-500/50 hover:text-fuchsia-400 transition-colors cursor-default">Этичный рост</span>
+        <span class="px-4 py-1.5 rounded-full border border-zinc-800 bg-zinc-950/80 text-[10px] font-bold tracking-widest text-zinc-300 uppercase hover:border-cyan-500/50 hover:text-cyan-400 transition-colors cursor-default">Когнитивная среда</span>
+      </div>
+    </div>
+
+    <!-- Bottom right avatar -->
+    <div class="absolute bottom-12 right-8 z-20">
+      <div class="flex items-center gap-4 bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-full p-2 pr-6 hover:border-cyan-500/30 transition-colors">
+        <div class="relative w-12 h-12 rounded-full overflow-hidden border border-cyan-500/50">
+          <img alt="Даниэль — Главный архитектор будущего" loading="lazy" decoding="async" class="object-cover grayscale hover:grayscale-0 transition-all" style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;color:transparent" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop"/>
+        </div>
+        <p class="text-[10px] font-mono leading-relaxed max-w-[200px] text-zinc-400 uppercase tracking-wider"><span class="text-cyan-400 font-bold block mb-0.5">Привет, я Даниэль,</span>Главный архитектор будущего.<br/>Спроектируем ваше десятилетие!</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+</body>
+</html>

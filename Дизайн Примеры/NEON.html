@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Neon Crypto | Будущее Светло</title>
+  <meta name="description" content="Криптоплатформа нового поколения"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous"/>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Carter+One&family=STIX+Two+Text:ital,wght@0,400..700;1,400..700&family=Source+Code+Pro&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#bbf351',
+            secondary: '#00bcff',
+          },
+          fontFamily: {
+            sans: ['Roboto', 'sans-serif'],
+            display: ['"Carter One"', 'Roboto', 'sans-serif'],
+            stix: ['"STIX Two Text"', 'serif'],
+            mono: ['"Source Code Pro"', 'monospace'],
+          },
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --color-primary: #bbf351;
+      --color-secondary: #00bcff;
+      --shadow-neon-primary: 0 0 5px #bbf35166, 0 0 15px #bbf35133, inset 0 0 5px #bbf3511a;
+      --shadow-neon-primary-hover: 0 0 10px #bbf35199, 0 0 20px #bbf35166, inset 0 0 10px #bbf35133;
+      --shadow-neon-secondary: 0 0 5px #00bcff66, 0 0 15px #00bcff33, inset 0 0 5px #00bcff1a;
+      --shadow-neon-secondary-hover: 0 0 10px #00bcff99, 0 0 20px #00bcff66, inset 0 0 10px #00bcff33;
+      --shadow-neon-text-primary: 0 0 8px #bbf351cc;
+      --shadow-neon-text-secondary: 0 0 8px #00bcffcc;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #050505;
+      color: #fff;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .font-display { font-family: 'Carter One', 'Roboto', sans-serif; }
+    .font-stix { font-family: 'STIX Two Text', serif; }
+    .font-mono { font-family: 'Source Code Pro', monospace; }
+
+    .text-primary { color: var(--color-primary); }
+    .text-secondary { color: var(--color-secondary); }
+    .text-glow-primary { text-shadow: var(--shadow-neon-text-primary); }
+    .text-glow-secondary { text-shadow: var(--shadow-neon-text-secondary); }
+
+    .btn-neon-primary {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-transform: uppercase;
+      border: 1px solid var(--color-primary);
+      box-shadow: var(--shadow-neon-primary);
+      background-color: transparent;
+      border-radius: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+    .btn-neon-primary:hover {
+      background-color: var(--color-primary);
+      color: #000;
+      box-shadow: var(--shadow-neon-primary-hover);
+      text-shadow: none;
+    }
+
+    .btn-neon-white {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      color: #fff;
+      text-transform: uppercase;
+      background-color: transparent;
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 10px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s;
+      position: relative;
+      cursor: pointer;
+    }
+    .btn-neon-white:hover {
+      border-color: #fff;
+      box-shadow: 0 0 15px rgba(255,255,255,0.3), inset 0 0 10px rgba(255,255,255,0.1);
+    }
+
+    .card-neon {
+      background-color: #050505;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-neon:hover {
+      border-color: rgba(255,255,255,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .input-neon {
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+      letter-spacing: 0.025em;
+      color: #fff;
+      background-color: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      outline: none;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    .input-neon::placeholder { color: #6b7280; }
+    .input-neon:focus {
+      border-bottom-color: var(--color-primary);
+      box-shadow: 0 5px 10px -5px var(--color-primary);
+      outline: none;
+    }
+
+    ::selection {
+      background-color: var(--color-primary);
+      color: #000;
+    }
+  </style>
+</head>
+<body class="antialiased bg-[#050505] text-white font-sans">
+
+<div class="min-h-screen bg-[#000000] text-white font-sans">
+
+  <!-- NAV -->
+  <nav class="fixed w-full z-50 border-b border-white/5 bg-[#000000]/70 backdrop-blur-lg">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="font-display text-2xl tracking-wide text-white uppercase">Neon<span class="text-primary text-glow-primary">Syndicate</span></span>
+      </div>
+      <div class="hidden md:flex items-center gap-8 font-sans font-medium tracking-wide text-sm text-gray-400">
+        <a href="#collection" class="hover:text-white transition-colors">Коллекция</a>
+        <a href="#about" class="hover:text-white transition-colors">О нас</a>
+        <a href="#contact" class="hover:text-white transition-colors">Контакт</a>
+      </div>
+      <div class="flex items-center gap-4">
+        <button class="hidden md:block font-sans text-sm text-white hover:text-primary transition-colors">Войти</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="relative pt-32 pb-24 px-6 min-h-screen flex flex-col justify-center">
+    <div class="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+      <!-- LEFT: SVG -->
+      <div class="relative flex justify-center items-center h-[500px] lg:h-[700px] w-full bg-[#050505] rounded-[24px] border border-white/5 overflow-hidden group">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/20 blur-[100px] rounded-full transition-all duration-700 group-hover:bg-primary/30" style="background-color:rgba(187,243,81,0.2);"></div>
+        <svg viewBox="0 0 200 200" class="w-64 h-64 md:w-96 md:h-96 relative z-10" style="filter:drop-shadow(0 0 15px rgba(187,243,81,0.6))">
+          <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width="2" class="text-secondary opacity-50" stroke-dasharray="4 8" style="color:#00bcff;opacity:0.5;"></circle>
+          <polygon points="100,20 169,60 169,140 100,180 31,140 31,60" fill="none" stroke="currentColor" stroke-width="3" style="color:#bbf351;stroke:#bbf351;"></polygon>
+          <polygon points="100,40 152,70 152,130 100,160 48,130 48,70" fill="none" stroke="currentColor" stroke-width="1" style="color:#bbf351;stroke:#bbf351;opacity:0.6;"></polygon>
+          <path d="M 60 100 Q 100 60 140 100 Q 100 140 60 100" fill="none" stroke="#FF00FF" stroke-width="2" style="filter:drop-shadow(0 0 10px #FF00FF)"></path>
+          <circle cx="100" cy="100" r="15" fill="none" stroke="#FF00FF" stroke-width="2"></circle>
+          <circle cx="100" cy="100" r="5" fill="#FF00FF" style="filter:drop-shadow(0 0 8px #FF00FF)"></circle>
+        </svg>
+        <div class="absolute bottom-6 left-6 flex gap-2">
+          <span class="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-gray-400">Лимитированная</span>
+          <span class="px-3 py-1 bg-black/50 backdrop-blur-md border border-white/10 rounded-full text-[10px] uppercase tracking-widest text-primary">Live</span>
+        </div>
+      </div>
+
+      <!-- RIGHT: INFO -->
+      <div class="flex flex-col justify-center">
+        <h1 class="font-stix font-bold text-5xl md:text-7xl mb-4 text-white uppercase tracking-wider leading-none">Neon<span class="text-primary text-glow-primary">Coin</span></h1>
+
+        <div class="font-sans text-xl text-gray-300 mb-8 border-l-2 border-primary pl-4 py-1 flex items-baseline gap-3" style="border-left-color:#bbf351;">
+          <span class="text-3xl font-bold text-white">$4.92</span>
+          <span class="text-primary font-medium">+14.5%</span>
+          <span class="text-gray-500 text-sm">(24ч)</span>
+        </div>
+
+        <p class="font-sans text-gray-400 mb-8 max-w-md leading-relaxed font-light">Нативный токен экосистемы Neon Syndicate. Обеспечивает децентрализованные транзакции с молниеносной скоростью и квантовой защитой.</p>
+
+        <a href="#" class="text-secondary text-sm font-medium hover:text-white transition-colors mb-8 inline-block underline underline-offset-4" style="color:#00bcff;text-decoration-color:rgba(0,188,255,0.5);">Читать Whitepaper</a>
+
+        <div class="grid grid-cols-2 gap-8 mb-10 border-t border-b border-white/10 py-6 max-w-md">
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Капитализация</label>
+            <div class="text-white font-medium text-lg">$492.5M</div>
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Объём за 24ч</label>
+            <div class="text-white font-medium text-lg">$84.2M</div>
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">В обращении</label>
+            <div class="text-white font-medium text-lg">100M NEON</div>
+          </div>
+          <div>
+            <label class="block text-xs uppercase tracking-widest text-gray-500 mb-2">Макс. эмиссия</label>
+            <div class="text-white font-medium text-lg">500M NEON</div>
+          </div>
+        </div>
+
+        <div class="mb-8">
+          <label class="block text-xs uppercase tracking-widest text-gray-500 mb-4">Адрес контракта (ERC-20)</label>
+          <div class="flex items-center justify-between bg-black/50 border border-white/20 rounded-[10px] p-3 max-w-md group hover:border-primary/50 transition-colors" style="--tw-border-opacity:1;">
+            <code class="text-gray-400 text-sm font-mono truncate w-full">0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2</code>
+            <button class="text-primary hover:text-white transition-colors pl-3 border-l border-white/10 ml-3" style="color:#bbf351;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="btn-neon-primary px-12 py-4 text-sm w-full max-w-sm">Купить NeonCoin</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SPECS -->
+  <section id="collection" class="py-24 px-6 relative z-10 border-t border-white/5 bg-[#030303]">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-16">
+        <h2 class="font-display text-3xl md:text-5xl text-white uppercase tracking-wider mb-4">Характери<span class="text-secondary text-glow-secondary">стики</span></h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="card-neon p-8">
+          <div class="text-2xl mb-4 opacity-80">⚡</div>
+          <h3 class="font-display text-2xl text-white mb-3 tracking-wide">Энергоэффективность</h3>
+          <p class="font-sans text-gray-500 font-light leading-relaxed text-sm">Потребляет на 80% меньше энергии, чем классические неоновые вывески.</p>
+        </div>
+        <div class="card-neon p-8">
+          <div class="text-2xl mb-4 opacity-80">🛡️</div>
+          <h3 class="font-display text-2xl text-white mb-3 tracking-wide">Небьющийся</h3>
+          <p class="font-sans text-gray-500 font-light leading-relaxed text-sm">Из акриловых LED-трубок. Прочный и полностью безопасный.</p>
+        </div>
+        <div class="card-neon p-8">
+          <div class="text-2xl mb-4 opacity-80">🔗</div>
+          <h3 class="font-display text-2xl text-white mb-3 tracking-wide">Умное управление</h3>
+          <p class="font-sans text-gray-500 font-light leading-relaxed text-sm">Синхронизация с кошельком — мигает при успешных транзакциях.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section id="contact" class="py-24 px-6 border-t border-white/5 bg-[#000000]">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="font-display text-4xl text-white uppercase tracking-wider mb-6">Вступить в <span class="text-primary text-glow-primary">Круг</span></h2>
+      <p class="font-sans text-gray-400 mb-10 font-light">Эксклюзивные дропы, ранний доступ к новым дизайнам и обновления сообщества.</p>
+      <form class="flex flex-col sm:flex-row gap-0 max-w-lg mx-auto">
+        <input type="email" placeholder="Ваш email" class="input-neon flex-grow bg-transparent text-sm h-12"/>
+        <button type="button" class="btn-neon-white px-8 h-12 text-xs ml-0 sm:ml-4 mt-4 sm:mt-0">Подписаться</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-white/10 py-12 px-6 bg-[#000000]">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <span class="font-display text-xl tracking-wider text-white uppercase">Neon<span class="text-primary">Syndicate</span></span>
+      <div class="font-sans text-xs text-gray-600 tracking-widest uppercase">© 2026 Neon Syndicate. Все права защищены.</div>
+      <div class="flex gap-6">
+        <a href="#" class="font-sans text-xs text-gray-400 hover:text-white transition-colors tracking-widest uppercase">Instagram</a>
+        <a href="#" class="font-sans text-xs text-gray-400 hover:text-white transition-colors tracking-widest uppercase">Twitter</a>
+        <a href="#" class="font-sans text-xs text-gray-400 hover:text-white transition-colors tracking-widest uppercase">Поддержка</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>

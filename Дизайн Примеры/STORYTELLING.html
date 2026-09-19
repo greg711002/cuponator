@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Путешествие сквозь время</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+      --color-zinc-400: #9f9fa9;
+      --color-zinc-500: #71717b;
+      --color-zinc-800: #27272a;
+      --color-zinc-900: #18181b;
+      --color-white: #fff;
+      --spacing: .25rem;
+      --container-md: 28rem;
+      --text-sm: .875rem;
+      --text-sm--line-height: calc(1.25/.875);
+      --text-4xl: 2.25rem;
+      --text-4xl--line-height: calc(2.5/2.25);
+      --text-5xl: 3rem;
+      --text-5xl--line-height: 1;
+      --font-weight-medium: 500;
+      --tracking-tighter: -.05em;
+      --tracking-wide: .025em;
+      --leading-loose: 2;
+      --default-transition-duration: .15s;
+      --default-transition-timing-function: cubic-bezier(.4,0,.2,1);
+      --default-font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      --default-mono-font-family: ui-monospace, monospace;
+    }
+
+    *, :after, :before, ::backdrop {
+      box-sizing: border-box;
+      border: 0 solid;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      line-height: 1.5;
+      font-family: var(--default-font-family);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #fff;
+      color: #171717;
+    }
+
+    h1,h2,h3,h4,h5,h6 { font-size: inherit; font-weight: inherit; }
+    a { color: inherit; text-decoration: inherit; }
+    img, video { max-width: 100%; height: auto; }
+    img, svg, video, canvas, audio, iframe, embed, object { vertical-align: middle; display: block; }
+
+    /* Tailwind utilities */
+    .antialiased { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .min-h-screen { min-height: 100vh; }
+    .bg-white { background-color: var(--color-white); }
+    .font-sans { font-family: var(--default-font-family); }
+    .text-zinc-900 { color: var(--color-zinc-900); }
+    .selection\:bg-zinc-900::selection { background-color: var(--color-zinc-900); }
+    .selection\:text-white::selection { color: var(--color-white); }
+
+    /* Nav */
+    .fixed { position: fixed; }
+    .top-0 { top: 0; }
+    .left-0 { left: 0; }
+    .right-0 { right: 0; }
+    .z-50 { z-index: 50; }
+    .flex { display: flex; }
+    .items-center { align-items: center; }
+    .justify-between { justify-content: space-between; }
+    .px-8 { padding-inline: calc(var(--spacing)*8); }
+    .py-8 { padding-block: calc(var(--spacing)*8); }
+    .mix-blend-difference { mix-blend-mode: difference; }
+    .text-white { color: var(--color-white); }
+    .gap-6 { gap: calc(var(--spacing)*6); }
+    .flex-col { flex-direction: column; }
+    .gap-1\.5 { gap: calc(var(--spacing)*1.5); }
+    .w-8 { width: calc(var(--spacing)*8); }
+    .cursor-pointer { cursor: pointer; }
+    .group { }
+    .h-px { height: 1px; }
+    .bg-white-line { background-color: var(--color-white); }
+    .w-full { width: 100%; }
+    .transition-all { transition-property: all; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+    .w-3\/4 { width: 75%; }
+    .w-5\/6 { width: 83.3333%; }
+    .text-sm { font-size: var(--text-sm); line-height: var(--text-sm--line-height); }
+    .font-medium { font-weight: var(--font-weight-medium); }
+    .tracking-wide { letter-spacing: var(--tracking-wide); }
+    .hidden { display: none; }
+    .gap-12 { gap: calc(var(--spacing)*12); }
+    .hover\:opacity-70:hover { opacity: .7; }
+    .transition-opacity { transition-property: opacity; transition-timing-function: var(--default-transition-timing-function); transition-duration: var(--default-transition-duration); }
+
+    /* Sections */
+    .relative { position: relative; }
+    .absolute { position: absolute; }
+    .sticky { position: sticky; }
+    .inset-0 { inset: 0; }
+    .inset-y-0 { inset-block: 0; }
+    .overflow-hidden { overflow: hidden; }
+    .object-cover { object-fit: cover; }
+    .z-10 { z-index: 10; }
+    .h-full { height: 100%; }
+    .h-screen { height: 100vh; }
+    .mx-auto { margin-inline: auto; }
+    .pt-20 { padding-top: calc(var(--spacing)*20); }
+    .pr-8 { padding-right: calc(var(--spacing)*8); }
+    .inline-block { display: inline-block; }
+    .mb-12 { margin-bottom: calc(var(--spacing)*12); }
+    .mb-8 { margin-bottom: calc(var(--spacing)*8); }
+    .-top-8 { top: calc(var(--spacing)*-8); }
+    .left-12 { left: calc(var(--spacing)*12); }
+    .right-12 { right: calc(var(--spacing)*12); }
+    .-bottom-8 { bottom: calc(var(--spacing)*-8); }
+    .w-px { width: 1px; }
+    .h-16 { height: calc(var(--spacing)*16); }
+    .bg-zinc-400 { background-color: var(--color-zinc-400); }
+    .transform { transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,); }
+    .-rotate-20deg { rotate: -20deg; }
+    .rotate-20deg { rotate: 20deg; }
+    .font-serif { font-family: var(--font-serif); }
+    .text-zinc-800 { color: var(--color-zinc-800); }
+    .tracking-tighter { letter-spacing: var(--tracking-tighter); }
+    .leading-none { line-height: 1; }
+    .text-6rem { font-size: 6rem; }
+    .italic { font-style: italic; }
+    .text-4xl { font-size: var(--text-4xl); line-height: var(--text-4xl--line-height); }
+    .space-y-6 > :not(:last-child) { margin-block-end: calc(var(--spacing)*6); }
+    .text-zinc-500 { color: var(--color-zinc-500); }
+    .leading-loose { line-height: var(--leading-loose); }
+    .max-w-md { max-width: var(--container-md); }
+
+    @media (min-width: 48rem) {
+      .md\:flex { display: flex; }
+      .md\:hidden { display: none; }
+      .md\:px-16 { padding-inline: calc(var(--spacing)*16); }
+      .md\:px-24 { padding-inline: calc(var(--spacing)*24); }
+      .md\:text-5xl { font-size: var(--text-5xl); line-height: var(--text-5xl--line-height); }
+      .md\:text-sm { font-size: var(--text-sm); }
+      .md\:text-8rem { font-size: 8rem; }
+      .md\:w-45 { width: 45%; }
+    }
+
+    @media (min-width: 64rem) {
+      .lg\:w-40 { width: 40%; }
+      .lg\:text-10rem { font-size: 10rem; }
+    }
+
+    /* Group hover */
+    .group:hover .group-hover\:w-3\/4 { width: 75%; }
+    .group:hover .group-hover\:w-5\/6 { width: 83.3333%; }
+    .group:hover .group-hover\:w-full { width: 100%; }
+
+    /* Inline nav hamburger lines */
+    .nav-line {
+      height: 1px;
+      background-color: white;
+      transition: all var(--default-transition-duration) var(--default-transition-timing-function);
+    }
+    .nav-lines { display: flex; flex-direction: column; gap: calc(var(--spacing)*1.5); width: calc(var(--spacing)*8); cursor: pointer; }
+    .nav-lines .line1 { width: 100%; }
+    .nav-lines .line2 { width: 75%; }
+    .nav-lines .line3 { width: 100%; }
+    .nav-lines .line4 { width: 83.3333%; }
+    .nav-lines .line5 { width: 100%; }
+    .nav-lines:hover .line1 { width: 75%; }
+    .nav-lines:hover .line2 { width: 100%; }
+    .nav-lines:hover .line3 { width: 83.3333%; }
+    .nav-lines:hover .line4 { width: 100%; }
+    .nav-lines:hover .line5 { width: 75%; }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="min-h-screen bg-white font-sans text-zinc-900 selection:bg-zinc-900 selection:text-white">
+
+    <!-- Навигация -->
+    <nav style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:2rem;mix-blend-mode:difference;color:white;">
+      <div style="display:flex;align-items:center;gap:1.5rem;">
+        <div class="nav-lines">
+          <div class="nav-line line1"></div>
+          <div class="nav-line line2"></div>
+          <div class="nav-line line3"></div>
+          <div class="nav-line line4"></div>
+          <div class="nav-line line5"></div>
+        </div>
+        <span style="font-size:.875rem;font-weight:500;letter-spacing:.025em;">Путешествие сквозь время</span>
+      </div>
+      <div style="display:none;align-items:center;gap:3rem;font-size:.875rem;font-weight:500;" class="md-nav">
+        <a href="#" style="transition:opacity .15s;color:white;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Сотрудничество</a>
+        <a href="#" style="transition:opacity .15s;color:white;" onmouseover="this.style.opacity='.7'" onmouseout="this.style.opacity='1'">Тур</a>
+      </div>
+    </nav>
+
+    <div style="position:relative;">
+
+      <!-- Секция 1 — 1995 -->
+      <section style="position:relative;min-height:100vh;width:100%;display:flex;align-items:center;overflow:hidden;position:sticky;top:0;">
+        <!-- Фоновое изображение -->
+        <div style="position:absolute;inset:0;width:100%;height:100%;">
+          <img
+            alt="Рассвет цифровой эры"
+            src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=2021&auto=format&fit=crop"
+            sizes="100vw"
+            srcset="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=640&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1080&auto=format&fit=crop 1080w, https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=1920&auto=format&fit=crop 1920w, https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=3840&auto=format&fit=crop 3840w"
+            style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent;"
+          />
+        </div>
+        <!-- Белая маска -->
+        <div style="position:absolute;inset-block:0;left:0;width:100%;background-color:white;clip-path:polygon(0 0, 45% 0, 65% 100%, 0 100%);"></div>
+        <!-- Контент -->
+        <div style="position:relative;z-index:10;width:100%;height:100vh;margin-inline:auto;padding-inline:2rem;display:flex;align-items:center;">
+          <div style="width:100%;padding-top:5rem;">
+            <div style="position:relative;display:inline-block;margin-bottom:3rem;">
+              <div style="position:absolute;top:-2rem;left:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:-20deg;"></div>
+              <h2 style="font-size:6rem;line-height:1;font-family:var(--font-serif);color:var(--color-zinc-800);letter-spacing:-.05em;">1995</h2>
+              <div style="position:absolute;bottom:-2rem;right:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:20deg;"></div>
+            </div>
+            <h3 style="font-size:2.25rem;font-family:var(--font-serif);font-style:italic;margin-bottom:2rem;color:var(--color-zinc-900);">Рассвет цифровой эры</h3>
+            <div style="font-size:.875rem;color:var(--color-zinc-500);line-height:2;max-width:28rem;padding-right:2rem;">
+              <p style="margin-bottom:1.5rem;">Наступление эпохи интернета открыло небывалые возможности связи. Первопроходцы начали формировать цифровые ландшафты, ставшие фундаментом современного общества.</p>
+              <p>Новаторы со всего мира совместно разработали первые ключевые протоколы, заложив основу технологической революции.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Секция 2 — 1999 -->
+      <section style="position:relative;min-height:100vh;width:100%;display:flex;align-items:center;overflow:hidden;position:sticky;top:0;">
+        <!-- Фоновое изображение -->
+        <div style="position:absolute;inset:0;width:100%;height:100%;">
+          <img
+            alt="На пороге тысячелетия"
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1974&auto=format&fit=crop"
+            sizes="100vw"
+            srcset="https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=640&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1080&auto=format&fit=crop 1080w, https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=1920&auto=format&fit=crop 1920w, https://images.unsplash.com/photo-1501504905252-473c47e087f8?q=80&w=3840&auto=format&fit=crop 3840w"
+            style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent;"
+          />
+        </div>
+        <!-- Белая маска -->
+        <div style="position:absolute;inset-block:0;left:0;width:100%;background-color:white;clip-path:polygon(0 0, 45% 0, 65% 100%, 0 100%);"></div>
+        <!-- Контент -->
+        <div style="position:relative;z-index:10;width:100%;height:100vh;margin-inline:auto;padding-inline:2rem;display:flex;align-items:center;">
+          <div style="width:100%;padding-top:5rem;">
+            <div style="position:relative;display:inline-block;margin-bottom:3rem;">
+              <div style="position:absolute;top:-2rem;left:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:-20deg;"></div>
+              <h2 style="font-size:6rem;line-height:1;font-family:var(--font-serif);color:var(--color-zinc-800);letter-spacing:-.05em;">1999</h2>
+              <div style="position:absolute;bottom:-2rem;right:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:20deg;"></div>
+            </div>
+            <h3 style="font-size:2.25rem;font-family:var(--font-serif);font-style:italic;margin-bottom:2rem;color:var(--color-zinc-900);">На пороге тысячелетия</h3>
+            <div style="font-size:.875rem;color:var(--color-zinc-500);line-height:2;max-width:28rem;padding-right:2rem;">
+              <p style="margin-bottom:1.5rem;">На исходе века смешались тревога и ожидание. Техноиндустрия в спешке готовила системы к новому тысячелетию — эпохе стремительного роста и спекуляций.</p>
+              <p>Мировые рынки переживали небывалый подъём, подпитываемый надеждами на будущее и расцветом доткомов.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Секция 3 — 2004 -->
+      <section style="position:relative;min-height:100vh;width:100%;display:flex;align-items:center;overflow:hidden;position:sticky;top:0;">
+        <!-- Фоновое изображение -->
+        <div style="position:absolute;inset:0;width:100%;height:100%;">
+          <img
+            alt="Социальный интернет"
+            loading="lazy"
+            src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=2070&auto=format&fit=crop"
+            sizes="100vw"
+            srcset="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=640&auto=format&fit=crop 640w, https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1080&auto=format&fit=crop 1080w, https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=1920&auto=format&fit=crop 1920w, https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=3840&auto=format&fit=crop 3840w"
+            style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent;"
+          />
+        </div>
+        <!-- Белая маска -->
+        <div style="position:absolute;inset-block:0;left:0;width:100%;background-color:white;clip-path:polygon(0 0, 45% 0, 65% 100%, 0 100%);"></div>
+        <!-- Контент -->
+        <div style="position:relative;z-index:10;width:100%;height:100vh;margin-inline:auto;padding-inline:2rem;display:flex;align-items:center;">
+          <div style="width:100%;padding-top:5rem;">
+            <div style="position:relative;display:inline-block;margin-bottom:3rem;">
+              <div style="position:absolute;top:-2rem;left:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:-20deg;"></div>
+              <h2 style="font-size:6rem;line-height:1;font-family:var(--font-serif);color:var(--color-zinc-800);letter-spacing:-.05em;">2004</h2>
+              <div style="position:absolute;bottom:-2rem;right:3rem;width:1px;height:4rem;background-color:var(--color-zinc-400);rotate:20deg;"></div>
+            </div>
+            <h3 style="font-size:2.25rem;font-family:var(--font-serif);font-style:italic;margin-bottom:2rem;color:var(--color-zinc-900);">Социальный интернет</h3>
+            <div style="font-size:.875rem;color:var(--color-zinc-500);line-height:2;max-width:28rem;padding-right:2rem;">
+              <p style="margin-bottom:1.5rem;">Произошёл сдвиг парадигмы: сеть стала интерактивной. Появились платформы, позволявшие не только потреблять контент, но и создавать его, кардинально изменив общение.</p>
+              <p>Эта эпоха породила современные социальные сети, объединив миллионы и переосмыслив понятия сообщества и личной идентичности в сети.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <style>
+    @media (min-width: 48rem) {
+      .md-nav { display: flex !important; }
+      nav { padding-inline: 4rem !important; }
+      section > div:last-child { padding-inline: 6rem !important; }
+      section h2 { font-size: 8rem !important; }
+      section h3 { font-size: 3rem !important; }
+    }
+    @media (min-width: 64rem) {
+      section h2 { font-size: 10rem !important; }
+      section > div:last-child > div { width: 40% !important; }
+    }
+    @media (min-width: 48rem) and (max-width: 63.9rem) {
+      section > div:last-child > div { width: 45% !important; }
+    }
+  </style>
+</body>
+</html>

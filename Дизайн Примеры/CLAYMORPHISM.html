@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Groomin' - Груминг питомцев</title>
+  <meta name="description" content="Игривый клеймоморфизм лендинг"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Montserrat', 'sans-serif'],
+            display: ['Poppins', 'sans-serif'],
+          },
+          keyframes: {
+            blob: {
+              '0%': { transform: 'translate(0px, 0px) scale(1)' },
+              '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+              '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+              '100%': { transform: 'translate(0px, 0px) scale(1)' },
+            }
+          },
+          animation: {
+            blob: 'blob 7s infinite',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .animation-delay-2000 { animation-delay: 2s; }
+    .animation-delay-4000 { animation-delay: 4s; }
+    .clay-card {
+      background: #fff;
+      border-radius: 48px;
+      transition: transform .3s, box-shadow .3s;
+      box-shadow: 30px 30px 60px #1e3a8a26, -20px -20px 60px #ffffff80,
+        inset 20px 20px 30px #fff, inset -20px -20px 30px #bfdbfecc, inset 2px 2px 5px #fff;
+    }
+    .clay-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 35px 35px 65px #1e3a8a33, -20px -20px 60px #ffffff80,
+        inset 20px 20px 30px #fff, inset -20px -20px 30px #bfdbfecc, inset 2px 2px 5px #fff;
+    }
+    .clay-btn {
+      background: #fff;
+      border-radius: 9999px;
+      transition: all .2s;
+      box-shadow: 15px 15px 30px #1e3a8a26, -10px -10px 30px #fff9,
+        inset 10px 10px 15px #fff, inset -10px -10px 15px #bfdbfecc, inset 1px 1px 3px #fff;
+    }
+    .clay-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 18px 18px 35px #1e3a8a33, -10px -10px 30px #fff9,
+        inset 10px 10px 15px #fff, inset -10px -10px 15px #bfdbfecc, inset 1px 1px 3px #fff;
+    }
+    .clay-btn:active {
+      transform: translateY(2px);
+      box-shadow: 5px 5px 15px #1e3a8a26, -5px -5px 15px #fff9,
+        inset 10px 10px 15px #fff, inset -10px -10px 15px #bfdbfecc, inset 1px 1px 3px #fff;
+    }
+    .clay-btn-primary {
+      color: #fff;
+      background: #3b82f6;
+      box-shadow: 15px 15px 30px #1e3a8a4d, -10px -10px 30px #fff6,
+        inset 10px 10px 15px #60a5fa, inset -10px -10px 15px #1e3a8a99, inset 1px 1px 3px #93c5fd;
+    }
+    @keyframes blob {
+      0%   { transform: translate(0px, 0px) scale(1); }
+      33%  { transform: translate(30px, -50px) scale(1.1); }
+      66%  { transform: translate(-20px, 20px) scale(0.9); }
+      100% { transform: translate(0px, 0px) scale(1); }
+    }
+    .animate-blob { animation: blob 7s infinite; }
+  </style>
+</head>
+<body class="antialiased">
+  <div class="min-h-screen bg-gradient-to-br from-blue-200 via-blue-100 to-blue-300 font-sans text-gray-800 overflow-hidden relative">
+
+    <!-- Фоновые блобы -->
+    <div class="absolute top-[-10%] left-[-10%] w-96 h-96 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob"></div>
+    <div class="absolute top-[20%] right-[-5%] w-72 h-72 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-2000"></div>
+    <div class="absolute bottom-[-20%] left-[20%] w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-40 animate-blob animation-delay-4000"></div>
+
+    <!-- Плавающие эмодзи -->
+    <div class="absolute top-[15%] left-[5%] text-6xl drop-shadow-xl animate-pulse z-0">🎾</div>
+    <div class="absolute top-[25%] right-[10%] text-7xl drop-shadow-xl animate-bounce z-0" style="animation-duration:4s">🦴</div>
+    <div class="absolute top-[45%] left-[15%] text-5xl drop-shadow-xl animate-pulse z-0" style="animation-duration:2.5s">✨</div>
+    <div class="absolute top-[60%] right-[5%] text-8xl drop-shadow-xl animate-pulse z-0" style="animation-duration:3.5s">🧸</div>
+    <div class="absolute bottom-[20%] left-[8%] text-6xl drop-shadow-xl z-0">🏃‍♀️</div>
+    <div class="absolute bottom-[10%] right-[12%] text-6xl drop-shadow-xl z-0">🧍‍♂️</div>
+    <div class="absolute top-[80%] left-[20%] text-5xl drop-shadow-xl animate-bounce z-0" style="animation-duration:5s">🐾</div>
+    <div class="absolute top-[35%] left-[80%] text-6xl drop-shadow-xl animate-pulse z-0" style="animation-duration:3s">🛁</div>
+
+    <!-- Шапка -->
+    <header class="relative z-10 max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 bg-yellow-300 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white">🐶</div>
+        <span class="font-display font-bold text-xl text-blue-900 tracking-wide">Claym'</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8 text-blue-900/80 font-medium">
+        <a href="#" class="hover:text-blue-900 transition-colors relative after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-blue-900 after:bottom-[-4px] after:left-0">Главная</a>
+        <a href="#" class="hover:text-blue-900 transition-colors">О нас</a>
+        <a href="#" class="hover:text-blue-900 transition-colors">Наша миссия</a>
+        <a href="#" class="hover:text-blue-900 transition-colors">Галерея</a>
+        <a href="#" class="hover:text-blue-900 transition-colors">Контакты</a>
+      </nav>
+      <div class="flex items-center gap-4">
+        <a href="#" class="text-blue-900 font-medium hover:text-blue-900/80 transition-colors">Войти</a>
+        <button class="clay-btn clay-btn-primary px-6 py-2.5 font-semibold">Регистрация</button>
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-32">
+
+      <!-- Герой -->
+      <div class="flex flex-col items-center text-center max-w-3xl mx-auto gap-8">
+        <h1 class="text-6xl md:text-8xl font-display tracking-tighter leading-none font-extrabold text-blue-900">Ухоженный — значит любимый</h1>
+        <p class="text-xl md:text-2xl text-blue-900/80 font-medium leading-relaxed mt-4">Вашему питомцу нужна стрижка или освежающая ванна?</p>
+        <button class="clay-btn px-10 py-5 text-blue-600 font-bold text-xl mt-8 flex items-center gap-3 hover:scale-105 transition-transform">Записаться на приём<span class="text-3xl">👆</span></button>
+      </div>
+
+      <!-- Шаги -->
+      <div class="mt-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10 px-4 max-w-5xl mx-auto">
+          <div class="clay-card p-10 flex flex-col items-center justify-center text-center aspect-square">
+            <div class="text-6xl mb-6 drop-shadow-md">📅</div>
+            <h3 class="text-xl font-display font-bold text-blue-700 mb-3">Записаться</h3>
+            <p class="text-blue-900/60 font-medium text-sm leading-relaxed max-w-[200px]">Выберите удобное время для спа-дня вашего питомца на платформе.</p>
+          </div>
+          <div class="clay-card p-10 flex flex-col items-center justify-center text-center aspect-square">
+            <div class="text-6xl mb-6 drop-shadow-md">🖼️</div>
+            <h3 class="text-xl font-display font-bold text-blue-700 mb-3">Выбрать услуги</h3>
+            <p class="text-blue-900/60 font-medium text-sm leading-relaxed max-w-[200px]">Укажите, нужна ли мойка, полная стрижка или обрезка когтей.</p>
+          </div>
+          <div class="clay-card p-10 flex flex-col items-center justify-center text-center aspect-square">
+            <div class="text-6xl mb-6 drop-shadow-md">🚀</div>
+            <h3 class="text-xl font-display font-bold text-blue-700 mb-3">Оставь и отдыхай</h3>
+            <p class="text-blue-900/60 font-medium text-sm leading-relaxed max-w-[200px]">Приведите питомца в салон, а остальное — наша забота.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Почему нас выбирают -->
+      <div class="mt-32">
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-blue-900 mb-16 text-center">Почему ваши питомцы любят нас</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-5xl mx-auto px-4">
+          <div class="clay-card p-8 flex items-start gap-6 !rounded-3xl">
+            <div class="text-5xl drop-shadow-md bg-white/40 p-4 rounded-2xl">✂️</div>
+            <div>
+              <h3 class="text-xl font-display font-bold text-blue-700 mb-2">Опытные стилисты</h3>
+              <p class="text-blue-900/60 font-medium text-sm leading-relaxed">Наши грумеры — сертифицированные специалисты, умеющие работать с любой породой с любовью и заботой.</p>
+            </div>
+          </div>
+          <div class="clay-card p-8 flex items-start gap-6 !rounded-3xl">
+            <div class="text-5xl drop-shadow-md bg-white/40 p-4 rounded-2xl">🧴</div>
+            <div>
+              <h3 class="text-xl font-display font-bold text-blue-700 mb-2">Премиум-средства</h3>
+              <p class="text-blue-900/60 font-medium text-sm leading-relaxed">Используем только гипоаллергенные, эко-шампуни и кондиционеры для здоровой и блестящей шерсти.</p>
+            </div>
+          </div>
+          <div class="clay-card p-8 flex items-start gap-6 !rounded-3xl">
+            <div class="text-5xl drop-shadow-md bg-white/40 p-4 rounded-2xl">🏥</div>
+            <div>
+              <h3 class="text-xl font-display font-bold text-blue-700 mb-2">Безопасная среда</h3>
+              <p class="text-blue-900/60 font-medium text-sm leading-relaxed">Салон дезинфицируется ежедневно и создан для минимизации стресса у ваших питомцев.</p>
+            </div>
+          </div>
+          <div class="clay-card p-8 flex items-start gap-6 !rounded-3xl">
+            <div class="text-5xl drop-shadow-md bg-white/40 p-4 rounded-2xl">⏱️</div>
+            <div>
+              <h3 class="text-xl font-display font-bold text-blue-700 mb-2">Быстрое обслуживание</h3>
+              <p class="text-blue-900/60 font-medium text-sm leading-relaxed">Ценим ваше время. Эффективный процесс — отличный результат без долгого ожидания.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ -->
+      <div class="mt-32 max-w-3xl mx-auto px-4">
+        <h2 class="text-4xl md:text-5xl font-display font-bold text-blue-900 mb-16 text-center">Есть вопросы?</h2>
+        <div class="flex flex-col gap-6">
+          <div class="clay-card p-6 px-8 !rounded-2xl cursor-pointer hover:scale-[1.01] transition-transform">
+            <h3 class="text-lg font-display font-bold text-blue-700 flex justify-between items-center">Какие прививки нужно подтвердить?<span class="text-2xl drop-shadow-sm">👇</span></h3>
+            <p class="text-blue-900/60 font-medium text-sm leading-relaxed mt-4 border-t border-blue-200/50 pt-4">Для собак: бешенство, бордетелла и чума. Для кошек: бешенство и FVRCP. Предъявите подтверждение при первом визите.</p>
+          </div>
+          <div class="clay-card p-6 px-8 !rounded-2xl cursor-pointer hover:scale-[1.01] transition-transform">
+            <h3 class="text-lg font-display font-bold text-blue-700 flex justify-between items-center">Сколько длится сеанс груминга?<span class="text-2xl drop-shadow-sm">👇</span></h3>
+          </div>
+          <div class="clay-card p-6 px-8 !rounded-2xl cursor-pointer hover:scale-[1.01] transition-transform">
+            <h3 class="text-lg font-display font-bold text-blue-700 flex justify-between items-center">Могу ли я остаться с питомцем?<span class="text-2xl drop-shadow-sm">👇</span></h3>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Подвал -->
+    <footer class="relative z-10 mt-20 border-t border-white/20 bg-white/10 backdrop-blur-md">
+      <div class="max-w-7xl mx-auto px-6 py-12 flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-2">
+          <div class="w-10 h-10 bg-yellow-300 rounded-full flex items-center justify-center text-xl shadow-lg border-2 border-white">🐶</div>
+          <span class="font-display font-bold text-xl text-blue-900 tracking-wide">Groomin'</span>
+        </div>
+        <div class="flex gap-4">
+          <button class="clay-btn w-12 h-12 flex items-center justify-center text-xl !p-0">📸</button>
+          <button class="clay-btn w-12 h-12 flex items-center justify-center text-xl !p-0">🐦</button>
+          <button class="clay-btn w-12 h-12 flex items-center justify-center text-xl !p-0">📘</button>
+        </div>
+        <p class="text-blue-900/70 font-medium text-sm">© 2026 Groomin' Зоосалон. Все права защищены.</p>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

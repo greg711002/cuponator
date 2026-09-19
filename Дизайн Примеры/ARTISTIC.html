@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charSet="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Artistic Drinks</title>
+<meta name="description" content="Создано с мастерством, подано с душой."/>
+<style>
+@font-face{font-family:Playfair Display;font-style:normal;font-weight:400 900;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/65c558afe41e89d6-s.e2c8389a.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}
+@font-face{font-family:Playfair Display;font-style:normal;font-weight:400 900;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/14e23f9b59180572-s.9c448f3c.woff2)format("woff2");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:Playfair Display;font-style:normal;font-weight:400 900;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/b49b0d9b851e4899-s.4f3fa681.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Playfair Display;font-style:normal;font-weight:400 900;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/2a65768255d6b625-s.p.d19752fb.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Playfair Display Fallback;src:local(Times New Roman);ascent-override:97.25%;descent-override:22.56%;line-gap-override:0.0%;size-adjust:111.26%}
+@font-face{font-family:Oswald;font-style:normal;font-weight:200 700;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/efadc3f7fcf6ac94-s.57ff0b37.woff2)format("woff2");unicode-range:U+460-52F,U+1C80-1C8A,U+20B4,U+2DE0-2DFF,U+A640-A69F,U+FE2E-FE2F}
+@font-face{font-family:Oswald;font-style:normal;font-weight:200 700;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/8e410338cab7e12e-s.986de7be.woff2)format("woff2");unicode-range:U+301,U+400-45F,U+490-491,U+4B0-4B1,U+2116}
+@font-face{font-family:Oswald;font-style:normal;font-weight:200 700;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/7e93c0a52799e849-s.f680bb9a.woff2)format("woff2");unicode-range:U+102-103,U+110-111,U+128-129,U+168-169,U+1A0-1A1,U+1AF-1B0,U+300-301,U+303-304,U+308-309,U+323,U+329,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:Oswald;font-style:normal;font-weight:200 700;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/037b6aa687f94b32-s.82297bd5.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Oswald;font-style:normal;font-weight:200 700;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/9a800f173b8d9e8f-s.p.ea25be69.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Oswald Fallback;src:local(Arial);ascent-override:146.51%;descent-override:35.49%;line-gap-override:0.0%;size-adjust:81.43%}
+@font-face{font-family:Bebas Neue;font-style:normal;font-weight:400;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/2039e8342bda6056-s.51680477.woff2)format("woff2");unicode-range:U+100-2BA,U+2BD-2C5,U+2C7-2CC,U+2CE-2D7,U+2DD-2FF,U+304,U+308,U+329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:Bebas Neue;font-style:normal;font-weight:400;font-display:swap;src:url(https://artistic-puce.vercel.app/_next/static/media/fabcf92ba1ccea36-s.p.19f28380.woff2)format("woff2");unicode-range:U+??,U+131,U+152-153,U+2BB-2BC,U+2C6,U+2DA,U+2DC,U+304,U+308,U+329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:Bebas Neue Fallback;src:local(Arial);ascent-override:117.32%;descent-override:39.11%;line-gap-override:0.0%;size-adjust:76.72%}
+
+:root{
+  --font-playfair:"Playfair Display","Playfair Display Fallback";
+  --font-oswald:"Oswald","Oswald Fallback";
+  --font-bebas:"Bebas Neue","Bebas Neue Fallback";
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  --color-red-600:#e40014;
+  --color-red-900:#82181a;
+  --color-white:#fff;
+  --spacing:.25rem;
+  --container-4xl:56rem;
+  --container-6xl:72rem;
+  --text-xs:.75rem;
+  --text-xs--line-height:calc(1/.75);
+  --text-sm:.875rem;
+  --text-sm--line-height:calc(1.25/.875);
+  --text-2xl:1.5rem;
+  --text-2xl--line-height:calc(2/1.5);
+  --text-3xl:1.875rem;
+  --text-3xl--line-height:calc(2.25/1.875);
+  --text-4xl:2.25rem;
+  --text-4xl--line-height:calc(2.5/2.25);
+  --text-5xl:3rem;
+  --text-5xl--line-height:1;
+  --font-weight-medium:500;
+  --tracking-wide:.025em;
+  --tracking-wider:.05em;
+  --tracking-widest:.1em;
+  --leading-relaxed:1.625;
+  --radius-lg:.5rem;
+  --radius-2xl:1rem;
+  --radius-3xl:1.5rem;
+  --drop-shadow-2xl:0 25px 25px #00000026;
+  --blur-3xl:64px;
+  --default-transition-duration:.15s;
+  --default-transition-timing-function:cubic-bezier(.4,0,.2,1);
+  --default-font-family:var(--font-oswald),sans-serif;
+  --default-mono-font-family:var(--font-mono);
+  --color-burgundy:#481110;
+  --color-cream:#f4ebd9;
+  --color-gold:#c6a25b
+}
+
+@layer base{
+  *,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}
+  html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif,system-ui,sans-serif);font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}
+  h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}
+  a{color:inherit;text-decoration:inherit}
+  b,strong{font-weight:bolder}
+  img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}
+  img,video{max-width:100%;height:auto}
+  ol,ul,menu{list-style:none}
+}
+
+@layer utilities{
+  .pointer-events-none{pointer-events:none}
+  .absolute{position:absolute}
+  .relative{position:relative}
+  .-inset-4{inset:calc(var(--spacing)*-4)}
+  .-inset-8{inset:calc(var(--spacing)*-8)}
+  .inset-0{inset:calc(var(--spacing)*0)}
+  .-top-64{top:calc(var(--spacing)*-64)}
+  .top-1\/2{top:50%}
+  .top-1\/3{top:33.3333%}
+  .top-1\/4{top:25%}
+  .top-10{top:calc(var(--spacing)*10)}
+  .-right-32{right:calc(var(--spacing)*-32)}
+  .right-0{right:calc(var(--spacing)*0)}
+  .-bottom-64{bottom:calc(var(--spacing)*-64)}
+  .bottom-0{bottom:calc(var(--spacing)*0)}
+  .bottom-20{bottom:calc(var(--spacing)*20)}
+  .bottom-24{bottom:calc(var(--spacing)*24)}
+  .-left-12{left:calc(var(--spacing)*-12)}
+  .left-0{left:calc(var(--spacing)*0)}
+  .left-1\/2{left:50%}
+  .-z-10{z-index:-10}
+  .z-10{z-index:10}
+  .z-20{z-index:20}
+  .z-30{z-index:30}
+  .z-40{z-index:40}
+  .z-50{z-index:50}
+  .container{width:100%}
+  @media (min-width:40rem){.container{max-width:40rem}}
+  @media (min-width:48rem){.container{max-width:48rem}}
+  @media (min-width:64rem){.container{max-width:64rem}}
+  @media (min-width:80rem){.container{max-width:80rem}}
+  @media (min-width:96rem){.container{max-width:96rem}}
+  .m-auto{margin:auto}
+  .mx-auto{margin-inline:auto}
+  .-mt-32{margin-top:calc(var(--spacing)*-32)}
+  .mt-1{margin-top:calc(var(--spacing)*1)}
+  .mt-24{margin-top:calc(var(--spacing)*24)}
+  .mt-\[-10vh\]{margin-top:-10vh}
+  .mb-4{margin-bottom:calc(var(--spacing)*4)}
+  .mb-8{margin-bottom:calc(var(--spacing)*8)}
+  .-ml-8{margin-left:calc(var(--spacing)*-8)}
+  .block{display:block}
+  .flex{display:flex}
+  .hidden{display:none}
+  .inline-block{display:inline-block}
+  .aspect-4\/5{aspect-ratio:4/5}
+  .h-1\/3{height:33.3333%}
+  .h-1\/4{height:25%}
+  .h-4{height:calc(var(--spacing)*4)}
+  .h-5{height:calc(var(--spacing)*5)}
+  .h-12{height:calc(var(--spacing)*12)}
+  .h-20{height:calc(var(--spacing)*20)}
+  .h-24{height:calc(var(--spacing)*24)}
+  .h-32{height:calc(var(--spacing)*32)}
+  .h-96{height:calc(var(--spacing)*96)}
+  .h-\[60vh\]{height:60vh}
+  .h-\[400px\]{height:400px}
+  .h-\[500px\]{height:500px}
+  .h-\[800px\]{height:800px}
+  .h-full{height:100%}
+  .min-h-screen{min-height:100vh}
+  .w-4{width:calc(var(--spacing)*4)}
+  .w-5{width:calc(var(--spacing)*5)}
+  .w-12{width:calc(var(--spacing)*12)}
+  .w-24{width:calc(var(--spacing)*24)}
+  .w-32{width:calc(var(--spacing)*32)}
+  .w-40{width:calc(var(--spacing)*40)}
+  .w-48{width:calc(var(--spacing)*48)}
+  .w-96{width:calc(var(--spacing)*96)}
+  .w-\[800px\]{width:800px}
+  .w-full{width:100%}
+  .max-w-4xl{max-width:var(--container-4xl)}
+  .max-w-6xl{max-width:var(--container-6xl)}
+  .max-w-\[200px\]{max-width:200px}
+  .flex-1{flex:1}
+  .origin-bottom{transform-origin:bottom}
+  .-translate-x-1\/2{translate:-50% 0}
+  .-translate-y-1\/2{translate:0 -50%}
+  .scale-150{scale:150% 150%}
+  .-rotate-3{rotate:-3deg}
+  .-rotate-12{rotate:-12deg}
+  .rotate-1{rotate:1deg}
+  .rotate-2{rotate:2deg}
+  .cursor-pointer{cursor:pointer}
+  .flex-col{flex-direction:column}
+  .items-center{align-items:center}
+  .items-end{align-items:flex-end}
+  .items-start{align-items:flex-start}
+  .justify-between{justify-content:space-between}
+  .justify-center{justify-content:center}
+  .gap-2{gap:calc(var(--spacing)*2)}
+  .gap-6{gap:calc(var(--spacing)*6)}
+  .gap-8{gap:calc(var(--spacing)*8)}
+  .gap-16{gap:calc(var(--spacing)*16)}
+  .space-y-3>:not(:last-child){margin-block-end:calc(var(--spacing)*3)}
+  .space-y-4>:not(:last-child){margin-block-end:calc(var(--spacing)*4)}
+  .self-start{align-self:flex-start}
+  .overflow-hidden{overflow:hidden}
+  .overflow-visible{overflow:visible}
+  .rounded-2xl{border-radius:var(--radius-2xl)}
+  .rounded-3xl{border-radius:var(--radius-3xl)}
+  .rounded-\[40px\]{border-radius:40px}
+  .rounded-full{border-radius:9999px}
+  .rounded-lg{border-radius:var(--radius-lg)}
+  .rounded-b-full{border-bottom-right-radius:9999px;border-bottom-left-radius:9999px}
+  .border{border-style:solid;border-width:1px}
+  .border-2{border-style:solid;border-width:2px}
+  .border-burgundy{border-color:#481110}
+  .border-burgundy\/10{border-color:rgba(72,17,16,0.1)}
+  .border-cream{border-color:#f4ebd9}
+  .border-cream\/30{border-color:rgba(244,235,217,0.3)}
+  .border-orange\/20{border-color:rgba(203,83,49,0.2)}
+  .border-white\/10{border-color:rgba(255,255,255,0.1)}
+  .bg-burgundy{background-color:#481110}
+  .bg-cream{background-color:#f4ebd9}
+  .bg-cream\/10{background-color:rgba(244,235,217,0.1)}
+  .bg-green{background-color:#68886b}
+  .bg-orange{background-color:#cb5331}
+  .bg-white\/20{background-color:rgba(255,255,255,0.2)}
+  .bg-linear-to-tr{background-image:linear-gradient(to top right,var(--tw-gradient-from,transparent),var(--tw-gradient-to,transparent))}
+  .bg-\[radial-gradient\(circle\,rgba\(203\,83\,49\,0\.1\)_0\%\,transparent_70\%\)\]{background-image:radial-gradient(circle,rgba(203,83,49,0.1) 0%,transparent 70%)}
+  .from-orange{--tw-gradient-from:#cb5331}
+  .from-red-600{--tw-gradient-from:#e40014}
+  .to-red-900{--tw-gradient-to:#82181a}
+  .bg-linear-to-tr.from-orange.to-red-900{background-image:linear-gradient(to top right,#cb5331,#82181a)}
+  .bg-linear-to-tr.from-red-600.to-red-900{background-image:linear-gradient(to top right,#e40014,#82181a)}
+  .fill-burgundy{fill:#481110}
+  .object-cover{object-fit:cover}
+  .p-2{padding:calc(var(--spacing)*2)}
+  .p-6{padding:calc(var(--spacing)*6)}
+  .px-4{padding-inline:calc(var(--spacing)*4)}
+  .px-6{padding-inline:calc(var(--spacing)*6)}
+  .px-8{padding-inline:calc(var(--spacing)*8)}
+  .py-1{padding-block:calc(var(--spacing)*1)}
+  .py-3{padding-block:calc(var(--spacing)*3)}
+  .py-6{padding-block:calc(var(--spacing)*6)}
+  .pt-12{padding-top:calc(var(--spacing)*12)}
+  .pt-20{padding-top:calc(var(--spacing)*20)}
+  .pb-40{padding-bottom:calc(var(--spacing)*40)}
+  .pb-48{padding-bottom:calc(var(--spacing)*48)}
+  .text-center{text-align:center}
+  .text-left{text-align:left}
+  .font-display{font-family:var(--font-bebas),sans-serif}
+  .font-sans{font-family:var(--font-oswald),sans-serif}
+  .font-serif{font-family:var(--font-playfair),serif}
+  .text-2xl{font-size:var(--text-2xl);line-height:var(--text-2xl--line-height)}
+  .text-3xl{font-size:var(--text-3xl);line-height:var(--text-3xl--line-height)}
+  .text-4xl{font-size:var(--text-4xl);line-height:var(--text-4xl--line-height)}
+  .text-sm{font-size:var(--text-sm);line-height:var(--text-sm--line-height)}
+  .text-xs{font-size:var(--text-xs);line-height:var(--text-xs--line-height)}
+  .text-\[10px\]{font-size:10px}
+  .text-\[11px\]{font-size:11px}
+  .text-\[12vw\]{font-size:12vw}
+  .leading-\[0\.85\]{line-height:.85}
+  .leading-relaxed{line-height:var(--leading-relaxed)}
+  .font-medium{font-weight:var(--font-weight-medium)}
+  .tracking-\[0\.2em\]{letter-spacing:.2em}
+  .tracking-wide{letter-spacing:var(--tracking-wide)}
+  .tracking-wider{letter-spacing:var(--tracking-wider)}
+  .tracking-widest{letter-spacing:var(--tracking-widest)}
+  .text-burgundy{color:#481110}
+  .text-burgundy\/80{color:rgba(72,17,16,0.8)}
+  .text-cream{color:#f4ebd9}
+  .text-dark-green{color:#2a3a2d}
+  .text-orange{color:#cb5331}
+  .uppercase{text-transform:uppercase}
+  .italic{font-style:italic}
+  .antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+  .opacity-60{opacity:.6}
+  .opacity-80{opacity:.8}
+  .opacity-90{opacity:.9}
+  .shadow-2xl{box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
+  .shadow-inner{box-shadow:inset 0 2px 4px 0 rgba(0,0,0,0.05)}
+  .shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -4px rgba(0,0,0,0.1)}
+  .blur-3xl{filter:blur(64px)}
+  .drop-shadow-2xl{filter:drop-shadow(0 25px 25px rgba(0,0,0,0.15))}
+  .transition{transition-property:color,background-color,border-color,opacity,box-shadow,transform;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+  .transition-colors{transition-property:color,background-color,border-color;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}
+  .preserve-3d{transform-style:preserve-3d}
+  .selection\:bg-orange::selection{background-color:#cb5331}
+  .selection\:text-cream::selection{color:#f4ebd9}
+  @media (hover:hover){.hover\:text-orange:hover{color:#cb5331}}
+  @media (min-width:48rem){
+    .md\:-mt-64{margin-top:calc(var(--spacing)*-64)}
+    .md\:flex{display:flex}
+    .md\:h-64{height:calc(var(--spacing)*64)}
+    .md\:w-1\/2{width:50%}
+    .md\:w-56{width:calc(var(--spacing)*56)}
+    .md\:flex-row{flex-direction:row}
+    .md\:text-5xl{font-size:var(--text-5xl);line-height:var(--text-5xl--line-height)}
+  }
+  @media (min-width:64rem){
+    .lg\:mt-0{margin-top:0}
+    .lg\:ml-48{margin-left:calc(var(--spacing)*48)}
+    .lg\:block{display:block}
+    .lg\:flex{display:flex}
+    .lg\:flex-row{flex-direction:row}
+    .lg\:items-start{align-items:flex-start}
+  }
+  @media (min-width:80rem){.xl\:block{display:block}}
+}
+
+body{background-color:var(--color-burgundy);color:var(--color-cream);overflow-x:hidden;font-family:var(--font-oswald),sans-serif}
+path{fill:transparent}
+text{fill:var(--color-burgundy)}
+.text-path-animate{animation:20s linear infinite moveText}
+@keyframes moveText{0%{startOffset:100%}to{startOffset:-100%}}
+</style>
+</head>
+<body class="antialiased">
+<div class="min-h-screen bg-burgundy font-sans selection:bg-orange selection:text-cream">
+
+  <!-- NAV -->
+  <nav class="flex items-center justify-between px-8 py-6 text-cream relative z-50">
+    <div class="font-display text-4xl tracking-wider italic">Ghia</div>
+    <div class="hidden md:flex gap-8 text-sm uppercase tracking-widest font-medium">
+      <a href="#" class="hover:text-orange transition-colors">Попробуй Ghia</a>
+      <a href="#" class="hover:text-orange transition-colors">О Ghia</a>
+      <a href="#" class="hover:text-orange transition-colors">Рецепты</a>
+    </div>
+    <div class="flex gap-6">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 cursor-pointer hover:text-orange transition-colors" aria-hidden="true"><path d="m21 21-4.34-4.34"></path><circle cx="11" cy="11" r="8"></circle></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 cursor-pointer hover:text-orange transition-colors" aria-hidden="true"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 cursor-pointer hover:text-orange transition-colors" aria-hidden="true"><path d="M16 10a4 4 0 0 1-8 0"></path><path d="M3.103 6.034h17.794"></path><path d="M3.4 5.467a2 2 0 0 0-.4 1.2V20a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6.667a2 2 0 0 0-.4-1.2l-2-2.667A2 2 0 0 0 17 2H7a2 2 0 0 0-1.6.8z"></path></svg>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="relative pt-12 pb-48 overflow-hidden">
+    <div class="absolute top-1\/2 left-1\/2 -translate-x-1\/2 -translate-y-1\/2 w-\[800px\] h-\[800px\] bg-\[radial-gradient\(circle\,rgba\(203\,83\,49\,0\.1\)_0\%\,transparent_70\%\)\] rounded-full blur-3xl -z-10"
+         style="position:absolute;top:50%;left:50%;translate:-50% -50%;width:800px;height:800px;background-image:radial-gradient(circle,rgba(203,83,49,0.1) 0%,transparent 70%);border-radius:9999px;filter:blur(64px);z-index:-10"></div>
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="text-center relative" style="opacity:1;transform:none">
+        <h1 class="font-display text-\[12vw\] leading-\[0\.85\] text-cream drop-shadow-2xl z-20 relative" style="font-family:var(--font-bebas),sans-serif;font-size:12vw;line-height:.85;color:#f4ebd9;filter:drop-shadow(0 25px 25px rgba(0,0,0,0.15));z-index:20;position:relative">РЕЦЕПТЫ GHIA</h1>
+        <div class="absolute left-0 top-1\/2 -translate-y-1\/2 text-left hidden lg:block max-w-\[200px\]" style="position:absolute;left:0;top:50%;translate:0 -50%;text-align:left;max-width:200px">
+          <p class="font-serif text-sm italic opacity-90 leading-relaxed" style="font-family:var(--font-playfair),serif;font-size:.875rem;font-style:italic;opacity:.9;line-height:1.625">Создано с мастерством,<br/>Подано с душой.</p>
+        </div>
+        <div class="absolute right-0 top-1\/3 hidden lg:flex items-center justify-center w-32 h-32 rounded-full border border-cream\/30"
+             style="position:absolute;right:0;top:33.3333%;display:none;align-items:center;justify-content:center;width:8rem;height:8rem;border-radius:9999px;border:1px solid rgba(244,235,217,0.3)">
+          <div class="absolute inset-0 m-auto w-12 h-12 flex items-center justify-center border border-cream rounded-full"
+               style="position:absolute;inset:0;margin:auto;width:3rem;height:3rem;display:flex;align-items:center;justify-content:center;border:1px solid #f4ebd9;border-radius:9999px">
+            <div class="w-4 h-4 bg-orange rounded-full" style="width:1rem;height:1rem;background-color:#cb5331;border-radius:9999px"></div>
+          </div>
+          <svg viewBox="0 0 100 100" style="width:100%;height:100%;padding:.5rem">
+            <path id="curve" d="M 50 50 m -40 0 a 40 40 0 1 1 80 0 a 40 40 0 1 1 -80 0" fill="transparent"></path>
+            <text style="font-size:11px;font-family:var(--font-oswald),sans-serif;text-transform:uppercase;letter-spacing:.2em;fill:#f4ebd9">
+              <textPath href="#curve">Все продукты • Все продукты •</textPath>
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Bottles -->
+      <div class="relative h-\[60vh\] mt-\[-10vh\] max-w-4xl mx-auto flex justify-center items-end z-30 pointer-events-none"
+           style="position:relative;height:60vh;margin-top:-10vh;max-width:56rem;margin-inline:auto;display:flex;justify-content:center;align-items:flex-end;z-index:30;pointer-events:none">
+        <div class="relative w-48 h-\[500px\] z-20 origin-bottom" style="position:relative;width:12rem;height:500px;z-index:20;transform-origin:bottom;opacity:1;transform:rotate(-15deg)">
+          <div class="absolute inset-0 rounded-\[40px\] shadow-2xl overflow-hidden border-2 border-white\/10"
+               style="position:absolute;inset:0;border-radius:40px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);overflow:hidden;border:2px solid rgba(255,255,255,0.1);background-image:linear-gradient(to top right,#cb5331,#82181a)">
+            <div class="absolute top-1\/3 w-full h-1\/3 bg-cream\/10 -rotate-12 transform scale-150"
+                 style="position:absolute;top:33.3333%;width:100%;height:33.3333%;background-color:rgba(244,235,217,0.1);rotate:-12deg;scale:150%"></div>
+            <div class="absolute bottom-20 w-32 h-20 bg-cream left-1\/2 -translate-x-1\/2 -rotate-12 rounded-lg flex items-center justify-center shadow-inner"
+                 style="position:absolute;bottom:5rem;width:8rem;height:5rem;background-color:#f4ebd9;left:50%;translate:-50% 0;rotate:-12deg;border-radius:.5rem;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.05)">
+              <span class="font-display text-4xl text-burgundy -rotate-12" style="font-family:var(--font-bebas),sans-serif;font-size:2.25rem;color:#481110;rotate:-12deg">Ghia</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative w-48 h-\[500px\] z-10 origin-bottom -ml-8" style="position:relative;width:12rem;height:500px;z-index:10;transform-origin:bottom;margin-left:-2rem;opacity:1;transform:rotate(10deg)">
+          <div class="absolute inset-0 rounded-\[40px\] shadow-2xl overflow-hidden border-2 border-white\/10"
+               style="position:absolute;inset:0;border-radius:40px;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);overflow:hidden;border:2px solid rgba(255,255,255,0.1);background-image:linear-gradient(to top right,#e40014,#82181a)">
+            <div class="absolute top-1\/4 w-full h-1\/4 bg-white\/20 -rotate-12 transform scale-150"
+                 style="position:absolute;top:25%;width:100%;height:25%;background-color:rgba(255,255,255,0.2);rotate:-12deg;scale:150%"></div>
+            <div class="absolute bottom-24 w-32 h-20 bg-cream left-1\/2 -translate-x-1\/2 -rotate-12 rounded-lg flex items-center justify-center shadow-inner"
+                 style="position:absolute;bottom:6rem;width:8rem;height:5rem;background-color:#f4ebd9;left:50%;translate:-50% 0;rotate:-12deg;border-radius:.5rem;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 2px 4px rgba(0,0,0,0.05)">
+              <span class="font-display text-4xl text-orange -rotate-12" style="font-family:var(--font-bebas),sans-serif;font-size:2.25rem;color:#cb5331;rotate:-12deg">Ghia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAVE DIVIDER -->
+  <div class="relative w-full h-32 md:h-64 -mt-32 md:-mt-64 z-20 overflow-hidden text-cream"
+       style="position:relative;width:100%;height:8rem;margin-top:-8rem;z-index:20;overflow:hidden;color:#f4ebd9">
+    <svg viewBox="0 0 1440 320" style="position:absolute;bottom:0;width:100%;height:100%;transform-style:preserve-3d" preserveAspectRatio="none">
+      <path fill="currentColor" d="M0,160L48,170.7C96,181,192,203,288,186.7C384,171,480,117,576,128C672,139,768,213,864,229.3C960,245,1056,203,1152,176C1248,149,1344,139,1392,133.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+  </div>
+
+  <!-- RECIPE SECTION -->
+  <section class="bg-cream text-burgundy relative pt-20 pb-40" style="background-color:#f4ebd9;color:#481110">
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="flex flex-col lg:flex-row gap-16 items-center lg:items-start max-w-6xl mx-auto"
+           style="display:flex;flex-direction:column;gap:4rem;align-items:center;max-width:72rem;margin-inline:auto">
+
+        <!-- LEFT: Banners -->
+        <div class="flex-1 relative w-full" style="flex:1;position:relative;width:100%">
+          <div class="absolute -top-64 left-0 w-40 md:w-56 h-\[400px\] z-30 hidden lg:block"
+               style="position:absolute;top:-16rem;left:0;width:10rem;height:400px;z-index:30;opacity:1;transform:none">
+            <div class="w-full h-full relative rounded-b-full overflow-hidden" style="width:100%;height:100%;position:relative;border-bottom-right-radius:9999px;border-bottom-left-radius:9999px;overflow:hidden"></div>
+          </div>
+          <div class="relative z-40 lg:ml-48 mt-24 space-y-4" style="position:relative;z-index:40;margin-top:6rem">
+            <div class="bg-orange text-cream px-6 py-3 font-display text-4xl md:text-5xl uppercase tracking-wide inline-block shadow-lg border-2 border-orange\/20"
+                 style="background-color:#cb5331;color:#f4ebd9;padding:.75rem 1.5rem;font-family:var(--font-bebas),sans-serif;font-size:2.25rem;text-transform:uppercase;letter-spacing:.025em;display:inline-block;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);border:2px solid rgba(203,83,49,0.2);opacity:1;transform:rotate(-2deg)">Наливай без сожалений</div>
+            <div class="bg-green text-cream px-6 py-3 font-display text-4xl md:text-5xl uppercase tracking-wide inline-block shadow-lg"
+                 style="background-color:#68886b;color:#f4ebd9;padding:.75rem 1.5rem;font-family:var(--font-bebas),sans-serif;font-size:2.25rem;text-transform:uppercase;letter-spacing:.025em;display:inline-block;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1);opacity:1;transform:rotate(1deg)">Пей осознанно</div>
+            <div class="absolute -left-12 top-10 w-24 h-24 text-dark-green opacity-80 pointer-events-none"
+                 style="position:absolute;left:-3rem;top:2.5rem;width:6rem;height:6rem;color:#2a3a2d;opacity:.8;pointer-events:none">
+              <svg viewBox="0 0 100 100" fill="currentColor"><path d="M20,80 Q50,20 80,80 Q50,90 20,80"></path><circle cx="50" cy="30" r="15"></circle></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: Recipe Card -->
+        <div class="flex-1 relative mt-24 lg:mt-0" style="flex:1;position:relative;margin-top:6rem">
+          <div class="relative z-20" style="position:relative;z-index:20;opacity:1;transform:none">
+            <div class="absolute -inset-4 bg-cream border border-burgundy\/10 rounded-2xl -rotate-3"
+                 style="position:absolute;inset:-1rem;background-color:#f4ebd9;border:1px solid rgba(72,17,16,0.1);border-radius:1rem;rotate:-3deg"></div>
+            <div class="absolute -inset-8 bg-green rounded-3xl rotate-2 opacity-90"
+                 style="position:absolute;inset:-2rem;background-color:#68886b;border-radius:1.5rem;rotate:2deg;opacity:.9"></div>
+            <div class="relative bg-cream border-2 border-burgundy p-6 flex flex-col md:flex-row gap-8 shadow-2xl"
+                 style="position:relative;background-color:#f4ebd9;border:2px solid #481110;padding:1.5rem;display:flex;flex-direction:column;gap:2rem;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)">
+              <!-- Image -->
+              <div class="w-full md:w-1\/2 aspect-4\/5 relative bg-orange overflow-hidden rounded-lg"
+                   style="width:100%;aspect-ratio:4/5;position:relative;background-color:#cb5331;overflow:hidden;border-radius:.5rem">
+                <img alt="Рецепт коктейля" loading="lazy" decoding="async"
+                     style="position:absolute;height:100%;width:100%;left:0;top:0;right:0;bottom:0;object-fit:cover;color:transparent"
+                     src="https://images.unsplash.com/photo-1536935338773-84649205039d?auto=format&fit=crop&q=80&w=828"/>
+              </div>
+              <!-- Text -->
+              <div class="w-full md:w-1\/2 flex flex-col justify-center" style="width:100%;display:flex;flex-direction:column;justify-content:center">
+                <div class="bg-orange text-cream font-display text-3xl px-4 py-1 self-start mb-4 rotate-1"
+                     style="background-color:#cb5331;color:#f4ebd9;font-family:var(--font-bebas),sans-serif;font-size:1.875rem;padding:.25rem 1rem;align-self:flex-start;margin-bottom:1rem;rotate:1deg">MELON-IAL</div>
+                <p class="font-serif italic text-burgundy\/80 mb-8" style="font-family:var(--font-playfair),serif;font-style:italic;color:rgba(72,17,16,0.8);margin-bottom:2rem">Ягодный аперитив</p>
+                <h3 class="font-display text-2xl uppercase tracking-widest mb-4" style="font-family:var(--font-bebas),sans-serif;font-size:1.5rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:1rem">Состав</h3>
+                <ul class="space-y-3 font-sans text-sm" style="font-family:var(--font-oswald),sans-serif;font-size:.875rem">
+                  <li class="flex items-center gap-2" style="display:flex;align-items:center;gap:.5rem"><span class="text-orange text-xs" style="color:#cb5331;font-size:.75rem">▶</span> 2 унц. дынного сока</li>
+                  <li class="flex items-center gap-2" style="display:flex;align-items:center;gap:.5rem"><span class="text-orange text-xs" style="color:#cb5331;font-size:.75rem">▶</span> 1 унц. ягодного аперитива</li>
+                  <li class="flex items-center gap-2" style="display:flex;align-items:center;gap:.5rem"><span class="text-orange text-xs" style="color:#cb5331;font-size:.75rem">▶</span> 150 мл тоника</li>
+                  <li class="flex items-start gap-2" style="display:flex;align-items:flex-start;gap:.5rem"><span class="text-orange text-xs mt-1" style="color:#cb5331;font-size:.75rem;margin-top:.25rem">▶</span> Украсить свежей зеленью и долькой лимона</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Snake path SVG -->
+          <div class="absolute -right-32 -bottom-64 w-96 h-96 z-10 opacity-60 hidden xl:block"
+               style="position:absolute;right:-8rem;bottom:-16rem;width:24rem;height:24rem;z-index:10;opacity:.6">
+            <svg viewBox="0 0 200 400" style="width:100%;height:100%;overflow:visible">
+              <path id="snakePath" d="M 100 0 C 200 100, 0 150, 100 250 C 200 350, 0 400, 100 500" fill="transparent" stroke="#c6a25b" stroke-width="2" stroke-dasharray="4 4"></path>
+              <text style="font-family:var(--font-oswald),sans-serif;font-size:10px;text-transform:uppercase;letter-spacing:.1em;fill:#481110" class="text-path-animate">
+                <textPath href="#snakePath" startOffset="0%">ИЗЫСКАННОСТЬ. ТИХОЕ ПОДАНИЕ - ГОРЬКО-СЛАДКИЙ ПО ЗАДУМКЕ - ЯСНОСТЬ В КАЖДОМ ГЛОТКЕ - МЕНЬШЕ ПИТЬ. БОЛЬШЕ ЧУВСТВОВАТЬ - РИТУАЛ, НЕ ПРИВЫЧКА - ИЗЫСКАННОСТЬ. ТИХОЕ ПОДАНИЕ - ГОРЬКО-СЛАДКИЙ ПО ЗАДУМКЕ - ЯСНОСТЬ В КАЖДОМ ГЛОТКЕ - МЕНЬШЕ ПИТЬ. БОЛЬШЕ ЧУВСТВОВАТЬ - РИТУАЛ, НЕ ПРИВЫЧКА -</textPath>
+              </text>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // Show elements that start hidden (Next.js SSR animation targets)
+  document.querySelectorAll('[style*="opacity:0"]').forEach(function(el){
+    el.style.opacity='1';
+    el.style.transform='none';
+  });
+  // Show lg:block / lg:flex on large screens
+  if(window.innerWidth>=1024){
+    document.querySelectorAll('.lg\\:block').forEach(function(el){el.style.display='block';});
+    document.querySelectorAll('.lg\\:flex').forEach(function(el){el.style.display='flex';});
+    document.querySelectorAll('.lg\\:ml-48').forEach(function(el){el.style.marginLeft='12rem';});
+    document.querySelectorAll('.lg\\:items-start').forEach(function(el){el.style.alignItems='flex-start';});
+    document.querySelectorAll('.lg\\:flex-row').forEach(function(el){el.style.flexDirection='row';});
+    document.querySelectorAll('.lg\\:mt-0').forEach(function(el){el.style.marginTop='0';});
+  }
+  if(window.innerWidth>=768){
+    document.querySelectorAll('.md\\:flex').forEach(function(el){el.style.display='flex';});
+    document.querySelectorAll('.md\\:flex-row').forEach(function(el){el.style.flexDirection='row';});
+    document.querySelectorAll('.md\\:w-1\\/2').forEach(function(el){el.style.width='50%';});
+  }
+  if(window.innerWidth>=1280){
+    document.querySelectorAll('.xl\\:block').forEach(function(el){el.style.display='block';});
+  }
+</script>
+</body>
+</html>

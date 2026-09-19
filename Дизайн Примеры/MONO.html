@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AMTRIX Клуб — Хакерский Коллектив</title>
+  <meta name="description" content="Хакерский коллектив для тех, кто создаёт интернет-продукты с помощью ИИ, кода и дизайна."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+:root,:host{--color-amber-400:#fcbb00;--color-emerald-50:#ecfdf5;--color-emerald-400:#00d294;--color-emerald-500:#00bb7f;--color-emerald-600:#009767;--spacing:.25rem;--container-md:28rem;--container-lg:32rem;--container-xl:36rem;--container-2xl:42rem;--container-4xl:56rem;--container-5xl:64rem;--container-6xl:72rem;--text-xs:.75rem;--text-xs--line-height:calc(1/.75);--text-sm:.875rem;--text-sm--line-height:calc(1.25/.875);--text-base:1rem;--text-base--line-height:calc(1.5/1);--text-lg:1.125rem;--text-lg--line-height:calc(1.75/1.125);--text-xl:1.25rem;--text-xl--line-height:calc(1.75/1.25);--text-2xl:1.5rem;--text-2xl--line-height:calc(2/1.5);--text-3xl:1.875rem;--text-3xl--line-height:calc(2.25/1.875);--text-4xl:2.25rem;--text-4xl--line-height:calc(2.5/2.25);--text-5xl:3rem;--text-5xl--line-height:1;--text-6xl:3.75rem;--text-6xl--line-height:1;--font-weight-medium:500;--font-weight-semibold:600;--font-weight-bold:700;--tracking-tight:-.025em;--tracking-widest:.1em;--leading-tight:1.25;--leading-snug:1.375;--leading-relaxed:1.625;--radius-sm:.25rem;--ease-in-out:cubic-bezier(.4,0,.2,1);--blur-xl:24px;--default-transition-duration:.15s;--default-transition-timing-function:cubic-bezier(.4,0,.2,1);--default-font-family:var(--font-space-mono);--default-mono-font-family:var(--font-jetbrains-mono)}@supports (color:lab(0% 0 0)){:root,:host{--color-amber-400:lab(80.1641% 16.6016 99.2089);--color-emerald-50:lab(97.8462% -6.94966 1.85487);--color-emerald-400:lab(75.0771% -60.7313 19.4147);--color-emerald-500:lab(66.9756% -58.27 19.5419);--color-emerald-600:lab(55.0481% -49.9246 15.93)}}}@layer base{*,:after,:before,::backdrop{box-sizing:border-box;border:0 solid;margin:0;padding:0}::file-selector-button{box-sizing:border-box;border:0 solid;margin:0;padding:0}html,:host{-webkit-text-size-adjust:100%;tab-size:4;line-height:1.5;font-family:var(--default-font-family,ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji");font-feature-settings:var(--default-font-feature-settings,normal);font-variation-settings:var(--default-font-variation-settings,normal);-webkit-tap-highlight-color:transparent}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;-webkit-text-decoration:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,samp,pre{font-family:var(--default-mono-font-family,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace);font-feature-settings:var(--default-mono-font-feature-settings,normal);font-variation-settings:var(--default-mono-font-variation-settings,normal);font-size:1em}small{font-size:80%}sub,sup{vertical-align:baseline;font-size:75%;line-height:0;position:relative}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}:-moz-focusring{outline:auto}progress{vertical-align:baseline}summary{display:list-item}ol,ul,menu{list-style:none}img,svg,video,canvas,audio,iframe,embed,object{vertical-align:middle;display:block}img,video{max-width:100%;height:auto}button,input,select,optgroup,textarea{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}::file-selector-button{font:inherit;font-feature-settings:inherit;font-variation-settings:inherit;letter-spacing:inherit;color:inherit;opacity:1;background-color:#0000;border-radius:0}:where(select:is([multiple],[size])) optgroup{font-weight:bolder}:where(select:is([multiple],[size])) optgroup option{padding-inline-start:20px}::file-selector-button{margin-inline-end:4px}::placeholder{opacity:1}@supports (not ((-webkit-appearance:-apple-pay-button))) or (contain-intrinsic-size:1px){::placeholder{color:currentColor}@supports (color:color-mix(in lab, red, red)){::placeholder{color:color-mix(in oklab,currentcolor 50%,transparent)}}}textarea{resize:vertical}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-date-and-time-value{min-height:1lh;text-align:inherit}::-webkit-datetime-edit{display:inline-flex}::-webkit-datetime-edit-fields-wrapper{padding:0}::-webkit-datetime-edit{padding-block:0}::-webkit-datetime-edit-year-field{padding-block:0}::-webkit-datetime-edit-month-field{padding-block:0}::-webkit-datetime-edit-day-field{padding-block:0}::-webkit-datetime-edit-hour-field{padding-block:0}::-webkit-datetime-edit-minute-field{padding-block:0}::-webkit-datetime-edit-second-field{padding-block:0}::-webkit-datetime-edit-millisecond-field{padding-block:0}::-webkit-datetime-edit-meridiem-field{padding-block:0}::-webkit-calendar-picker-indicator{line-height:1}:-moz-ui-invalid{box-shadow:none}button,input:where([type=button],[type=reset],[type=submit]){appearance:button}::file-selector-button{appearance:button}::-webkit-inner-spin-button{height:auto}::-webkit-outer-spin-button{height:auto}[hidden]:where(:not([hidden=until-found])){display:none!important}}@layer components;@layer utilities{.pointer-events-none{pointer-events:none}.visible{visibility:visible}.absolute{position:absolute}.fixed{position:fixed}.relative{position:relative}.inset-0{inset:calc(var(--spacing)*0)}.start{inset-inline-start:var(--spacing)}.top-0{top:calc(var(--spacing)*0)}.top-6{top:calc(var(--spacing)*6)}.top-8{top:calc(var(--spacing)*8)}.right-0{right:calc(var(--spacing)*0)}.bottom-6{bottom:calc(var(--spacing)*6)}.bottom-8{bottom:calc(var(--spacing)*8)}.left-0{left:calc(var(--spacing)*0)}.left-5{left:calc(var(--spacing)*5)}.left-6{left:calc(var(--spacing)*6)}.left-8{left:calc(var(--spacing)*8)}.z-50{z-index:50}.mx-6{margin-inline:calc(var(--spacing)*6)}.mx-auto{margin-inline:auto}.my-6{margin-block:calc(var(--spacing)*6)}.mt-0\.5{margin-top:calc(var(--spacing)*.5)}.mt-1{margin-top:calc(var(--spacing)*1)}.mt-2{margin-top:calc(var(--spacing)*2)}.mt-3{margin-top:calc(var(--spacing)*3)}.mt-4{margin-top:calc(var(--spacing)*4)}.mt-5{margin-top:calc(var(--spacing)*5)}.mt-6{margin-top:calc(var(--spacing)*6)}.mt-8{margin-top:calc(var(--spacing)*8)}.mt-10{margin-top:calc(var(--spacing)*10)}.mt-14{margin-top:calc(var(--spacing)*14)}.mt-16{margin-top:calc(var(--spacing)*16)}.mr-2{margin-right:calc(var(--spacing)*2)}.-mb-px{margin-bottom:-1px}.mb-2{margin-bottom:calc(var(--spacing)*2)}.mb-3{margin-bottom:calc(var(--spacing)*3)}.mb-4{margin-bottom:calc(var(--spacing)*4)}.mb-5{margin-bottom:calc(var(--spacing)*5)}.mb-6{margin-bottom:calc(var(--spacing)*6)}.ml-2{margin-left:calc(var(--spacing)*2)}.ml-3{margin-left:calc(var(--spacing)*3)}.line-clamp-3{-webkit-line-clamp:3;-webkit-box-orient:vertical;display:-webkit-box;overflow:hidden}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.inline-block{display:inline-block}.inline-flex{display:inline-flex}.aspect-square{aspect-ratio:1}.h-0{height:calc(var(--spacing)*0)}.h-1\.5{height:calc(var(--spacing)*1.5)}.h-2{height:calc(var(--spacing)*2)}.h-2\.5{height:calc(var(--spacing)*2.5)}.h-3{height:calc(var(--spacing)*3)}.h-4{height:calc(var(--spacing)*4)}.h-5{height:calc(var(--spacing)*5)}.h-7{height:calc(var(--spacing)*7)}.h-8{height:calc(var(--spacing)*8)}.h-9{height:calc(var(--spacing)*9)}.h-10{height:calc(var(--spacing)*10)}.h-11{height:calc(var(--spacing)*11)}.h-12{height:calc(var(--spacing)*12)}.h-13{height:calc(var(--spacing)*13)}.h-16{height:calc(var(--spacing)*16)}.h-20{height:calc(var(--spacing)*20)}.h-full{height:100%}.h-px{height:1px}.min-h-\[220px\]{min-height:220px}.min-h-\[280px\]{min-height:280px}.w-0{width:calc(var(--spacing)*0)}.w-1\.5{width:calc(var(--spacing)*1.5)}.w-2\.5{width:calc(var(--spacing)*2.5)}.w-3{width:calc(var(--spacing)*3)}.w-3\/5{width:60%}.w-4\/5{width:80%}.w-5{width:calc(var(--spacing)*5)}.w-7{width:calc(var(--spacing)*7)}.w-8{width:calc(var(--spacing)*8)}.w-10{width:calc(var(--spacing)*10)}.w-12{width:calc(var(--spacing)*12)}.w-14{width:calc(var(--spacing)*14)}.w-16{width:calc(var(--spacing)*16)}.w-20{width:calc(var(--spacing)*20)}.w-24{width:calc(var(--spacing)*24)}.w-28{width:calc(var(--spacing)*28)}.w-32{width:calc(var(--spacing)*32)}.w-48{width:calc(var(--spacing)*48)}.w-64{width:calc(var(--spacing)*64)}.w-\[52px\]{width:52px}.w-full{width:100%}.w-px{width:1px}.max-w-2xl{max-width:var(--container-2xl)}.max-w-4xl{max-width:var(--container-4xl)}.max-w-5xl{max-width:var(--container-5xl)}.max-w-6xl{max-width:var(--container-6xl)}.max-w-lg{max-width:var(--container-lg)}.max-w-md{max-width:var(--container-md)}.max-w-xl{max-width:var(--container-xl)}.flex-1{flex:1}.shrink-0{flex-shrink:0}.cursor-pointer{cursor:pointer}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.grid-rows-\[0fr\]{grid-template-rows:0fr}.grid-rows-\[1fr\]{grid-template-rows:1fr}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-baseline{align-items:baseline}.items-center{align-items:center}.items-start{align-items:flex-start}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.gap-1{gap:calc(var(--spacing)*1)}.gap-1\.5{gap:calc(var(--spacing)*1.5)}.gap-2{gap:calc(var(--spacing)*2)}.gap-2\.5{gap:calc(var(--spacing)*2.5)}.gap-3{gap:calc(var(--spacing)*3)}.gap-4{gap:calc(var(--spacing)*4)}.gap-5{gap:calc(var(--spacing)*5)}.gap-6{gap:calc(var(--spacing)*6)}.gap-8{gap:calc(var(--spacing)*8)}.gap-10{gap:calc(var(--spacing)*10)}.gap-12{gap:calc(var(--spacing)*12)}:where(.space-y-1\.5>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*1.5)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*1.5)*calc(1 - var(--tw-space-y-reverse)))}:where(.space-y-2>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*2)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*2)*calc(1 - var(--tw-space-y-reverse)))}:where(.space-y-2\.5>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*2.5)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*2.5)*calc(1 - var(--tw-space-y-reverse)))}:where(.space-y-3>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*3)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*3)*calc(1 - var(--tw-space-y-reverse)))}:where(.space-y-4>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*4)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*4)*calc(1 - var(--tw-space-y-reverse)))}:where(.space-y-6>:not(:last-child)){--tw-space-y-reverse:0;margin-block-start:calc(calc(var(--spacing)*6)*var(--tw-space-y-reverse));margin-block-end:calc(calc(var(--spacing)*6)*calc(1 - var(--tw-space-y-reverse)))}.gap-x-12{column-gap:calc(var(--spacing)*12)}:where(.-space-x-2>:not(:last-child)){--tw-space-x-reverse:0;margin-inline-start:calc(calc(var(--spacing)*-2)*var(--tw-space-x-reverse));margin-inline-end:calc(calc(var(--spacing)*-2)*calc(1 - var(--tw-space-x-reverse)))}.gap-y-4{row-gap:calc(var(--spacing)*4)}.overflow-hidden{overflow:hidden}.rounded{border-radius:.25rem}.rounded-full{border-radius:3.40282e38px}.rounded-sm{border-radius:var(--radius-sm)}.rounded-tl-none{border-top-left-radius:0}.border{border-style:var(--tw-border-style);border-width:1px}.border-2{border-style:var(--tw-border-style);border-width:2px}.border-y{border-block-style:var(--tw-border-style);border-block-width:1px}.border-t{border-top-style:var(--tw-border-style);border-top-width:1px}.border-t-\[31px\]{border-top-style:var(--tw-border-style);border-top-width:31px}.border-t-\[32px\]{border-top-style:var(--tw-border-style);border-top-width:32px}.border-t-\[47px\]{border-top-style:var(--tw-border-style);border-top-width:47px}.border-t-\[48px\]{border-top-style:var(--tw-border-style);border-top-width:48px}.border-r{border-right-style:var(--tw-border-style);border-right-width:1px}.border-b{border-bottom-style:var(--tw-border-style);border-bottom-width:1px}.border-b-2{border-bottom-style:var(--tw-border-style);border-bottom-width:2px}.border-l{border-left-style:var(--tw-border-style);border-left-width:1px}.border-l-\[31px\]{border-left-style:var(--tw-border-style);border-left-width:31px}.border-l-\[32px\]{border-left-style:var(--tw-border-style);border-left-width:32px}.border-l-\[47px\]{border-left-style:var(--tw-border-style);border-left-width:47px}.border-l-\[48px\]{border-left-style:var(--tw-border-style);border-left-width:48px}.border-border{border-color:var(--border)}.border-primary,.border-primary\/10{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.border-primary\/10{border-color:color-mix(in oklab,var(--primary)10%,transparent)}}.border-primary\/15{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.border-primary\/15{border-color:color-mix(in oklab,var(--primary)15%,transparent)}}.border-primary\/20{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.border-primary\/20{border-color:color-mix(in oklab,var(--primary)20%,transparent)}}.border-primary\/30{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.border-primary\/30{border-color:color-mix(in oklab,var(--primary)30%,transparent)}}.border-primary\/40{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.border-primary\/40{border-color:color-mix(in oklab,var(--primary)40%,transparent)}}.border-secondary{border-color:var(--secondary)}.border-surface{border-color:var(--surface)}.border-t-background{border-top-color:var(--background)}.border-l-transparent{border-left-color:#0000}.bg-amber-400\/30{background-color:#fcbb004d}@supports (color:color-mix(in lab, red, red)){.bg-amber-400\/30{background-color:color-mix(in oklab,var(--color-amber-400)30%,transparent)}}.bg-background,.bg-background\/80{background-color:var(--background)}@supports (color:color-mix(in lab, red, red)){.bg-background\/80{background-color:color-mix(in oklab,var(--background)80%,transparent)}}.bg-background\/95{background-color:var(--background)}@supports (color:color-mix(in lab, red, red)){.bg-background\/95{background-color:color-mix(in oklab,var(--background)95%,transparent)}}.bg-emerald-50{background-color:var(--color-emerald-50)}.bg-emerald-400\/20{background-color:#00d29433}@supports (color:color-mix(in lab, red, red)){.bg-emerald-400\/20{background-color:color-mix(in oklab,var(--color-emerald-400)20%,transparent)}}.bg-emerald-400\/30{background-color:#00d2944d}@supports (color:color-mix(in lab, red, red)){.bg-emerald-400\/30{background-color:color-mix(in oklab,var(--color-emerald-400)30%,transparent)}}.bg-emerald-500{background-color:var(--color-emerald-500)}.bg-foreground\/5{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/5{background-color:color-mix(in oklab,var(--foreground)5%,transparent)}}.bg-foreground\/6{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/6{background-color:color-mix(in oklab,var(--foreground)6%,transparent)}}.bg-foreground\/8{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/8{background-color:color-mix(in oklab,var(--foreground)8%,transparent)}}.bg-foreground\/10{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/10{background-color:color-mix(in oklab,var(--foreground)10%,transparent)}}.bg-foreground\/15{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/15{background-color:color-mix(in oklab,var(--foreground)15%,transparent)}}.bg-foreground\/\[0\.03\]{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/\[0\.03\]{background-color:color-mix(in oklab,var(--foreground)3%,transparent)}}.bg-foreground\/\[0\.04\]{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.bg-foreground\/\[0\.04\]{background-color:color-mix(in oklab,var(--foreground)4%,transparent)}}.bg-primary,.bg-primary\/5{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/5{background-color:color-mix(in oklab,var(--primary)5%,transparent)}}.bg-primary\/8{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/8{background-color:color-mix(in oklab,var(--primary)8%,transparent)}}.bg-primary\/10{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/10{background-color:color-mix(in oklab,var(--primary)10%,transparent)}}.bg-primary\/15{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/15{background-color:color-mix(in oklab,var(--primary)15%,transparent)}}.bg-primary\/20{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/20{background-color:color-mix(in oklab,var(--primary)20%,transparent)}}.bg-primary\/30{background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.bg-primary\/30{background-color:color-mix(in oklab,var(--primary)30%,transparent)}}.bg-secondary{background-color:var(--secondary)}.bg-surface{background-color:var(--surface)}.bg-transparent{background-color:#0000}.bg-gradient-to-br{--tw-gradient-position:to bottom right in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}.bg-gradient-to-r{--tw-gradient-position:to right in oklab;background-image:linear-gradient(var(--tw-gradient-stops))}.from-primary{--tw-gradient-from:var(--primary);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.from-primary\/8{--tw-gradient-from:var(--primary)}@supports (color:color-mix(in lab, red, red)){.from-primary\/8{--tw-gradient-from:color-mix(in oklab,var(--primary)8%,transparent)}}.from-primary\/8{--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.from-primary\/10{--tw-gradient-from:var(--primary)}@supports (color:color-mix(in lab, red, red)){.from-primary\/10{--tw-gradient-from:color-mix(in oklab,var(--primary)10%,transparent)}}.from-primary\/10{--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.to-emerald-500{--tw-gradient-to:var(--color-emerald-500);--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.to-primary\/5{--tw-gradient-to:var(--primary)}@supports (color:color-mix(in lab, red, red)){.to-primary\/5{--tw-gradient-to:color-mix(in oklab,var(--primary)5%,transparent)}}.to-primary\/5{--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.to-transparent{--tw-gradient-to:transparent;--tw-gradient-stops:var(--tw-gradient-via-stops,var(--tw-gradient-position),var(--tw-gradient-from)var(--tw-gradient-from-position),var(--tw-gradient-to)var(--tw-gradient-to-position))}.p-2{padding:calc(var(--spacing)*2)}.p-3{padding:calc(var(--spacing)*3)}.p-4{padding:calc(var(--spacing)*4)}.p-5{padding:calc(var(--spacing)*5)}.p-6{padding:calc(var(--spacing)*6)}.p-7{padding:calc(var(--spacing)*7)}.px-2{padding-inline:calc(var(--spacing)*2)}.px-3{padding-inline:calc(var(--spacing)*3)}.px-3\.5{padding-inline:calc(var(--spacing)*3.5)}.px-4{padding-inline:calc(var(--spacing)*4)}.px-6{padding-inline:calc(var(--spacing)*6)}.px-8{padding-inline:calc(var(--spacing)*8)}.py-0\.5{padding-block:calc(var(--spacing)*.5)}.py-1{padding-block:calc(var(--spacing)*1)}.py-2{padding-block:calc(var(--spacing)*2)}.py-3{padding-block:calc(var(--spacing)*3)}.py-4{padding-block:calc(var(--spacing)*4)}.py-8{padding-block:calc(var(--spacing)*8)}.py-10{padding-block:calc(var(--spacing)*10)}.py-12{padding-block:calc(var(--spacing)*12)}.py-14{padding-block:calc(var(--spacing)*14)}.py-16{padding-block:calc(var(--spacing)*16)}.py-24{padding-block:calc(var(--spacing)*24)}.pt-1{padding-top:calc(var(--spacing)*1)}.pt-4{padding-top:calc(var(--spacing)*4)}.pt-6{padding-top:calc(var(--spacing)*6)}.pt-24{padding-top:calc(var(--spacing)*24)}.pt-28{padding-top:calc(var(--spacing)*28)}.pb-3{padding-bottom:calc(var(--spacing)*3)}.pb-4{padding-bottom:calc(var(--spacing)*4)}.pb-6{padding-bottom:calc(var(--spacing)*6)}.pb-16{padding-bottom:calc(var(--spacing)*16)}.pb-20{padding-bottom:calc(var(--spacing)*20)}.pl-4{padding-left:calc(var(--spacing)*4)}.text-center{text-align:center}.text-left{text-align:left}.font-display{font-family:var(--font-space-mono)}.font-mono{font-family:var(--font-jetbrains-mono)}.font-sans{font-family:var(--font-space-mono)}.text-2xl{font-size:var(--text-2xl);line-height:var(--tw-leading,var(--text-2xl--line-height))}.text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}.text-4xl{font-size:var(--text-4xl);line-height:var(--tw-leading,var(--text-4xl--line-height))}.text-base{font-size:var(--text-base);line-height:var(--tw-leading,var(--text-base--line-height))}.text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.text-sm{font-size:var(--text-sm);line-height:var(--tw-leading,var(--text-sm--line-height))}.text-xl{font-size:var(--text-xl);line-height:var(--tw-leading,var(--text-xl--line-height))}.text-xs{font-size:var(--text-xs);line-height:var(--tw-leading,var(--text-xs--line-height))}.text-\[11px\]{font-size:11px}.text-\[15px\]{font-size:15px}.leading-\[1\.1\]{--tw-leading:1.1;line-height:1.1}.leading-relaxed{--tw-leading:var(--leading-relaxed);line-height:var(--leading-relaxed)}.leading-snug{--tw-leading:var(--leading-snug);line-height:var(--leading-snug)}.leading-tight{--tw-leading:var(--leading-tight);line-height:var(--leading-tight)}.font-bold{--tw-font-weight:var(--font-weight-bold);font-weight:var(--font-weight-bold)}.font-medium{--tw-font-weight:var(--font-weight-medium);font-weight:var(--font-weight-medium)}.font-semibold{--tw-font-weight:var(--font-weight-semibold);font-weight:var(--font-weight-semibold)}.tracking-\[0\.2em\]{--tw-tracking:.2em;letter-spacing:.2em}.tracking-\[0\.15em\]{--tw-tracking:.15em;letter-spacing:.15em}.tracking-\[0\.24em\]{--tw-tracking:.24em;letter-spacing:.24em}.tracking-tight{--tw-tracking:var(--tracking-tight);letter-spacing:var(--tracking-tight)}.tracking-widest{--tw-tracking:var(--tracking-widest);letter-spacing:var(--tracking-widest)}.whitespace-nowrap{white-space:nowrap}.text-background{color:var(--background)}.text-emerald-600{color:var(--color-emerald-600)}.text-foreground,.text-foreground\/25{color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.text-foreground\/25{color:color-mix(in oklab,var(--foreground)25%,transparent)}}.text-foreground\/60{color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.text-foreground\/60{color:color-mix(in oklab,var(--foreground)60%,transparent)}}.text-foreground\/70{color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.text-foreground\/70{color:color-mix(in oklab,var(--foreground)70%,transparent)}}.text-primary{color:var(--primary)}.text-secondary{color:var(--secondary)}.text-text-muted{color:var(--text-muted)}.text-text-subtle{color:var(--text-subtle)}.uppercase{text-transform:uppercase}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.opacity-0{opacity:0}.opacity-70{opacity:.7}.opacity-100{opacity:1}.shadow-\[0_0_6px_rgba\(55\,247\,18\,0\.3\)\]{--tw-shadow:0 0 6px var(--tw-shadow-color,#37f7124d);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px var(--tw-shadow-color,#0000001a),0 4px 6px -4px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px var(--tw-shadow-color,#0000001a),0 2px 4px -2px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 3px 0 var(--tw-shadow-color,#0000001a),0 1px 2px -1px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.backdrop-blur-xl{--tw-backdrop-blur:blur(var(--blur-xl));-webkit-backdrop-filter:var(--tw-backdrop-blur,)var(--tw-backdrop-brightness,)var(--tw-backdrop-contrast,)var(--tw-backdrop-grayscale,)var(--tw-backdrop-hue-rotate,)var(--tw-backdrop-invert,)var(--tw-backdrop-opacity,)var(--tw-backdrop-saturate,)var(--tw-backdrop-sepia,);backdrop-filter:var(--tw-backdrop-blur,)var(--tw-backdrop-brightness,)var(--tw-backdrop-contrast,)var(--tw-backdrop-grayscale,)var(--tw-backdrop-hue-rotate,)var(--tw-backdrop-invert,)var(--tw-backdrop-opacity,)var(--tw-backdrop-saturate,)var(--tw-backdrop-sepia,)}.transition{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to,opacity,box-shadow,transform,translate,scale,rotate,filter,-webkit-backdrop-filter,backdrop-filter,display,content-visibility,overlay,pointer-events;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-all{transition-property:all;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.transition-colors{transition-property:color,background-color,border-color,outline-color,text-decoration-color,fill,stroke,--tw-gradient-from,--tw-gradient-via,--tw-gradient-to;transition-timing-function:var(--tw-ease,var(--default-transition-timing-function));transition-duration:var(--tw-duration,var(--default-transition-duration))}.duration-200{--tw-duration:.2s;transition-duration:.2s}.duration-300{--tw-duration:.3s;transition-duration:.3s}.duration-400{--tw-duration:.4s;transition-duration:.4s}.ease-in-out{--tw-ease:var(--ease-in-out);transition-timing-function:var(--ease-in-out)}.select-none{-webkit-user-select:none;user-select:none}@media (hover:hover){.group-hover\:bg-primary\/\[0\.08\]:is(:where(.group):hover *){background-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.group-hover\:bg-primary\/\[0\.08\]:is(:where(.group):hover *){background-color:color-mix(in oklab,var(--primary)8%,transparent)}}.group-hover\:text-primary:is(:where(.group):hover *){color:var(--primary)}.hover\:border-border:hover{border-color:var(--border)}.hover\:border-primary:hover,.hover\:border-primary\/50:hover{border-color:var(--primary)}@supports (color:color-mix(in lab, red, red)){.hover\:border-primary\/50:hover{border-color:color-mix(in oklab,var(--primary)50%,transparent)}}.hover\:border-secondary-dark:hover{border-color:var(--secondary-dark)}.hover\:bg-foreground\/\[0\.02\]:hover{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.hover\:bg-foreground\/\[0\.02\]:hover{background-color:color-mix(in oklab,var(--foreground)2%,transparent)}}.hover\:bg-foreground\/\[0\.04\]:hover{background-color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.hover\:bg-foreground\/\[0\.04\]:hover{background-color:color-mix(in oklab,var(--foreground)4%,transparent)}}.hover\:bg-primary:hover{background-color:var(--primary)}.hover\:bg-primary-dark:hover{background-color:var(--primary-dark)}.hover\:bg-secondary-dark:hover{background-color:var(--secondary-dark)}.hover\:text-background:hover{color:var(--background)}.hover\:text-foreground:hover,.hover\:text-foreground\/50:hover{color:var(--foreground)}@supports (color:color-mix(in lab, red, red)){.hover\:text-foreground\/50:hover{color:color-mix(in oklab,var(--foreground)50%,transparent)}}.hover\:text-primary:hover{color:var(--primary)}.hover\:shadow-\[0_0_14px_rgba\(55\,247\,18\,0\.4\)\]:hover{--tw-shadow:0 0 14px var(--tw-shadow-color,#37f71266);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}.hover\:shadow-md:hover{--tw-shadow:0 4px 6px -1px var(--tw-shadow-color,#0000001a),0 2px 4px -2px var(--tw-shadow-color,#0000001a);box-shadow:var(--tw-inset-shadow),var(--tw-inset-ring-shadow),var(--tw-ring-offset-shadow),var(--tw-ring-shadow),var(--tw-shadow)}}.focus-visible\:outline-2:focus-visible{outline-style:var(--tw-outline-style);outline-width:2px}.focus-visible\:outline-offset-2:focus-visible{outline-offset:2px}.focus-visible\:outline-primary:focus-visible{outline-color:var(--primary)}.active\:scale-\[0\.98\]:active{scale:.98}@media (min-width:40rem){.sm\:block{display:block}.sm\:flex{display:flex}.sm\:inline{display:inline}.sm\:min-h-\[340px\]{min-height:340px}.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.sm\:flex-row{flex-direction:row}.sm\:items-center{align-items:center}.sm\:justify-between{justify-content:space-between}.sm\:p-8{padding:calc(var(--spacing)*8)}.sm\:text-3xl{font-size:var(--text-3xl);line-height:var(--tw-leading,var(--text-3xl--line-height))}.sm\:text-4xl{font-size:var(--text-4xl);line-height:var(--tw-leading,var(--text-4xl--line-height))}.sm\:text-5xl{font-size:var(--text-5xl);line-height:var(--tw-leading,var(--text-5xl--line-height))}}@media (min-width:48rem){.md\:mt-2{margin-top:calc(var(--spacing)*2)}.md\:flex{display:flex}.md\:hidden{display:none}.md\:w-auto{width:auto}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.md\:grid-cols-\[1\.3fr_0\.9fr\]{grid-template-columns:1.3fr .9fr}.md\:flex-row{flex-direction:row}.md\:items-end{align-items:flex-end}.md\:justify-between{justify-content:space-between}.md\:gap-10{gap:calc(var(--spacing)*10)}.md\:gap-x-16{column-gap:calc(var(--spacing)*16)}.md\:px-16{padding-inline:calc(var(--spacing)*16)}.md\:py-14{padding-block:calc(var(--spacing)*14)}.md\:py-16{padding-block:calc(var(--spacing)*16)}.md\:py-20{padding-block:calc(var(--spacing)*20)}.md\:py-32{padding-block:calc(var(--spacing)*32)}.md\:pt-28{padding-top:calc(var(--spacing)*28)}.md\:pt-36{padding-top:calc(var(--spacing)*36)}.md\:pb-28{padding-bottom:calc(var(--spacing)*28)}.md\:text-5xl{font-size:var(--text-5xl);line-height:var(--tw-leading,var(--text-5xl--line-height))}.md\:text-6xl{font-size:var(--text-6xl);line-height:var(--tw-leading,var(--text-6xl--line-height))}.md\:text-base{font-size:var(--text-base);line-height:var(--tw-leading,var(--text-base--line-height))}.md\:text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}.md\:text-\[2\.75rem\]{font-size:2.75rem}.md\:leading-\[1\.15\]{--tw-leading:1.15;line-height:1.15}}@media (min-width:64rem){.lg\:block{display:block}.lg\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}.lg\:justify-start{justify-content:flex-start}.lg\:gap-16{gap:calc(var(--spacing)*16)}.lg\:pt-40{padding-top:calc(var(--spacing)*40)}.lg\:pb-32{padding-bottom:calc(var(--spacing)*32)}.lg\:text-left{text-align:left}.lg\:text-6xl{font-size:var(--text-6xl);line-height:var(--tw-leading,var(--text-6xl--line-height))}.lg\:text-lg{font-size:var(--text-lg);line-height:var(--tw-leading,var(--text-lg--line-height))}}}:root{--background:#020804;--foreground:#37f712;--primary:#37f712;--primary-light:#74ff5a;--primary-dark:#1f9e0c;--secondary:#37f712;--secondary-light:#74ff5a;--secondary-dark:#1f9e0c;--success:#00a63d;--warning:#fe9900;--danger:#ff2157;--surface:#04120a;--border:#184a29;--text-muted:#1f9e0c;--text-subtle:#1f9e0c}html{scroll-behavior:smooth}body{background:var(--background);color:var(--foreground);font-family:var(--font-space-mono),ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;text-rendering:geometricprecision}::selection{color:var(--foreground);background:#37f7123d}@keyframes cursor-blink{0%,49%{opacity:1}to{opacity:0}}@keyframes typing{0%{width:0}to{width:11ch}}@keyframes matrix-rain{0%{background-position:0 0}to{background-position:0 220px}}@keyframes panel-glow{0%,to{box-shadow:0 0 #37f71200}to{box-shadow:0 0 20px #37f7122e}}@keyframes pulse-soft{0%,to{opacity:1}50%{opacity:.55}}@keyframes marquee-slide{0%{transform:translate(0)}to{transform:translate(-50%)}}.animate-cursor-blink{animation:1s step-end infinite cursor-blink}.typing-line{white-space:nowrap;width:0;animation:2s steps(11,end) .2s forwards typing;display:inline-block;overflow:hidden}.pulse-soft{animation:2s ease-in-out infinite pulse-soft}.matrix-bg:before{content:"";pointer-events:none;opacity:.5;background-image:linear-gradient(#37f7120f 1px,#0000 1px),linear-gradient(90deg,#37f7121f 1px,#0000 1px);background-size:100% 18px,18px 100%;animation:10s linear infinite matrix-rain;position:absolute;inset:0}.grid-noise:after{content:"";pointer-events:none;opacity:.2;background-image:radial-gradient(#37f71238 .45px,#0000 .45px);background-size:4px 4px;position:absolute;inset:0}.terminal-panel{border:1px solid var(--secondary);background:var(--surface);border-radius:.5rem;padding:1rem;animation:4s ease-in-out infinite panel-glow}.terminal-dot{background:var(--secondary);border-radius:9999px;width:.5rem;height:.5rem}.terminal-button{border:1px solid var(--primary);color:var(--foreground);background:#04140bf2;border-radius:.5rem;align-items:center;padding:.6rem .85rem;font-size:.9rem;transition:box-shadow .16s,transform .16s,border-color .16s;display:inline-flex}.terminal-button:hover{border-color:var(--secondary);transform:translateY(-1px);box-shadow:0 0 14px #37f71247}.terminal-button:focus-visible,.terminal-link:focus-visible{outline:2px solid var(--secondary);outline-offset:2px}.marquee{animation:24s linear infinite marquee-slide}.terminal-link{color:var(--text-muted);transition:color .15s,text-shadow .15s}.terminal-link:hover{color:var(--foreground);text-shadow:0 0 12px #37f71259}@media (prefers-reduced-motion:reduce){*,:before,:after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}@property --tw-space-y-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-space-x-reverse{syntax:"*";inherits:false;initial-value:0}@property --tw-border-style{syntax:"*";inherits:false;initial-value:solid}@property --tw-gradient-position{syntax:"*";inherits:false}@property --tw-gradient-from{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-via{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-to{syntax:"<color>";inherits:false;initial-value:#0000}@property --tw-gradient-stops{syntax:"*";inherits:false}@property --tw-gradient-via-stops{syntax:"*";inherits:false}@property --tw-gradient-from-position{syntax:"<length-percentage>";inherits:false;initial-value:0%}@property --tw-gradient-via-position{syntax:"<length-percentage>";inherits:false;initial-value:50%}@property --tw-gradient-to-position{syntax:"<length-percentage>";inherits:false;initial-value:100%}@property --tw-leading{syntax:"*";inherits:false}@property --tw-font-weight{syntax:"*";inherits:false}@property --tw-tracking{syntax:"*";inherits:false}@property --tw-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-shadow-color{syntax:"*";inherits:false}@property --tw-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-inset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-shadow-color{syntax:"*";inherits:false}@property --tw-inset-shadow-alpha{syntax:"<percentage>";inherits:false;initial-value:100%}@property --tw-ring-color{syntax:"*";inherits:false}@property --tw-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-inset-ring-color{syntax:"*";inherits:false}@property --tw-inset-ring-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-ring-inset{syntax:"*";inherits:false}@property --tw-ring-offset-width{syntax:"<length>";inherits:false;initial-value:0}@property --tw-ring-offset-color{syntax:"*";inherits:false;initial-value:#fff}@property --tw-ring-offset-shadow{syntax:"*";inherits:false;initial-value:0 0 #0000}@property --tw-backdrop-blur{syntax:"*";inherits:false}@property --tw-backdrop-brightness{syntax:"*";inherits:false}@property --tw-backdrop-contrast{syntax:"*";inherits:false}@property --tw-backdrop-grayscale{syntax:"*";inherits:false}@property --tw-backdrop-hue-rotate{syntax:"*";inherits:false}@property --tw-backdrop-invert{syntax:"*";inherits:false}@property --tw-backdrop-opacity{syntax:"*";inherits:false}@property --tw-backdrop-saturate{syntax:"*";inherits:false}@property --tw-backdrop-sepia{syntax:"*";inherits:false}@property --tw-duration{syntax:"*";inherits:false}@property --tw-ease{syntax:"*";inherits:false}@property --tw-outline-style{syntax:"*";inherits:false;initial-value:solid}
+
+    :root { --font-space-mono: 'Space Mono'; --font-jetbrains-mono: 'JetBrains Mono'; }
+    body { font-family: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .font-mono { font-family: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace; }
+  </style>
+</head>
+<body class="font-sans antialiased">
+
+<main>
+  <!-- HERO -->
+  <section id="home" class="matrix-bg grid-noise relative overflow-hidden border-b border-border px-6 pt-24 pb-16 md:pt-28">
+    <div class="mx-auto max-w-5xl">
+      <div class="grid items-start gap-8 md:grid-cols-[1.3fr_0.9fr] md:gap-10">
+        <div>
+          <p class="text-xs uppercase tracking-[0.24em] text-text-subtle">[ amtrix://club-interface v1.0.0 ]</p>
+          <h1 class="mt-6 max-w-4xl text-4xl leading-tight font-semibold text-foreground md:text-6xl">
+            <span class="typing-line">СТРОЙ СИГНАЛ</span><span class="ml-2 inline-block animate-cursor-blink text-primary">|</span><br/>
+            ОТСЕКИ ШУМ.
+          </h1>
+          <p class="mt-5 max-w-2xl text-base leading-relaxed text-text-muted md:text-lg">Хакерский коллектив для строителей, создающих продукты с ИИ, кодом, дизайном и неустанным исполнением.</p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#join" class="terminal-button"><span class="text-secondary">$</span> Вступить<span aria-hidden="true" class="ml-2 inline-block animate-cursor-blink">_</span></a>
+            <a href="#projects" class="rounded border border-border px-4 py-2 text-sm text-text-muted transition hover:border-primary hover:text-foreground">&gt; смотреть проекты</a>
+          </div>
+        </div>
+        <aside class="border border-primary bg-surface rounded-lg p-6 flex flex-col gap-0 md:mt-2" style="animation:4s ease-in-out infinite panel-glow;">
+          <!-- Заголовок -->
+          <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">pricing.batch</p>
+          <!-- Цена -->
+          <p class="mt-2 text-3xl font-semibold text-foreground">$99</p>
+          <!-- Описание -->
+          <p class="mt-1 text-xs uppercase tracking-[0.15em] text-text-muted">пожизненный доступ</p>
+          <!-- Блок прогресса -->
+          <div class="mt-6 rounded-sm border border-primary/40 bg-background p-4">
+            <div class="flex items-center justify-between">
+              <p class="text-xs uppercase tracking-[0.15em] text-text-subtle">мест в батче 01</p>
+              <p class="text-xs font-mono text-primary">14 / 50 осталось</p>
+            </div>
+            <div class="flex gap-1 mt-4">
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+              <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+            </div>
+          </div>
+          <!-- Список фич -->
+          <ul class="mt-6 space-y-2 text-sm text-text-muted font-mono">
+            <li><span class="text-primary mr-2">&gt;</span> Приватный Discord</li>
+            <li><span class="text-primary mr-2">&gt;</span> Доступ к шаблонам</li>
+            <li><span class="text-primary mr-2">&gt;</span> Еженедельные воркшопы</li>
+          </ul>
+          <!-- Кнопка -->
+          <a href="#join" class="mt-6 inline-flex items-center justify-center rounded-sm border border-primary bg-primary/10 px-4 py-3 text-sm text-primary transition hover:bg-primary hover:text-background hover:shadow-[0_0_14px_rgba(55,247,18,0.4)]">[ АКТИВИРОВАТЬ ЧЛЕНСТВО ]</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <section class="border-y border-border bg-background py-3">
+    <div class="overflow-hidden whitespace-nowrap">
+      <div class="marquee inline-block text-sm tracking-[0.2em] text-text-muted">
+        <span class="mx-6">ОТГРУЖАЙ ЕЖЕНЕДЕЛЬНО  //  СТРОЙ ПУБЛИЧНО  //  БЕЗ ПРИВРАТНИКОВ  //  ИИ-РАБОЧИЕ ПРОЦЕССЫ  //  НАСТОЯЩЕЕ СООБЩЕСТВО  //  ИСПОЛНЕНИЕ &gt; ХАЙП</span>
+        <span class="mx-6">ОТГРУЖАЙ ЕЖЕНЕДЕЛЬНО  //  СТРОЙ ПУБЛИЧНО  //  БЕЗ ПРИВРАТНИКОВ  //  ИИ-РАБОЧИЕ ПРОЦЕССЫ  //  НАСТОЯЩЕЕ СООБЩЕСТВО  //  ИСПОЛНЕНИЕ &gt; ХАЙП</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="px-6 py-14 md:py-20">
+    <div class="mx-auto max-w-5xl">
+      <div aria-hidden="true" class="my-6 overflow-hidden text-xs tracking-[0.2em] text-text-subtle">
+        <p class="whitespace-nowrap">====================<!-- -->[<!-- -->О НАС<!-- -->]<!-- -->////<!-- -->========================</p>
+      </div>
+      <article class="terminal-panel">
+        <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+          <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">about.exe</p>
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+          </div>
+        </header>
+        <p class="text-sm leading-relaxed text-text-muted md:text-base">AMTRIX — место, где строители встречаются, чтобы быстро запускать, монетизировать и продвигать интернет-продукты. Каждый проект — эксперимент, каждый эксперимент — публичное доказательство работы.</p>
+        <div class="mt-4 grid gap-2 text-sm text-text-muted md:grid-cols-3">
+          <p class="rounded border border-border bg-background px-3 py-2">&gt; Учись у операторов.</p>
+          <p class="rounded border border-border bg-background px-3 py-2">&gt; Строй с ИИ-рычагом.</p>
+          <p class="rounded border border-border bg-background px-3 py-2">&gt; Запускай без оправданий.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects" class="px-6 py-8 md:py-14">
+    <div class="mx-auto max-w-5xl">
+      <div aria-hidden="true" class="my-6 overflow-hidden text-xs tracking-[0.2em] text-text-subtle">
+        <p class="whitespace-nowrap">====================<!-- -->[<!-- -->ПРОЕКТЫ<!-- -->]<!-- -->////<!-- -->========================</p>
+      </div>
+      <div class="grid gap-4 md:grid-cols-2">
+        <article class="terminal-panel">
+          <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">experiment.log</p>
+            <div class="flex items-center gap-2" aria-hidden="true">
+              <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+            </div>
+          </header>
+          <p class="text-sm text-text-muted">$ amtrix run ghost-proxy</p>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">Анонимный ретранслятор для приватных сессий совместной работы.</p>
+        </article>
+        <article class="terminal-panel">
+          <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">experiment.log</p>
+            <div class="flex items-center gap-2" aria-hidden="true">
+              <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+            </div>
+          </header>
+          <p class="text-sm text-text-muted">$ amtrix run neon-shell</p>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">Браузерный командный интерфейс с совместным скриптингом.</p>
+        </article>
+        <article class="terminal-panel">
+          <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">experiment.log</p>
+            <div class="flex items-center gap-2" aria-hidden="true">
+              <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+            </div>
+          </header>
+          <p class="text-sm text-text-muted">$ amtrix run signal-map</p>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">Карта в реальном времени для отслеживания распределённых экспериментов.</p>
+        </article>
+        <article class="terminal-panel">
+          <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+            <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">experiment.log</p>
+            <div class="flex items-center gap-2" aria-hidden="true">
+              <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+            </div>
+          </header>
+          <p class="text-sm text-text-muted">$ amtrix run ascii-lab</p>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">Дизайн-площадка в текстовом режиме для терминальной визуализации.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEMBERS -->
+  <section id="members" class="px-6 py-8 md:py-14">
+    <div class="mx-auto max-w-5xl">
+      <div aria-hidden="true" class="my-6 overflow-hidden text-xs tracking-[0.2em] text-text-subtle">
+        <p class="whitespace-nowrap">====================<!-- -->[<!-- -->УЧАСТНИКИ<!-- -->]<!-- -->////<!-- -->========================</p>
+      </div>
+      <article class="terminal-panel">
+        <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+          <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">community.who</p>
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          </div>
+        </header>
+        <ul class="grid gap-3 sm:grid-cols-2">
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">zerohex</span> <span class="text-text-muted">- системы</span></li>
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">bytewitch</span> <span class="text-text-muted">- design ops</span></li>
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">nullframe</span> <span class="text-text-muted">- исследования</span></li>
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">cipherkid</span> <span class="text-text-muted">- сообщество</span></li>
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">gridghost</span> <span class="text-text-muted">- фронтенд</span></li>
+          <li class="rounded border border-border bg-background px-3 py-2 text-sm transition hover:border-primary"><span class="text-primary">[::]</span> <span class="text-foreground">polarity</span> <span class="text-text-muted">- инфраструктура</span></li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="px-6 py-8 md:py-14">
+    <div class="mx-auto max-w-5xl">
+      <div aria-hidden="true" class="my-6 overflow-hidden text-xs tracking-[0.2em] text-text-subtle">
+        <p class="whitespace-nowrap">====================<!-- -->[<!-- -->Ч.З.В.<!-- -->]<!-- -->////<!-- -->========================</p>
+      </div>
+      <article class="terminal-panel">
+        <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+          <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">system.query</p>
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          </div>
+        </header>
+        <div class="flex flex-col gap-3 mt-2">
+          <div class="border transition-colors duration-200 border-border bg-background hover:border-primary/50">
+            <button class="flex w-full items-center justify-between p-4 text-left font-mono cursor-pointer bg-transparent" onclick="toggleFaq(this)">
+              <span class="text-sm text-foreground"><span class="text-primary mr-2 text-base font-bold">[+]</span>Что такое этот клуб?</span>
+            </button>
+            <div class="grid transition-all duration-300 ease-in-out grid-rows-[0fr] opacity-0 faq-answer">
+              <div class="overflow-hidden">
+                <div class="px-4 pb-4 pt-1">
+                  <p class="text-sm leading-relaxed text-text-muted border-l border-primary/30 pl-4 ml-3"><span class="text-primary text-xs uppercase tracking-widest block mb-2 opacity-70">&gt;&gt; response_</span>Коллектив строителей, ориентированных на высококачественное исполнение. Мы делимся знаниями, приватными инструментами и совместно работаем над передовыми ИИ и дизайн-инженерными процессами.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border transition-colors duration-200 border-border bg-background hover:border-primary/50">
+            <button class="flex w-full items-center justify-between p-4 text-left font-mono cursor-pointer bg-transparent" onclick="toggleFaq(this)">
+              <span class="text-sm text-foreground"><span class="text-primary mr-2 text-base font-bold">[+]</span>Нужно ли уметь программировать?</span>
+            </button>
+            <div class="grid transition-all duration-300 ease-in-out grid-rows-[0fr] opacity-0 faq-answer">
+              <div class="overflow-hidden">
+                <div class="px-4 pb-4 pt-1">
+                  <p class="text-sm leading-relaxed text-text-muted border-l border-primary/30 pl-4 ml-3"><span class="text-primary text-xs uppercase tracking-widest block mb-2 opacity-70">&gt;&gt; response_</span>Помогает, но не обязательно. Если ты умеешь применять ИИ-агентов, эффективно работать с промптами и строить системы — ты здесь в своей тарелке. Главное — исполнение.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border transition-colors duration-200 border-border bg-background hover:border-primary/50">
+            <button class="flex w-full items-center justify-between p-4 text-left font-mono cursor-pointer bg-transparent" onclick="toggleFaq(this)">
+              <span class="text-sm text-foreground"><span class="text-primary mr-2 text-base font-bold">[+]</span>Что включает пожизненный доступ за $99?</span>
+            </button>
+            <div class="grid transition-all duration-300 ease-in-out grid-rows-[0fr] opacity-0 faq-answer">
+              <div class="overflow-hidden">
+                <div class="px-4 pb-4 pt-1">
+                  <p class="text-sm leading-relaxed text-text-muted border-l border-primary/30 pl-4 ml-3"><span class="text-primary text-xs uppercase tracking-widest block mb-2 opacity-70">&gt;&gt; response_</span>Доступ к приватному Discord, эксклюзивным шаблонам, еженедельным техническим воркшопам и прямым каналам сотрудничества с другими участниками.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border transition-colors duration-200 border-border bg-background hover:border-primary/50">
+            <button class="flex w-full items-center justify-between p-4 text-left font-mono cursor-pointer bg-transparent" onclick="toggleFaq(this)">
+              <span class="text-sm text-foreground"><span class="text-primary mr-2 text-base font-bold">[+]</span>Можно ли вернуть деньги?</span>
+            </button>
+            <div class="grid transition-all duration-300 ease-in-out grid-rows-[0fr] opacity-0 faq-answer">
+              <div class="overflow-hidden">
+                <div class="px-4 pb-4 pt-1">
+                  <p class="text-sm leading-relaxed text-text-muted border-l border-primary/30 pl-4 ml-3"><span class="text-primary text-xs uppercase tracking-widest block mb-2 opacity-70">&gt;&gt; response_</span>Да. Выполни протокол возврата в течение 14 дней с момента вступления для полного возврата средств. Без лишних вопросов.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- JOIN -->
+  <section id="join" class="px-6 py-8 md:py-16">
+    <div class="mx-auto max-w-5xl">
+      <div aria-hidden="true" class="my-6 overflow-hidden text-xs tracking-[0.2em] text-text-subtle">
+        <p class="whitespace-nowrap">====================<!-- -->[<!-- -->ВСТУПИТЬ<!-- -->]<!-- -->////<!-- -->========================</p>
+      </div>
+      <article class="terminal-panel">
+        <header class="mb-4 flex items-center justify-between border-b border-border pb-3">
+          <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">join.sh</p>
+          <div class="flex items-center gap-2" aria-hidden="true">
+            <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+          </div>
+        </header>
+        <div class="space-y-3 text-sm text-text-muted">
+          <p>$ git clone https://github.com/amtrix-club/collective-lab</p>
+          <p>$ cd collective-lab &amp;&amp; pnpm install</p>
+          <p>$ pnpm dev</p>
+          <p>$ open https://discord.gg/amtrix</p>
+        </div>
+        <p class="mt-5 text-sm text-text-muted">Нужен доступ? напиши <a href="#" class="terminal-link">@ops</a></p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-border px-6 py-10">
+  <div class="mx-auto max-w-5xl space-y-6">
+    <aside class="border border-primary bg-surface rounded-lg p-6 flex flex-col" style="animation:4s ease-in-out infinite panel-glow;">
+      <!-- Заголовок -->
+      <p class="text-xs uppercase tracking-[0.2em] text-text-subtle">footer.pricing.batch</p>
+      <!-- Цена + описание -->
+      <div class="mt-3 flex items-baseline gap-3">
+        <p class="text-3xl font-semibold text-foreground">$99</p>
+        <p class="text-sm text-text-muted">пожизненный доступ</p>
+      </div>
+      <!-- Блок прогресса -->
+      <div class="mt-6 rounded-sm border border-primary/40 bg-background p-4">
+        <div class="flex items-center justify-between">
+          <p class="text-xs uppercase tracking-[0.15em] text-text-subtle">мест в батче 01</p>
+          <p class="text-xs font-mono text-primary">14 / 50 осталось</p>
+        </div>
+        <div class="flex gap-1 mt-4">
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-primary border-primary shadow-[0_0_6px_rgba(55,247,18,0.3)]"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+          <div class="h-3 flex-1 border bg-transparent border-primary/30"></div>
+        </div>
+      </div>
+      <!-- Список фич -->
+      <ul class="mt-6 space-y-2 text-sm text-text-muted font-mono">
+        <li><span class="text-primary mr-2">&gt;</span> Приватный Discord</li>
+        <li><span class="text-primary mr-2">&gt;</span> Доступ к шаблонам</li>
+        <li><span class="text-primary mr-2">&gt;</span> Еженедельные воркшопы</li>
+      </ul>
+      <!-- Кнопка -->
+      <a href="#join" class="mt-6 inline-flex items-center justify-center rounded-sm border border-primary bg-primary/10 px-6 py-3 text-sm text-primary transition hover:bg-primary hover:text-background hover:shadow-[0_0_14px_rgba(55,247,18,0.4)]">[ АКТИВИРОВАТЬ ЧЛЕНСТВО ]</a>
+    </aside>
+    <div class="flex flex-col gap-3 text-xs text-text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>====[ AMTRIX CLUB ]==============================================</p>
+      <div class="flex items-center gap-4">
+        <a href="#" class="terminal-link">github</a>
+        <a href="#" class="terminal-link">discord</a>
+        <a href="#" class="terminal-link">matrix</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn) {
+  var answer = btn.nextElementSibling;
+  var isOpen = answer.classList.contains('grid-rows-[1fr]');
+  if (isOpen) {
+    answer.classList.remove('grid-rows-[1fr]', 'opacity-100');
+    answer.classList.add('grid-rows-[0fr]', 'opacity-0');
+    btn.querySelector('span span').textContent = '[+]';
+  } else {
+    answer.classList.remove('grid-rows-[0fr]', 'opacity-0');
+    answer.classList.add('grid-rows-[1fr]', 'opacity-100');
+    btn.querySelector('span span').textContent = '[-]';
+  }
+}
+</script>
+
+</body>
+</html>

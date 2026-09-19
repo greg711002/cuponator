@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Нарисованное портфолио</title>
+  <meta name="description" content="Весёлый и зарисованный творческий сайт."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Delius+Swash+Caps&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --color-primary: #76c7e2;
+      --color-secondary: #4a6382;
+      --color-success: #3eb36b;
+      --color-warning: #e09e38;
+      --color-danger: #e25858;
+      --color-surface-light: #f9f6f0;
+      --color-surface-dark: #efebe1;
+      --color-text-main: #1f2937;
+      --color-text-muted: #6b7280;
+      --color-border-sketch: #111827;
+      --bg-dots: radial-gradient(var(--color-text-muted) 1px, transparent 1px);
+      --spacing-1: 4px;
+      --spacing-2: 8px;
+      --spacing-3: 12px;
+      --spacing-4: 16px;
+      --spacing-6: 24px;
+      --spacing-8: 32px;
+      --spacing-12: 48px;
+      --spacing-16: 64px;
+      --font-delius-app: "Delius Swash Caps", "Comic Sans MS", cursive;
+      --font-mono-app: "JetBrains Mono", monospace;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --color-surface-light: #202124;
+        --color-surface-dark: #303134;
+        --color-text-main: #f3f4f6;
+        --color-text-muted: #9ca3af;
+        --color-border-sketch: #f3f4f6;
+        --color-primary: #5ab4d4;
+      }
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    html, body {
+      background-color: var(--color-surface-light);
+      color: var(--color-text-main);
+      font-family: var(--font-delius-app);
+      flex-direction: column;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      display: flex;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-delius-app);
+      margin-top: 0;
+      margin-bottom: var(--spacing-4);
+      color: var(--color-text-main);
+      font-weight: 600;
+      line-height: 1.2;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    p {
+      margin-top: 0;
+      margin-bottom: var(--spacing-6);
+      color: var(--color-text-muted);
+      font-size: 1.125rem;
+      font-weight: 400;
+    }
+    ::selection {
+      background-color: var(--color-primary);
+      color: var(--color-text-main);
+    }
+    .sketch-container {
+      max-width: 1000px;
+      padding: var(--spacing-8);
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .sketch-border-1 {
+      border: 3px solid var(--color-border-sketch);
+      border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+    }
+    .sketch-border-2 {
+      border: 3px solid var(--color-border-sketch);
+      border-radius: 15px 225px 15px 255px / 255px 15px 225px;
+    }
+    .sketch-border-3 {
+      border: 3px solid var(--color-border-sketch);
+      border-radius: 225px 15px 255px / 15px 255px 15px 225px;
+    }
+    .sketch-shadow {
+      box-shadow: 4px 5px 0px 0px var(--color-border-sketch);
+    }
+    .sketch-shadow-hover:hover {
+      box-shadow: 7px 8px 0px 0px var(--color-border-sketch);
+      transform: translate(-3px, -3px) rotate(-1deg);
+    }
+    .sketch-highlight {
+      z-index: 1;
+      color: var(--color-text-main);
+      display: inline-block;
+      position: relative;
+    }
+    .sketch-highlight:after {
+      content: "";
+      background-color: var(--color-primary);
+      opacity: .6;
+      z-index: -1;
+      border-radius: 50% 10% 40% 20% / 10% 50% 20% 40%;
+      width: 104%;
+      height: 40%;
+      position: absolute;
+      bottom: 0%;
+      left: -2%;
+      transform: rotate(-2deg);
+    }
+    .sketch-highlight-yellow:after {
+      background-color: var(--color-warning);
+    }
+    .marker-btn {
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-2);
+      padding: var(--spacing-3) var(--spacing-6);
+      background-color: var(--color-primary);
+      color: #111827;
+      font-family: var(--font-delius-app);
+      border: 3px solid var(--color-border-sketch);
+      cursor: pointer;
+      box-shadow: 4px 5px 0px 0px var(--color-border-sketch);
+      border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+      font-size: 1.25rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all .2s cubic-bezier(.25, .46, .45, .94);
+      display: inline-flex;
+    }
+    .marker-btn:hover {
+      box-shadow: 6px 7px 0px 0px var(--color-border-sketch);
+      background-color: var(--color-surface-light);
+      transform: translate(-2px, -2px) rotate(-1.5deg);
+    }
+    .marker-btn:focus-visible {
+      outline: 3px dashed var(--color-border-sketch);
+      outline-offset: 4px;
+    }
+    .marker-btn:active {
+      box-shadow: 2px 3px 0px 0px var(--color-border-sketch);
+      transform: translate(2px, 2px) rotate(1deg);
+    }
+    .marker-btn-secondary {
+      background-color: var(--color-surface-light);
+      box-shadow: 3px 4px 0px 0px var(--color-border-sketch);
+    }
+    .marker-btn-secondary:hover {
+      background-color: var(--color-surface-dark);
+    }
+    .hero-section {
+      text-align: center;
+      z-index: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 60vh;
+      padding: 80px 20px;
+      display: flex;
+      position: relative;
+    }
+    .hero-title {
+      margin-bottom: var(--spacing-4);
+      max-width: 800px;
+      display: inline-block;
+      position: relative;
+    }
+    .hero-subtitle {
+      max-width: 650px;
+      margin: 0 auto var(--spacing-8);
+      font-size: 1.25rem;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      gap: var(--spacing-4);
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      position: relative;
+    }
+    .doodle-svg {
+      pointer-events: none;
+      stroke: var(--color-border-sketch);
+      stroke-width: 2.5px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+      position: absolute;
+    }
+    .doodle-fill {
+      fill: var(--color-warning);
+      stroke: var(--color-border-sketch);
+      stroke-width: 2px;
+    }
+    .arrow-hero {
+      width: 70px;
+      height: 70px;
+      top: 70%;
+      left: -80px;
+      transform: rotate(-15deg);
+    }
+    @media (max-width: 768px) {
+      .arrow-hero { display: none; }
+    }
+    .arrow-hero-right {
+      width: 60px;
+      height: 60px;
+      bottom: -40px;
+      right: -60px;
+      transform: rotate(160deg);
+    }
+    @media (max-width: 768px) {
+      .arrow-hero-right { display: none; }
+    }
+    .star-1 {
+      width: 45px;
+      height: 45px;
+      stroke: var(--color-warning);
+      top: -20px;
+      right: -40px;
+    }
+    .star-2 {
+      width: 30px;
+      height: 30px;
+      stroke: var(--color-success);
+      bottom: 20px;
+      left: 10%;
+    }
+    .scribble-bg {
+      z-index: -1;
+      opacity: .2;
+      width: 120%;
+      height: 150%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    .wavy-divider {
+      width: 100%;
+      height: 40px;
+      margin: var(--spacing-12) 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' style='fill:%23111827; opacity: 0.05'/%3E%3C/svg%3E");
+      background-position: 50%;
+      background-size: cover;
+    }
+    .features-grid {
+      gap: var(--spacing-8);
+      margin-top: var(--spacing-8);
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      padding: 0 10px;
+      display: grid;
+    }
+    .feature-card {
+      padding: var(--spacing-6);
+      background-color: var(--color-surface-light);
+      border: 3px solid var(--color-border-sketch);
+      box-shadow: 3px 4px 0px 0px var(--color-border-sketch);
+      text-align: left;
+      border-radius: 15px 225px 15px 255px / 255px 15px 225px;
+      flex-direction: column;
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      position: relative;
+    }
+    .feature-card:hover {
+      box-shadow: 6px 8px 0px 0px var(--color-border-sketch);
+      z-index: 2;
+      background-color: var(--color-surface-dark);
+      transform: translateY(-4px) rotate(1.5deg);
+    }
+    .feature-icon-wrapper {
+      border: 2px solid var(--color-border-sketch);
+      width: 60px;
+      height: 60px;
+      margin-bottom: var(--spacing-4);
+      background-color: var(--color-surface-light);
+      border-radius: 50% 40% / 40% 50%;
+      justify-content: center;
+      align-items: center;
+      display: inline-flex;
+      transform: rotate(-3deg);
+    }
+    .feature-card:nth-child(2n) .feature-icon-wrapper {
+      border-radius: 40% 50% / 50% 40%;
+      transform: rotate(4deg);
+    }
+    .feature-card h3 {
+      margin-bottom: var(--spacing-2);
+      font-size: 1.5rem;
+    }
+    .feature-card p {
+      flex-grow: 1;
+      margin-bottom: 0;
+      font-size: 1rem;
+    }
+    .navbar {
+      padding: var(--spacing-4) var(--spacing-6);
+      border-bottom: 2px solid var(--color-border-sketch);
+      background-color: var(--color-surface-light);
+      margin-bottom: var(--spacing-8);
+      border-radius: 0 0 255px 15px / 0 0 15px 255px;
+      justify-content: space-between;
+      align-items: center;
+      display: flex;
+    }
+    .nav-logo {
+      font-family: var(--font-delius-app);
+      color: var(--color-text-main);
+      align-items: center;
+      gap: 8px;
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex;
+    }
+    .nav-links {
+      gap: var(--spacing-6);
+      display: flex;
+    }
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+    }
+    .nav-link {
+      color: var(--color-text-main);
+      font-weight: 600;
+      text-decoration: none;
+      position: relative;
+    }
+    .nav-link:hover:after {
+      content: "";
+      background-color: var(--color-primary);
+      border-radius: 255px 15px 225px / 15px 225px 15px 255px;
+      width: 100%;
+      height: 3px;
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+    }
+    @media (min-width: 640px) {
+      h1 { font-size: 3.5rem; line-height: 1.1; }
+      h2 { font-size: 2.5rem; }
+      p { font-size: 1.25rem; }
+      .hero-section { padding: 100px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <div style="min-height:100vh;position:relative;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:var(--bg-dots);background-size:20px 20px;opacity:0.5;z-index:-2"></div>
+
+    <nav class="sketch-container navbar">
+      <a class="nav-logo" href="#">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-primary)">
+          <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+          <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+          <path d="M2 2l7.586 7.586"></path>
+          <circle cx="11" cy="11" r="2"></circle>
+        </svg>
+        DoodleUI
+      </a>
+      <div class="nav-links">
+        <a class="nav-link" href="#features">Возможности</a>
+        <a class="nav-link" href="#components">Компоненты</a>
+      </div>
+    </nav>
+
+    <main class="sketch-container">
+      <section class="hero-section" style="position:relative">
+        <div style="position:absolute;top:0;left:0;right:0;bottom:0;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' fill='none' stroke='%23111827' stroke-width='0.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 0c2 20-2 40 0 60M0 10c20-2 40 2 60 0M35 0c-3 25 3 50 0 80M0 35c25 3 50-3 80 0M60 0c2 20-2 40 0 80M0 60c20-2 40 2 80 0' opacity='0.08'/%3E%3C/svg%3E&quot;);background-size:80px 80px;z-index:-1;mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%);-webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 80%)"></div>
+
+        <div class="hero-title">
+          <svg class="doodle-svg" viewBox="0 0 100 100" style="top:-30px;left:-20px;width:50px;stroke:var(--color-danger)" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50,10 L50,40 M20,20 L40,40 M80,20 L60,40" stroke-width="4"></path>
+          </svg>
+          <h1>Дизайн, который ощущается <span class="sketch-highlight">живым</span>.</h1>
+          <svg class="doodle-svg" viewBox="0 0 200 20" style="bottom:-20px;right:0;width:150px;stroke:var(--color-border-sketch)" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5,10 Q50,0 100,10 T195,10" stroke-width="5"></path>
+          </svg>
+        </div>
+
+        <p class="hero-subtitle">Творческая интерактивная площадка с грубыми линиями, игривыми формами и нарисованными интерфейсами. Для инди-разработчиков и творческих умов, готовых выйти за рамки.</p>
+
+        <div class="hero-actions">
+          <div style="position:relative">
+            <a class="marker-btn" href="#">
+              Начать рисовать
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:8px">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <div style="position:absolute;bottom:-55px;left:10px;transform:rotate(-10deg);font-family:var(--font-delius-app);color:var(--color-text-muted);display:flex;flex-direction:column;align-items:center">
+              <svg width="30" height="30" viewBox="0 0 100 100" class="doodle-svg" style="position:static;display:block;margin-bottom:-5px">
+                <path d="M50,80 Q30,40 50,10" stroke-width="3"></path>
+                <path d="M50,10 L35,25 M50,10 L65,25" stroke-width="3"></path>
+              </svg>
+              <span style="font-size:1rem">Бесплатно!</span>
+            </div>
+          </div>
+          <a class="marker-btn marker-btn-secondary sketch-border-3" href="#">Смотреть компоненты</a>
+        </div>
+      </section>
+
+      <div class="wavy-divider"></div>
+
+      <section id="features">
+        <div style="text-align:center;margin-bottom:var(--spacing-8)">
+          <h2><span class="sketch-highlight sketch-highlight-yellow">Почему</span> DoodleUI?</h2>
+          <p>Потому что идеально прямые линии — скучны.</p>
+        </div>
+        <div class="features-grid">
+          <div class="feature-card sketch-border-1">
+            <div class="feature-icon-wrapper">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-primary)">
+                <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                <line x1="16" y1="8" x2="2" y2="22"></line>
+                <line x1="17.5" y1="15" x2="9" y2="15"></line>
+              </svg>
+            </div>
+            <h3>Неидеальные линии</h3>
+            <p>Мы любим закорючки. Математически идеальные кривые Безье устарели — живые мазки в моде.</p>
+          </div>
+          <div class="feature-card sketch-border-2">
+            <div class="feature-icon-wrapper">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-success)">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+              </svg>
+            </div>
+            <h3>Надёжно и безопасно</h3>
+            <p>Не дайте игривому виду обмануть вас. Всё доступно, работает с клавиатурой и семантично внутри.</p>
+          </div>
+          <div class="feature-card sketch-border-3">
+            <div class="feature-icon-wrapper">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--color-warning)">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                <line x1="15" y1="9" x2="15.01" y2="9"></line>
+              </svg>
+            </div>
+            <h3>Дружелюбная атмосфера</h3>
+            <p>Создайте эмоциональную связь с пользователями с помощью человечной эстетики.</p>
+          </div>
+        </div>
+      </section>
+
+      <div class="wavy-divider"></div>
+
+      <section id="components" style="display:flex;flex-direction:column;align-items:center;padding:var(--spacing-8) 0;text-align:center">
+        <h2>Готовы к творческому беспорядку?</h2>
+        <p>Возьмите виртуальный маркер и начните создавать креативные интерфейсы прямо сейчас.</p>
+        <div style="margin-top:var(--spacing-6)">
+          <a class="marker-btn sketch-border-2" href="#">Получить код</a>
+        </div>
+      </section>
+    </main>
+
+    <footer style="margin-top:auto;padding:var(--spacing-8);text-align:center;border-top:3px solid var(--color-border-sketch);background-color:var(--color-surface-dark)">
+      <p style="margin:0">Сделано с 💛 и кучей каракулей.</p>
+    </footer>
+  </div>
+</body>
+</html>
