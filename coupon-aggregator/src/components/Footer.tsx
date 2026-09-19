@@ -9,7 +9,7 @@ export default function Footer() {
 					<div className="md:col-span-2">
 						<Link href="/" className="flex items-center gap-2 mb-4">
 							<span className="text-2xl">🍽️</span>
-							<span className="text-xl font-bold text-white">КупоныЕды</span>
+							<span className="text-xl font-bold text-white">Купонатор</span>
 						</Link>
 						<p className="text-sm text-gray-400 max-w-md">
 							Все промокоды и скидки на доставку продуктов и еды в одном месте.
@@ -94,7 +94,7 @@ export default function Footer() {
 
 				<div className="mt-8 pt-8 border-t border-gray-800">
 					<p className="text-xs text-gray-500 text-center">
-						© {new Date().getFullYear()} КупоныЕды. Информационный сервис. Все
+						© {new Date().getFullYear()} Купонатор. Информационный сервис. Все
 						товарные знаки принадлежат их правообладателям.
 					</p>
 				</div>

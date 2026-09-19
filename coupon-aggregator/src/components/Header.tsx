@@ -9,7 +9,7 @@ export default function Header() {
 					<Link href="/" className="flex items-center gap-2 group">
 						<span className="text-3xl">🍽️</span>
 						<div>
-							<span className="text-xl font-bold gradient-text">КупоныЕды</span>
+							<span className="text-xl font-bold gradient-text">Купонатор</span>
 							<span className="hidden sm:block text-xs text-gray-400 -mt-1">
 								Скидки на доставку
 							</span>
