@@ -1,156 +1,160 @@
 @import "tailwindcss";
 
 :root {
-  --color-primary: #ff6b35;
-  --color-primary-dark: #e55a2b;
-  --color-secondary: #004e89;
-  --color-accent: #ffca3a;
-  --color-accent-light: #ffe066;
-  --color-surface: #fff9f0;
-  --color-bg: #ffffff;
-  --color-text: #1a1a2e;
-  --color-text-muted: #6b7280;
-  --color-border: #e5e7eb;
-  --color-success: #10b981;
-  --color-error: #ef4444;
+	--color-primary: #ff6b35;
+	--color-primary-dark: #e55a2b;
+	--color-secondary: #004e89;
+	--color-accent: #ffca3a;
+	--color-accent-light: #ffe066;
+	--color-surface: #fff9f0;
+	--color-bg: #ffffff;
+	--color-text: #1a1a2e;
+	--color-text-muted: #6b7280;
+	--color-border: #e5e7eb;
+	--color-success: #10b981;
+	--color-error: #ef4444;
 }
 
 html {
-  scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+	background-color: var(--color-bg);
+	color: var(--color-text);
+	font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Gradient text for headings */
 .gradient-text {
-  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+	background: linear-gradient(
+		135deg,
+		var(--color-primary),
+		var(--color-secondary)
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
 }
 
 /* Bright accent button */
 .btn-primary {
-  background: linear-gradient(135deg, var(--color-primary), #ff8f5e);
-  color: white;
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+	background: linear-gradient(135deg, var(--color-primary), #ff8f5e);
+	color: white;
+	font-weight: 600;
+	padding: 0.5rem 1.5rem;
+	border-radius: 0.75rem;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
 }
 
 .btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
 }
 
 .btn-outline {
-  border: 2px solid var(--color-primary);
-  color: var(--color-primary);
-  font-weight: 600;
-  padding: 0.5rem 1.5rem;
-  border-radius: 0.75rem;
-  transition: all 0.2s ease;
+	border: 2px solid var(--color-primary);
+	color: var(--color-primary);
+	font-weight: 600;
+	padding: 0.5rem 1.5rem;
+	border-radius: 0.75rem;
+	transition: all 0.2s ease;
 }
 
 .btn-outline:hover {
-  background-color: var(--color-primary);
-  color: white;
+	background-color: var(--color-primary);
+	color: white;
 }
 
 /* Coupon card shine effect */
 .coupon-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease;
 }
 
 .coupon-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
 .coupon-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
-  transition: left 0.5s ease;
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -100%;
+	width: 100%;
+	height: 100%;
+	background: linear-gradient(
+		90deg,
+		transparent,
+		rgba(255, 255, 255, 0.2),
+		transparent
+	);
+	transition: left 0.5s ease;
 }
 
 .coupon-card:hover::before {
-  left: 100%;
+	left: 100%;
 }
 
 /* Category pill */
 .category-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.375rem 1rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-  font-weight: 500;
-  background-color: var(--color-surface);
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
-  transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.375rem 1rem;
+	border-radius: 9999px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	background-color: var(--color-surface);
+	color: var(--color-text);
+	border: 1px solid var(--color-border);
+	transition: all 0.2s ease;
 }
 
 .category-pill:hover {
-  background-color: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
+	background-color: var(--color-primary);
+	color: white;
+	border-color: var(--color-primary);
 }
 
 .category-pill.active {
-  background-color: var(--color-primary);
-  color: white;
-  border-color: var(--color-primary);
+	background-color: var(--color-primary);
+	color: white;
+	border-color: var(--color-primary);
 }
 
 /* Discount badge */
 .discount-badge {
-  background: linear-gradient(135deg, var(--color-accent), #ffd700);
-  color: #1a1a2e;
-  font-weight: 700;
-  font-size: 0.875rem;
-  padding: 0.25rem 0.75rem;
-  border-radius: 0.5rem;
-  display: inline-block;
+	background: linear-gradient(135deg, var(--color-accent), #ffd700);
+	color: #1a1a2e;
+	font-weight: 700;
+	font-size: 0.875rem;
+	padding: 0.25rem 0.75rem;
+	border-radius: 0.5rem;
+	display: inline-block;
 }
 
 /* Code reveal */
 .code-reveal {
-  font-family: 'Courier New', monospace;
-  letter-spacing: 0.15em;
-  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-  border: 2px dashed var(--color-secondary);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: var(--color-secondary);
-  cursor: pointer;
-  transition: all 0.2s ease;
+	font-family: "Courier New", monospace;
+	letter-spacing: 0.15em;
+	background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+	border: 2px dashed var(--color-secondary);
+	border-radius: 0.5rem;
+	padding: 0.5rem 1rem;
+	font-size: 1.125rem;
+	font-weight: 700;
+	color: var(--color-secondary);
+	cursor: pointer;
+	transition: all 0.2s ease;
 }
 
 .code-reveal:hover {
-  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
-  transform: scale(1.02);
+	background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+	transform: scale(1.02);
 }
