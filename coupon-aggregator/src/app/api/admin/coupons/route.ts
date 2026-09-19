@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
+import { CouponStatus, DiscountType, Prisma } from "@prisma/client";
 
 // ─── GET: список купонов с фильтрацией ──────────────────────────────
 
@@ -24,11 +24,11 @@ export async function GET(request: NextRequest) {
 	if (storeId) {
 		where.storeId = BigInt(storeId);
 	}
-	if (status && Object.values(Prisma.CouponStatus).includes(status as Prisma.CouponStatus)) {
-		where.status = status as Prisma.CouponStatus;
+	if (status && CouponStatus[status as keyof typeof CouponStatus]) {
+		where.status = status as typeof CouponStatus[keyof typeof CouponStatus];
 	}
-	if (discountType && Object.values(Prisma.DiscountType).includes(discountType as Prisma.DiscountType)) {
-		where.discountType = discountType as Prisma.DiscountType;
+	if (discountType && DiscountType[discountType as keyof typeof DiscountType]) {
+		where.discountType = discountType as typeof DiscountType[keyof typeof DiscountType];
 	}
 	if (search) {
 		where.OR = [
