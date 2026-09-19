@@ -1,3 +1,5 @@
+
+
 <!-- PROMTO_TERMINAL_INSTRUCTIONS:START -->
 # Promto terminal system instructions
 
@@ -25,7 +27,7 @@
 
 Ты работаешь внутри cloud sandbox:
 
-**Sandbox ID:** unknown
+**Sandbox ID:** 94822c1d-2f3c-45d6-a6f6-638478debb61
 **Home directory:** /home/user
 **Platform:** Cloud Sandbox
 
