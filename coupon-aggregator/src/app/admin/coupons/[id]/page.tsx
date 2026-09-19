@@ -103,7 +103,9 @@ export default function EditCouponPage() {
 					discountType: coupon.discountType,
 					discountValue: coupon.discountValue,
 					conditions: coupon.conditions || "",
-					minOrderAmount: coupon.minOrderAmount ? String(coupon.minOrderAmount) : "",
+					minOrderAmount: coupon.minOrderAmount
+						? String(coupon.minOrderAmount)
+						: "",
 					startsAt: formatDate(coupon.startsAt),
 					expiresAt: formatDate(coupon.expiresAt),
 					isVerified: coupon.isVerified,
@@ -113,7 +115,9 @@ export default function EditCouponPage() {
 				});
 			} catch (err) {
 				if (!ignore) {
-					setErrors([err instanceof Error ? err.message : "Ошибка загрузки купона"]);
+					setErrors([
+						err instanceof Error ? err.message : "Ошибка загрузки купона",
+					]);
 				}
 			} finally {
 				if (!ignore) setLoading(false);
@@ -121,7 +125,9 @@ export default function EditCouponPage() {
 		}
 
 		load();
-		return () => { ignore = true; };
+		return () => {
+			ignore = true;
+		};
 	}, [couponId]);
 
 	// Update form field
@@ -136,7 +142,7 @@ export default function EditCouponPage() {
 		if (!form.storeId) errs.push("Выберите магазин");
 		if (!form.title.trim()) errs.push("Введите название купона");
 		if (!form.discountValue.trim()) errs.push("Введите значение скидки");
-		return (setErrors(errs), errs.length === 0);
+		return setErrors(errs), errs.length === 0;
 	}
 
 	// Submit update
@@ -180,7 +186,9 @@ export default function EditCouponPage() {
 					<h1>✏️ Редактирование {couponInfo}</h1>
 				</div>
 				<div className="admin-form-card">
-					<div className="admin-empty"><p>Загрузка...</p></div>
+					<div className="admin-empty">
+						<p>Загрузка...</p>
+					</div>
 				</div>
 			</div>
 		);
@@ -213,7 +221,9 @@ export default function EditCouponPage() {
 			</div>
 
 			{/* Messages */}
-			{success && <div className="admin-alert admin-alert-success">{success}</div>}
+			{success && (
+				<div className="admin-alert admin-alert-success">{success}</div>
+			)}
 			{errors.length > 0 && (
 				<div className="admin-alert admin-alert-error">
 					{errors.map((e, i) => (

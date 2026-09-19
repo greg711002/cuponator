@@ -106,7 +106,7 @@ export default function NewCouponPage() {
 		if (!form.title.trim()) errs.push("Введите название купона");
 		if (!form.discountValue.trim()) errs.push("Введите значение скидки");
 		if (!form.startsAt) errs.push("Укажите дату начала действия");
-		return (setErrors(errs), errs.length === 0);
+		return setErrors(errs), errs.length === 0;
 	}
 
 	// Submit
@@ -158,7 +158,9 @@ export default function NewCouponPage() {
 			</div>
 
 			{/* Messages */}
-			{success && <div className="admin-alert admin-alert-success">{success}</div>}
+			{success && (
+				<div className="admin-alert admin-alert-success">{success}</div>
+			)}
 			{errors.length > 0 && (
 				<div className="admin-alert admin-alert-error">
 					{errors.map((e, i) => (
@@ -268,7 +270,9 @@ export default function NewCouponPage() {
 								onChange={(e) => update("code", e.target.value)}
 								placeholder="PROMO2025"
 							/>
-							<span className="admin-hint">Оставьте пустым, если скидка по ссылке</span>
+							<span className="admin-hint">
+								Оставьте пустым, если скидка по ссылке
+							</span>
 						</div>
 
 						<div className="admin-form-group">
@@ -316,7 +320,9 @@ export default function NewCouponPage() {
 								value={form.expiresAt}
 								onChange={(e) => update("expiresAt", e.target.value)}
 							/>
-							<span className="admin-hint">Оставьте пустым, если бессрочно</span>
+							<span className="admin-hint">
+								Оставьте пустым, если бессрочно
+							</span>
 						</div>
 
 						<div className="admin-form-group">

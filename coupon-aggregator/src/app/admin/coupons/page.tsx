@@ -7,7 +7,13 @@ import { useRouter, useSearchParams } from "next/navigation";
 // Export a wrapped version that provides Suspense for useSearchParams
 export default function AdminCouponsPageWrapper() {
 	return (
-		<Suspense fallback={<div className="admin-empty"><p>Загрузка...</p></div>}>
+		<Suspense
+			fallback={
+				<div className="admin-empty">
+					<p>Загрузка...</p>
+				</div>
+			}
+		>
 			<AdminCouponsPage />
 		</Suspense>
 	);
@@ -69,12 +75,23 @@ const DISCOUNT_LABELS: Record<string, string> = {
 };
 
 const COUPON_STATUSES = [
-	"active", "imported", "pending_check", "duplicate",
-	"paused", "expired", "rejected", "archived",
+	"active",
+	"imported",
+	"pending_check",
+	"duplicate",
+	"paused",
+	"expired",
+	"rejected",
+	"archived",
 ] as const;
 
 const DISCOUNT_TYPES = [
-	"percentage", "fixed_amount", "free_delivery", "bonus", "gift", "other",
+	"percentage",
+	"fixed_amount",
+	"free_delivery",
+	"bonus",
+	"gift",
+	"other",
 ] as const;
 
 function formatDate(dateStr: string | null): string {
@@ -139,7 +156,9 @@ function AdminCouponsPage() {
 			}
 		};
 		doFetch();
-		return () => { ignore = true; };
+		return () => {
+			ignore = true;
+		};
 	}, [page, search, statusFilter, storeFilter, discountFilter]);
 
 	// ─── Filter helpers ───────────────────────────────────────────
@@ -298,13 +317,17 @@ function AdminCouponsPage() {
 											<span className="text-gray-600">{coupon.store.name}</span>
 										</td>
 										<td>
-											<span className="admin-discount">{coupon.discountValue}</span>
+											<span className="admin-discount">
+												{coupon.discountValue}
+											</span>
 											<span className="text-xs text-gray-400 ml-1">
 												{DISCOUNT_LABELS[coupon.discountType]}
 											</span>
 										</td>
 										<td>
-											<span className={`admin-status admin-status-${coupon.status}`}>
+											<span
+												className={`admin-status admin-status-${coupon.status}`}
+											>
 												{STATUS_LABELS[coupon.status] || coupon.status}
 											</span>
 											{coupon.isVerified && (
@@ -315,12 +338,16 @@ function AdminCouponsPage() {
 											<span className="text-sm">{coupon.priority}</span>
 										</td>
 										<td>
-											<span className={`text-sm ${coupon.expiresAt && new Date(coupon.expiresAt) < new Date() ? "text-red-500" : "text-gray-600"}`}>
+											<span
+												className={`text-sm ${coupon.expiresAt && new Date(coupon.expiresAt) < new Date() ? "text-red-500" : "text-gray-600"}`}
+											>
 												{formatDate(coupon.expiresAt)}
 											</span>
 										</td>
 										<td>
-											<span className="text-sm text-gray-600">{coupon.clickCount}</span>
+											<span className="text-sm text-gray-600">
+												{coupon.clickCount}
+											</span>
 										</td>
 										<td>
 											<div className="admin-actions">
@@ -369,7 +396,9 @@ function AdminCouponsPage() {
 												<span className="text-gray-400 px-1">...</span>
 											)}
 											<button
-												className={p === pagination.page ? "admin-page-active" : ""}
+												className={
+													p === pagination.page ? "admin-page-active" : ""
+												}
 												onClick={() => setFilter("page", String(p))}
 											>
 												{p}
@@ -395,8 +424,8 @@ function AdminCouponsPage() {
 					<div className="admin-confirm" onClick={(e) => e.stopPropagation()}>
 						<h3>🗑️ Удалить купон</h3>
 						<p>
-							Вы уверены, что хотите удалить купон «{deleteTarget.title}»?
-							Это также удалит все связанные клики. Действие необратимо.
+							Вы уверены, что хотите удалить купон «{deleteTarget.title}»? Это
+							также удалит все связанные клики. Действие необратимо.
 						</p>
 						<div className="admin-confirm-actions">
 							<button

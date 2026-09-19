@@ -3,7 +3,10 @@ import prisma from "@/lib/prisma";
 
 export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
-	const limit = Math.min(200, Math.max(1, Number(searchParams.get("limit")) || 100));
+	const limit = Math.min(
+		200,
+		Math.max(1, Number(searchParams.get("limit")) || 100),
+	);
 
 	try {
 		const stores = await prisma.store.findMany({
@@ -21,6 +24,9 @@ export async function GET(request: NextRequest) {
 		});
 	} catch (error) {
 		console.error("GET /api/stores error:", error);
-		return NextResponse.json({ error: "Ошибка при получении магазинов" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при получении магазинов" },
+			{ status: 500 },
+		);
 	}
 }

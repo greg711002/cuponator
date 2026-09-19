@@ -34,9 +34,7 @@ export default function AdminLayout({
 			</aside>
 
 			{/* Main content */}
-			<main className="admin-main">
-				{children}
-			</main>
+			<main className="admin-main">{children}</main>
 		</div>
 	);
 }

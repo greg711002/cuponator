@@ -20,20 +20,45 @@ export async function GET(
 			return NextResponse.json({ error: "Купон не найден" }, { status: 404 });
 		}
 
-		return NextResponse.json({
-			...coupon,
+		const result = {
 			id: coupon.id.toString(),
 			storeId: coupon.storeId.toString(),
-			minOrderAmount: coupon.minOrderAmount ? Number(coupon.minOrderAmount) : null,
+			title: coupon.title,
+			description: coupon.description,
+			code: coupon.code,
+			promoUrl: coupon.promoUrl,
+			discountType: coupon.discountType,
+			discountValue: coupon.discountValue,
+			conditions: coupon.conditions,
+			minOrderAmount: coupon.minOrderAmount
+				? Number(coupon.minOrderAmount)
+				: null,
+			startsAt: coupon.startsAt,
+			expiresAt: coupon.expiresAt,
+			isVerified: coupon.isVerified,
+			verifiedAt: coupon.verifiedAt,
 			clickCount: coupon.clickCount.toString(),
+			sortOrder: coupon.sortOrder,
+			status: coupon.status,
+			priority: coupon.priority,
+			dataSource: coupon.dataSource,
+			sourceUrl: coupon.sourceUrl,
+			meta: coupon.meta,
+			createdAt: coupon.createdAt,
+			updatedAt: coupon.updatedAt,
 			store: {
-				...coupon.store,
 				id: coupon.store.id.toString(),
+				name: coupon.store.name,
+				slug: coupon.store.slug,
 			},
-		});
+		};
+		return NextResponse.json(result);
 	} catch (error) {
 		console.error("GET /api/admin/coupons/[id] error:", error);
-		return NextResponse.json({ error: "Ошибка при получении купона" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при получении купона" },
+			{ status: 500 },
+		);
 	}
 }
 
@@ -47,7 +72,9 @@ export async function PUT(
 	const couponId = BigInt(id);
 
 	try {
-		const existing = await prisma.coupon.findUnique({ where: { id: couponId } });
+		const existing = await prisma.coupon.findUnique({
+			where: { id: couponId },
+		});
 		if (!existing) {
 			return NextResponse.json({ error: "Купон не найден" }, { status: 404 });
 		}
@@ -57,10 +84,21 @@ export async function PUT(
 
 		// Only update provided fields
 		const fields = [
-			"title", "description", "code", "promoUrl",
-			"discountType", "discountValue", "conditions",
-			"startsAt", "expiresAt", "isVerified",
-			"sortOrder", "status", "priority", "dataSource", "sourceUrl",
+			"title",
+			"description",
+			"code",
+			"promoUrl",
+			"discountType",
+			"discountValue",
+			"conditions",
+			"startsAt",
+			"expiresAt",
+			"isVerified",
+			"sortOrder",
+			"status",
+			"priority",
+			"dataSource",
+			"sourceUrl",
 		] as const;
 
 		const dateFields = new Set(["startsAt", "expiresAt", "verifiedAt"]);
@@ -68,7 +106,9 @@ export async function PUT(
 		for (const field of fields) {
 			if (body[field] !== undefined) {
 				if (dateFields.has(field)) {
-					(data as Record<string, unknown>)[field] = body[field] ? new Date(body[field]) : null;
+					(data as Record<string, unknown>)[field] = body[field]
+						? new Date(body[field])
+						: null;
 				} else {
 					(data as Record<string, unknown>)[field] = body[field];
 				}
@@ -96,16 +136,43 @@ export async function PUT(
 		});
 
 		return NextResponse.json({
-			...coupon,
 			id: coupon.id.toString(),
 			storeId: coupon.storeId.toString(),
-			minOrderAmount: coupon.minOrderAmount ? Number(coupon.minOrderAmount) : null,
+			title: coupon.title,
+			description: coupon.description,
+			code: coupon.code,
+			promoUrl: coupon.promoUrl,
+			discountType: coupon.discountType,
+			discountValue: coupon.discountValue,
+			conditions: coupon.conditions,
+			minOrderAmount: coupon.minOrderAmount
+				? Number(coupon.minOrderAmount)
+				: null,
+			startsAt: coupon.startsAt,
+			expiresAt: coupon.expiresAt,
+			isVerified: coupon.isVerified,
+			verifiedAt: coupon.verifiedAt,
 			clickCount: coupon.clickCount.toString(),
-			store: { ...coupon.store, id: coupon.store.id.toString() },
+			sortOrder: coupon.sortOrder,
+			status: coupon.status,
+			priority: coupon.priority,
+			dataSource: coupon.dataSource,
+			sourceUrl: coupon.sourceUrl,
+			meta: coupon.meta,
+			createdAt: coupon.createdAt,
+			updatedAt: coupon.updatedAt,
+			store: {
+				id: coupon.store.id.toString(),
+				name: coupon.store.name,
+				slug: coupon.store.slug,
+			},
 		});
 	} catch (error) {
 		console.error("PUT /api/admin/coupons/[id] error:", error);
-		return NextResponse.json({ error: "Ошибка при обновлении купона" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при обновлении купона" },
+			{ status: 500 },
+		);
 	}
 }
 
@@ -118,7 +185,9 @@ export async function DELETE(
 	const { id } = await params;
 
 	try {
-		const existing = await prisma.coupon.findUnique({ where: { id: BigInt(id) } });
+		const existing = await prisma.coupon.findUnique({
+			where: { id: BigInt(id) },
+		});
 		if (!existing) {
 			return NextResponse.json({ error: "Купон не найден" }, { status: 404 });
 		}
@@ -131,6 +200,9 @@ export async function DELETE(
 		return NextResponse.json({ success: true });
 	} catch (error) {
 		console.error("DELETE /api/admin/coupons/[id] error:", error);
-		return NextResponse.json({ error: "Ошибка при удалении купона" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при удалении купона" },
+			{ status: 500 },
+		);
 	}
 }

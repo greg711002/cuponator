@@ -8,7 +8,10 @@ export async function GET(request: NextRequest) {
 	const { searchParams } = new URL(request.url);
 
 	const page = Math.max(1, Number(searchParams.get("page")) || 1);
-	const limit = Math.min(100, Math.max(1, Number(searchParams.get("limit")) || 50));
+	const limit = Math.min(
+		100,
+		Math.max(1, Number(searchParams.get("limit")) || 50),
+	);
 	const skip = (page - 1) * limit;
 
 	const storeId = searchParams.get("storeId");
@@ -25,10 +28,11 @@ export async function GET(request: NextRequest) {
 		where.storeId = BigInt(storeId);
 	}
 	if (status && CouponStatus[status as keyof typeof CouponStatus]) {
-		where.status = status as typeof CouponStatus[keyof typeof CouponStatus];
+		where.status = status as (typeof CouponStatus)[keyof typeof CouponStatus];
 	}
 	if (discountType && DiscountType[discountType as keyof typeof DiscountType]) {
-		where.discountType = discountType as typeof DiscountType[keyof typeof DiscountType];
+		where.discountType =
+			discountType as (typeof DiscountType)[keyof typeof DiscountType];
 	}
 	if (search) {
 		where.OR = [
@@ -39,8 +43,18 @@ export async function GET(request: NextRequest) {
 	}
 
 	// Allowed sort fields
-	const allowedSortFields = ["createdAt", "updatedAt", "title", "sortOrder", "priority", "clickCount", "expiresAt"];
-	const orderField = allowedSortFields.includes(sortField) ? sortField : "createdAt";
+	const allowedSortFields = [
+		"createdAt",
+		"updatedAt",
+		"title",
+		"sortOrder",
+		"priority",
+		"clickCount",
+		"expiresAt",
+	];
+	const orderField = allowedSortFields.includes(sortField)
+		? sortField
+		: "createdAt";
 
 	try {
 		const [coupons, total] = await Promise.all([
@@ -56,14 +70,33 @@ export async function GET(request: NextRequest) {
 
 		// Convert BigInt to string for JSON serialization
 		const serialized = coupons.map((c) => ({
-			...c,
 			id: c.id.toString(),
 			storeId: c.storeId.toString(),
+			title: c.title,
+			description: c.description,
+			code: c.code,
+			promoUrl: c.promoUrl,
+			discountType: c.discountType,
+			discountValue: c.discountValue,
+			conditions: c.conditions,
 			minOrderAmount: c.minOrderAmount ? Number(c.minOrderAmount) : null,
+			startsAt: c.startsAt,
+			expiresAt: c.expiresAt,
+			isVerified: c.isVerified,
+			verifiedAt: c.verifiedAt,
 			clickCount: c.clickCount.toString(),
+			sortOrder: c.sortOrder,
+			status: c.status,
+			priority: c.priority,
+			dataSource: c.dataSource,
+			sourceUrl: c.sourceUrl,
+			meta: c.meta,
+			createdAt: c.createdAt,
+			updatedAt: c.updatedAt,
 			store: {
-				...c.store,
 				id: c.store.id.toString(),
+				name: c.store.name,
+				slug: c.store.slug,
 			},
 		}));
 
@@ -78,7 +111,10 @@ export async function GET(request: NextRequest) {
 		});
 	} catch (error) {
 		console.error("GET /api/admin/coupons error:", error);
-		return NextResponse.json({ error: "Ошибка при получении списка купонов" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при получении списка купонов" },
+			{ status: 500 },
+		);
 	}
 }
 
@@ -89,9 +125,17 @@ export async function POST(request: NextRequest) {
 		const body = await request.json();
 
 		// Basic validation
-		if (!body.title || !body.storeId || !body.discountType || !body.discountValue) {
+		if (
+			!body.title ||
+			!body.storeId ||
+			!body.discountType ||
+			!body.discountValue
+		) {
 			return NextResponse.json(
-				{ error: "Обязательные поля: title, storeId, discountType, discountValue" },
+				{
+					error:
+						"Обязательные поля: title, storeId, discountType, discountValue",
+				},
 				{ status: 400 },
 			);
 		}
@@ -114,7 +158,9 @@ export async function POST(request: NextRequest) {
 				discountType: body.discountType,
 				discountValue: body.discountValue,
 				conditions: body.conditions || null,
-				minOrderAmount: body.minOrderAmount ? new Prisma.Decimal(body.minOrderAmount) : null,
+				minOrderAmount: body.minOrderAmount
+					? new Prisma.Decimal(body.minOrderAmount)
+					: null,
 				startsAt: body.startsAt ? new Date(body.startsAt) : new Date(),
 				expiresAt: body.expiresAt ? new Date(body.expiresAt) : null,
 				isVerified: body.isVerified ?? false,
@@ -129,17 +175,44 @@ export async function POST(request: NextRequest) {
 
 		return NextResponse.json(
 			{
-				...coupon,
 				id: coupon.id.toString(),
 				storeId: coupon.storeId.toString(),
-				minOrderAmount: coupon.minOrderAmount ? Number(coupon.minOrderAmount) : null,
+				title: coupon.title,
+				description: coupon.description,
+				code: coupon.code,
+				promoUrl: coupon.promoUrl,
+				discountType: coupon.discountType,
+				discountValue: coupon.discountValue,
+				conditions: coupon.conditions,
+				minOrderAmount: coupon.minOrderAmount
+					? Number(coupon.minOrderAmount)
+					: null,
+				startsAt: coupon.startsAt,
+				expiresAt: coupon.expiresAt,
+				isVerified: coupon.isVerified,
+				verifiedAt: coupon.verifiedAt,
 				clickCount: coupon.clickCount.toString(),
-				store: { ...coupon.store, id: coupon.store.id.toString() },
+				sortOrder: coupon.sortOrder,
+				status: coupon.status,
+				priority: coupon.priority,
+				dataSource: coupon.dataSource,
+				sourceUrl: coupon.sourceUrl,
+				meta: coupon.meta,
+				createdAt: coupon.createdAt,
+				updatedAt: coupon.updatedAt,
+				store: {
+					id: coupon.store.id.toString(),
+					name: coupon.store.name,
+					slug: coupon.store.slug,
+				},
 			},
 			{ status: 201 },
 		);
 	} catch (error) {
 		console.error("POST /api/admin/coupons error:", error);
-		return NextResponse.json({ error: "Ошибка при создании купона" }, { status: 500 });
+		return NextResponse.json(
+			{ error: "Ошибка при создании купона" },
+			{ status: 500 },
+		);
 	}
 }
