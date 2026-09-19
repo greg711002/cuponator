@@ -578,7 +578,7 @@ function AdminSourcesPage() {
 								<strong>Последняя синхр.:</strong> {formatDate(modal.source.lastSyncAt)}
 							</div>
 
-							{modal.source.config && (modal.source.config as Record<string, unknown>).url && (
+							{!!modal.source.config && !!((modal.source.config as Record<string, unknown>).url) && (
 								<button
 									className="admin-btn-primary"
 									onClick={async () => {
