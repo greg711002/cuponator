@@ -18,9 +18,15 @@ export default function AdminLayout({
 				<nav className="admin-nav">
 					<Link
 						href="/admin/coupons"
-						className="admin-nav-link admin-nav-active"
+						className="admin-nav-link"
 					>
 						🏷️ Купоны
+					</Link>
+					<Link
+						href="/admin/sources"
+						className="admin-nav-link"
+					>
+						🔌 API-подключения
 					</Link>
 					<Link href="/" className="admin-nav-link" target="_blank">
 						🌐 На сайт
