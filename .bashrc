@@ -115,3 +115,9 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# PROMTO_AI_CLI_PROXY_PROFILE
+if [ -f /etc/profile.d/promto-ai-cli-proxy.sh ]; then
+  . /etc/profile.d/promto-ai-cli-proxy.sh
+fi
+# PROMTO_AI_CLI_PROXY_PROFILE_END

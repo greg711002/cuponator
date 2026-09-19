@@ -25,3 +25,9 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# PROMTO_AI_CLI_PROXY_PROFILE
+if [ -f /etc/profile.d/promto-ai-cli-proxy.sh ]; then
+  . /etc/profile.d/promto-ai-cli-proxy.sh
+fi
+# PROMTO_AI_CLI_PROXY_PROFILE_END
